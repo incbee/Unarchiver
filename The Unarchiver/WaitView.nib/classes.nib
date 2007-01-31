@@ -1,0 +1,32 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                abortAfterError = id; 
+                cancelExtraction = id; 
+                cancelWait = id; 
+                ignoreAllErrors = id; 
+                ignoreError = id; 
+            }; 
+            CLASS = TUArchiveController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                actionfield = NSTextField; 
+                errorfield = NSTextField; 
+                erroricon = NSImageView; 
+                errorview = NSView; 
+                explanationfield = NSTextField; 
+                namefield = NSTextField; 
+                progress = NSProgressIndicator; 
+                unpackview = NSView; 
+                waitfield = NSTextField; 
+                waiticon = NSImageView; 
+                waitview = NSView; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = TUCancelButton; LANGUAGE = ObjC; SUPERCLASS = NSButton; }
+    ); 
+    IBVersion = 1; 
+}

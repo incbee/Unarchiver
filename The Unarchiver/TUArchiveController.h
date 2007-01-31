@@ -1,0 +1,107 @@
+#import <Cocoa/Cocoa.h>
+#import <XADMaster/XADArchive.h>
+
+@class TUController,TUEncodingPopUp;
+
+@interface TUArchiveController:NSObject
+{
+	TUController *maincontroller;
+	XADArchive *archive;
+	NSString *archivename,*destination,*tmpdest,*defaultname;
+	NSView *view;
+	NSLock *pauselock;
+
+	BOOL cancelled,firstprogress,ignoreall;
+	XADAction erroraction;
+
+	NSStringEncoding selected_encoding;
+	const char *name_bytes;
+	XADAction encodingaction;
+
+	IBOutlet NSView *waitview;
+	IBOutlet NSTextField *waitfield;
+	IBOutlet NSImageView *waiticon;
+
+	IBOutlet NSView *progressview;
+	IBOutlet NSTextField *actionfield;
+	IBOutlet NSTextField *namefield;
+	IBOutlet NSProgressIndicator *progress;
+	IBOutlet NSImageView *progressicon;
+
+	IBOutlet NSView *errorview;
+	IBOutlet NSTextField *errorfield;
+	IBOutlet NSImageView *erroricon;
+	IBOutlet NSButton *applyallcheck;
+
+	IBOutlet NSView *openerrorview;
+	IBOutlet NSTextField *openerrorfield;
+	IBOutlet NSImageView *openerroricon;
+
+	IBOutlet NSView *passwordview;
+	IBOutlet NSTextField *passwordfield;
+	IBOutlet NSImageView *passwordicon;
+
+	IBOutlet NSView *encodingview;
+	IBOutlet TUEncodingPopUp *encodingpopup;
+	IBOutlet NSTextField *encodingfield;
+	IBOutlet NSImageView *encodingicon;
+}
+
+-(id)initWithFilename:(NSString *)filename controller:(TUController *)maincontroller alwaysAsk:(BOOL)ask;
+-(void)dealloc;
+
+-(NSString *)destination;
+-(void)setDestination:(NSString *)path;
+
+-(void)wait;
+-(void)go;
+-(void)stop;
+-(void)cancel;
+
+-(void)extract;
+-(void)extractFinished;
+-(void)extractFailed;
+-(NSString *)findUniqueDestinationWithDirectory:(NSString *)directory andFilename:(NSString *)filename;
+
+-(BOOL)archiveExtractionShouldStop:(XADArchive *)archive;
+
+-(void)archive:(XADArchive *)msgarchive extractionOfEntryWillStart:(int)n;
+-(void)archive:(XADArchive *)msgarchive extractionProgressBytes:(xadSize)bytes of:(xadSize)total;
+-(void)archive:(XADArchive *)archive immediateExtractionInputProgressBytes:(xadSize)bytes of:(xadSize)total;
+-(void)progressStart:(NSNumber *)total;
+-(void)progressUpdate:(NSNumber *)bytes;
+
+-(XADAction)archive:(XADArchive *)archive nameDecodingDidFailForEntry:(int)n bytes:(const char *)bytes;
+-(XADAction)archive:(XADArchive *)sender extractionOfEntryDidFail:(int)n error:(XADError)error;
+-(XADAction)archive:(XADArchive *)sender extractionOfResourceForkForEntryDidFail:(int)n error:(XADError)error;
+-(XADAction)displayError:(NSString *)error;
+
+-(BOOL)archiveExtractionShouldStop:(XADArchive *)archive;
+-(void)archive:(XADArchive *)archive extractionOfEntryWillStart:(int)n;
+-(void)archive:(XADArchive *)archive extractionProgressBytes:(xadSize)bytes of:(xadSize)total;
+-(void)archive:(XADArchive *)archive immediateExtractionInputProgressBytes:(xadSize)bytes of:(xadSize)total;
+
+-(XADAction)displayError:(NSString *)error;
+-(XADAction)displayEncodingSelectorForBytes:(const char *)bytes encoding:(NSStringEncoding)encoding;
+
+-(IBAction)cancelExtraction:(id)sender;
+-(IBAction)cancelWait:(id)sender;
+-(IBAction)stopAfterError:(id)sender;
+-(IBAction)continueAfterError:(id)sender;
+-(IBAction)okAfterOpenError:(id)sender;
+-(IBAction)stopAfterPassword:(id)sender;
+-(IBAction)continueAfterPassword:(id)sender;
+-(IBAction)stopAfterEncoding:(id)sender;
+-(IBAction)continueAfterEncoding:(id)sender;
+-(IBAction)selectEncoding:(id)sender;
+
+-(void)setupWaitView;
+-(void)setupProgressView;
+-(void)setupErrorView:(NSString *)error;
+-(void)setupOpenErrorView;
+-(void)setupPasswordView;
+-(void)setupEncodingView;
+
+-(void)setDisplayedView:(NSView *)dispview;
+
+@end

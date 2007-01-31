@@ -1,0 +1,40 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                cancelExtraction = id; 
+                cancelWait = id; 
+                continueAfterError = id; 
+                continueAfterPassword = id; 
+                okAfterOpenError = id; 
+                stopAfterError = id; 
+                stopAfterPassword = id; 
+            }; 
+            CLASS = TUArchiveController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                actionfield = NSTextField; 
+                applyallcheck = NSButton; 
+                errorfield = NSTextField; 
+                erroricon = NSImageView; 
+                errorview = NSView; 
+                namefield = NSTextField; 
+                openerrorfield = NSTextField; 
+                openerroricon = NSImageView; 
+                openerrorview = NSView; 
+                passwordfield = NSView; 
+                passwordicon = NSImageView; 
+                passwordview = NSView; 
+                progress = NSProgressIndicator; 
+                progressicon = NSImageView; 
+                progressview = NSView; 
+                waitfield = NSTextField; 
+                waiticon = NSImageView; 
+                waitview = NSView; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
