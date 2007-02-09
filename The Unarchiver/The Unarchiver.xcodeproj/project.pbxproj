@@ -150,6 +150,13 @@
 		1B932E830A5730DD00F7DE66 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
 		1B9767BA0A6D79CA00A8E8DA /* amiga.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = amiga.icns; sourceTree = "<group>"; };
 		1B9767BB0A6D79CA00A8E8DA /* unarchiver.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = unarchiver.icns; sourceTree = "<group>"; };
+		1BBD9C720B7C0D2B00ACAA72 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BBD9C750B7C0D4900ACAA72 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1BBD9C780B7C0D5700ACAA72 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		1BBD9C7B0B7C0D5F00ACAA72 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/ErrorView.nib; sourceTree = "<group>"; };
+		1BBD9C7E0B7C0D6500ACAA72 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
+		1BBD9C810B7C0D6B00ACAA72 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/PasswordView.nib; sourceTree = "<group>"; };
+		1BBD9C840B7C0D7000ACAA72 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/EncodingView.nib; sourceTree = "<group>"; };
 		1BED5D050A5DE56000CA31C2 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1BED5DB30A600D6E00CA31C2 /* TUEncodingPopUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUEncodingPopUp.h; sourceTree = "<group>"; };
 		1BED5DB40A600D6E00CA31C2 /* TUEncodingPopUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUEncodingPopUp.m; sourceTree = "<group>"; };
@@ -357,6 +364,7 @@
 				Spanish,
 				pt,
 				ru,
+				zh_TW,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* The Unarchiver */;
 			projectDirPath = "";
@@ -486,6 +494,7 @@
 				1B1B995F0B07C43B00EC8324 /* French */,
 				1BFB113F0B1763270088CDB4 /* pt */,
 				1BFB11400B17632A0088CDB4 /* ru */,
+				1BBD9C720B7C0D2B00ACAA72 /* zh_TW */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -500,6 +509,7 @@
 				1B1B99610B07C45E00EC8324 /* French */,
 				1BFB11430B17633F0088CDB4 /* pt */,
 				1BFB11440B1763420088CDB4 /* ru */,
+				1BBD9C750B7C0D4900ACAA72 /* zh_TW */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -514,6 +524,7 @@
 				1B1B99690B07C48900EC8324 /* French */,
 				1BFB114C0B1763B30088CDB4 /* pt */,
 				1BFB114D0B1763B60088CDB4 /* ru */,
+				1BBD9C7B0B7C0D5F00ACAA72 /* zh_TW */,
 			);
 			name = ErrorView.nib;
 			sourceTree = "<group>";
@@ -528,6 +539,7 @@
 				1B1B996D0B07C49300EC8324 /* French */,
 				1BFB11500B1763C30088CDB4 /* pt */,
 				1BFB11510B1763C50088CDB4 /* ru */,
+				1BBD9C7E0B7C0D6500ACAA72 /* zh_TW */,
 			);
 			name = OpenErrorView.nib;
 			sourceTree = "<group>";
@@ -542,6 +554,7 @@
 				1B1B99710B07C49C00EC8324 /* French */,
 				1BFB11540B17668A0088CDB4 /* pt */,
 				1BFB11550B17668C0088CDB4 /* ru */,
+				1BBD9C810B7C0D6B00ACAA72 /* zh_TW */,
 			);
 			name = PasswordView.nib;
 			sourceTree = "<group>";
@@ -556,6 +569,7 @@
 				1B1B99750B07C4A700EC8324 /* French */,
 				1BFB11580B1766930088CDB4 /* pt */,
 				1BFB11590B1766960088CDB4 /* ru */,
+				1BBD9C840B7C0D7000ACAA72 /* zh_TW */,
 			);
 			name = EncodingView.nib;
 			sourceTree = "<group>";
@@ -570,6 +584,7 @@
 				1B1B99650B07C47900EC8324 /* French */,
 				1BFB11470B1763970088CDB4 /* pt */,
 				1BFB11480B17639A0088CDB4 /* ru */,
+				1BBD9C780B7C0D5700ACAA72 /* zh_TW */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";

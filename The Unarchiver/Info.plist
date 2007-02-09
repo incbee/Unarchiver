@@ -557,7 +557,7 @@
 				<string>TGZ</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>tar.icns</string>
+			<string>gz.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>Gzip Tar Archive</string>
 			<key>CFBundleTypeRole</key>
@@ -614,7 +614,7 @@
 				<string>TBZ</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>tar.icns</string>
+			<string>bz2.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>Bzip2 Tar Archive</string>
 			<key>CFBundleTypeRole</key>
@@ -720,7 +720,7 @@
 				<string>tar-z</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>tar.icns</string>
+			<string>z.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>Unix Compress Tar Archive</string>
 			<key>CFBundleTypeRole</key>
@@ -1260,11 +1260,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.4</string>
+	<string>1.5</string>
 	<key>CFBundleSignature</key>
 	<string>TUnA</string>
 	<key>CFBundleVersion</key>
-	<string>1.4</string>
+	<string>1.5</string>
 	<key>CSHiddenDocumentTypes</key>
 	<array>
 		<string>com.sun.java-archive</string>
@@ -1848,7 +1848,7 @@
 			<key>UTTypeDescription</key>
 			<string>Unix Compress Tar Archive</string>
 			<key>UTTypeIconFile</key>
-			<string>tar.icns</string>
+			<string>z.icns</string>
 			<key>UTTypeIdentifier</key>
 			<string>cx.c3.compress-tar-archive</string>
 			<key>UTTypeTagSpecification</key>
@@ -2131,7 +2131,7 @@
 			<key>UTTypeDescription</key>
 			<string>Bzip2 Tar Archive</string>
 			<key>UTTypeIconFile</key>
-			<string>tar.icns</string>
+			<string>bz2.icns</string>
 			<key>UTTypeIdentifier</key>
 			<string>org.bzip.bzip2-tar-archive</string>
 			<key>UTTypeTagSpecification</key>

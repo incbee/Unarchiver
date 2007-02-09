@@ -692,9 +692,11 @@
 					"-DHAVE_CONFIG_H",
 					"-DUNIX",
 					"-DNO_FILENAME_MANGLING",
-					"-I$(SRCROOT)/../include",
-					"-I$(SRCROOT)/../unix",
+					"$(OTHER_CFLAGS_QUOTED_1)",
+					"$(OTHER_CFLAGS_QUOTED_2)",
 				);
+				OTHER_CFLAGS_QUOTED_1 = "\"-I$(SRCROOT)/../include\"";
+				OTHER_CFLAGS_QUOTED_2 = "\"-I$(SRCROOT)/../unix\"";
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					UniversalDetector,
