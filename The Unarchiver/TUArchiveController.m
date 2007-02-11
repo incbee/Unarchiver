@@ -124,7 +124,6 @@
 		if(!destination)
 		{
 			[maincontroller runDestinationPanel];
-
 			if(cancelled) @throw @"User cancelled destination panel";
 		}
 
@@ -185,7 +184,6 @@
 	}
 	@catch(id e)
 	{
-		if(archive)
 		[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
 	}
 
