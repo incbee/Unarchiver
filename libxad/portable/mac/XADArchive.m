@@ -1069,7 +1069,10 @@ static UTCDateTime NSDateToUTCDateTime(NSDate *date)
 	else if(detected_encoding) encoding=detected_encoding;
 	else encoding=NSWindowsCP1252StringEncoding;
 
-	return [[password dataUsingEncoding:encoding] bytes];
+	NSMutableData *encoded=[[password dataUsingEncoding:encoding] mutableCopy];
+	[encoded increaseLengthBy:1]; // add a single byte, which will be initialized as 0
+	return [encoded bytes];
+
 //	return [password cStringUsingEncoding:encoding];
 }
 
