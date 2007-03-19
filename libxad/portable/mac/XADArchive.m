@@ -11,7 +11,7 @@
 #import "ConvertE.c"
 
 
-static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgressInfo *info);
+static xadUINT32 XADProgressFunc(struct Hook *hook,xadPTR object,struct xadProgressInfo *info);
 
 
 
@@ -35,7 +35,7 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 
 		xmb=NULL;
 		archive=NULL;
-		progresshook.h_Entry=progress_func;
+		progresshook.h_Entry=XADProgressFunc;
 		progresshook.h_Data=(void *)self;
 
 		fileinfos=[[NSMutableArray array] retain];
@@ -170,8 +170,7 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 }
 
 -(id)initWithArchive:(XADArchive *)otherarchive entry:(int)n
-     immediateExtractionTo:(NSString *)destination delegate:(id)del
-	 encoding:(NSStringEncoding)encoding error:(XADError *)error
+     immediateExtractionTo:(NSString *)destination error:(XADError *)error
 {
 	if(self=[self init])
 	{
@@ -179,14 +178,13 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 		filename=[[otherarchive nameOfEntry:n] retain];
 		immediatedestination=destination;
 
-		[self setDelegate:del];
-		[self setNameEncoding:encoding];
+		[self setDelegate:otherarchive];
 
 		if(pipe=[[XADArchivePipe alloc] initWithArchive:otherarchive entry:n bufferSize:1024*1024])
 		{
 			struct TagItem tags[]={
 				XAD_INHOOK,(xadPTRINT)[pipe inHook],
-				[pipe hasNoSize]?XAD_CLIENT:TAG_IGNORE,XADCID_TAR,
+				[otherarchive entryHasSize:n]?TAG_IGNORE:XAD_CLIENT,XADCID_TAR,
 			TAG_DONE};
 
 			if([self _finishInit:tags error:error])
@@ -266,7 +264,17 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 	[self _runDetectorOn:info->xfi_FileName];
 
 	// Skip normal resource forks (except lonely ones)
-	if((info->xfi_Flags&XADFIF_MACRESOURCE)&&info->xfi_MacFork) return XADPIF_OK;
+	if((info->xfi_Flags&XADFIF_MACRESOURCE)&&info->xfi_MacFork)
+	{
+		// Was this file already extracted without attributes?
+		int n=[self _entryIndexOfFileInfo:info->xfi_MacFork];
+		if(n!=NSNotFound)
+		{
+			NSDictionary *attrs=[self attributesOfEntry:n withResourceFork:YES];
+			if(attrs) [self _changeAllAttributes:attrs atPath:[immediatedestination stringByAppendingPathComponent:[self nameOfEntry:n]] overrideWritePermissions:YES];
+		}
+		return XADPIF_OK;
+	}
 
 	// Resource forks in ditto archives
 	if([self _canHaveDittoResourceForks]&&[self _fileInfoIsDittoResourceFork:info])
@@ -400,7 +408,6 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 		}
 
 		// Create a mutable string
-//		NSMutableString *mutablename=[NSMutableString stringWithCString:cname encoding:encoding];
 		NSMutableString *mutablename=[[[NSMutableString alloc] initWithBytes:cname length:strlen(cname) encoding:encoding] autorelease];
 		if(!mutablename) return nil;
 
@@ -457,10 +464,17 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 	return name;
 }
 
+-(BOOL)entryHasSize:(int)n
+{
+	struct xadFileInfo *info=[self xadFileInfoForEntry:n];
+	return info->xfi_Flags&XADFIF_NOUNCRUNCHSIZE?NO:YES;
+}
+
 -(int)sizeOfEntry:(int)n
 {
 	struct xadFileInfo *info=[self xadFileInfoForEntry:n];
 	if([self _entryIsLonelyResourceFork:n]) return 0; // Special case for resource forks without data forks
+	if(info->xfi_Flags&XADFIF_NOUNCRUNCHSIZE) return info->xfi_CrunchSize; // Return crunched size for files lacking an uncrunched size
 	return info->xfi_Size;
 }
 
@@ -478,6 +492,27 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 {
 	return [self xadFileInfoForEntry:n]->xfi_Flags&XADFIF_CRYPTED?YES:NO;
 }
+
+-(BOOL)entryIsArchive:(int)n
+{
+	if([self numberOfEntries]==1)
+	{
+		NSString *ext=[[[self nameOfEntry:0] pathExtension] lowercaseString];
+		if(
+			[ext isEqual:@"tar"]||
+			[ext isEqual:@"sit"]||
+			[ext isEqual:@"sea"]||
+			[ext isEqual:@"pax"]||
+			[ext isEqual:@"cpio"]
+		) return YES;
+	}
+
+	struct xadFileInfo *info=[self xadFileInfoForEntry:n];
+	if(info->xfi_Flags&XADFIF_MACBINARY) return YES;
+
+	return NO;
+}
+
 
 #define PARSE_HEX(ptr) (*(ptr)>='0'&&*(ptr)<='9'?*(ptr)-'0':(*(ptr)>='A'&&*(ptr)<='F'?*(ptr)-'A'+10:(*(ptr)>='a'&&*(ptr)<='f'?*(ptr)-'a'-10:0)))
 
@@ -584,18 +619,19 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 
 -(NSData *)_contentsOfFileInfo:(struct xadFileInfo *)info
 {
+	if(info->xfi_Flags&XADFIF_NOUNCRUNCHSIZE) return nil;
+
 	xadSize size=info->xfi_Size;
 	void *buffer=malloc(size);
 
 	if(buffer)
 	{
-		const char *pass=[self _encodedPassword];
-		int err=xadFileUnArc(xmb,archive,
-			XAD_ENTRYNUMBER,info->xfi_EntryNumber,
-			XAD_OUTMEMORY,buffer,
+		struct TagItem tags[]={
+			XAD_OUTMEMORY,(xadPTRINT)buffer,
 			XAD_OUTSIZE,size,
-			pass?XAD_PASSWORD:TAG_IGNORE,pass,
-		TAG_DONE);
+		TAG_DONE};
+
+		int err=[self _extractFileInfo:info tags:tags reportProgress:NO];
 
 		if(!err) return [NSData dataWithBytesNoCopy:buffer length:size freeWhenDone:YES];
 
@@ -621,6 +657,13 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 	return NSNotFound;
 }
 
+-(int)_entryIndexOfFileInfo:(struct xadFileInfo *)info
+{
+	int numentries=[self numberOfEntries];
+	for(int i=0;i<numentries;i++) if([self xadFileInfoForEntry:i]==info) return i;
+	return NSNotFound;
+}
+
 -(const char *)_undecodedNameOfEntry:(int)n
 {
 	struct xadFileInfo *info=[self xadFileInfoForEntry:n];
@@ -630,16 +673,26 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 
 -(BOOL)extractTo:(NSString *)destination
 {
-	return [self extractEntries:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,[self numberOfEntries])] to:destination];
+	return [self extractEntries:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,[self numberOfEntries])] to:destination subArchives:NO];
+}
+
+-(BOOL)extractTo:(NSString *)destination subArchives:(BOOL)sub
+{
+	return [self extractEntries:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,[self numberOfEntries])] to:destination subArchives:sub];
 }
 
 -(BOOL)extractEntries:(NSIndexSet *)entries to:(NSString *)destination
+{
+	return [self extractEntries:entries to:destination subArchives:NO];
+}
+
+-(BOOL)extractEntries:(NSIndexSet *)entries to:(NSString *)destination subArchives:(BOOL)sub
 {
 	extractsize=0;
 	totalsize=0;
 
 	for(int i=[entries firstIndex];i!=NSNotFound;i=[entries indexGreaterThanIndex:i])
-	totalsize+=[self xadFileInfoForEntry:i]->xfi_Size;
+	totalsize+=[self sizeOfEntry:i];
 
 	int numentries=[entries count];
 	[delegate archive:self extractionProgressFiles:0 of:numentries];
@@ -647,13 +700,18 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 
 	for(int i=[entries firstIndex];i!=NSNotFound;i=[entries indexGreaterThanIndex:i])
 	{
-		if(![self extractEntry:i to:destination overrideWritePermissions:YES])
+		BOOL res;
+
+		if(sub&&[self entryIsArchive:i]) res=[self extractArchiveEntry:i to:destination];
+		else res=[self extractEntry:i to:destination overrideWritePermissions:YES];
+
+		if(!res)
 		{
 			totalsize=0;
 			return NO;
 		}
 
-		extractsize+=[self xadFileInfoForEntry:i]->xfi_Size;
+		extractsize+=[self sizeOfEntry:i];
 
 		[delegate archive:self extractionProgressFiles:i+1 of:numentries];
 		[delegate archive:self extractionProgressBytes:extractsize of:totalsize];
@@ -720,9 +778,12 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 
 -(BOOL)extractArchiveEntry:(int)n to:(NSString *)destination
 {
+	NSString *path=[destination stringByAppendingPathComponent:
+	[[self nameOfEntry:n] stringByDeletingLastPathComponent]];
+
 	XADError err;
 	XADArchive *subarchive=[[XADArchive alloc] initWithArchive:self entry:n
-	immediateExtractionTo:destination delegate:delegate encoding:name_encoding error:&err];
+	immediateExtractionTo:path error:&err];
 
 	if(!subarchive)
 	{
@@ -830,14 +891,11 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 	{
 		if(![self _entryIsLonelyResourceFork:n])
 		{
-			const char *pass=[self _encodedPassword];
-			err=xadFileUnArc(xmb,archive,
-				XAD_ENTRYNUMBER,info->xfi_EntryNumber,
+			struct TagItem tags[]={
 				XAD_OUTFILEHANDLE,fh,
 				XAD_NOKILLPARTIAL,1,
-				XAD_PROGRESSHOOK,&progresshook,
-				pass?XAD_PASSWORD:TAG_IGNORE,pass,
-			TAG_DONE);
+			TAG_DONE};
+			err=[self _extractFileInfo:info tags:tags reportProgress:YES];
 		}
 
 		close(fh);
@@ -888,6 +946,17 @@ static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgres
 		return NO;
 	}
 	return YES;
+}
+
+-(xadERROR)_extractFileInfo:(struct xadFileInfo *)info tags:(xadTAGPTR)tags reportProgress:(BOOL)report
+{
+	const char *pass=[self _encodedPassword];
+	return xadFileUnArc(xmb,archive,
+		XAD_ENTRYNUMBER,info->xfi_EntryNumber,
+		report?XAD_PROGRESSHOOK:TAG_IGNORE,&progresshook,
+		pass?XAD_PASSWORD:TAG_IGNORE,pass,
+		TAG_MORE,tags,
+	TAG_DONE);
 }
 
 -(BOOL)_ensureDirectoryExists:(NSString *)directory
@@ -953,9 +1022,9 @@ static UTCDateTime NSDateToUTCDateTime(NSDate *date)
 	{
 		pinfo->mode=[permissions unsignedShortValue];
 
-		if(override&&!(pinfo->mode&0200))
+		if(override&&!(pinfo->mode&0700))
 		{
-			pinfo->mode|=0200;
+			pinfo->mode|=0700;
 			[writeperms addObject:permissions];
 			[writeperms addObject:path];
 		}
@@ -1091,29 +1160,26 @@ static UTCDateTime NSDateToUTCDateTime(NSDate *date)
 	if(currtime-update_time<update_interval) return XADPIF_OK;
 	update_time=currtime;
 
-	[delegate archive:self extractionProgressForEntry:currentry
-	bytes:info->xpi_CurrentSize of:info->xpi_FileInfo->xfi_Size];
+	int progress,filesize;
+	if(info->xpi_FileInfo->xfi_Flags&XADFIF_NOUNCRUNCHSIZE)
+	{
+		progress=archive->xai_InPos-info->xpi_FileInfo->xfi_DataPos;
+		filesize=info->xpi_FileInfo->xfi_CrunchSize;
+	}
+	else
+	{
+		progress=info->xpi_CurrentSize;
+		filesize=info->xpi_FileInfo->xfi_Size;
+	}
+
+	[delegate archive:self extractionProgressForEntry:currentry bytes:progress of:filesize];
 
 	if(totalsize)
-	[delegate archive:self extractionProgressBytes:extractsize+info->xpi_CurrentSize of:totalsize];
-
-	if(immediatedestination)
-	[self _reportInputPosition];
+	[delegate archive:self extractionProgressBytes:extractsize+progress of:totalsize];
 
 	return XADPIF_OK;
 }
 
--(void)_reportInputPosition
-{
-	if(archive->xai_InSize!=0x7fffffffffffffff)
-	{
-		[delegate archive:self immediateExtractionInputProgressBytes:archive->xai_InPos of:archive->xai_InSize];
-	}
-	else if(parentarchive)
-	{
-		[parentarchive _reportInputPosition];
-	}
-}
 
 
 -(BOOL)_canHaveDittoResourceForks
@@ -1282,7 +1348,7 @@ static UTCDateTime NSDateToUTCDateTime(NSDate *date)
 	return archive;
 }
 
-int volume_sort(NSString *str1,NSString *str2,void *dummy)
+static int XADVolumeSort(NSString *str1,NSString *str2,void *dummy)
 {
 	BOOL israr1=[[str1 lowercaseString] hasSuffix:@".rar"];
 	BOOL israr2=[[str2 lowercaseString] hasSuffix:@".rar"];
@@ -1328,8 +1394,52 @@ int volume_sort(NSString *str1,NSString *str2,void *dummy)
 
 	if([files count]<=1) return nil;
 
-	return [files sortedArrayUsingFunction:volume_sort context:NULL];
+	return [files sortedArrayUsingFunction:XADVolumeSort context:NULL];
 }
+
+
+
+-(NSStringEncoding)archive:(XADArchive *)arc encodingForName:(const char *)bytes guess:(NSStringEncoding)guess confidence:(float)confidence
+{ return  [self encodingForString:bytes]; }
+
+-(XADAction)archive:(XADArchive *)arc nameDecodingDidFailForEntry:(int)n bytes:(const char *)bytes
+{ return [delegate archive:arc nameDecodingDidFailForEntry:n bytes:bytes]; }
+
+-(BOOL)archiveExtractionShouldStop:(XADArchive *)arc
+{ return [delegate archiveExtractionShouldStop:arc]; }
+
+-(BOOL)archive:(XADArchive *)arc shouldCreateDirectory:(NSString *)directory
+{ return [delegate archive:arc shouldCreateDirectory:directory]; }
+
+-(XADAction)archive:(XADArchive *)arc entry:(int)n collidesWithFile:(NSString *)file newFilename:(NSString **)newname
+{ return [delegate archive:arc entry:n collidesWithFile:file newFilename:newname]; }
+
+-(XADAction)archive:(XADArchive *)arc entry:(int)n collidesWithDirectory:(NSString *)file newFilename:(NSString **)newname
+{ return [delegate archive:arc entry:n collidesWithDirectory:file newFilename:newname]; }
+
+-(XADAction)archive:(XADArchive *)arc creatingDirectoryDidFailForEntry:(int)n
+{ return [delegate archive:arc creatingDirectoryDidFailForEntry:n]; }
+
+-(void)archive:(XADArchive *)arc extractionOfEntryWillStart:(int)n
+{ [delegate archive:arc extractionOfEntryWillStart:n]; }
+
+-(void)archive:(XADArchive *)arc extractionProgressForEntry:(int)n bytes:(xadSize)bytes of:(xadSize)total
+{ [delegate archive:arc extractionProgressForEntry:n bytes:bytes of:total]; }
+
+-(void)archive:(XADArchive *)arc extractionOfEntryDidSucceed:(int)n
+{ [delegate archive:arc extractionOfEntryDidSucceed:n]; }
+
+-(XADAction)archive:(XADArchive *)arc extractionOfEntryDidFail:(int)n error:(XADError)error
+{ return [delegate archive:arc extractionOfEntryDidFail:n error:error]; }
+
+-(XADAction)archive:(XADArchive *)arc extractionOfResourceForkForEntryDidFail:(int)n error:(XADError)error
+{ return [delegate archive:arc extractionOfResourceForkForEntryDidFail:n error:error]; }
+
+//-(void)archive:(XADArchive *)arc extractionProgressBytes:(xadSize)bytes of:(xadSize)total
+//{}
+
+//-(void)archive:(XADArchive *)arc extractionProgressFiles:(int)files of:(int)total;
+//{}
 
 @end
 
@@ -1354,13 +1464,12 @@ int volume_sort(NSString *str1,NSString *str2,void *dummy)
 
 -(void)archive:(XADArchive *)archive extractionProgressBytes:(xadSize)bytes of:(xadSize)total {}
 -(void)archive:(XADArchive *)archive extractionProgressFiles:(int)files of:(int)total {}
--(void)archive:(XADArchive *)archive immediateExtractionInputProgressBytes:(xadSize)bytes of:(xadSize)total {}
 
 @end
 
 
 
-static xadUINT32 progress_func(struct Hook *hook,xadPTR object,struct xadProgressInfo *info)
+static xadUINT32 XADProgressFunc(struct Hook *hook,xadPTR object,struct xadProgressInfo *info)
 {
 	XADArchive *archive=(XADArchive *)hook->h_Data;
 	id delegate=[archive delegate];

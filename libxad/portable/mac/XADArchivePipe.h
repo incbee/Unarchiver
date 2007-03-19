@@ -26,7 +26,6 @@
 -(void)dismantle;
 -(struct Hook *)outHook;
 -(struct Hook *)inHook;
--(BOOL)hasNoSize;
 
 -(void)decompress:(id)dummy;
 

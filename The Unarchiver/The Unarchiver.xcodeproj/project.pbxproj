@@ -139,6 +139,13 @@
 		1B2AD8500A5C4BD200FAEA01 /* tar.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = tar.icns; sourceTree = "<group>"; };
 		1B2AD8510A5C4BD200FAEA01 /* z.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = z.icns; sourceTree = "<group>"; };
 		1B2AD8520A5C4BD200FAEA01 /* zip.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = zip.icns; sourceTree = "<group>"; };
+		1B2EF86A0BAF5561009F4902 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Dutch; path = Dutch.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1B2EF86D0BAF556A009F4902 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Dutch; path = Dutch.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1B2EF8700BAF557F009F4902 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Dutch; path = Dutch.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		1B2EF8710BAF558A009F4902 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Dutch; path = Dutch.lproj/ErrorView.nib; sourceTree = "<group>"; };
+		1B2EF8740BAF5593009F4902 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Dutch; path = Dutch.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
+		1B2EF8750BAF559A009F4902 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Dutch; path = Dutch.lproj/PasswordView.nib; sourceTree = "<group>"; };
+		1B2EF8760BAF55A1009F4902 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Dutch; path = Dutch.lproj/EncodingView.nib; sourceTree = "<group>"; };
 		1B6FA2090A58A1D800066489 /* CSFileTypeList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CSFileTypeList.h; sourceTree = "<group>"; };
 		1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CSFileTypeList.m; sourceTree = "<group>"; };
 		1B932D0D0A55CFEF00F7DE66 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
@@ -365,6 +372,7 @@
 				pt,
 				ru,
 				zh_TW,
+				Dutch,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* The Unarchiver */;
 			projectDirPath = "";
@@ -495,6 +503,7 @@
 				1BFB113F0B1763270088CDB4 /* pt */,
 				1BFB11400B17632A0088CDB4 /* ru */,
 				1BBD9C720B7C0D2B00ACAA72 /* zh_TW */,
+				1B2EF86A0BAF5561009F4902 /* Dutch */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -510,6 +519,7 @@
 				1BFB11430B17633F0088CDB4 /* pt */,
 				1BFB11440B1763420088CDB4 /* ru */,
 				1BBD9C750B7C0D4900ACAA72 /* zh_TW */,
+				1B2EF86D0BAF556A009F4902 /* Dutch */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -525,6 +535,7 @@
 				1BFB114C0B1763B30088CDB4 /* pt */,
 				1BFB114D0B1763B60088CDB4 /* ru */,
 				1BBD9C7B0B7C0D5F00ACAA72 /* zh_TW */,
+				1B2EF8710BAF558A009F4902 /* Dutch */,
 			);
 			name = ErrorView.nib;
 			sourceTree = "<group>";
@@ -540,6 +551,7 @@
 				1BFB11500B1763C30088CDB4 /* pt */,
 				1BFB11510B1763C50088CDB4 /* ru */,
 				1BBD9C7E0B7C0D6500ACAA72 /* zh_TW */,
+				1B2EF8740BAF5593009F4902 /* Dutch */,
 			);
 			name = OpenErrorView.nib;
 			sourceTree = "<group>";
@@ -555,6 +567,7 @@
 				1BFB11540B17668A0088CDB4 /* pt */,
 				1BFB11550B17668C0088CDB4 /* ru */,
 				1BBD9C810B7C0D6B00ACAA72 /* zh_TW */,
+				1B2EF8750BAF559A009F4902 /* Dutch */,
 			);
 			name = PasswordView.nib;
 			sourceTree = "<group>";
@@ -570,6 +583,7 @@
 				1BFB11580B1766930088CDB4 /* pt */,
 				1BFB11590B1766960088CDB4 /* ru */,
 				1BBD9C840B7C0D7000ACAA72 /* zh_TW */,
+				1B2EF8760BAF55A1009F4902 /* Dutch */,
 			);
 			name = EncodingView.nib;
 			sourceTree = "<group>";
@@ -585,6 +599,7 @@
 				1BFB11470B1763970088CDB4 /* pt */,
 				1BFB11480B17639A0088CDB4 /* ru */,
 				1BBD9C780B7C0D5700ACAA72 /* zh_TW */,
+				1B2EF8700BAF557F009F4902 /* Dutch */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";

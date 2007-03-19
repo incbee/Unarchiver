@@ -55,8 +55,7 @@ typedef xadERROR XADError;
 -(id)initWithArchive:(XADArchive *)archive entry:(int)n;
 -(id)initWithArchive:(XADArchive *)archive entry:(int)n error:(XADError *)error;
 -(id)initWithArchive:(XADArchive *)otherarchive entry:(int)n
-     immediateExtractionTo:(NSString *)destination delegate:(id)del
-     encoding:(NSStringEncoding)encoding error:(XADError *)error;
+     immediateExtractionTo:(NSString *)destination error:(XADError *)error;
 -(void)dealloc;
 
 -(BOOL)_finishInit:(xadTAGPTR)tags error:(XADError *)error;
@@ -71,19 +70,25 @@ typedef xadERROR XADError;
 
 -(int)numberOfEntries;
 -(NSString *)nameOfEntry:(int)n;
+-(BOOL)entryHasSize:(int)n;
+-(int)sizeOfEntry:(int)n;
 -(BOOL)entryIsDirectory:(int)n;
 -(BOOL)entryIsLink:(int)n;
 -(BOOL)entryIsEncrypted:(int)n;
+-(BOOL)entryIsArchive:(int)n;
 -(NSDictionary *)attributesOfEntry:(int)n;
 -(NSDictionary *)attributesOfEntry:(int)n withResourceFork:(BOOL)resfork;
 -(NSData *)contentsOfEntry:(int)n;
 -(NSData *)_contentsOfFileInfo:(struct xadFileInfo *)info;
 -(BOOL)_entryIsLonelyResourceFork:(int)n;
 -(int)_entryIndexOfName:(NSString *)name;
+-(int)_entryIndexOfFileInfo:(struct xadFileInfo *)info;
 -(const char *)_undecodedNameOfEntry:(int)n;
 
 -(BOOL)extractTo:(NSString *)destination;
+-(BOOL)extractTo:(NSString *)destination subArchives:(BOOL)sub;
 -(BOOL)extractEntries:(NSIndexSet *)entries to:(NSString *)destination;
+-(BOOL)extractEntries:(NSIndexSet *)entries to:(NSString *)destination subArchives:(BOOL)sub;
 -(BOOL)extractEntry:(int)n to:(NSString *)destination;
 -(BOOL)extractEntry:(int)n to:(NSString *)destination overrideWritePermissions:(BOOL)override;
 -(BOOL)extractArchiveEntry:(int)n to:(NSString *)destination;
@@ -93,6 +98,7 @@ typedef xadERROR XADError;
 -(BOOL)_extractFileEntry:(int)n as:(NSString *)destfile;
 -(BOOL)_extractDirectoryEntry:(int)n as:(NSString *)destfile;
 -(BOOL)_extractLinkEntry:(int)n as:(NSString *)destfile;
+-(xadERROR)_extractFileInfo:(struct xadFileInfo *)info tags:(xadTAGPTR)tags reportProgress:(BOOL)report;
 -(BOOL)_ensureDirectoryExists:(NSString *)directory;
 -(BOOL)_changeAllAttributes:(NSDictionary *)attrs atPath:(NSString *)path overrideWritePermissions:(BOOL)override;
 
@@ -113,7 +119,6 @@ typedef xadERROR XADError;
 
 -(void)setProgressInterval:(NSTimeInterval)interval;
 -(xadUINT32)_progressCallback:(struct xadProgressInfo *)info;
--(void)_reportInputPosition;
 
 -(BOOL)_canHaveDittoResourceForks;
 -(BOOL)_fileInfoIsDittoResourceFork:(struct xadFileInfo *)info;
@@ -159,6 +164,5 @@ typedef xadERROR XADError;
 
 -(void)archive:(XADArchive *)archive extractionProgressBytes:(xadSize)bytes of:(xadSize)total;
 -(void)archive:(XADArchive *)archive extractionProgressFiles:(int)files of:(int)total;
--(void)archive:(XADArchive *)archive immediateExtractionInputProgressBytes:(xadSize)bytes of:(xadSize)total;
 
 @end

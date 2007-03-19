@@ -159,22 +159,28 @@ struct xadArchiveInfo *ai, struct xadMasterBase *xadMasterBase)
 {
   xadINT32 err = 0;
   xadUINT32 j;
+  xadSize end = ai->xai_InPos + len, next;
   struct ZipExtra ze;
 
   while(len >= 9 && !err)
   {
     if(!(err = xadHookAccess(XADM XADAC_READ, 4, &ze, ai)))
     {
-      len -= 4; j = EndGetI16(ze.Size);
-      if((xadUINT32)j > len)
+      j = EndGetI16(ze.Size);
+	  len -= 4;
+
+      if(j > len)
         break;
-      else if(EndGetM16(ze.ID) == 0x5554 && j == 5)
+
+	  len -= j;
+	  next = ai->xai_InPos + j;
+
+      if(EndGetI16(ze.ID) == 0x5455 && j == 5)
       {
         xadUINT8 r[5];
 
         if(!(err = xadHookAccess(XADM XADAC_READ, 5, r, ai)))
         {
-          len -= 5;
           if(r[0] == 1)
           {
             xadConvertDates(XADM XAD_DATEUNIX, (r[1])+(r[2]<<8)+(r[3]<<16)
@@ -184,28 +190,23 @@ struct xadArchiveInfo *ai, struct xadMasterBase *xadMasterBase)
           }
         }
       }
-      else if(EndGetM16(ze.ID) == 0x4AFB && j >= 64+4)
+      else if(EndGetI16(ze.ID) == 0xFB4A && j >= 64+4)
       {
-        xadUINT32 r, s = 0;
+        xadUINT32 r;
         xadUINT8 buf[4];
         if(!(err = xadHookAccess(XADM XADAC_READ, 4, &buf, ai)))
         {
-          s = 4;
           r = EndGetM32(buf);
           if(r == 0x515A4844 || r == 0x51444F53)
           {
             struct ZipQDirect zd;
 
             if(r == 0x51444F53)
-            {
               xadHookAccess(XADM XADAC_INPUTSEEK, 4, 0, ai);
-              s += 4;
-            }
 
             if(!(err = xadHookAccess(XADM XADAC_READ, sizeof(struct ZipQDirect),
             &zd, ai)))
             {
-              s += sizeof(struct ZipQDirect);
               if(!fi->xfi_Comment && (fi->xfi_Comment =
               (xadSTRPTR) xadAllocVec(XADM 25, XADMEMF_PUBLIC)))
               {
@@ -216,20 +217,106 @@ struct xadArchiveInfo *ai, struct xadMasterBase *xadMasterBase)
             }
           }
         }
-        if(s < j)
-          err = xadHookAccess(XADM XADAC_INPUTSEEK, j-s, 0, ai);
-        len -= j;
       }
-      else
+      else if(EndGetI16(ze.ID) == 0x2605 && j >= 13 && !(fi->xfi_Flags & XADFIF_DIRECTORY))
+      /* ZipIt structure - the presence of it indicates the file is MacBinary encoded,
+         IF it is a file and not directory. Ignore information in this and rely on the
+         data stored in the MacBinary file instead, and mark the file. */
       {
-        err = xadHookAccess(XADM XADAC_INPUTSEEK, j, 0, ai);
-        len -= j;
+        xadUINT8 buf[5];
+
+        if(!(err = xadHookAccess(XADM XADAC_READ, 5, buf, ai)))
+        {
+          if(buf[0] == 'Z' && buf[1] == 'P' && buf[2] == 'I' && buf[3] == 'T' )
+          {
+            fi->xfi_Flags |= XADFIF_MACBINARY;
+          }
+        }
       }
+      else if(EndGetI16(ze.ID) == 0x2705 && j >= 12)
+      /* Short ZipIt extension for files. Contains creator, filetype and finder flags */
+      {
+        xadUINT8 buf[14];
+
+        if(!(err = xadHookAccess(XADM XADAC_READ, j > 14 ? 14 : j, buf, ai)))
+        {
+          if(buf[0] == 'Z' && buf[1] == 'P' && buf[2] == 'I' && buf[3] == 'T' )
+          {
+            if(!fi->xfi_Comment && (fi->xfi_Comment =
+            (xadSTRPTR) xadAllocVec(XADM 15, XADMEMF_PUBLIC)))
+            {
+              xadUINT32 i;
+              xadUINT16 flags = EndGetM16(buf+12);
+
+              ZIPPI(fi)->PrivFlags |= ZIPPRIVFLAG_OWNCOMMENT;
+
+              for(i = 0; i < 8; ++i)
+                fi->xfi_Comment[i + (i>=4?1:0)] = buf[i + 4] ? buf[i + 4] : '?';
+
+			  if(j >= 14)
+			  {
+                for(i = 0; i < 4 ; ++i)
+                {
+                  fi->xfi_Comment[i + 10] = (flags >= 0xA000 ? 'A'-10 : '0') + (flags >> 12);
+                  flags <<= 4;
+                }
+
+                fi->xfi_Comment[4] = '/';
+                fi->xfi_Comment[9] = ' ';
+                fi->xfi_Comment[14] = 0;
+			  }
+			  else
+			  {
+                fi->xfi_Comment[4] = '/';
+                fi->xfi_Comment[9] = 0;
+			  }
+
+              fi->xfi_Flags |= XADFIF_MACDATA;
+            }
+          }
+        }
+      }
+      else if(EndGetI16(ze.ID) == 0x2805 && j >= 6)
+      /* Short ZipIt extension for directories. Contains finder flags */
+      {
+        xadUINT8 buf[6];
+
+        if(!(err = xadHookAccess(XADM XADAC_READ, 6, buf, ai)))
+        {
+          if(buf[0] == 'Z' && buf[1] == 'P' && buf[2] == 'I' && buf[3] == 'T' )
+          {
+            if(!fi->xfi_Comment && (fi->xfi_Comment =
+            (xadSTRPTR) xadAllocVec(XADM 15, XADMEMF_PUBLIC)))
+            {
+              xadUINT32 i;
+              xadUINT16 flags = EndGetM16(buf + 4);
+
+              ZIPPI(fi)->PrivFlags |= ZIPPRIVFLAG_OWNCOMMENT;
+
+              for(i = 0; i < 4 ; ++i)
+              {
+                fi->xfi_Comment[i+10] = (flags >= 0xA000 ? 'A'-10 : '0') + (flags >> 12);
+                flags <<= 4;
+              }
+
+              fi->xfi_Comment[0] = fi->xfi_Comment[1] = fi->xfi_Comment[2] = fi->xfi_Comment[3] = '?';
+              fi->xfi_Comment[4] = '/';
+              fi->xfi_Comment[5] = fi->xfi_Comment[6] = fi->xfi_Comment[7] = fi->xfi_Comment[8] = '?';
+              fi->xfi_Comment[9] = ' ';
+              fi->xfi_Comment[14] = 0;
+
+              fi->xfi_Flags |= XADFIF_MACDATA;
+            }
+          }
+        }
+      }
+
+      err = xadHookAccess(XADM XADAC_INPUTSEEK, next-ai->xai_InPos, 0, ai);
     }
   }
 
-  if(len && !err)
-    err = xadHookAccess(XADM XADAC_INPUTSEEK, len, 0, ai);
+  if(!err)
+    err = xadHookAccess(XADM XADAC_INPUTSEEK, end-ai->xai_InPos, 0, ai);
 
   return err;
 }

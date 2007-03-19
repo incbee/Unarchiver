@@ -134,8 +134,10 @@
 
 		if(!archive)
 		{
-			[self performSelectorOnMainThread:@selector(setupOpenErrorView) withObject:nil waitUntilDone:NO];
-			@throw @"Archive opening failed";
+			[self displayOpenError:[NSString stringWithFormat:
+			NSLocalizedString(@"The contents of the file \"%@\" can not be extracted with this program.",@"Error message for files not extractable by The Unarchiver"),
+			[archivename lastPathComponent]]];
+			@throw @"Failed to open archive";
 		}
 
 		[archivename release];
@@ -157,26 +159,7 @@
 
 		firstprogress=YES;
 		BOOL res;
-		if([archive numberOfEntries]==1)
-		{
-			NSString *ext=[[[archive nameOfEntry:0] pathExtension] lowercaseString];
-			if(
-				[ext isEqual:@"tar"]||
-				[ext isEqual:@"sit"]||
-				[ext isEqual:@"sea"]||
-				[ext isEqual:@"pax"]||
-				[ext isEqual:@"cpio"]
-			)
-			{
-				[defaultname release];
-				defaultname=[[[[archive nameOfEntry:0] lastPathComponent] stringByDeletingPathExtension] retain];
-
-				res=[archive extractArchiveEntry:0 to:tmpdest];
-				//if(!res&&[archive lastError]==XADERR_INPUT) res=[archive extractEntry:0 to:tmpdest];
-			}
-			else res=[archive extractTo:tmpdest];
-		}
-		else res=[archive extractTo:tmpdest];
+		res=[archive extractTo:tmpdest subArchives:YES];
 
 		if(!res) @throw @"Archive extraction failed or was cancelled";
 
@@ -311,21 +294,6 @@
 	}
 }
 
--(void)archive:(XADArchive *)sender immediateExtractionInputProgressBytes:(xadSize)bytes of:(xadSize)total
-{
-	if(firstprogress)
-	{
-		[self performSelectorOnMainThread:@selector(progressStart:)
-		withObject:[NSNumber numberWithUnsignedLongLong:total] waitUntilDone:NO];
-		firstprogress=NO;
-	}
-	else
-	{
-		[self performSelectorOnMainThread:@selector(progressUpdate:)
-		withObject:[NSNumber numberWithUnsignedLongLong:bytes] waitUntilDone:NO];
-	}
-}
-
 -(void)progressStart:(NSNumber *)total
 {
 	[actionfield setStringValue:[NSString stringWithFormat:
@@ -347,6 +315,14 @@
 -(XADAction)archive:(XADArchive *)archive nameDecodingDidFailForEntry:(int)n bytes:(const char *)bytes
 {
 	return [self displayEncodingSelectorForBytes:bytes encoding:0];
+}
+
+-(XADAction)archive:(XADArchive *)archive creatingDirectoryDidFailForEntry:(int)n
+{
+	[self displayOpenError:[NSString stringWithFormat:
+		NSLocalizedString(@"Could not write to the destination directory.",@"Error message string when writing is impossible.")]
+	];
+	return XADAbort;
 }
 
 -(XADAction)archive:(XADArchive *)sender extractionOfEntryDidFail:(int)n error:(XADError)error
@@ -382,6 +358,16 @@
 
 	return erroraction;
 }
+
+-(void)displayOpenError:(NSString *)error
+{
+	[pauselock lock];
+	[self performSelectorOnMainThread:@selector(setupOpenErrorView:) withObject:error waitUntilDone:NO];
+	[pauselock lock];
+	[pauselock unlock];
+}
+
+
 
 -(XADAction)displayEncodingSelectorForBytes:(const char *)bytes encoding:(NSStringEncoding)encoding
 {
@@ -430,7 +416,8 @@
 
 -(IBAction)okAfterOpenError:(id)sender
 {
-	[maincontroller archiveFinished:self];
+//	[maincontroller archiveFinished:self];
+	[pauselock unlock];
 }
 
 -(IBAction)stopAfterPassword:(id)sender
@@ -519,7 +506,7 @@
 	[self setDisplayedView:errorview];
 }
 
--(void)setupOpenErrorView
+-(void)setupOpenErrorView:(NSString *)error
 {
 	if(!openerrorview)
 	{
@@ -527,9 +514,7 @@
 		[nib instantiateNibWithOwner:self topLevelObjects:nil];
 	}
 
-	[openerrorfield setStringValue:[NSString stringWithFormat:
-	NSLocalizedString(@"The contents of the file \"%@\" can not be extracted with this program.",@"Error message for files not extractable by The Unarchiver"),
-	[archivename lastPathComponent]]];
+	[openerrorfield setStringValue:error];
 	[self setDisplayedView:openerrorview];
 }
 

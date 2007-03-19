@@ -67,21 +67,15 @@
 
 -(void)archive:(XADArchive *)msgarchive extractionOfEntryWillStart:(int)n;
 -(void)archive:(XADArchive *)msgarchive extractionProgressBytes:(xadSize)bytes of:(xadSize)total;
--(void)archive:(XADArchive *)archive immediateExtractionInputProgressBytes:(xadSize)bytes of:(xadSize)total;
 -(void)progressStart:(NSNumber *)total;
 -(void)progressUpdate:(NSNumber *)bytes;
 
 -(XADAction)archive:(XADArchive *)archive nameDecodingDidFailForEntry:(int)n bytes:(const char *)bytes;
+-(XADAction)archive:(XADArchive *)archive creatingDirectoryDidFailForEntry:(int)n;
 -(XADAction)archive:(XADArchive *)sender extractionOfEntryDidFail:(int)n error:(XADError)error;
 -(XADAction)archive:(XADArchive *)sender extractionOfResourceForkForEntryDidFail:(int)n error:(XADError)error;
 -(XADAction)displayError:(NSString *)error;
-
--(BOOL)archiveExtractionShouldStop:(XADArchive *)archive;
--(void)archive:(XADArchive *)archive extractionOfEntryWillStart:(int)n;
--(void)archive:(XADArchive *)archive extractionProgressBytes:(xadSize)bytes of:(xadSize)total;
--(void)archive:(XADArchive *)archive immediateExtractionInputProgressBytes:(xadSize)bytes of:(xadSize)total;
-
--(XADAction)displayError:(NSString *)error;
+-(void)displayOpenError:(NSString *)error;
 -(XADAction)displayEncodingSelectorForBytes:(const char *)bytes encoding:(NSStringEncoding)encoding;
 
 -(IBAction)cancelExtraction:(id)sender;
@@ -98,7 +92,7 @@
 -(void)setupWaitView;
 -(void)setupProgressView;
 -(void)setupErrorView:(NSString *)error;
--(void)setupOpenErrorView;
+-(void)setupOpenErrorView:(NSString *)error;
 -(void)setupPasswordView;
 -(void)setupEncodingView;
 

@@ -23,9 +23,8 @@ static xadUINT32 in_func(struct Hook *hook,xadPTR object,struct xadHookParam *pa
 		bufsize=buffersize;
 		buf=malloc(bufsize);
 
-		struct xadFileInfo *info=[archive xadFileInfoForEntry:entry];
-		if(info->xfi_Flags&XADFIF_NOUNCRUNCHSIZE) fullsize=0x7fffffffffffffff;
-		else fullsize=[archive xadFileInfoForEntry:entry]->xfi_Size;
+		if([archive entryHasSize:entry]) fullsize=[archive sizeOfEntry:entry];
+		else fullsize=0x7fffffffffffffff;
 
 		bufstart=0;
 		buflen=0;
@@ -80,8 +79,6 @@ static xadUINT32 in_func(struct Hook *hook,xadPTR object,struct xadHookParam *pa
 
 -(struct Hook *)inHook { return &inhook; }
 
--(BOOL)hasNoSize { return fullsize==0x7fffffffffffffff; }
-
 
 
 -(void)decompress:(id)dummy
@@ -92,10 +89,10 @@ static xadUINT32 in_func(struct Hook *hook,xadPTR object,struct xadHookParam *pa
 	do
 	{
 //NSLog(@"*** Starting decomression");
-		xadFileUnArc([sourcearchive xadMasterBase],[sourcearchive xadArchiveInfo],
-			XAD_ENTRYNUMBER,[sourcearchive xadFileInfoForEntry:entry]->xfi_EntryNumber,
-			XAD_OUTHOOK,&outhook,
-		TAG_DONE);
+		struct TagItem tags[]={
+			XAD_OUTHOOK,(xadPTRINT)&outhook,
+		TAG_DONE};
+		[sourcearchive _extractFileInfo:[sourcearchive xadFileInfoForEntry:entry] tags:tags reportProgress:YES];
 	}
 	while(!writefailed);
 

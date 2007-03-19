@@ -166,8 +166,9 @@ XADGETINFO(Rar)
 		switch(type)
 		{
 			case 0x73: // archive header
-				if(flags&(RARMHD_LOCK|RARMHD_PASSWORD))
+				if(flags&(/*RARMHD_LOCK|*/RARMHD_PASSWORD))
 				{
+fprintf(stderr,"err\n");
 					err=XADERR_NOTSUPPORTED;
 					goto rar_getinfo_end;
 				}
