@@ -79,6 +79,10 @@
 			NSString *extensions=[[dict objectForKey:@"CFBundleTypeExtensions"] componentsJoinedByString:@", "];
 			NSString *type=[types objectAtIndex:0];
 
+			// Zip UTI kludge
+			if(floor(NSAppKitVersionNumber)>=949&&[type isEqual:@"com.pkware.zip-archive"]&&[types count]>1)
+			type=[types objectAtIndex:1];
+
 			if(!hidden||![hidden containsObject:type])
 			[array addObject:[NSDictionary dictionaryWithObjectsAndKeys:
 				type,@"type",
