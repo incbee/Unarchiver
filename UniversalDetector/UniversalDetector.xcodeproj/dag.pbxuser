@@ -1,7 +1,7 @@
 // !$*UTF8*$!
 {
 	0867D690FE84028FC02AAC07 /* Project object */ = {
-		activeBuildConfigurationName = Release;
+		activeBuildConfigurationName = Debug;
 		activeExecutable = 1B0DDCAC0A2D0AD10009B697 /* DetectorTest */;
 		activeTarget = 1B0DDCAA0A2D0AD10009B697 /* DetectorTest */;
 		addToTargets = (
