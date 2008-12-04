@@ -7,6 +7,8 @@
 class wrappedUniversalDetector:public nsUniversalDetector
 {
 	public:
+	wrappedUniversalDetector():nsUniversalDetector(NS_FILTER_ALL) {}
+
 	void Report(const char* aCharset) {}
 
 	const char *charset(float &confidence)
