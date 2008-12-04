@@ -18,7 +18,8 @@
 
 -(BOOL)done;
 -(NSString *)MIMECharset;
--(NSStringEncoding)encoding;
 -(float)confidence;
+
+-(NSStringEncoding)encoding;
 
 @end

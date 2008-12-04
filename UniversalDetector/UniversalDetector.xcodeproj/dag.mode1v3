@@ -266,8 +266,9 @@
 							<array>
 								<string>0867D691FE84028FC02AAC07</string>
 								<string>08FB77AEFE84172EC02AAC07</string>
-								<string>1B0DDC1C0A2CC8F60009B697</string>
-								<string>1B0DDCAD0A2D0AFD0009B697</string>
+								<string>32C88DFF0371C24200C91783</string>
+								<string>089C1665FE841158C02AAC07</string>
+								<string>0867D69AFE84028FC02AAC07</string>
 								<string>034768DFFF38A50411DB9C8B</string>
 								<string>1C37FBAC04509CD000000102</string>
 								<string>1C37FABC05509CD000000102</string>
@@ -275,7 +276,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>5</integer>
+									<integer>3</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -300,7 +301,7 @@
 							<real>242</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>248 92 1080 786 0 0 1440 878 </string>
+						<string>182 92 1080 786 0 0 1440 878 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -318,7 +319,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>WrappedUniversalDetector.cpp</string>
+								<string>UniversalDetector.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -326,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>WrappedUniversalDetector.cpp</string>
+										<string>UniversalDetector.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1B2F16F10EE894470000DAFF</string>
+										<string>1B2F17CF0EE89E810000DAFF</string>
 										<key>history</key>
 										<array>
 											<string>1B0DDC330A2CD8380009B697</string>
@@ -352,7 +353,6 @@
 											<string>1B0DDD8E0A2D2DE00009B697</string>
 											<string>1B0DDDC60A2E0F7E0009B697</string>
 											<string>1B0DDDDE0A2E11F40009B697</string>
-											<string>1B0DDE550A2E6D670009B697</string>
 											<string>1B97681E0A6FD40D00A8E8DA</string>
 											<string>1B97681F0A6FD40D00A8E8DA</string>
 											<string>1B9768200A6FD40D00A8E8DA</string>
@@ -373,10 +373,12 @@
 											<string>1B2F16A10EE88C6A0000DAFF</string>
 											<string>1B2F16BB0EE893E10000DAFF</string>
 											<string>1B2F16BC0EE893E10000DAFF</string>
-											<string>1B2F16E30EE894470000DAFF</string>
-											<string>1B2F16E40EE894470000DAFF</string>
 											<string>1B2F16E50EE894470000DAFF</string>
-											<string>1B2F16E60EE894470000DAFF</string>
+											<string>1B2F17A60EE8984E0000DAFF</string>
+											<string>1B2F17B50EE89A4B0000DAFF</string>
+											<string>1B2F17BA0EE89D2A0000DAFF</string>
+											<string>1B2F17C80EE89E3D0000DAFF</string>
+											<string>1B2F17C90EE89E3D0000DAFF</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -460,6 +462,19 @@
 											<string>1B2F16EE0EE894470000DAFF</string>
 											<string>1B2F16EF0EE894470000DAFF</string>
 											<string>1B2F16F00EE894470000DAFF</string>
+											<string>1B2F17AB0EE8984E0000DAFF</string>
+											<string>1B2F17AC0EE8984E0000DAFF</string>
+											<string>1B2F17AD0EE8984E0000DAFF</string>
+											<string>1B2F17AF0EE8984E0000DAFF</string>
+											<string>1B2F17B00EE8984E0000DAFF</string>
+											<string>1B2F17B10EE8984E0000DAFF</string>
+											<string>1B2F17B30EE8984E0000DAFF</string>
+											<string>1B2F17B70EE89A4B0000DAFF</string>
+											<string>1B2F17B80EE89A4B0000DAFF</string>
+											<string>1B2F17BC0EE89D2A0000DAFF</string>
+											<string>1B2F17BD0EE89D2A0000DAFF</string>
+											<string>1B2F17CA0EE89E3D0000DAFF</string>
+											<string>1B2F17CB0EE89E3D0000DAFF</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -473,7 +488,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {816, 740}}</string>
 								<key>RubberWindowFrame</key>
-								<string>248 92 1080 786 0 0 1440 878 </string>
+								<string>182 92 1080 786 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -493,7 +508,7 @@
 								<key>Frame</key>
 								<string>{{0, 745}, {816, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>248 92 1080 786 0 0 1440 878 </string>
+								<string>182 92 1080 786 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -655,7 +670,7 @@
 		<string>/Users/dag/Code/The Unarchiver/UniversalDetector/UniversalDetector.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>248 92 1080 786 0 0 1440 878 </string>
+	<string>182 92 1080 786 0 0 1440 878 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
