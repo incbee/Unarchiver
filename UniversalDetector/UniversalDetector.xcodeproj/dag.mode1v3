@@ -321,7 +321,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nscore.h</string>
+								<string>kludge.c</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -329,15 +329,14 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nscore.h</string>
+										<string>kludge.c</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1BCD5D180EEC96D000D86C43</string>
+										<string>1BCD5D2B0EEC979D00D86C43</string>
 										<key>history</key>
 										<array>
 											<string>1B0DDC460A2CD9160009B697</string>
-											<string>1B0DDC840A2D0A900009B697</string>
 											<string>1B0DDCEB0A2D18000009B697</string>
 											<string>1B0DDDDE0A2E11F40009B697</string>
 											<string>1B2F166E0EE889930000DAFF</string>
@@ -355,7 +354,8 @@
 											<string>1BCD5C3B0EEC60C900D86C43</string>
 											<string>1BCD5C3C0EEC60C900D86C43</string>
 											<string>1BCD5D010EEC924400D86C43</string>
-											<string>1B0DDC830A2D0A900009B697</string>
+											<string>1BCD5D290EEC979D00D86C43</string>
+											<string>1BCD5D270EEC979800D86C43</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -379,7 +379,7 @@
 											<string>1B2F16C50EE893E10000DAFF</string>
 											<string>1B2F16C80EE893E10000DAFF</string>
 											<string>1B2F17AD0EE8984E0000DAFF</string>
-											<string>1BCD5D020EEC924400D86C43</string>
+											<string>1BCD5D2A0EEC979D00D86C43</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -437,9 +437,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1BCD5D040EEC924400D86C43</string>
+				<string>1BCD5D220EEC976500D86C43</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>1BCD5D050EEC924400D86C43</string>
+				<string>1BCD5D230EEC976500D86C43</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -572,7 +572,6 @@
 	<key>WindowOrderList</key>
 	<array>
 		<string>1C530D57069F1CE1000CFCEE</string>
-		<string>1BC89D590EDCC416006B47FE</string>
 		<string>/Users/dag/Code/The Unarchiver/UniversalDetector/UniversalDetector.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -806,12 +805,14 @@
 							<key>Dock</key>
 							<array>
 								<dict>
+									<key>BecomeActive</key>
+									<true/>
 									<key>ContentConfiguration</key>
 									<dict>
 										<key>PBXProjectModuleGUID</key>
 										<string>1CDD528C0622207200134675</string>
 										<key>PBXProjectModuleLabel</key>
-										<string></string>
+										<string>kludge.c</string>
 										<key>StatusBarVisibility</key>
 										<true/>
 									</dict>
@@ -832,8 +833,6 @@
 							<string>365pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -869,8 +868,8 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D57069F1CE1000CFCEE</string>
-				<string>1BCD5D160EEC96CD00D86C43</string>
-				<string>1BCD5D170EEC96CD00D86C43</string>
+				<string>1BCD5D240EEC976500D86C43</string>
+				<string>1BCD5D250EEC976500D86C43</string>
 				<string>1CDD528C0622207200134675</string>
 				<string>1CD0528E0623707200166675</string>
 			</array>
