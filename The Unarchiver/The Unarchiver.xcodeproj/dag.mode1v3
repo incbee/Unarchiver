@@ -253,10 +253,12 @@
 						<dict>
 							<key>PBXSmartGroupTreeModuleColumnWidthsKey</key>
 							<array>
-								<real>186</real>
+								<real>22</real>
+								<real>164</real>
 							</array>
 							<key>PBXSmartGroupTreeModuleColumnsKey_v4</key>
 							<array>
+								<string>SCMStatusColumn</string>
 								<string>MainColumn</string>
 							</array>
 						</dict>
@@ -298,8 +300,10 @@
 						<string>{{0, 0}, {203, 720}}</string>
 						<key>GroupTreeTableConfiguration</key>
 						<array>
+							<string>SCMStatusColumn</string>
+							<real>22</real>
 							<string>MainColumn</string>
-							<real>186</real>
+							<real>164</real>
 						</array>
 						<key>RubberWindowFrame</key>
 						<string>153 117 1021 761 0 0 1440 878 </string>
@@ -332,7 +336,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1B61628C0E3FC53E00FD3727</string>
+										<string>1B216A320F8D8B30001207C9</string>
 										<key>history</key>
 										<array>
 											<string>1B932E8B0A57312B00F7DE66</string>
@@ -390,7 +394,7 @@
 											<string>1B2EF84B0BAF5524009F4902</string>
 											<string>1B06D7550DE8F82800D9C000</string>
 											<string>1B06D7560DE8F82800D9C000</string>
-											<string>1B183F2B0E09DB2600FA7F8F</string>
+											<string>1B216A2E0F8D8B1A001207C9</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -509,9 +513,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1B6162660E3FC12F00FD3727</string>
+				<string>1B216A330F8D8B30001207C9</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>1B6162670E3FC12F00FD3727</string>
+				<string>1B216A340F8D8B30001207C9</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -643,6 +647,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>1C530D57069F1CE1000CFCEE</string>
 		<string>/Users/dag/Code/The Unarchiver/The Unarchiver/The Unarchiver.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -865,6 +870,8 @@
 			<false/>
 			<key>Identifier</key>
 			<string>windowTool.find</string>
+			<key>IsVertical</key>
+			<true/>
 			<key>Layout</key>
 			<array>
 				<dict>
@@ -874,12 +881,14 @@
 							<key>Dock</key>
 							<array>
 								<dict>
+									<key>BecomeActive</key>
+									<true/>
 									<key>ContentConfiguration</key>
 									<dict>
 										<key>PBXProjectModuleGUID</key>
 										<string>1CDD528C0622207200134675</string>
 										<key>PBXProjectModuleLabel</key>
-										<string></string>
+										<string>TUArchiveController.m</string>
 										<key>StatusBarVisibility</key>
 										<true/>
 									</dict>
@@ -935,11 +944,9 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D57069F1CE1000CFCEE</string>
-				<string>1C530D58069F1CE1000CFCEE</string>
-				<string>1C530D59069F1CE1000CFCEE</string>
+				<string>1B216A300F8D8B1A001207C9</string>
+				<string>1B216A310F8D8B1A001207C9</string>
 				<string>1CDD528C0622207200134675</string>
-				<string>1C530D5A069F1CE1000CFCEE</string>
-				<string>1CE0B1FE06471DED0097A5F4</string>
 				<string>1CD0528E0623707200166675</string>
 			</array>
 			<key>WindowString</key>
