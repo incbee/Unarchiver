@@ -2,8 +2,9 @@
 {
 	089C165DFE840E0CC02AAC07 /* English */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {772, 683}}";
-			sepNavSelRange = "{103, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {698, 660}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 103}";
 			sepNavVisRect = "{{0, 0}, {772, 683}}";
 		};
 	};
@@ -303,9 +304,9 @@
 	};
 	1B2109F80A38F2BA005ED2AF /* TUArchiveController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1348, 11267}}";
-			sepNavSelRange = "{1414, 0}";
-			sepNavVisRange = "{959, 731}";
+			sepNavIntBoundsRect = "{{0, 0}, {988, 12217}}";
+			sepNavSelRange = "{1370, 0}";
+			sepNavVisRange = "{1839, 447}";
 			sepNavVisRect = "{{0, 5673}, {772, 683}}";
 		};
 	};
@@ -445,6 +446,57 @@
 		rType = 0;
 		vrLen = 731;
 		vrLoc = 959;
+	};
+	1B480CB00F9E89F900F1DE86 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1B2109F80A38F2BA005ED2AF /* TUArchiveController.m */;
+		name = "TUArchiveController.m: 61";
+		rLen = 0;
+		rLoc = 1370;
+		rType = 0;
+		vrLen = 447;
+		vrLoc = 1839;
+	};
+	1B480CB10F9E89F900F1DE86 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 089C165DFE840E0CC02AAC07 /* English */;
+		name = "InfoPlist.strings: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 103;
+		vrLoc = 0;
+	};
+	1B480CB20F9E89F900F1DE86 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1B2109F80A38F2BA005ED2AF /* TUArchiveController.m */;
+		name = "TUArchiveController.m: 61";
+		rLen = 0;
+		rLoc = 1370;
+		rType = 0;
+		vrLen = 447;
+		vrLoc = 1839;
+	};
+	1B480CB30F9E89F900F1DE86 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 089C165DFE840E0CC02AAC07 /* English */;
+		name = "InfoPlist.strings: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 103;
+		vrLoc = 0;
+	};
+	1B480CB40F9E89F900F1DE86 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/dag/Code/The Unarchiver/The Unarchiver/Info.plist";
+		rLen = 0;
+		rLoc = 2147483647;
 	};
 	1B6FA2090A58A1D800066489 /* CSFileTypeList.h */ = {
 		uiCtxt = {
@@ -858,29 +910,6 @@
 		vrLen = 1467;
 		vrLoc = 0;
 	};
-	1BCE91FD0AF3F5B900380963 /* LhA.c */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.c;
-		name = LhA.c;
-		path = /Users/dag/Code/libxad/portable/clients/LhA.c;
-		sourceTree = "<group>";
-	};
-	1BCE91FF0AF3F5B900380963 /* LhA.c:519 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 1BCE91FD0AF3F5B900380963 /* LhA.c */;
-		functionName = "XADGETINFO()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 519;
-		modificationTime = 261515909.9383639;
-		state = 2;
-	};
 	1BED5D140A5DE5EB00CA31C2 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 1B2AD8BC0A5C69BD00FAEA01 /* LSInfo.h */;
@@ -1159,7 +1188,6 @@
 			8D1107260486CEB800E47090 /* The Unarchiver */,
 		);
 		breakpoints = (
-			1BCE91FF0AF3F5B900380963 /* LhA.c:519 */,
 		);
 		codeSenseManager = 1B0DE4BF0A37A0C70009B697 /* Code sense */;
 		executables = (
@@ -1300,6 +1328,11 @@
 			1B2EF8490BAF5524009F4902 = 1B2EF8490BAF5524009F4902 /* PBXTextBookmark */;
 			1B2EF84B0BAF5524009F4902 = 1B2EF84B0BAF5524009F4902 /* PBXTextBookmark */;
 			1B480BD30F9AB9B200F1DE86 /* PBXTextBookmark */ = 1B480BD30F9AB9B200F1DE86 /* PBXTextBookmark */;
+			1B480CB00F9E89F900F1DE86 /* PBXTextBookmark */ = 1B480CB00F9E89F900F1DE86 /* PBXTextBookmark */;
+			1B480CB10F9E89F900F1DE86 /* PBXTextBookmark */ = 1B480CB10F9E89F900F1DE86 /* PBXTextBookmark */;
+			1B480CB20F9E89F900F1DE86 /* PBXTextBookmark */ = 1B480CB20F9E89F900F1DE86 /* PBXTextBookmark */;
+			1B480CB30F9E89F900F1DE86 /* PBXTextBookmark */ = 1B480CB30F9E89F900F1DE86 /* PBXTextBookmark */;
+			1B480CB40F9E89F900F1DE86 /* PlistBookmark */ = 1B480CB40F9E89F900F1DE86 /* PlistBookmark */;
 			1B6FA2330A59A88F00066489 = 1B6FA2330A59A88F00066489 /* PBXTextBookmark */;
 			1B6FA2340A59A88F00066489 = 1B6FA2340A59A88F00066489 /* PBXTextBookmark */;
 			1B6FA3000A5AC82600066489 = 1B6FA3000A5AC82600066489 /* PBXTextBookmark */;
