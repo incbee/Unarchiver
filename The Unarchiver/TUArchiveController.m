@@ -158,8 +158,7 @@
 		}
 
 		firstprogress=YES;
-		BOOL res;
-		res=[archive extractTo:tmpdest subArchives:YES];
+		BOOL res=[archive extractTo:tmpdest subArchives:YES];
 
 		if(!res) @throw @"Archive extraction failed or was cancelled";
 
