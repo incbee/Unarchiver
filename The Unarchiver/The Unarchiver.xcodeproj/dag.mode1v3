@@ -336,7 +336,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1B480EE40FA8C14F00F1DE86</string>
+										<string>1B480F7C0FB7A17100F1DE86</string>
 										<key>history</key>
 										<array>
 											<string>1B932E8B0A57312B00F7DE66</string>
@@ -394,8 +394,8 @@
 											<string>1B06D7550DE8F82800D9C000</string>
 											<string>1B480CB10F9E89F900F1DE86</string>
 											<string>1B480D540FA5347500F1DE86</string>
-											<string>1B480D750FA53F3B00F1DE86</string>
-											<string>1B480ECE0FA8B5DF00F1DE86</string>
+											<string>1B480F3D0FB4A9AC00F1DE86</string>
+											<string>1B480F3E0FB4A9AC00F1DE86</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -466,6 +466,10 @@
 											<string>1B480D770FA53F3B00F1DE86</string>
 											<string>1B480D780FA53F3B00F1DE86</string>
 											<string>1B480D790FA53F3B00F1DE86</string>
+											<string>1B480F3F0FB4A9AC00F1DE86</string>
+											<string>1B480F400FB4A9AC00F1DE86</string>
+											<string>1B480F410FB4A9AC00F1DE86</string>
+											<string>1B480F420FB4A9AC00F1DE86</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -660,9 +664,9 @@
 		<string>1B480D5E0FA5347500F1DE86</string>
 		<string>1B480D5F0FA5347500F1DE86</string>
 		<string>1B183F2E0E09DB2600FA7F8F</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>1B480D5C0FA5347500F1DE86</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/dag/Code/The Unarchiver/The Unarchiver/The Unarchiver.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -878,7 +882,7 @@
 			<key>WindowToolGUID</key>
 			<string>1CD10A99069EF8BA00B06720</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
@@ -1002,18 +1006,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1364, 737}}</string>
+								<string>{{0, 0}, {829, 746}}</string>
 								<key>RubberWindowFrame</key>
-								<string>60 77 1364 778 0 0 1440 878 </string>
+								<string>633 91 829 787 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXDebugCLIModule</string>
 							<key>Proportion</key>
-							<string>737pt</string>
+							<string>746pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
-					<string>737pt</string>
+					<string>746pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -1033,7 +1037,7 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.consoleV3</string>
 			<key>WindowString</key>
-			<string>60 77 1364 778 0 0 1440 878 </string>
+			<string>633 91 829 787 0 0 1440 878 </string>
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
