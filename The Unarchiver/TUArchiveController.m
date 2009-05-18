@@ -130,7 +130,7 @@
 		NSString *tmpdir=[NSString stringWithFormat:@".tmp%04x%04x%04x",rand()&0xffff,rand()&0xffff,rand()&0xffff];
 		tmpdest=[[destination stringByAppendingPathComponent:tmpdir] retain];
 
-		archive=[[XADArchive alloc] initWithFile:archivename delegate:self error:NULL];
+		archive=[archive=[XADArchive alloc] initWithFile:archivename delegate:self error:NULL];
 
 		if(!archive)
 		{
@@ -144,18 +144,6 @@
 		archivename=[[archive filename] retain];
 
 		//[archive setDelegate:self];
-
-		if([archive isEncrypted])
-		{
-			[pauselock lock];
-			[self performSelectorOnMainThread:@selector(setupPasswordView) withObject:nil waitUntilDone:NO];
-			[pauselock lock];
-			[pauselock unlock];
-
-			if(cancelled) @throw @"User cancelled after password request";
-
-			[self performSelectorOnMainThread:@selector(setupProgressView) withObject:nil waitUntilDone:NO];
-		}
 
 		firstprogress=YES;
 		BOOL res=[archive extractTo:tmpdest subArchives:YES];
@@ -270,6 +258,19 @@
 		return selected_encoding;
 	}
 	else return guess;
+}
+
+-(void)archiveNeedsPassword:(XADArchive *)sender
+{
+	[pauselock lock];
+	[self performSelectorOnMainThread:@selector(setupPasswordView) withObject:nil waitUntilDone:NO];
+	[pauselock lock];
+	[pauselock unlock];
+
+//	if(cancelled) @throw @"User cancelled after password request";
+
+	[self performSelectorOnMainThread:@selector(setupProgressView) withObject:nil waitUntilDone:NO];
+//	return cancelled;
 }
 
 -(void)archive:(XADArchive *)sender extractionOfEntryWillStart:(int)n
