@@ -600,7 +600,7 @@
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>org.bzip.bzip2-archive</string>
+				<string>public.bzip2-archive</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -622,7 +622,7 @@
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>org.bzip.bzip2-tar-archive</string>
+				<string>public.bzip2-tar-archive</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -884,6 +884,27 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>alz</string>
+				<string>ALZ</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>ALZip Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.altools.alz-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>dd</string>
 				<string>DD</string>
 			</array>
@@ -899,7 +920,32 @@
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.symantec.diskdoubler-archive</string>
+				<string>com.symantec.dd-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>cpt</string>
+				<string>CPT</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Compact Pro Archive</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>PACT</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.cyclos.cpt-archive</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -1261,11 +1307,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0 alpha 1</string>
+	<string>2.0 alpha 2</string>
 	<key>CFBundleSignature</key>
 	<string>TUnA</string>
 	<key>CFBundleVersion</key>
-	<string>2.0 alpha 1</string>
+	<string>2.0 alpha 2</string>
 	<key>CSHiddenDocumentTypes</key>
 	<array>
 		<string>com.sun.java-archive</string>
@@ -1728,7 +1774,7 @@
 			<key>UTTypeIconFile</key>
 			<string>archive.icns</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.symantec.diskdoubler-archive</string>
+			<string>com.symantec.dd-archive</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>
@@ -1739,6 +1785,31 @@
 				<array>
 					<string>dd</string>
 					<string>DD</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Compact Pro Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.cyclos.cpt-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>PACT</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>cpt</string>
+					<string>CPT</string>
 				</array>
 			</dict>
 		</dict>
@@ -1768,6 +1839,47 @@
 				<key>public.mime-type</key>
 				<array>
 					<string>application/x-ace-compressed</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>ALZip Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.altools.alz-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>alz</string>
+					<string>ALZ</string>
+					<string>a00</string>
+					<string>a01</string>
+					<string>a02</string>
+					<string>a03</string>
+					<string>a04</string>
+					<string>a05</string>
+					<string>a06</string>
+					<string>a07</string>
+					<string>a08</string>
+					<string>a09</string>
+					<string>A00</string>
+					<string>A01</string>
+					<string>A02</string>
+					<string>A03</string>
+					<string>A04</string>
+					<string>A05</string>
+					<string>A06</string>
+					<string>A07</string>
+					<string>A08</string>
+					<string>A09</string>
 				</array>
 			</dict>
 		</dict>
@@ -2097,11 +2209,56 @@
 				<string>public.archive</string>
 			</array>
 			<key>UTTypeDescription</key>
+			<string>Pax Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>cx.c3.pax-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pax</string>
+					<string>PAX</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.bzip2-archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Bzip2 Tar Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>bz2.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.bzip2-tar-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>tbz2</string>
+					<string>tbz</string>
+					<string>TBZ</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeDescription</key>
 			<string>Bzip2 File</string>
 			<key>UTTypeIconFile</key>
 			<string>bz2.icns</string>
 			<key>UTTypeIdentifier</key>
-			<string>org.bzip.bzip2-archive</string>
+			<string>public.bzip2-archive</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>
@@ -2122,48 +2279,6 @@
 					<string>application/bzip</string>
 					<string>application/x-bzip2</string>
 					<string>application/x-bzip</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>org.bzip.bzip2-archive</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Bzip2 Tar Archive</string>
-			<key>UTTypeIconFile</key>
-			<string>bz2.icns</string>
-			<key>UTTypeIdentifier</key>
-			<string>org.bzip.bzip2-tar-archive</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>tbz2</string>
-					<string>tbz</string>
-					<string>TBZ</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-				<string>public.archive</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Pax Archive</string>
-			<key>UTTypeIconFile</key>
-			<string>archive.icns</string>
-			<key>UTTypeIdentifier</key>
-			<string>cx.c3.pax-archive</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>pax</string>
-					<string>PAX</string>
 				</array>
 			</dict>
 		</dict>
