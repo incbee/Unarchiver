@@ -25,7 +25,7 @@
 		argumentStrings = (
 		);
 		autoAttachOnCrash = 1;
-		breakpointsEnabled = 1;
+		breakpointsEnabled = 0;
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
@@ -294,9 +294,9 @@
 	};
 	1B2109F80A38F2BA005ED2AF /* TUArchiveController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1348, 12027}}";
-			sepNavSelRange = "{2982, 0}";
-			sepNavVisRange = "{2331, 1264}";
+			sepNavIntBoundsRect = "{{0, 0}, {1516, 11476}}";
+			sepNavSelRange = "{138, 0}";
+			sepNavVisRange = "{0, 712}";
 			sepNavVisRect = "{{0, 5673}, {772, 683}}";
 		};
 	};
@@ -406,9 +406,9 @@
 	};
 	1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {944, 4313}}";
-			sepNavSelRange = "{1398, 0}";
-			sepNavVisRange = "{894, 1087}";
+			sepNavIntBoundsRect = "{{0, 0}, {908, 4408}}";
+			sepNavSelRange = "{1627, 0}";
+			sepNavVisRange = "{895, 1086}";
 			sepNavVisRect = "{{0, 1084}, {772, 683}}";
 		};
 	};
@@ -964,7 +964,7 @@
 		hitCount = 1;
 		ignoreCount = 0;
 		location = libobjc.A.dylib;
-		modificationTime = 264545723.43436;
+		modificationTime = 265333971.618232;
 		state = 1;
 		symbolName = objc_exception_throw;
 	};
@@ -991,6 +991,209 @@
 		name = "/Users/dag/Code/The Unarchiver/The Unarchiver/Info.plist";
 		rLen = 0;
 		rLoc = 2147483647;
+	};
+	1BA269590FD0AC4500279E95 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			CSHiddenDocumentTypes,
+		);
+		name = "/Users/dag/Code/The Unarchiver/The Unarchiver/Info.plist";
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	1BA269660FD0B84300279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: syntax error before 'XADPath'";
+		fRef = 1BA269670FD0B84300279E95 /* XADArchiveParser.h */;
+		rLen = 1;
+		rLoc = 132;
+		rType = 1;
+	};
+	1BA269670FD0B84300279E95 /* XADArchiveParser.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = XADArchiveParser.h;
+		path = /Users/dag/Code/Build/Debug/XADMaster.framework/Headers/XADArchiveParser.h;
+		sourceTree = "<absolute>";
+	};
+	1BA269680FD0B84300279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1BA269690FD0B84300279E95 /* XADArchiveParser.h */;
+		name = "XADArchiveParser.h: 132";
+		rLen = 0;
+		rLoc = 4035;
+		rType = 0;
+		vrLen = 1054;
+		vrLoc = 3753;
+	};
+	1BA269690FD0B84300279E95 /* XADArchiveParser.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = XADArchiveParser.h;
+		path = /Users/dag/Code/Build/Debug/XADMaster.framework/Headers/XADArchiveParser.h;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {698, 3344}}";
+			sepNavSelRange = "{190, 0}";
+			sepNavVisRange = "{0, 1121}";
+		};
+	};
+	1BA269C70FD0C05500279E95 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			CSHiddenDocumentTypes,
+		);
+		name = "/Users/dag/Code/The Unarchiver/The Unarchiver/Info.plist";
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	1BA269C80FD0C05500279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: XADPath.h: No such file or directory";
+		fRef = 1BA269C90FD0C05500279E95 /* XADArchiveParser.h */;
+		rLen = 1;
+		rLoc = 3;
+		rType = 1;
+	};
+	1BA269C90FD0C05500279E95 /* XADArchiveParser.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = XADArchiveParser.h;
+		path = /Users/dag/Code/Build/Debug/XADMaster.framework/Headers/XADArchiveParser.h;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1132, 3135}}";
+			sepNavSelRange = "{4035, 0}";
+			sepNavVisRange = "{3753, 1054}";
+		};
+	};
+	1BA269CA0FD0C05500279E95 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			CSHiddenDocumentTypes,
+		);
+		name = "/Users/dag/Code/The Unarchiver/The Unarchiver/Info.plist";
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	1BA269CB0FD0C05500279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1BA269690FD0B84300279E95 /* XADArchiveParser.h */;
+		name = "XADArchiveParser.h: 8";
+		rLen = 0;
+		rLoc = 190;
+		rType = 0;
+		vrLen = 1121;
+		vrLoc = 0;
+	};
+	1BA269CC0FD0C09900279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1BA269C90FD0C05500279E95 /* XADArchiveParser.h */;
+		name = "XADArchiveParser.h: 132";
+		rLen = 0;
+		rLoc = 4035;
+		rType = 0;
+		vrLen = 1054;
+		vrLoc = 3753;
+	};
+	1BA269DF0FD0C18F00279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1BA269C90FD0C05500279E95 /* XADArchiveParser.h */;
+		name = "XADArchiveParser.h: 8";
+		rLen = 0;
+		rLoc = 190;
+		rType = 0;
+		vrLen = 1121;
+		vrLoc = 0;
+	};
+	1BA269E00FD0C18F00279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */;
+		name = "CSFileTypeList.m: 82";
+		rLen = 0;
+		rLoc = 1627;
+		rType = 0;
+		vrLen = 1086;
+		vrLoc = 895;
+	};
+	1BA269E10FD0C18F00279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1B2109F80A38F2BA005ED2AF /* TUArchiveController.m */;
+		name = "TUArchiveController.m: 245";
+		rLen = 9;
+		rLoc = 6175;
+		rType = 0;
+		vrLen = 1121;
+		vrLoc = 6106;
+	};
+	1BA269E20FD0C18F00279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1BA269C90FD0C05500279E95 /* XADArchiveParser.h */;
+		name = "XADArchiveParser.h: 8";
+		rLen = 0;
+		rLoc = 190;
+		rType = 0;
+		vrLen = 1121;
+		vrLoc = 0;
+	};
+	1BA269E30FD0C18F00279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */;
+		name = "CSFileTypeList.m: 82";
+		rLen = 0;
+		rLoc = 1627;
+		rType = 0;
+		vrLen = 1086;
+		vrLoc = 895;
+	};
+	1BA269E40FD0C18F00279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1B2109F80A38F2BA005ED2AF /* TUArchiveController.m */;
+		name = "TUArchiveController.m: 258";
+		rLen = 0;
+		rLoc = 6775;
+		rType = 0;
+		vrLen = 1137;
+		vrLoc = 6090;
+	};
+	1BA269EB0FD0C38900279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1BA269C90FD0C05500279E95 /* XADArchiveParser.h */;
+		name = "XADArchiveParser.h: 132";
+		rLen = 0;
+		rLoc = 4035;
+		rType = 0;
+		vrLen = 1054;
+		vrLoc = 3753;
+	};
+	1BA269EE0FD0C3A800279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1B2109F80A38F2BA005ED2AF /* TUArchiveController.m */;
+		name = "TUArchiveController.m: 242";
+		rLen = 0;
+		rLoc = 6107;
+		rType = 0;
+		vrLen = 1082;
+		vrLoc = 5747;
+	};
+	1BA269F20FD0C40700279E95 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1B2109F80A38F2BA005ED2AF /* TUArchiveController.m */;
+		name = "TUArchiveController.m: 5";
+		rLen = 0;
+		rLoc = 138;
+		rType = 0;
+		vrLen = 712;
+		vrLoc = 0;
 	};
 	1BBD9C720B7C0D2B00ACAA72 /* zh_TW */ = {
 		uiCtxt = {
@@ -1552,6 +1755,23 @@
 			1BA266BC0FC49CF900279E95 /* PlistBookmark */ = 1BA266BC0FC49CF900279E95 /* PlistBookmark */;
 			1BA266C50FC49D4F00279E95 /* PlistBookmark */ = 1BA266C50FC49D4F00279E95 /* PlistBookmark */;
 			1BA266D70FC4A61900279E95 /* PlistBookmark */ = 1BA266D70FC4A61900279E95 /* PlistBookmark */;
+			1BA269590FD0AC4500279E95 /* PlistBookmark */ = 1BA269590FD0AC4500279E95 /* PlistBookmark */;
+			1BA269660FD0B84300279E95 /* PBXTextBookmark */ = 1BA269660FD0B84300279E95 /* PBXTextBookmark */;
+			1BA269680FD0B84300279E95 /* PBXTextBookmark */ = 1BA269680FD0B84300279E95 /* PBXTextBookmark */;
+			1BA269C70FD0C05500279E95 /* PlistBookmark */ = 1BA269C70FD0C05500279E95 /* PlistBookmark */;
+			1BA269C80FD0C05500279E95 /* PBXTextBookmark */ = 1BA269C80FD0C05500279E95 /* PBXTextBookmark */;
+			1BA269CA0FD0C05500279E95 /* PlistBookmark */ = 1BA269CA0FD0C05500279E95 /* PlistBookmark */;
+			1BA269CB0FD0C05500279E95 /* PBXTextBookmark */ = 1BA269CB0FD0C05500279E95 /* PBXTextBookmark */;
+			1BA269CC0FD0C09900279E95 /* PBXTextBookmark */ = 1BA269CC0FD0C09900279E95 /* PBXTextBookmark */;
+			1BA269DF0FD0C18F00279E95 /* PBXTextBookmark */ = 1BA269DF0FD0C18F00279E95 /* PBXTextBookmark */;
+			1BA269E00FD0C18F00279E95 /* PBXTextBookmark */ = 1BA269E00FD0C18F00279E95 /* PBXTextBookmark */;
+			1BA269E10FD0C18F00279E95 /* PBXTextBookmark */ = 1BA269E10FD0C18F00279E95 /* PBXTextBookmark */;
+			1BA269E20FD0C18F00279E95 /* PBXTextBookmark */ = 1BA269E20FD0C18F00279E95 /* PBXTextBookmark */;
+			1BA269E30FD0C18F00279E95 /* PBXTextBookmark */ = 1BA269E30FD0C18F00279E95 /* PBXTextBookmark */;
+			1BA269E40FD0C18F00279E95 /* PBXTextBookmark */ = 1BA269E40FD0C18F00279E95 /* PBXTextBookmark */;
+			1BA269EB0FD0C38900279E95 /* PBXTextBookmark */ = 1BA269EB0FD0C38900279E95 /* PBXTextBookmark */;
+			1BA269EE0FD0C3A800279E95 /* PBXTextBookmark */ = 1BA269EE0FD0C3A800279E95 /* PBXTextBookmark */;
+			1BA269F20FD0C40700279E95 /* PBXTextBookmark */ = 1BA269F20FD0C40700279E95 /* PBXTextBookmark */;
 			1BBD9C940B7C0D9A00ACAA72 = 1BBD9C940B7C0D9A00ACAA72 /* PBXTextBookmark */;
 			1BBD9C990B7C0D9A00ACAA72 = 1BBD9C990B7C0D9A00ACAA72 /* PBXTextBookmark */;
 			1BBD9CEC0B7F6B0C00ACAA72 = 1BBD9CEC0B7F6B0C00ACAA72 /* PBXTextBookmark */;
