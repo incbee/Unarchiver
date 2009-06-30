@@ -6,6 +6,10 @@
 
 
 
+static BOOL IsPathWritable(NSString *path);
+
+
+
 @implementation TUArchiveController
 
 -(id)initWithFilename:(NSString *)filename controller:(TUController *)controller alwaysAsk:(BOOL)ask
@@ -52,7 +56,7 @@
 		else
 		defaultname=[[[filename lastPathComponent] stringByDeletingPathExtension] retain];
 
-		pauselock=[[NSLock alloc] init];
+		pauselock=[[NSConditionLock alloc] initWithCondition:0];
 	}
 	return self;
 }
@@ -123,10 +127,31 @@
 	{
 		if(!destination)
 		{
-			[maincontroller runDestinationPanel];
+			[maincontroller runDestinationPanelForAllArchives];
 			if(cancelled) @throw @"User cancelled destination panel";
 		}
 
+		while(!IsPathWritable(destination))
+		{
+			switch([self displayNotWritableError])
+			{
+				case 0: // cancel
+					@throw @"User cancelled destination dialog";
+				break;
+
+				case 1: // to desktop
+					[self setDestination:[NSSearchPathForDirectoriesInDomains(
+					NSDesktopDirectory,NSUserDomainMask,YES) objectAtIndex:0]];
+				break;
+
+				case 2: // elsewhere
+					[maincontroller runDestinationPanelForArchive:self];
+					if(cancelled) @throw @"User cancelled destination panel";
+				break;
+			}
+		}
+
+		// TODO: fix tmppath handling on crash.
 		NSString *tmpdir=[NSString stringWithFormat:@".tmp%04x%04x%04x",rand()&0xffff,rand()&0xffff,rand()&0xffff];
 		tmpdest=[[destination stringByAppendingPathComponent:tmpdir] retain];
 
@@ -204,8 +229,10 @@
 		{
 			BOOL isdir;
 			[[NSFileManager defaultManager] fileExistsAtPath:finaldest isDirectory:&isdir];
-
-			if(isdir&&![[finaldest pathExtension] isEqual:@"app"]) [[NSWorkspace sharedWorkspace] openFile:finaldest];
+			if(isdir&&![[NSWorkspace sharedWorkspace] isFilePackageAtPath:finaldest])
+			{
+				[[NSWorkspace sharedWorkspace] openFile:finaldest];
+			}
 			else [[NSWorkspace sharedWorkspace] selectFile:finaldest inFileViewerRootedAtPath:@""];
 		}
 	}
@@ -262,15 +289,20 @@
 
 -(void)archiveNeedsPassword:(XADArchive *)sender
 {
-	[pauselock lock];
 	[self performSelectorOnMainThread:@selector(setupPasswordView) withObject:nil waitUntilDone:NO];
-	[pauselock lock];
-	[pauselock unlock];
+
+	if([self waitForResponseFromUI])
+	{
+		[archive setPassword:[passwordfield stringValue]];
+	}
+	else
+	{
+		cancelled=YES;
+	}
 
 //	if(cancelled) @throw @"User cancelled after password request";
 
 	[self performSelectorOnMainThread:@selector(setupProgressView) withObject:nil waitUntilDone:NO];
-//	return cancelled;
 }
 
 -(void)archive:(XADArchive *)sender extractionOfEntryWillStart:(int)n
@@ -345,43 +377,56 @@
 	];
 }
 
+
+
+-(int)displayNotWritableError
+{
+	[self performSelectorOnMainThread:@selector(setupNotWritableView) withObject:nil waitUntilDone:NO];
+	int action=[self waitForResponseFromUI];
+
+	[self performSelectorOnMainThread:@selector(setDisplayedView:) withObject:progressview waitUntilDone:NO];
+
+	return action;
+}
+
 -(XADAction)displayError:(NSString *)error
 {
 	if(ignoreall) return XADSkip;
 
-	[pauselock lock];
 	[self performSelectorOnMainThread:@selector(setupErrorView:) withObject:error waitUntilDone:NO];
-	[pauselock lock];
-	[pauselock unlock];
+	XADAction action=[self waitForResponseFromUI];
+
+	if(action==XADSkip)
+	{
+		if([applyallcheck state]==NSOnState) ignoreall=YES;
+		else ignoreall=NO;
+	}
 
 	[self performSelectorOnMainThread:@selector(setDisplayedView:) withObject:progressview waitUntilDone:NO];
 
-	return erroraction;
+	return action;
 }
 
 -(void)displayOpenError:(NSString *)error
 {
-	[pauselock lock];
 	[self performSelectorOnMainThread:@selector(setupOpenErrorView:) withObject:error waitUntilDone:NO];
-	[pauselock lock];
-	[pauselock unlock];
+	[self waitForResponseFromUI];
 }
-
-
 
 -(XADAction)displayEncodingSelectorForBytes:(const char *)bytes encoding:(NSStringEncoding)encoding
 {
+NSLog(@"%x %s",bytes,bytes);
 	selected_encoding=encoding;
 	name_bytes=bytes;
 
-	[pauselock lock];
 	[self performSelectorOnMainThread:@selector(setupEncodingView) withObject:nil waitUntilDone:NO];
-	[pauselock lock];
-	[pauselock unlock];
+	XADAction action=[self waitForResponseFromUI];
+
+	selected_encoding=[encodingpopup selectedTag];
 
 	[self performSelectorOnMainThread:@selector(setDisplayedView:) withObject:progressview waitUntilDone:NO];
 
-	return encodingaction;
+	return action;
 }
 
 
@@ -401,53 +446,72 @@
 	[sender setEnabled:NO];
 }
 
+-(IBAction)stopAfterNotWritable:(id)sender
+{
+	[self provideResponseFromUI:0];
+}
+
+-(IBAction)extractToDesktopAfterNotWritable:(id)sender
+{
+	[self provideResponseFromUI:1];
+}
+
+-(IBAction)extractElsewhereAfterNotWritable:(id)sender
+{
+	[self provideResponseFromUI:2];
+}
+
 -(IBAction)stopAfterError:(id)sender
 {
-	erroraction=XADAbort;
-	[pauselock unlock];
+	// KLUDGE: for some reason the button releases itself if sent an Esc keystroke.
+	// This will drive up the retain count, but as the button should never be released
+	// anyway this shouldn't be a problem.
+	//[sender retain];
+	[self provideResponseFromUI:XADAbort];
 }
 
 -(IBAction)continueAfterError:(id)sender
 {
-	erroraction=XADSkip;
-	ignoreall=([applyallcheck state]==NSOnState?YES:NO);
-	[pauselock unlock];
+	[self provideResponseFromUI:XADSkip];
 }
 
 -(IBAction)okAfterOpenError:(id)sender
 {
-//	[maincontroller archiveFinished:self];
-	[pauselock unlock];
+	[self provideResponseFromUI:0];
 }
 
 -(IBAction)stopAfterPassword:(id)sender
 {
-	cancelled=YES;
-	[pauselock unlock];
+	// KLUDGE: for some reason the button releases itself if sent an Esc keystroke.
+	// This will drive up the retain count, but as the button should never be released
+	// anyway this shouldn't be a problem.
+	//[sender retain];
+	[self provideResponseFromUI:NO];
 }
 
 -(IBAction)continueAfterPassword:(id)sender
 {
-	[archive setPassword:[passwordfield stringValue]];
-	[pauselock unlock];
-}
-
--(IBAction)continueAfterEncoding:(id)sender
-{
-	encodingaction=XADRetry;
-	[pauselock unlock];
+	[self provideResponseFromUI:YES];
 }
 
 -(IBAction)stopAfterEncoding:(id)sender
 {
-	encodingaction=XADAbort;
-	[pauselock unlock];
+	// KLUDGE: for some reason the button releases itself if sent an Esc keystroke.
+	// This will drive up the retain count, but as the button should never be released
+	// anyway this shouldn't be a problem.
+	//[sender retain];
+	[self provideResponseFromUI:XADAbort];
+}
+
+-(IBAction)continueAfterEncoding:(id)sender
+{
+	[self provideResponseFromUI:XADRetry];
 }
 
 -(IBAction)selectEncoding:(id)sender
 {
-	selected_encoding=[encodingpopup selectedTag];
-	NSString *str=[[[NSString alloc] initWithBytes:name_bytes length:strlen(name_bytes) encoding:selected_encoding] autorelease];
+	NSStringEncoding encoding=[encodingpopup selectedTag];
+	NSString *str=[[[NSString alloc] initWithBytes:name_bytes length:strlen(name_bytes) encoding:encoding] autorelease];
 	[encodingfield setStringValue:str?str:@""];
 }
 
@@ -494,6 +558,18 @@
 	[self setDisplayedView:progressview];
 }
 
+-(void)setupNotWritableView
+{
+	if(!notwritableview)
+	{
+		NSNib *nib=[[[NSNib alloc] initWithNibNamed:@"NotWritableView" bundle:nil] autorelease];
+		[nib instantiateNibWithOwner:self topLevelObjects:nil];
+	}
+
+	[self setDisplayedView:notwritableview];
+	[self getUserAttention];
+}
+
 -(void)setupErrorView:(NSString *)error
 {
 	if(!errorview)
@@ -504,6 +580,7 @@
 
 	[errorfield setStringValue:error];
 	[self setDisplayedView:errorview];
+	[self getUserAttention];
 }
 
 -(void)setupOpenErrorView:(NSString *)error
@@ -516,6 +593,7 @@
 
 	[openerrorfield setStringValue:error];
 	[self setDisplayedView:openerrorview];
+	[self getUserAttention];
 }
 
 -(void)setupPasswordView
@@ -532,6 +610,7 @@
 
 	[self setDisplayedView:passwordview];
 	[[passwordfield window] makeFirstResponder:passwordfield];
+	[self getUserAttention];
 }
 
 -(void)setupEncodingView
@@ -557,6 +636,8 @@
 	[self selectEncoding:self];
 
 	[self setDisplayedView:encodingview];
+	[[passwordfield window] makeFirstResponder:passwordfield];
+	[self getUserAttention];
 }
 
 
@@ -593,4 +674,37 @@
 
 }
 
+-(void)getUserAttention
+{
+	[[maincontroller window] makeKeyAndOrderFront:self];
+	[NSApp activateIgnoringOtherApps:YES];
+}
+
+// Uiiiiii~ Aisuuuuu~
+-(int)waitForResponseFromUI
+{
+	[pauselock lockWhenCondition:1];
+	[pauselock unlockWithCondition:0];
+	return uiresponse;
+}
+
+-(void)provideResponseFromUI:(int)response
+{
+	uiresponse=response;
+	[pauselock lockWhenCondition:0];
+	[pauselock unlockWithCondition:1];
+}
+
+
 @end
+
+
+
+#include <unistd.h>
+
+static BOOL IsPathWritable(NSString *path)
+{
+	if(access([path fileSystemRepresentation],W_OK)==-1) return NO;
+
+	return YES;
+}

@@ -10,7 +10,7 @@
 	NSMutableArray *archives;
 	BOOL resizeblocked,opened;
 
-	NSLock *guilock;
+	NSConditionLock *guilock;
 	NSString *newdestination;
 
 	IBOutlet NSWindow *mainwindow;
@@ -39,7 +39,8 @@
 -(IBAction)changeDestination:(id)sender;
 -(void)destinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)context;
 
--(void)runDestinationPanel;
+-(void)runDestinationPanelForAllArchives;
+-(void)runDestinationPanelForArchive:(TUArchiveController *)archive;
 -(void)archiveDestinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)info;
 
 /*-(void)lockFileSystem:(NSString *)filename;

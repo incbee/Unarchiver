@@ -39,6 +39,7 @@
 		1B2AD86C0A5C4BD200FAEA01 /* z.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B2AD8510A5C4BD200FAEA01 /* z.icns */; };
 		1B2AD86D0A5C4BD200FAEA01 /* zip.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B2AD8520A5C4BD200FAEA01 /* zip.icns */; };
 		1B6FA20B0A58A1D800066489 /* CSFileTypeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */; };
+		1B81DBD20FF98BF9005C5B23 /* NotWritableView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1B81DBD00FF98BF9005C5B23 /* NotWritableView.nib */; };
 		1B932D6A0A560AC900F7DE66 /* TUCancelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B932D690A560AC900F7DE66 /* TUCancelButton.m */; };
 		1B932DA10A56142A00F7DE66 /* close_hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B932D9E0A56142A00F7DE66 /* close_hover.png */; };
 		1B932DA20A56142A00F7DE66 /* close_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B932D9F0A56142A00F7DE66 /* close_press.png */; };
@@ -148,6 +149,7 @@
 		1B2EF8760BAF55A1009F4902 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Dutch; path = Dutch.lproj/EncodingView.nib; sourceTree = "<group>"; };
 		1B6FA2090A58A1D800066489 /* CSFileTypeList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CSFileTypeList.h; sourceTree = "<group>"; };
 		1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CSFileTypeList.m; sourceTree = "<group>"; };
+		1B81DBD10FF98BF9005C5B23 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NotWritableView.nib; sourceTree = "<group>"; };
 		1B932D0D0A55CFEF00F7DE66 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
 		1B932D680A560AC900F7DE66 /* TUCancelButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUCancelButton.h; sourceTree = "<group>"; };
 		1B932D690A560AC900F7DE66 /* TUCancelButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUCancelButton.m; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1B1D47060AFC294E009AA7EB /* Localizable.strings */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
+				1B81DBD00FF98BF9005C5B23 /* NotWritableView.nib */,
 				1B1D47B90AFCBE94009AA7EB /* ErrorView.nib */,
 				1B1D47BB0AFCBE94009AA7EB /* OpenErrorView.nib */,
 				1B1D47BD0AFCBE94009AA7EB /* PasswordView.nib */,
@@ -447,6 +450,7 @@
 				1B9767BC0A6D79CA00A8E8DA /* amiga.icns in Resources */,
 				1B9767BD0A6D79CA00A8E8DA /* unarchiver.icns in Resources */,
 				1B1D47070AFC294E009AA7EB /* Localizable.strings in Resources */,
+				1B81DBD20FF98BF9005C5B23 /* NotWritableView.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,6 +592,14 @@
 				1B2EF8760BAF55A1009F4902 /* Dutch */,
 			);
 			name = EncodingView.nib;
+			sourceTree = "<group>";
+		};
+		1B81DBD00FF98BF9005C5B23 /* NotWritableView.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1B81DBD10FF98BF9005C5B23 /* English */,
+			);
+			name = NotWritableView.nib;
 			sourceTree = "<group>";
 		};
 		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {

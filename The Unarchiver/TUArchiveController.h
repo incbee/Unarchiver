@@ -9,14 +9,14 @@
 	XADArchive *archive;
 	NSString *archivename,*destination,*tmpdest,*defaultname;
 	NSView *view;
-	NSLock *pauselock;
+
+	NSConditionLock *pauselock;
+	int uiresponse;
 
 	BOOL cancelled,firstprogress,ignoreall;
-	XADAction erroraction;
 
 	NSStringEncoding selected_encoding;
 	const char *name_bytes;
-	XADAction encodingaction;
 
 	IBOutlet NSView *waitview;
 	IBOutlet NSTextField *waitfield;
@@ -27,6 +27,8 @@
 	IBOutlet NSTextField *namefield;
 	IBOutlet NSProgressIndicator *progress;
 	IBOutlet NSImageView *progressicon;
+
+	IBOutlet NSView *notwritableview;
 
 	IBOutlet NSView *errorview;
 	IBOutlet NSTextField *errorfield;
@@ -74,12 +76,17 @@
 -(XADAction)archive:(XADArchive *)archive creatingDirectoryDidFailForEntry:(int)n;
 -(XADAction)archive:(XADArchive *)sender extractionOfEntryDidFail:(int)n error:(XADError)error;
 -(XADAction)archive:(XADArchive *)sender extractionOfResourceForkForEntryDidFail:(int)n error:(XADError)error;
+
+-(int)displayNotWritableError;
 -(XADAction)displayError:(NSString *)error;
 -(void)displayOpenError:(NSString *)error;
 -(XADAction)displayEncodingSelectorForBytes:(const char *)bytes encoding:(NSStringEncoding)encoding;
 
 -(IBAction)cancelExtraction:(id)sender;
 -(IBAction)cancelWait:(id)sender;
+-(IBAction)stopAfterNotWritable:(id)sender;
+-(IBAction)extractToDesktopAfterNotWritable:(id)sender;
+-(IBAction)extractElsewhereAfterNotWritable:(id)sender;
 -(IBAction)stopAfterError:(id)sender;
 -(IBAction)continueAfterError:(id)sender;
 -(IBAction)okAfterOpenError:(id)sender;
@@ -91,11 +98,16 @@
 
 -(void)setupWaitView;
 -(void)setupProgressView;
+-(void)setupNotWritableView;
 -(void)setupErrorView:(NSString *)error;
 -(void)setupOpenErrorView:(NSString *)error;
 -(void)setupPasswordView;
 -(void)setupEncodingView;
 
 -(void)setDisplayedView:(NSView *)dispview;
+-(void)getUserAttention;
+
+-(int)waitForResponseFromUI;
+-(void)provideResponseFromUI:(int)response;
 
 @end

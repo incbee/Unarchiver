@@ -16,7 +16,7 @@
 	if(self=[super init])
 	{
 		archives=[[NSMutableArray array] retain];
-		guilock=[[NSLock alloc] init];
+		guilock=[[NSConditionLock alloc] initWithCondition:0];
 
 		resizeblocked=NO;
 		opened=NO;
@@ -185,14 +185,12 @@
 
 
 
--(void)runDestinationPanel
+-(void)runDestinationPanelForAllArchives
 {
-	[guilock lock];
-
 	[self performSelectorOnMainThread:@selector(_mainThreadRunDestinationPanel) withObject:nil waitUntilDone:NO];
 
-	[guilock lock];
-	[guilock unlock];
+	[guilock lockWhenCondition:1];
+	[guilock unlockWithCondition:0];
 
 	NSEnumerator *enumerator=[archives objectEnumerator];
 	TUArchiveController *archive;
@@ -204,6 +202,17 @@
 			else [archive cancel];
 		}
 	}
+}
+
+-(void)runDestinationPanelForArchive:(TUArchiveController *)archive
+{
+	[self performSelectorOnMainThread:@selector(_mainThreadRunDestinationPanel) withObject:nil waitUntilDone:NO];
+
+	[guilock lockWhenCondition:1];
+	[guilock unlockWithCondition:0];
+
+	if(newdestination) [archive setDestination:newdestination];
+	else [archive cancel];
 }
 
 -(void)_mainThreadRunDestinationPanel
@@ -225,7 +234,8 @@
 	if(res==NSOKButton) newdestination=[[panel directory] retain];
 	else newdestination=nil;
 
-	[guilock unlock];
+	[guilock lockWhenCondition:0];
+	[guilock unlockWithCondition:1];
 }
 
 @end
