@@ -7,6 +7,8 @@
 
 
 static BOOL IsPathWritable(NSString *path);
+static BOOL GetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info);
+static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info);
 
 
 
@@ -192,8 +194,26 @@ static BOOL IsPathWritable(NSString *path);
 
 	if(files)
 	{
+		BOOL alwayscreatepref=[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"]==2;
+		BOOL copydatepref=[[NSUserDefaults standardUserDefaults] integerForKey:@"folderModifiedDate"]==2;
+		BOOL changefilespref=[[NSUserDefaults standardUserDefaults] boolForKey:@"changeDateOfFiles"];
+		BOOL deletearchivepref=[[NSUserDefaults standardUserDefaults] boolForKey:@"deleteExtractedArchive"];
+		BOOL openfolderpref=[[NSUserDefaults standardUserDefaults] boolForKey:@"openExtractedFolder"];
+
+		BOOL singlefile=[files count]==1;
+
+		BOOL makefolder=!singlefile || alwayscreatepref;
+		BOOL copydate=(makefolder&&copydatepref)||(!makefolder&&changefilespref&&copydatepref);
+		BOOL resetdate=!makefolder&&changefilespref&&!copydatepref;
+
 		NSString *finaldest;
-		if([files count]==1)
+
+		if(makefolder)
+		{
+			finaldest=[self findUniqueDestinationWithDirectory:destination andFilename:defaultname];
+			[fm movePath:tmpdest toPath:finaldest handler:nil];
+		}
+		else
 		{
 			NSString *filename=[files objectAtIndex:0];
 			NSString *src=[tmpdest stringByAppendingPathComponent:filename];
@@ -201,13 +221,24 @@ static BOOL IsPathWritable(NSString *path);
 			[fm movePath:src toPath:finaldest handler:nil];
 			[fm removeFileAtPath:tmpdest handler:nil];
 		}
-		else
+
+		if(copydate)
 		{
-			finaldest=[self findUniqueDestinationWithDirectory:destination andFilename:defaultname];
-			[fm movePath:tmpdest toPath:finaldest handler:nil];
+			FSCatalogInfo archiveinfo,newinfo;
+
+			GetCatalogInfoForFilename(archivename,kFSCatInfoContentMod,&archiveinfo);
+			newinfo.contentModDate=archiveinfo.contentModDate;
+			SetCatalogInfoForFilename(finaldest,kFSCatInfoContentMod,&newinfo);
+		}
+		else if(resetdate)
+		{
+			FSCatalogInfo newinfo;
+
+			UCConvertCFAbsoluteTimeToUTCDateTime(CFAbsoluteTimeGetCurrent(),&newinfo.contentModDate);
+			SetCatalogInfoForFilename(finaldest,kFSCatInfoContentMod,&newinfo);
 		}
 
-		if([[NSUserDefaults standardUserDefaults] boolForKey:@"deleteExtractedArchive"])
+		if(deletearchivepref)
 		{
 			NSString *directory=[archivename stringByDeletingLastPathComponent];
 			NSArray *allpaths=[archive allFilenames];
@@ -225,7 +256,7 @@ static BOOL IsPathWritable(NSString *path);
 			//[self playSound:@"/System/Library/Components/CoreAudio.component/Contents/Resources/SystemSounds/dock/drag to trash.aif"];
 		}
 
-		if([[NSUserDefaults standardUserDefaults] boolForKey:@"openExtractedFolder"])
+		if(openfolderpref)
 		{
 			BOOL isdir;
 			[[NSFileManager defaultManager] fileExistsAtPath:finaldest isDirectory:&isdir];
@@ -271,7 +302,7 @@ static BOOL IsPathWritable(NSString *path);
 
 -(BOOL)archiveExtractionShouldStop:(XADArchive *)sender { return cancelled; }
 
--(NSStringEncoding)archive:(XADArchive *)archive encodingForName:(const char *)bytes guess:(NSStringEncoding)guess confidence:(float)confidence
+-(NSStringEncoding)archive:(XADArchive *)archive encodingForData:(NSData *)data guess:(NSStringEncoding)guess confidence:(float)confidence
 {
 	NSStringEncoding encoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
 	int threshold=[[NSUserDefaults standardUserDefaults] integerForKey:@"autoDetectionThreshold"];
@@ -280,7 +311,7 @@ static BOOL IsPathWritable(NSString *path);
 	else if(selected_encoding) return selected_encoding;
 	else if(confidence*100<threshold)
 	{
-		XADAction action=[self displayEncodingSelectorForBytes:bytes encoding:guess];
+		XADAction action=[self displayEncodingSelectorForData:data encoding:guess];
 		if(action==XADAbort) cancelled=YES;
 		return selected_encoding;
 	}
@@ -344,9 +375,9 @@ static BOOL IsPathWritable(NSString *path);
 
 
 
--(XADAction)archive:(XADArchive *)archive nameDecodingDidFailForEntry:(int)n bytes:(const char *)bytes
+-(XADAction)archive:(XADArchive *)archive nameDecodingDidFailForEntry:(int)n data:(NSData *)data
 {
-	return [self displayEncodingSelectorForBytes:bytes encoding:0];
+	return [self displayEncodingSelectorForData:data encoding:0];
 }
 
 -(XADAction)archive:(XADArchive *)archive creatingDirectoryDidFailForEntry:(int)n
@@ -413,11 +444,10 @@ static BOOL IsPathWritable(NSString *path);
 	[self waitForResponseFromUI];
 }
 
--(XADAction)displayEncodingSelectorForBytes:(const char *)bytes encoding:(NSStringEncoding)encoding
+-(XADAction)displayEncodingSelectorForData:(NSData *)data encoding:(NSStringEncoding)encoding
 {
-NSLog(@"%x %s",bytes,bytes);
 	selected_encoding=encoding;
-	name_bytes=bytes;
+	namedata=data;
 
 	[self performSelectorOnMainThread:@selector(setupEncodingView) withObject:nil waitUntilDone:NO];
 	XADAction action=[self waitForResponseFromUI];
@@ -511,7 +541,7 @@ NSLog(@"%x %s",bytes,bytes);
 -(IBAction)selectEncoding:(id)sender
 {
 	NSStringEncoding encoding=[encodingpopup selectedTag];
-	NSString *str=[[[NSString alloc] initWithBytes:name_bytes length:strlen(name_bytes) encoding:encoding] autorelease];
+	NSString *str=[[[NSString alloc] initWithData:namedata encoding:encoding] autorelease];
 	[encodingfield setStringValue:str?str:@""];
 }
 
@@ -625,7 +655,7 @@ NSLog(@"%x %s",bytes,bytes);
 	[icon setSize:[encodingicon frame].size];
 	[encodingicon setImage:icon];
 
-	[encodingpopup buildEncodingListMatchingBytes:name_bytes];
+	[encodingpopup buildEncodingListMatchingData:namedata];
 	if(selected_encoding)
 	{
 		int index=[encodingpopup indexOfItemWithTag:selected_encoding];
@@ -706,5 +736,23 @@ static BOOL IsPathWritable(NSString *path)
 {
 	if(access([path fileSystemRepresentation],W_OK)==-1) return NO;
 
+	return YES;
+}
+
+static BOOL GetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info)
+{
+	FSRef ref;
+	if(FSPathMakeRefWithOptions((const UInt8 *)[filename fileSystemRepresentation],
+	kFSPathMakeRefDoNotFollowLeafSymlink,&ref,NULL)!=noErr) return NO;
+	if(FSGetCatalogInfo(&ref,bitmap,info,NULL,NULL,NULL)!=noErr) return NO;
+	return YES;
+}
+
+static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info)
+{
+	FSRef ref;
+	if(FSPathMakeRefWithOptions((const UInt8 *)[filename fileSystemRepresentation],
+	kFSPathMakeRefDoNotFollowLeafSymlink,&ref,NULL)!=noErr) return NO;
+	if(FSSetCatalogInfo(&ref,bitmap,info)!=noErr) return NO;
 	return YES;
 }

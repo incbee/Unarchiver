@@ -17,6 +17,10 @@
 				<string>id</string>
 				<key>continueAfterPassword</key>
 				<string>id</string>
+				<key>extractElsewhereAfterNotWritable</key>
+				<string>id</string>
+				<key>extractToDesktopAfterNotWritable</key>
+				<string>id</string>
 				<key>okAfterOpenError</key>
 				<string>id</string>
 				<key>selectEncoding</key>
@@ -24,6 +28,8 @@
 				<key>stopAfterEncoding</key>
 				<string>id</string>
 				<key>stopAfterError</key>
+				<string>id</string>
+				<key>stopAfterNotWritable</key>
 				<string>id</string>
 				<key>stopAfterPassword</key>
 				<string>id</string>
@@ -54,6 +60,8 @@
 				<string>NSView</string>
 				<key>namefield</key>
 				<string>NSTextField</string>
+				<key>notwritableview</key>
+				<string>NSView</string>
 				<key>openerrorfield</key>
 				<string>NSTextField</string>
 				<key>openerroricon</key>

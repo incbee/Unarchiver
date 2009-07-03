@@ -16,7 +16,7 @@
 	BOOL cancelled,firstprogress,ignoreall;
 
 	NSStringEncoding selected_encoding;
-	const char *name_bytes;
+	NSData *namedata;
 
 	IBOutlet NSView *waitview;
 	IBOutlet NSTextField *waitfield;
@@ -67,12 +67,14 @@
 
 -(BOOL)archiveExtractionShouldStop:(XADArchive *)archive;
 
+-(NSStringEncoding)archive:(XADArchive *)archive encodingForData:(NSData *)data guess:(NSStringEncoding)guess confidence:(float)confidence;
+
 -(void)archive:(XADArchive *)msgarchive extractionOfEntryWillStart:(int)n;
 -(void)archive:(XADArchive *)msgarchive extractionProgressBytes:(xadSize)bytes of:(xadSize)total;
 -(void)progressStart:(NSNumber *)total;
 -(void)progressUpdate:(NSNumber *)bytes;
 
--(XADAction)archive:(XADArchive *)archive nameDecodingDidFailForEntry:(int)n bytes:(const char *)bytes;
+-(XADAction)archive:(XADArchive *)archive nameDecodingDidFailForEntry:(int)n data:(NSData *)data;
 -(XADAction)archive:(XADArchive *)archive creatingDirectoryDidFailForEntry:(int)n;
 -(XADAction)archive:(XADArchive *)sender extractionOfEntryDidFail:(int)n error:(XADError)error;
 -(XADAction)archive:(XADArchive *)sender extractionOfResourceForkForEntryDidFail:(int)n error:(XADError)error;
@@ -80,7 +82,7 @@
 -(int)displayNotWritableError;
 -(XADAction)displayError:(NSString *)error;
 -(void)displayOpenError:(NSString *)error;
--(XADAction)displayEncodingSelectorForBytes:(const char *)bytes encoding:(NSStringEncoding)encoding;
+-(XADAction)displayEncodingSelectorForData:(NSData *)data encoding:(NSStringEncoding)encoding;
 
 -(IBAction)cancelExtraction:(id)sender;
 -(IBAction)cancelWait:(id)sender;

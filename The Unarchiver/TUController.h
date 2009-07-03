@@ -22,6 +22,8 @@
 	IBOutlet NSTabViewItem *formattab;
 	IBOutlet NSPopUpButton *destinationpopup;
 	IBOutlet NSMenuItem *diritem;
+
+	IBOutlet NSButton *singlefilecheckbox;
 }
 
 -(BOOL)application:(NSApplication *)app openFile:(NSString *)filename;
@@ -38,6 +40,8 @@
 -(void)updateDestinationPopup;
 -(IBAction)changeDestination:(id)sender;
 -(void)destinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)context;
+
+-(IBAction)changeCreateFolder:(id)sender;
 
 -(void)runDestinationPanelForAllArchives;
 -(void)runDestinationPanelForArchive:(TUArchiveController *)archive;

@@ -45,6 +45,8 @@
 //	if(encoding) [encodingpopup selectItemWithTag:encoding];
 	if(encoding) [encodingpopup selectItemAtIndex:[encodingpopup indexOfItemWithTag:encoding]];
 	else [encodingpopup selectItemAtIndex:[encodingpopup numberOfItems]-1];
+
+	[self changeCreateFolder:nil];
 }
 
 -(void)applicationDidFinishLaunching:(NSNotification *)notification
@@ -181,6 +183,14 @@
 	}
 	[destinationpopup selectItem:diritem];
 	[[NSUserDefaults standardUserDefaults] setInteger:2 forKey:@"extractionDestination"];
+}
+
+
+
+-(IBAction)changeCreateFolder:(id)sender
+{
+	int createfolder=[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"];
+	[singlefilecheckbox setEnabled:createfolder==1];
 }
 
 

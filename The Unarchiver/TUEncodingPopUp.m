@@ -15,7 +15,7 @@
 {
 	if(self=[super initWithFrame:frame])
 	{
-		[self buildEncodingList];
+		//[self buildEncodingList];
 	}
 	return self;
 }
@@ -24,19 +24,19 @@
 {
 	if(self=[super initWithCoder:coder])
 	{
-		[self buildEncodingList];
+		//[self buildEncodingList];
 	}
 	return self;
 }
 
 -(void)buildEncodingList
 {
-	[self buildEncodingListMatchingBytes:NULL];
+	[self buildEncodingListMatchingData:nil];
 }
 
 -(void)buildEncodingListWithAutoDetect
 {
-	[self buildEncodingListMatchingBytes:NULL];
+	[self buildEncodingListMatchingData:nil];
 
 	[[self menu] addItem:[NSMenuItem separatorItem]];
 
@@ -47,37 +47,75 @@
 	[item release];
 }
 
--(void)buildEncodingListMatchingBytes:(const char *)bytes
+-(void)buildEncodingListMatchingData:(NSData *)data
 {
 	[self removeAllItems];
+
+	NSMutableDictionary *normalattrs,*smallattrs;
+	if(data)
+	{
+		normalattrs=[NSMutableDictionary dictionaryWithObjectsAndKeys:
+			[NSFont menuFontOfSize:[NSFont systemFontSize]],NSFontAttributeName,
+		nil];
+		smallattrs=[NSMutableDictionary dictionaryWithObjectsAndKeys:
+			[NSFont menuFontOfSize:[NSFont smallSystemFontSize]],NSFontAttributeName,
+		nil];
+
+		float maxwidth=[[self class] maximumEncodingNameWidthWithAttributes:normalattrs];
+
+		NSMutableParagraphStyle *parastyle=[[NSMutableParagraphStyle new] autorelease];
+		[parastyle setTabStops:[NSArray arrayWithObjects:
+			[[[NSTextTab alloc] initWithType:NSLeftTabStopType location:maxwidth+10] autorelease],
+		nil]];
+
+		[normalattrs setObject:parastyle forKey:NSParagraphStyleAttributeName];
+		[smallattrs setObject:parastyle forKey:NSParagraphStyleAttributeName];
+	}
 
 	NSArray *encodings=[[self class] encodings];
 	NSEnumerator *enumerator=[encodings objectEnumerator];
 	NSDictionary *encdict;
 	while(encdict=[enumerator nextObject])
 	{
-		NSStringEncoding encoding=[[encdict objectForKey:@"encoding"] longValue];
+		NSStringEncoding encoding=[[encdict objectForKey:@"Encoding"] longValue];
 
-		if(bytes)
+		NSString *str=nil;
+		if(data)
 		{
-			NSString *str=[[NSString alloc] initWithBytes:bytes length:strlen(bytes) encoding:encoding];
+			str=[[NSString alloc] initWithData:data encoding:encoding];
 			if(!str) continue;
-			[str release];
 		}
 
+		NSString *encname=[encdict objectForKey:@"Name"];
 		NSMenuItem *item=[[NSMenuItem alloc] init];
-		[item setTitle:[encdict objectForKey:@"name"]];
+
+		if(str)
+		{
+			NSMutableAttributedString *attrstr=[[[NSMutableAttributedString alloc]
+			initWithString:[NSString stringWithFormat:@"%@\t%C %@",encname,0x27a4,str]
+			attributes:normalattrs] autorelease];
+			[attrstr setAttributes:smallattrs range:NSMakeRange([encname length],[str length]+3)];
+
+			[item setAttributedTitle:attrstr];
+		}
+		else
+		{
+			[item setTitle:encname];
+		}
+
 		[item setTag:encoding];
 		[[self menu] addItem:item];
+
 		[item release];
+		[str release];
 	}
 }
 
 
 NSComparisonResult encoding_sort(NSDictionary *enc1,NSDictionary *enc2,void *dummy)
 {
-	NSString *name1=[enc1 objectForKey:@"name"];
-	NSString *name2=[enc2 objectForKey:@"name"];
+	NSString *name1=[enc1 objectForKey:@"Name"];
+	NSString *name2=[enc2 objectForKey:@"Name"];
 	/*BOOL isunicode1=[name1 hasPrefix:@"Unicode"];
 	BOOL isunicode2=[name2 hasPrefix:@"Unicode"];
 
@@ -101,8 +139,8 @@ NSComparisonResult encoding_sort(NSDictionary *enc1,NSDictionary *enc2,void *dum
 		if(encoding==10) continue;
 
 		[encodingarray addObject:[NSDictionary dictionaryWithObjectsAndKeys:
-			name,@"name",
-			[NSNumber numberWithLong:encoding],@"encoding",
+			name,@"Name",
+			[NSNumber numberWithLong:encoding],@"Encoding",
 		nil]];
 	}
 
@@ -121,6 +159,22 @@ NSComparisonResult encoding_sort(NSDictionary *enc1,NSDictionary *enc2,void *dum
 
 //	return [[[NSString alloc] initWithBytes:str length:namelen encoding:CFStringConvertEncodingToNSStringEncoding(nameenc)] autorelease];
 	return [[[NSString alloc] initWithBytes:str length:namelen encoding:NSUTF8StringEncoding] autorelease];
+}
+
++(float)maximumEncodingNameWidthWithAttributes:(NSDictionary *)attrs
+{
+	float maxwidth=0;
+
+	NSArray *encodings=[[self class] encodings];
+	NSEnumerator *enumerator=[encodings objectEnumerator];
+	NSDictionary *encdict;
+	while(encdict=[enumerator nextObject])
+	{
+		NSString *name=[encdict objectForKey:@"Name"];
+		float width=[name sizeWithAttributes:attrs].width;
+		if(width>maxwidth) maxwidth=width;
+	}
+	return maxwidth;
 }
 
 @end

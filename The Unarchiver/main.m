@@ -20,6 +20,9 @@ int main(int argc,const char **argv)
 		@"0",@"deleteExtractedArchive",
 		@"0",@"openExtractedFolder",
 		@"1",@"extractionDestination",
+		@"1",@"createFolder",
+		@"1",@"folderModifiedDate",
+		@"0",@"changeDateOfFiles",
 		desktop,@"extractionDestinationPath",
 	nil]];
     [pool release];

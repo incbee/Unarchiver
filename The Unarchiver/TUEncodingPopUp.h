@@ -9,9 +9,10 @@
 
 -(void)buildEncodingList;
 -(void)buildEncodingListWithAutoDetect;
--(void)buildEncodingListMatchingBytes:(const char *)bytes;
+-(void)buildEncodingListMatchingData:(NSData *)data;
 
 +(NSArray *)encodings;
 +(NSString *)nameOfEncoding:(CFStringEncoding)encoding;
++(float)maximumEncodingNameWidthWithAttributes:(NSDictionary *)attrs;
 
 @end
