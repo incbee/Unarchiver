@@ -21,6 +21,19 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>TUTaskListView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>resizetarget</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>FirstResponder</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -60,7 +73,7 @@
 				<key>formattab</key>
 				<string>NSTabViewItem</string>
 				<key>mainlist</key>
-				<string>TUListView</string>
+				<string>TUTaskListView</string>
 				<key>mainwindow</key>
 				<string>NSWindow</string>
 				<key>prefstabs</key>
@@ -72,19 +85,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>TUListView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>resizetarget</key>
-				<string>id</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSView</string>
 		</dict>
 	</array>
 	<key>IBVersion</key>

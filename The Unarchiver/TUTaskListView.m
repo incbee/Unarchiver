@@ -1,7 +1,7 @@
-#import "TUListView.h"
+#import "TUTaskListView.h"
 
 
-@implementation TUListView
+@implementation TUTaskListView
 
 -(id)initWithFrame:(NSRect)frame
 {
@@ -20,27 +20,26 @@
 	[super dealloc];
 }
 
--(void)addSubview:(NSView *)subview
+-(void)addTaskView:(TUTaskView *)taskview
 {
-	[subview setAutoresizingMask:NSViewWidthSizable|NSViewMinYMargin];
-	[super addSubview:subview];
+	[taskview setAutoresizingMask:NSViewWidthSizable|NSViewMinYMargin];
+	[self addSubview:taskview];
 	[self _layoutSubviews];
 }
 
--(void)removeSubview:(NSView *)subview;
+-(void)removeTaskView:(TUTaskView *)taskview
 {
 //	[self _markAsResizable:subview];
 //	[self _calcTotalHeightExcluding:subview];
 //	[self _notifySizeChange];
-	[subview removeFromSuperview];
+	[taskview removeFromSuperview];
 	[self _layoutSubviews];
 }
 
-/*-(void)willRemoveSubview:(NSView *)subview
+-(BOOL)containsTaskView:(TUTaskView *)taskview
 {
-	[super willRemoveSubview:subview];
-	[self performSelector:@selector(_layoutSubviews) withObject:nil afterDelay:0];
-}*/
+	return [[self subviews] indexOfObjectIdenticalTo:taskview]!=NSNotFound;
+}
 
 -(void)setHeight:(float)height forView:(NSView *)view
 {
@@ -81,7 +80,6 @@
 
 	if(oldheight!=totalheight)
 	{
-		if(resizetarget&&[resizetarget respondsToSelector:resizeaction])
 		[resizetarget performSelector:resizeaction withObject:self];
 	}
 
@@ -125,6 +123,66 @@
 -(NSSize)preferredSize
 {
 	return NSMakeSize([self frame].size.width,totalheight);
+}
+
+@end
+
+
+
+@implementation TUTaskView
+
+-(id)init
+{
+	if(self=[super init])
+	{
+	}
+	return self;
+}
+
+-(TUTaskListView *)taskListView
+{
+	id superview=[self superview];
+	if(!superview) return nil;
+	if(![superview isKindOfClass:[TUTaskListView class]]) return nil;
+
+	return superview;
+}
+
+@end
+
+
+
+@implementation TUMultiTaskView
+
+-(id)init
+{
+	if(self=[super init])
+	{
+		[self setAutoresizesSubviews:YES];
+	}
+	return self;
+}
+
+-(void)setDisplayedView:(NSView *)dispview
+{
+	NSEnumerator *enumerator=[[self subviews] objectEnumerator];
+	NSView *subview;
+	while(subview=[enumerator nextObject]) [subview removeFromSuperview];
+
+	NSSize viewsize=[dispview frame].size;
+	NSSize selfsize=[self frame].size;
+
+	if(!selfsize.height)
+	{
+		selfsize=viewsize;
+		[self setFrame:NSMakeRect(0,0,selfsize.width,selfsize.height)];
+	}
+
+	[dispview setAutoresizingMask:NSViewWidthSizable|NSViewMaxYMargin];
+	[dispview setFrame:NSMakeRect(0,0,selfsize.width,viewsize.height)];
+	[self addSubview:dispview];
+
+	[[self taskListView] setHeight:viewsize.height forView:self];
 }
 
 @end

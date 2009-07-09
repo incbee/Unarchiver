@@ -7,11 +7,10 @@
 	<key>IBLastKnownRelativeProjectPath</key>
 	<string>../The Unarchiver.xcodeproj</string>
 	<key>IBOldestOS</key>
-	<integer>5</integer>
+	<integer>4</integer>
 	<key>IBOpenObjects</key>
 	<array>
 		<integer>29</integer>
-		<integer>292</integer>
 		<integer>21</integer>
 	</array>
 	<key>IBSystem Version</key>

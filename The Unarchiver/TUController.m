@@ -1,11 +1,16 @@
 #import <UniversalDetector/UniversalDetector.h>
 #import "TUController.h"
 #import "TUArchiveController.h"
-#import "TUListView.h"
+#import "TUTaskListView.h"
 #import "TUEncodingPopUp.h"
 
+#import <unistd.h>
 #import <sys/stat.h>
 #import <Carbon/Carbon.h>
+
+
+
+static BOOL IsPathWritable(NSString *path);
 
 
 
@@ -15,9 +20,8 @@
 {
 	if(self=[super init])
 	{
-		archives=[[NSMutableArray array] retain];
-		guilock=[[NSConditionLock alloc] initWithCondition:0];
-
+		setuptasks=[TUTaskQueue new];
+		extracttasks=[TUTaskQueue new];
 		resizeblocked=NO;
 		opened=NO;
 	}
@@ -26,8 +30,8 @@
 
 -(void)dealloc
 {
-	[archives release];
-	[guilock release];
+	[setuptasks release];
+	[extracttasks release];
 	[super dealloc];
 }
 
@@ -49,11 +53,17 @@
 	[self changeCreateFolder:nil];
 }
 
+
+
+-(NSWindow *)window { return mainwindow; }
+
+
+
 -(void)applicationDidFinishLaunching:(NSNotification *)notification
 {
 	if(!opened)
 	{
-		[[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+		[NSApp activateIgnoringOtherApps:YES];
 		[prefswindow makeKeyAndOrderFront:nil];
 	}
 }
@@ -70,49 +80,167 @@
 	return YES;
 }
 
+
+
 -(void)newArchiveForFile:(NSString *)filename
 {
-	BOOL ask=NO;
-	if(GetCurrentKeyModifiers()&(optionKey|shiftKey)) ask=YES;
+	int desttype;
+	if(GetCurrentKeyModifiers()&(optionKey|shiftKey)) desttype=3;
+	else desttype=[[NSUserDefaults standardUserDefaults] integerForKey:@"extractionDestination"];
 
-	TUArchiveController *archive=[[TUArchiveController alloc] initWithFilename:filename controller:self alwaysAsk:ask];
-	if(!archive) return; // big trouble
+	NSString *destination;
+	switch(desttype)
+	{
+		default:
+		case 1:
+			destination=[filename stringByDeletingLastPathComponent];
+		break;
 
-	[archives addObject:archive];
-	[archive release];
+		case 2:
+			destination=[[NSUserDefaults standardUserDefaults] stringForKey:@"extractionDestinationPath"];
+		break;
 
-	[[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+		case 3:
+			destination=nil;
+		break;
+	}
+
+	TUArchiveTaskView *taskview=[[TUArchiveTaskView alloc] initWithFilename:filename];
+	[taskview setupWaitView];
+	[taskview setCancelAction:@selector(archiveTaskViewCancelledBeforeSetup:) target:self];
+	[mainlist addTaskView:taskview];
+	[taskview release];
+
+	[NSApp activateIgnoringOtherApps:YES];
 	[mainwindow makeKeyAndOrderFront:nil];
 
-	if([archives count]==1) [archive go];
-	else [archive wait];
+	[[setuptasks newTaskWithTarget:self] setupExtractionOfFile:filename to:destination taskView:taskview];
 }
 
--(void)archiveFinished:(TUArchiveController *)archive
+-(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview
 {
-	resizeblocked=YES;
-	[archive stop];
-	resizeblocked=NO;
-	[archives removeObject:archive];
+	[mainlist removeTaskView:taskview];
+}
 
-	if([archives count])
+
+
+-(void)setupExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview
+{
+	if(![mainlist containsTaskView:taskview]) // This archive has been cancelled
 	{
-		TUArchiveController *nextarchive=[archives objectAtIndex:0];
-		[nextarchive go];
+		[extracttasks finishCurrentTask];
+		return;
+	}
+
+	currfilename=[filename retain];
+	currtaskview=taskview;
+
+	[taskview setCancelAction:NULL target:nil];
+
+	[self tryDestination:destination];
+}
+
+-(void)tryDestination:(NSString *)destination
+{
+	if(!destination)
+	{
+		NSOpenPanel *panel=[NSOpenPanel openPanel];
+		[panel setCanCreateDirectories:YES];
+		[panel setCanChooseDirectories:YES];
+		[panel setCanChooseFiles:NO];
+		//[panel setTitle:NSLocalizedString(@"Extract Archive",@"Panel title when choosing an unarchiving destination for an archive")];
+		[panel setPrompt:NSLocalizedString(@"Extract",@"Panel OK button title when choosing an unarchiving destination for an archive")];
+
+		[panel beginSheetForDirectory:nil file:nil modalForWindow:mainwindow
+		modalDelegate:self didEndSelector:@selector(archiveDestinationPanelDidEnd:returnCode:contextInfo:)
+		contextInfo:NULL];
+	}
+	else if(!IsPathWritable(destination))
+	{
+		[currtaskview displayNotWritableErrorWithResponseAction:@selector(archiveTaskView:notWritableResponse:) target:self];
+	}
+	else // go ahead and start an extraction task
+	{
+		[currtaskview setCancelAction:@selector(archiveTaskViewCancelledBeforeExtract:) target:self];
+
+		[[extracttasks newTaskWithTarget:self] startExtractionOfFile:currfilename
+		to:destination taskView:currtaskview];
+		[currfilename release];
+
+		[setuptasks finishCurrentTask];
 	}
 }
 
--(void)archiveCancelled:(TUArchiveController *)archive
+-(void)archiveDestinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)info
 {
-	[archive stop];
-	[archives removeObject:archive];
+	if(res==NSOKButton)
+	{
+		[self tryDestination:[panel directory]];
+	}
+	else // cancel
+	{
+		[mainlist removeTaskView:currtaskview];
+		[setuptasks finishCurrentTask];
+		[currfilename release];
+	}
+}
+
+-(void)archiveTaskView:(TUArchiveTaskView *)taskview notWritableResponse:(int)response
+{
+	if(taskview!=currtaskview) NSLog(@"Sanity check failure");
+
+	switch(response)
+	{
+		case 0: // cancel
+			[mainlist removeTaskView:taskview];
+			[setuptasks finishCurrentTask];
+			[currfilename release];
+		break;
+
+		case 1: // to desktop
+			[self tryDestination:[NSSearchPathForDirectoriesInDomains(
+			NSDesktopDirectory,NSUserDomainMask,YES) objectAtIndex:0]];
+		break;
+
+		case 2: // elsewhere
+			[self tryDestination:nil];
+		break;
+	}
+}
+
+-(void)archiveTaskViewCancelledBeforeExtract:(TUArchiveTaskView *)taskview
+{
+	[mainlist removeTaskView:taskview];
 }
 
 
+-(void)startExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview
+{
+	if(![mainlist containsTaskView:taskview]) // This archive has been cancelled
+	{
+		[extracttasks finishCurrentTask];
+		return;
+	}
 
--(TUListView *)listView { return mainlist; }
+	[taskview setupProgressViewInPreparingMode];
 
--(NSWindow *)window { return mainwindow; }
+	TUArchiveController *archive=[[TUArchiveController alloc]
+	initWithFilename:filename destination:destination taskView:taskview];
+	//if(!archive) return; // big trouble TODO: fix this
+
+	[archive runWithFinishAction:@selector(archiveControllerFinished:) target:self];
+}
+
+-(void)archiveControllerFinished:(TUArchiveController *)archive
+{
+	//resizeblocked=YES;
+	[mainlist removeTaskView:[archive taskView]];
+	//resizeblocked=NO;
+
+	[extracttasks finishCurrentTask];
+
+	if(![extracttasks isRunning]) [TUArchiveController clearGlobalPassword];
+}
 
 
 
@@ -185,70 +313,23 @@
 	[[NSUserDefaults standardUserDefaults] setInteger:2 forKey:@"extractionDestination"];
 }
 
-
-
 -(IBAction)changeCreateFolder:(id)sender
 {
 	int createfolder=[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"];
 	[singlefilecheckbox setEnabled:createfolder==1];
 }
 
-
-
--(void)runDestinationPanelForAllArchives
-{
-	[self performSelectorOnMainThread:@selector(_mainThreadRunDestinationPanel) withObject:nil waitUntilDone:NO];
-
-	[guilock lockWhenCondition:1];
-	[guilock unlockWithCondition:0];
-
-	NSEnumerator *enumerator=[archives objectEnumerator];
-	TUArchiveController *archive;
-	while(archive=[enumerator nextObject])
-	{
-		if(![archive destination])
-		{
-			if(newdestination) [archive setDestination:newdestination];
-			else [archive cancel];
-		}
-	}
-}
-
--(void)runDestinationPanelForArchive:(TUArchiveController *)archive
-{
-	[self performSelectorOnMainThread:@selector(_mainThreadRunDestinationPanel) withObject:nil waitUntilDone:NO];
-
-	[guilock lockWhenCondition:1];
-	[guilock unlockWithCondition:0];
-
-	if(newdestination) [archive setDestination:newdestination];
-	else [archive cancel];
-}
-
--(void)_mainThreadRunDestinationPanel
-{
-	NSOpenPanel *panel=[NSOpenPanel openPanel];
-	[panel setCanCreateDirectories:YES];
-	[panel setCanChooseDirectories:YES];
-	[panel setCanChooseFiles:NO];
-	//[panel setTitle:NSLocalizedString(@"Extract Archive",@"Panel title when choosing an unarchiving destination for an archive")];
-	[panel setPrompt:NSLocalizedString(@"Extract",@"Panel OK button title when choosing an unarchiving destination for an archive")];
-
-	[panel beginSheetForDirectory:nil file:nil modalForWindow:mainwindow
-	modalDelegate:self didEndSelector:@selector(archiveDestinationPanelDidEnd:returnCode:contextInfo:)
-	contextInfo:NULL];
-}
-
--(void)archiveDestinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)info
-{
-	if(res==NSOKButton) newdestination=[[panel directory] retain];
-	else newdestination=nil;
-
-	[guilock lockWhenCondition:0];
-	[guilock unlockWithCondition:1];
-}
-
 @end
+
+
+
+
+static BOOL IsPathWritable(NSString *path)
+{
+	if(access([path fileSystemRepresentation],W_OK)==-1) return NO;
+
+	return YES;
+}
 
 
 /*-(void)lockFileSystem:(NSString *)filename

@@ -5,6 +5,22 @@
 	<key>IBClasses</key>
 	<array>
 		<dict>
+			<key>CLASS</key>
+			<string>TUTaskView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>cancelExtraction</key>
@@ -17,6 +33,10 @@
 				<string>id</string>
 				<key>continueAfterPassword</key>
 				<string>id</string>
+				<key>extractElsewhereAfterNotWritable</key>
+				<string>id</string>
+				<key>extractToDesktopAfterNotWritable</key>
+				<string>id</string>
 				<key>okAfterOpenError</key>
 				<string>id</string>
 				<key>selectEncoding</key>
@@ -25,11 +45,13 @@
 				<string>id</string>
 				<key>stopAfterError</key>
 				<string>id</string>
+				<key>stopAfterNotWritable</key>
+				<string>id</string>
 				<key>stopAfterPassword</key>
 				<string>id</string>
 			</dict>
 			<key>CLASS</key>
-			<string>TUArchiveController</string>
+			<string>TUArchiveTaskView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>OUTLETS</key>
@@ -38,12 +60,12 @@
 				<string>NSTextField</string>
 				<key>applyallcheck</key>
 				<string>NSButton</string>
+				<key>canceltarget</key>
+				<string>id</string>
 				<key>encodingfield</key>
 				<string>NSTextField</string>
 				<key>encodingicon</key>
 				<string>NSImageView</string>
-				<key>encodingok</key>
-				<string>NSButton</string>
 				<key>encodingpopup</key>
 				<string>TUEncodingPopUp</string>
 				<key>encodingview</key>
@@ -56,6 +78,8 @@
 				<string>NSView</string>
 				<key>namefield</key>
 				<string>NSTextField</string>
+				<key>notwritableview</key>
+				<string>NSView</string>
 				<key>openerrorfield</key>
 				<string>NSTextField</string>
 				<key>openerroricon</key>
@@ -74,6 +98,8 @@
 				<string>NSImageView</string>
 				<key>progressview</key>
 				<string>NSView</string>
+				<key>responsetarget</key>
+				<string>id</string>
 				<key>waitfield</key>
 				<string>NSTextField</string>
 				<key>waiticon</key>
@@ -82,15 +108,7 @@
 				<string>NSView</string>
 			</dict>
 			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>FirstResponder</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
+			<string>TUMultiTaskView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -99,6 +117,14 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSPopUpButton</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>TUMultiTaskView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>TUTaskView</string>
 		</dict>
 	</array>
 	<key>IBVersion</key>

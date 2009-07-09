@@ -1,115 +1,50 @@
-#import <Cocoa/Cocoa.h>
 #import <XADMaster/XADArchive.h>
+
+#import "TUArchiveTaskView.h"
+
 
 @class TUController,TUEncodingPopUp;
 
 @interface TUArchiveController:NSObject
 {
 	TUController *maincontroller;
+	TUArchiveTaskView *view;
 	XADArchive *archive;
 	NSString *archivename,*destination,*tmpdest,*defaultname;
-	NSView *view;
-
-	NSConditionLock *pauselock;
-	int uiresponse;
-
-	BOOL cancelled,firstprogress,ignoreall;
-
 	NSStringEncoding selected_encoding;
-	NSData *namedata;
 
-	IBOutlet NSView *waitview;
-	IBOutlet NSTextField *waitfield;
-	IBOutlet NSImageView *waiticon;
+	id finishtarget;
+	SEL finishselector;
 
-	IBOutlet NSView *progressview;
-	IBOutlet NSTextField *actionfield;
-	IBOutlet NSTextField *namefield;
-	IBOutlet NSProgressIndicator *progress;
-	IBOutlet NSImageView *progressicon;
-
-	IBOutlet NSView *notwritableview;
-
-	IBOutlet NSView *errorview;
-	IBOutlet NSTextField *errorfield;
-	IBOutlet NSImageView *erroricon;
-	IBOutlet NSButton *applyallcheck;
-
-	IBOutlet NSView *openerrorview;
-	IBOutlet NSTextField *openerrorfield;
-	IBOutlet NSImageView *openerroricon;
-
-	IBOutlet NSView *passwordview;
-	IBOutlet NSTextField *passwordfield;
-	IBOutlet NSImageView *passwordicon;
-
-	IBOutlet NSView *encodingview;
-	IBOutlet TUEncodingPopUp *encodingpopup;
-	IBOutlet NSTextField *encodingfield;
-	IBOutlet NSImageView *encodingicon;
+	BOOL cancelled,hasstopped,ignoreall;
 }
 
--(id)initWithFilename:(NSString *)filename controller:(TUController *)maincontroller alwaysAsk:(BOOL)ask;
++(void)clearGlobalPassword;
+
+-(id)initWithFilename:(NSString *)filename destination:(NSString *)destpath
+taskView:(TUArchiveTaskView *)taskview;
 -(void)dealloc;
 
--(NSString *)destination;
--(void)setDestination:(NSString *)path;
+-(TUArchiveTaskView *)taskView;
 
--(void)wait;
--(void)go;
--(void)stop;
--(void)cancel;
+-(void)runWithFinishAction:(SEL)selector target:(id)target;
 
 -(void)extract;
 -(void)extractFinished;
 -(void)extractFailed;
 -(NSString *)findUniqueDestinationWithDirectory:(NSString *)directory andFilename:(NSString *)filename;
 
+-(void)archiveTaskViewCancelled:(TUArchiveTaskView *)taskview;
+
 -(BOOL)archiveExtractionShouldStop:(XADArchive *)archive;
 
 -(NSStringEncoding)archive:(XADArchive *)archive encodingForData:(NSData *)data guess:(NSStringEncoding)guess confidence:(float)confidence;
 
 -(void)archive:(XADArchive *)msgarchive extractionOfEntryWillStart:(int)n;
--(void)archive:(XADArchive *)msgarchive extractionProgressBytes:(xadSize)bytes of:(xadSize)total;
--(void)progressStart:(NSNumber *)total;
--(void)progressUpdate:(NSNumber *)bytes;
-
+-(void)archive:(XADArchive *)sender extractionProgressBytes:(off_t)bytes of:(off_t)total;
 -(XADAction)archive:(XADArchive *)archive nameDecodingDidFailForEntry:(int)n data:(NSData *)data;
 -(XADAction)archive:(XADArchive *)archive creatingDirectoryDidFailForEntry:(int)n;
 -(XADAction)archive:(XADArchive *)sender extractionOfEntryDidFail:(int)n error:(XADError)error;
 -(XADAction)archive:(XADArchive *)sender extractionOfResourceForkForEntryDidFail:(int)n error:(XADError)error;
-
--(int)displayNotWritableError;
--(XADAction)displayError:(NSString *)error;
--(void)displayOpenError:(NSString *)error;
--(XADAction)displayEncodingSelectorForData:(NSData *)data encoding:(NSStringEncoding)encoding;
-
--(IBAction)cancelExtraction:(id)sender;
--(IBAction)cancelWait:(id)sender;
--(IBAction)stopAfterNotWritable:(id)sender;
--(IBAction)extractToDesktopAfterNotWritable:(id)sender;
--(IBAction)extractElsewhereAfterNotWritable:(id)sender;
--(IBAction)stopAfterError:(id)sender;
--(IBAction)continueAfterError:(id)sender;
--(IBAction)okAfterOpenError:(id)sender;
--(IBAction)stopAfterPassword:(id)sender;
--(IBAction)continueAfterPassword:(id)sender;
--(IBAction)stopAfterEncoding:(id)sender;
--(IBAction)continueAfterEncoding:(id)sender;
--(IBAction)selectEncoding:(id)sender;
-
--(void)setupWaitView;
--(void)setupProgressView;
--(void)setupNotWritableView;
--(void)setupErrorView:(NSString *)error;
--(void)setupOpenErrorView:(NSString *)error;
--(void)setupPasswordView;
--(void)setupEncodingView;
-
--(void)setDisplayedView:(NSView *)dispview;
--(void)getUserAttention;
-
--(int)waitForResponseFromUI;
--(void)provideResponseFromUI:(int)response;
 
 @end

@@ -1,20 +1,23 @@
 #import <Cocoa/Cocoa.h>
 #import <XADMaster/XADArchive.h>
 
-@class TUArchiveController,TUListView,TUEncodingPopUp;
+#import "TUTaskQueue.h"
+#import "TUArchiveController.h"
+#import "TUArchiveTaskView.h"
+#import "TUTaskListView.h"
+#import "TUEncodingPopUp.h"
 
 @interface TUController:NSObject
 {
-//	NSMutableDictionary *filesyslocks;
-//	NSLock *metalock;
-	NSMutableArray *archives;
+	TUTaskQueue *setuptasks,*extracttasks;
+
+	NSString *currfilename;
+	TUArchiveTaskView *currtaskview;
+
 	BOOL resizeblocked,opened;
 
-	NSConditionLock *guilock;
-	NSString *newdestination;
-
 	IBOutlet NSWindow *mainwindow;
-	IBOutlet TUListView *mainlist;
+	IBOutlet TUTaskListView *mainlist;
 	IBOutlet TUEncodingPopUp *encodingpopup;
 
 	IBOutlet NSWindow *prefswindow;
@@ -24,16 +27,32 @@
 	IBOutlet NSMenuItem *diritem;
 
 	IBOutlet NSButton *singlefilecheckbox;
+
+//	NSMutableDictionary *filesyslocks;
+//	NSLock *metalock;
 }
 
+-(id)init;
+-(void)dealloc;
+-(void)awakeFromNib;
+
+-(NSWindow *)window;
+
+-(void)applicationDidFinishLaunching:(NSNotification *)notification;
+-(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app;
 -(BOOL)application:(NSApplication *)app openFile:(NSString *)filename;
 
 -(void)newArchiveForFile:(NSString *)filename;
--(void)archiveFinished:(TUArchiveController *)archive;
--(void)archiveCancelled:(TUArchiveController *)archive;
+-(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview;
 
--(TUListView *)listView;
--(NSWindow *)window;
+-(void)setupExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview;
+-(void)tryDestination:(NSString *)destination;
+-(void)archiveDestinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)info;
+-(void)archiveTaskView:(TUArchiveTaskView *)taskview notWritableResponse:(int)response;
+-(void)archiveTaskViewCancelledBeforeExtract:(TUArchiveTaskView *)taskview;
+
+-(void)startExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview;
+-(void)archiveControllerFinished:(TUArchiveController *)archive;
 
 -(void)listResized:(id)sender;
 
@@ -43,9 +62,6 @@
 
 -(IBAction)changeCreateFolder:(id)sender;
 
--(void)runDestinationPanelForAllArchives;
--(void)runDestinationPanelForArchive:(TUArchiveController *)archive;
--(void)archiveDestinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)info;
 
 /*-(void)lockFileSystem:(NSString *)filename;
 -(BOOL)tryFileSystemLock:(NSString *)filename;

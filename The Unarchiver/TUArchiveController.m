@@ -1,125 +1,79 @@
 #import "TUArchiveController.h"
 #import "TUController.h"
-#import "TUListView.h"
+#import "TUTaskListView.h"
 #import "TUEncodingPopUp.h"
 #import <XADMaster/XADRegex.h>
 
 
 
-static BOOL IsPathWritable(NSString *path);
 static BOOL GetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info);
 static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info);
 
 
+static NSString *globalpassword=nil;
+
 
 @implementation TUArchiveController
 
--(id)initWithFilename:(NSString *)filename controller:(TUController *)controller alwaysAsk:(BOOL)ask
++(void)clearGlobalPassword
+{
+	[globalpassword release];
+	globalpassword=nil;
+}
+
+-(id)initWithFilename:(NSString *)filename destination:(NSString *)destpath
+taskView:(TUArchiveTaskView *)taskview
 {
 	if(self=[super init])
 	{
-		view=nil;
 		cancelled=NO;
 		ignoreall=NO;
-		selected_encoding=0;
+		hasstopped=NO;
 
-		waitview=nil;
-		progressview=nil;
-		errorview=nil;
-		openerrorview=nil;
-		passwordview=nil;
-		encodingview=nil;
-
+		view=[taskview retain];
 		archivename=[filename retain];
-		maincontroller=controller;
 
-		int desttype;
-		if(ask) desttype=3;
-		else desttype=[[NSUserDefaults standardUserDefaults] integerForKey:@"extractionDestination"];
-
-		switch(desttype)
-		{
-			default:
-			case 1:
-				destination=[filename stringByDeletingLastPathComponent];
-			break;
-			case 2:
-				destination=[[NSUserDefaults standardUserDefaults] stringForKey:@"extractionDestinationPath"];
-			break;
-			case 3:
-				destination=nil;
-			break;
-		}
-		[destination retain];
+		destination=[destpath retain];
 		tmpdest=nil;
 
 		if([filename matchedByPattern:@"\\.part[0-9]+\\.rar$" options:REG_ICASE])
 		defaultname=[[[[filename lastPathComponent] stringByDeletingPathExtension] stringByDeletingPathExtension] retain];
 		else
 		defaultname=[[[filename lastPathComponent] stringByDeletingPathExtension] retain];
-
-		pauselock=[[NSConditionLock alloc] initWithCondition:0];
 	}
 	return self;
 }
 
 -(void)dealloc
 {
+	[view release];
 	[archive release];
 	[archivename release];
 	[destination release];
 	[tmpdest release];
 	[defaultname release];
 
-	[view release];
-	[pauselock release];
-
-	[waitview release];
-	[progressview release];
-	[errorview release];
-	[openerrorview release];
-	[passwordview release];
-	[encodingview release];
-
 	[super dealloc];
 }
 
 
 
--(NSString *)destination { return destination; }
+-(TUArchiveTaskView *)taskView { return view; }
 
--(void)setDestination:(NSString *)path
+
+
+-(void)runWithFinishAction:(SEL)selector target:(id)target
 {
-	[destination autorelease];
-	destination=[path retain];
+	finishtarget=target;
+	finishselector=selector;
+	[self retain];
+
+	[view setCancelAction:@selector(archiveTaskViewCancelled:) target:self];
+
+	//[view setupProgressViewInPreparingMode];
+
+	[NSThread detachNewThreadSelector:@selector(extract) toTarget:self withObject:nil];
 }
-
-
--(void)wait
-{
-	[self setupWaitView];
-}
-
--(void)go
-{
-	if(cancelled) [maincontroller archiveCancelled:self];
-	else
-	{
-		[self setupProgressView];
-		[NSThread detachNewThreadSelector:@selector(extract) toTarget:self withObject:nil];
-	}
-}
-
--(void)stop
-{
-	[[maincontroller listView] removeSubview:view];
-}
-
--(void)cancel
-{
-	cancelled=YES;
-}
-
 
 -(void)extract
 {
@@ -127,41 +81,15 @@ static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bit
 
 	@try
 	{
-		if(!destination)
-		{
-			[maincontroller runDestinationPanelForAllArchives];
-			if(cancelled) @throw @"User cancelled destination panel";
-		}
-
-		while(!IsPathWritable(destination))
-		{
-			switch([self displayNotWritableError])
-			{
-				case 0: // cancel
-					@throw @"User cancelled destination dialog";
-				break;
-
-				case 1: // to desktop
-					[self setDestination:[NSSearchPathForDirectoriesInDomains(
-					NSDesktopDirectory,NSUserDomainMask,YES) objectAtIndex:0]];
-				break;
-
-				case 2: // elsewhere
-					[maincontroller runDestinationPanelForArchive:self];
-					if(cancelled) @throw @"User cancelled destination panel";
-				break;
-			}
-		}
-
 		// TODO: fix tmppath handling on crash.
 		NSString *tmpdir=[NSString stringWithFormat:@".tmp%04x%04x%04x",rand()&0xffff,rand()&0xffff,rand()&0xffff];
 		tmpdest=[[destination stringByAppendingPathComponent:tmpdir] retain];
 
-		archive=[archive=[XADArchive alloc] initWithFile:archivename delegate:self error:NULL];
+		archive=[[XADArchive alloc] initWithFile:archivename delegate:self error:NULL];
 
 		if(!archive)
 		{
-			[self displayOpenError:[NSString stringWithFormat:
+			[view displayOpenError:[NSString stringWithFormat:
 			NSLocalizedString(@"The contents of the file \"%@\" can not be extracted with this program.",@"Error message for files not extractable by The Unarchiver"),
 			[archivename lastPathComponent]]];
 			@throw @"Failed to open archive";
@@ -172,9 +100,7 @@ static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bit
 
 		//[archive setDelegate:self];
 
-		firstprogress=YES;
 		BOOL res=[archive extractTo:tmpdest subArchives:YES];
-
 		if(!res) @throw @"Archive extraction failed or was cancelled";
 
 		[self performSelectorOnMainThread:@selector(extractFinished) withObject:nil waitUntilDone:NO];
@@ -268,7 +194,8 @@ static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bit
 		}
 	}
 
-	[maincontroller archiveFinished:self];
+	[finishtarget performSelector:finishselector withObject:self];
+	[self release];
 }
 
 -(void)extractFailed
@@ -276,7 +203,8 @@ static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bit
 	NSFileManager *fm=[NSFileManager defaultManager];
 	[fm removeFileAtPath:tmpdest handler:nil];
 
-	[maincontroller archiveFinished:self];
+	[finishtarget performSelector:finishselector withObject:self];
+	[self release];
 }
 
 -(NSString *)findUniqueDestinationWithDirectory:(NSString *)directory andFilename:(NSString *)filename
@@ -299,20 +227,31 @@ static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bit
 
 
 
+-(void)archiveTaskViewCancelled:(TUArchiveTaskView *)taskview
+{
+	cancelled=YES;
+}
+
+
 
 -(BOOL)archiveExtractionShouldStop:(XADArchive *)sender { return cancelled; }
 
--(NSStringEncoding)archive:(XADArchive *)archive encodingForData:(NSData *)data guess:(NSStringEncoding)guess confidence:(float)confidence
+-(NSStringEncoding)archive:(XADArchive *)sender encodingForData:(NSData *)data guess:(NSStringEncoding)guess confidence:(float)confidence
 {
 	NSStringEncoding encoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
 	int threshold=[[NSUserDefaults standardUserDefaults] integerForKey:@"autoDetectionThreshold"];
 
-	if(encoding) return encoding;
+	if(cancelled) return guess;
+	else if(encoding) return encoding;
 	else if(selected_encoding) return selected_encoding;
 	else if(confidence*100<threshold)
 	{
-		XADAction action=[self displayEncodingSelectorForData:data encoding:guess];
-		if(action==XADAbort) cancelled=YES;
+		selected_encoding=[view displayEncodingSelectorForData:data encoding:guess];
+		if(!selected_encoding)
+		{
+			cancelled=YES;
+			return guess;
+		}
 		return selected_encoding;
 	}
 	else return guess;
@@ -320,69 +259,47 @@ static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bit
 
 -(void)archiveNeedsPassword:(XADArchive *)sender
 {
-	[self performSelectorOnMainThread:@selector(setupPasswordView) withObject:nil waitUntilDone:NO];
-
-	if([self waitForResponseFromUI])
+	if(globalpassword)
 	{
-		[archive setPassword:[passwordfield stringValue]];
+		[sender setPassword:globalpassword];
 	}
 	else
 	{
-		cancelled=YES;
+		BOOL applytoall;
+		NSString *password=[view displayPasswordInputWithApplyToAllPointer:&applytoall];
+
+		if(password)
+		{
+			[sender setPassword:password];
+			if(applytoall) globalpassword=[password retain];
+		}
+		else
+		{
+			cancelled=YES;
+		}
 	}
-
-//	if(cancelled) @throw @"User cancelled after password request";
-
-	[self performSelectorOnMainThread:@selector(setupProgressView) withObject:nil waitUntilDone:NO];
 }
 
 -(void)archive:(XADArchive *)sender extractionOfEntryWillStart:(int)n
 {
 	NSString *name=[sender nameOfEntry:n];
-	if(name) [namefield performSelectorOnMainThread:@selector(setStringValue:) withObject:name waitUntilDone:NO];
+	if(name) [view setName:name];
 }
 
--(void)archive:(XADArchive *)sender extractionProgressBytes:(xadSize)bytes of:(xadSize)total
+-(void)archive:(XADArchive *)sender extractionProgressBytes:(off_t)bytes of:(off_t)total
 {
-	if(firstprogress)
-	{
-		[self performSelectorOnMainThread:@selector(progressStart:)
-		withObject:[NSNumber numberWithUnsignedLongLong:total] waitUntilDone:NO];
-		firstprogress=NO;
-	}
-	else
-	{
-		[self performSelectorOnMainThread:@selector(progressUpdate:)
-		withObject:[NSNumber numberWithUnsignedLongLong:bytes] waitUntilDone:NO];
-	}
+	[view setProgress:(double)bytes/(double)total];
 }
-
--(void)progressStart:(NSNumber *)total
-{
-	[actionfield setStringValue:[NSString stringWithFormat:
-	NSLocalizedString(@"Extracting \"%@\"",@"Status text while extracting an archive"),
-	[archivename lastPathComponent]]];
-
-	[progress setIndeterminate:NO];
-	[progress setDoubleValue:0];
-	[progress setMaxValue:[total unsignedLongLongValue]];
-}
-
--(void)progressUpdate:(NSNumber *)bytes
-{
-	[progress setDoubleValue:[bytes unsignedLongLongValue]];
-}
-
 
 
 -(XADAction)archive:(XADArchive *)archive nameDecodingDidFailForEntry:(int)n data:(NSData *)data
 {
-	return [self displayEncodingSelectorForData:data encoding:0];
+	return [view displayEncodingSelectorForData:data encoding:0];
 }
 
 -(XADAction)archive:(XADArchive *)archive creatingDirectoryDidFailForEntry:(int)n
 {
-	[self displayOpenError:[NSString stringWithFormat:
+	[view displayOpenError:[NSString stringWithFormat:
 		NSLocalizedString(@"Could not write to the destination directory.",@"Error message string when writing is impossible.")]
 	];
 	return XADAbort;
@@ -390,339 +307,31 @@ static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bit
 
 -(XADAction)archive:(XADArchive *)sender extractionOfEntryDidFail:(int)n error:(XADError)error
 {
+	if(ignoreall) return XADSkip;
+	if(hasstopped) return XADAbort;
+
 	NSString *errstr=[archive describeError:error];
-	return [self displayError:
+	XADAction action=[view displayError:
 		[NSString stringWithFormat:
 		NSLocalizedString(@"Could not extract the file \"%@\": %@",@"Error message string. The first %@ is the file name, the second the error message"),
 		[sender nameOfEntry:n],[[NSBundle mainBundle] localizedStringForKey:errstr value:errstr table:nil]]
-	];
+	ignoreAll:&ignoreall];
+
+	if(action==XADAbort) hasstopped=YES;
+
+	return action;
 }
 
 -(XADAction)archive:(XADArchive *)sender extractionOfResourceForkForEntryDidFail:(int)n error:(XADError)error
 {
+	if(ignoreall) return XADSkip;
+
 	NSString *errstr=[archive describeError:error];
-	return [self displayError:
+	return [view displayError:
 		[NSString stringWithFormat:
 		NSLocalizedString(@"Could not extract the resource fork for the file \"%@\":\n%@",@"Error message for resource forks. The first %@ is the file name, the second the error message"),
 		[sender nameOfEntry:n],[[NSBundle mainBundle] localizedStringForKey:errstr value:errstr table:nil]]
-	];
-}
-
-
-
--(int)displayNotWritableError
-{
-	[self performSelectorOnMainThread:@selector(setupNotWritableView) withObject:nil waitUntilDone:NO];
-	int action=[self waitForResponseFromUI];
-
-	[self performSelectorOnMainThread:@selector(setDisplayedView:) withObject:progressview waitUntilDone:NO];
-
-	return action;
-}
-
--(XADAction)displayError:(NSString *)error
-{
-	if(ignoreall) return XADSkip;
-
-	[self performSelectorOnMainThread:@selector(setupErrorView:) withObject:error waitUntilDone:NO];
-	XADAction action=[self waitForResponseFromUI];
-
-	if(action==XADSkip)
-	{
-		if([applyallcheck state]==NSOnState) ignoreall=YES;
-		else ignoreall=NO;
-	}
-
-	[self performSelectorOnMainThread:@selector(setDisplayedView:) withObject:progressview waitUntilDone:NO];
-
-	return action;
-}
-
--(void)displayOpenError:(NSString *)error
-{
-	[self performSelectorOnMainThread:@selector(setupOpenErrorView:) withObject:error waitUntilDone:NO];
-	[self waitForResponseFromUI];
-}
-
--(XADAction)displayEncodingSelectorForData:(NSData *)data encoding:(NSStringEncoding)encoding
-{
-	selected_encoding=encoding;
-	namedata=data;
-
-	[self performSelectorOnMainThread:@selector(setupEncodingView) withObject:nil waitUntilDone:NO];
-	XADAction action=[self waitForResponseFromUI];
-
-	selected_encoding=[encodingpopup selectedTag];
-
-	[self performSelectorOnMainThread:@selector(setDisplayedView:) withObject:progressview waitUntilDone:NO];
-
-	return action;
-}
-
-
-
-
-
-
--(IBAction)cancelWait:(id)sender
-{
-	[maincontroller archiveCancelled:self];
-	[sender setEnabled:NO];
-}
-
--(IBAction)cancelExtraction:(id)sender
-{
-	cancelled=YES;
-	[sender setEnabled:NO];
-}
-
--(IBAction)stopAfterNotWritable:(id)sender
-{
-	[self provideResponseFromUI:0];
-}
-
--(IBAction)extractToDesktopAfterNotWritable:(id)sender
-{
-	[self provideResponseFromUI:1];
-}
-
--(IBAction)extractElsewhereAfterNotWritable:(id)sender
-{
-	[self provideResponseFromUI:2];
-}
-
--(IBAction)stopAfterError:(id)sender
-{
-	// KLUDGE: for some reason the button releases itself if sent an Esc keystroke.
-	// This will drive up the retain count, but as the button should never be released
-	// anyway this shouldn't be a problem.
-	//[sender retain];
-	[self provideResponseFromUI:XADAbort];
-}
-
--(IBAction)continueAfterError:(id)sender
-{
-	[self provideResponseFromUI:XADSkip];
-}
-
--(IBAction)okAfterOpenError:(id)sender
-{
-	[self provideResponseFromUI:0];
-}
-
--(IBAction)stopAfterPassword:(id)sender
-{
-	// KLUDGE: for some reason the button releases itself if sent an Esc keystroke.
-	// This will drive up the retain count, but as the button should never be released
-	// anyway this shouldn't be a problem.
-	//[sender retain];
-	[self provideResponseFromUI:NO];
-}
-
--(IBAction)continueAfterPassword:(id)sender
-{
-	[self provideResponseFromUI:YES];
-}
-
--(IBAction)stopAfterEncoding:(id)sender
-{
-	// KLUDGE: for some reason the button releases itself if sent an Esc keystroke.
-	// This will drive up the retain count, but as the button should never be released
-	// anyway this shouldn't be a problem.
-	//[sender retain];
-	[self provideResponseFromUI:XADAbort];
-}
-
--(IBAction)continueAfterEncoding:(id)sender
-{
-	[self provideResponseFromUI:XADRetry];
-}
-
--(IBAction)selectEncoding:(id)sender
-{
-	NSStringEncoding encoding=[encodingpopup selectedTag];
-	NSString *str=[[[NSString alloc] initWithData:namedata encoding:encoding] autorelease];
-	[encodingfield setStringValue:str?str:@""];
-}
-
-
-
--(void)setupWaitView
-{
-	if(!waitview)
-	{
-		NSNib *nib=[[[NSNib alloc] initWithNibNamed:@"WaitView" bundle:nil] autorelease];
-		[nib instantiateNibWithOwner:self topLevelObjects:nil];
-	}
-
-	[waitfield setStringValue:[archivename lastPathComponent]];
-
-	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:archivename];
-	[icon setSize:[waiticon frame].size];
-	[waiticon setImage:icon];
-
-	[self setDisplayedView:waitview];
-}
-
--(void)setupProgressView
-{
-	if(!progressview)
-	{
-		NSNib *nib=[[[NSNib alloc] initWithNibNamed:@"ProgressView" bundle:nil] autorelease];
-		[nib instantiateNibWithOwner:self topLevelObjects:nil];
-	}
-
-	[actionfield setStringValue:[NSString stringWithFormat:
-	NSLocalizedString(@"Preparing to extract \"%@\"",@"Status text when preparing to extract an archive"),
-	[archivename lastPathComponent]]];
-
-	[namefield setStringValue:@""];
-
-	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:archivename];
-	[icon setSize:[progressicon frame].size];
-	[progressicon setImage:icon];
-
-	[progress setIndeterminate:YES];
-	[progress startAnimation:self];
-
-	[self setDisplayedView:progressview];
-}
-
--(void)setupNotWritableView
-{
-	if(!notwritableview)
-	{
-		NSNib *nib=[[[NSNib alloc] initWithNibNamed:@"NotWritableView" bundle:nil] autorelease];
-		[nib instantiateNibWithOwner:self topLevelObjects:nil];
-	}
-
-	[self setDisplayedView:notwritableview];
-	[self getUserAttention];
-}
-
--(void)setupErrorView:(NSString *)error
-{
-	if(!errorview)
-	{
-		NSNib *nib=[[[NSNib alloc] initWithNibNamed:@"ErrorView" bundle:nil] autorelease];
-		[nib instantiateNibWithOwner:self topLevelObjects:nil];
-	}
-
-	[errorfield setStringValue:error];
-	[self setDisplayedView:errorview];
-	[self getUserAttention];
-}
-
--(void)setupOpenErrorView:(NSString *)error
-{
-	if(!openerrorview)
-	{
-		NSNib *nib=[[[NSNib alloc] initWithNibNamed:@"OpenErrorView" bundle:nil] autorelease];
-		[nib instantiateNibWithOwner:self topLevelObjects:nil];
-	}
-
-	[openerrorfield setStringValue:error];
-	[self setDisplayedView:openerrorview];
-	[self getUserAttention];
-}
-
--(void)setupPasswordView
-{
-	if(!passwordview)
-	{
-		NSNib *nib=[[[NSNib alloc] initWithNibNamed:@"PasswordView" bundle:nil] autorelease];
-		[nib instantiateNibWithOwner:self topLevelObjects:nil];
-	}
-
-	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:archivename];
-	[icon setSize:[passwordicon frame].size];
-	[passwordicon setImage:icon];
-
-	[self setDisplayedView:passwordview];
-	[[passwordfield window] makeFirstResponder:passwordfield];
-	[self getUserAttention];
-}
-
--(void)setupEncodingView
-{
-	if(!encodingview)
-	{
-		NSNib *nib=[[[NSNib alloc] initWithNibNamed:@"EncodingView" bundle:nil] autorelease];
-		[nib instantiateNibWithOwner:self topLevelObjects:nil];
-	}
-
-	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:archivename];
-	[icon setSize:[encodingicon frame].size];
-	[encodingicon setImage:icon];
-
-	[encodingpopup buildEncodingListMatchingData:namedata];
-	if(selected_encoding)
-	{
-		int index=[encodingpopup indexOfItemWithTag:selected_encoding];
-		if(index>=0) [encodingpopup selectItemAtIndex:index];
-		else [encodingpopup selectItemAtIndex:[encodingpopup indexOfItemWithTag:NSISOLatin1StringEncoding]];
-	}
-
-	[self selectEncoding:self];
-
-	[self setDisplayedView:encodingview];
-	[[passwordfield window] makeFirstResponder:passwordfield];
-	[self getUserAttention];
-}
-
-
-
--(void)setDisplayedView:(NSView *)dispview
-{
-	NSRect frame=[dispview frame];
-	[dispview setAutoresizingMask:NSViewWidthSizable|NSViewMinYMargin];
-
-	if(view)
-	{
-		NSEnumerator *enumerator=[[view subviews] objectEnumerator];
-		NSView *subview;
-		while(subview=[enumerator nextObject]) [subview removeFromSuperview];
-
-		NSSize viewsize=[view frame].size;
-		NSRect newframe=NSMakeRect(0,viewsize.height-frame.size.height,viewsize.width,frame.size.height);
-		[dispview setFrame:newframe];
-		[view addSubview:dispview];
-		[[maincontroller listView] setHeight:frame.size.height forView:view];
-	}
-	else
-	{
-		view=[[NSView alloc] init];
-		[view setAutoresizesSubviews:YES];
-
-		NSRect newframe=NSMakeRect(0,0,frame.size.width,frame.size.height);
-		[view setFrame:newframe];
-		[dispview setFrame:newframe];
-		[view addSubview:dispview];
-
-		[[maincontroller listView] addSubview:view];
-	}
-
-}
-
--(void)getUserAttention
-{
-	[[maincontroller window] makeKeyAndOrderFront:self];
-	[NSApp activateIgnoringOtherApps:YES];
-}
-
-// Uiiiiii~ Aisuuuuu~
--(int)waitForResponseFromUI
-{
-	[pauselock lockWhenCondition:1];
-	[pauselock unlockWithCondition:0];
-	return uiresponse;
-}
-
--(void)provideResponseFromUI:(int)response
-{
-	uiresponse=response;
-	[pauselock lockWhenCondition:0];
-	[pauselock unlockWithCondition:1];
+	ignoreAll:&ignoreall];
 }
 
 
@@ -730,14 +339,6 @@ static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bit
 
 
 
-#include <unistd.h>
-
-static BOOL IsPathWritable(NSString *path)
-{
-	if(access([path fileSystemRepresentation],W_OK)==-1) return NO;
-
-	return YES;
-}
 
 static BOOL GetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info)
 {

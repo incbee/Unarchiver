@@ -17,7 +17,7 @@
 		1B1D484B0AFCCD2F009AA7EB /* ProgressView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1B2109F50A38EEAF005ED2AF /* ProgressView.nib */; };
 		1B1D484C0AFCCD30009AA7EB /* WaitView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1B2117AC0A4E10D3005ED2AF /* WaitView.nib */; };
 		1B2109F90A38F2BA005ED2AF /* TUArchiveController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2109F80A38F2BA005ED2AF /* TUArchiveController.m */; };
-		1B2116FC0A4CA510005ED2AF /* TUListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2116FB0A4CA510005ED2AF /* TUListView.m */; };
+		1B2116FC0A4CA510005ED2AF /* TUTaskListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2116FB0A4CA510005ED2AF /* TUTaskListView.m */; };
 		1B2AD8530A5C4BD200FAEA01 /* 7z.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B2AD8380A5C4BD200FAEA01 /* 7z.icns */; };
 		1B2AD8540A5C4BD200FAEA01 /* ace.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B2AD8390A5C4BD200FAEA01 /* ace.icns */; };
 		1B2AD8550A5C4BD200FAEA01 /* adf.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B2AD83A0A5C4BD200FAEA01 /* adf.icns */; };
@@ -40,6 +40,8 @@
 		1B2AD86D0A5C4BD200FAEA01 /* zip.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B2AD8520A5C4BD200FAEA01 /* zip.icns */; };
 		1B6FA20B0A58A1D800066489 /* CSFileTypeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */; };
 		1B81DBD20FF98BF9005C5B23 /* NotWritableView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1B81DBD00FF98BF9005C5B23 /* NotWritableView.nib */; };
+		1B81DDA710003BBB005C5B23 /* TUArchiveTaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B81DDA610003BBB005C5B23 /* TUArchiveTaskView.m */; };
+		1B81DDCE10012A2D005C5B23 /* TUTaskQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B81DDCD10012A2D005C5B23 /* TUTaskQueue.m */; };
 		1B932D6A0A560AC900F7DE66 /* TUCancelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B932D690A560AC900F7DE66 /* TUCancelButton.m */; };
 		1B932DA10A56142A00F7DE66 /* close_hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B932D9E0A56142A00F7DE66 /* close_hover.png */; };
 		1B932DA20A56142A00F7DE66 /* close_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B932D9F0A56142A00F7DE66 /* close_press.png */; };
@@ -116,8 +118,8 @@
 		1B2109F50A38EEAF005ED2AF /* ProgressView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = ProgressView.nib; sourceTree = "<group>"; };
 		1B2109F70A38F2BA005ED2AF /* TUArchiveController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUArchiveController.h; sourceTree = "<group>"; };
 		1B2109F80A38F2BA005ED2AF /* TUArchiveController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUArchiveController.m; sourceTree = "<group>"; };
-		1B2116FA0A4CA50F005ED2AF /* TUListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUListView.h; sourceTree = "<group>"; };
-		1B2116FB0A4CA510005ED2AF /* TUListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUListView.m; sourceTree = "<group>"; };
+		1B2116FA0A4CA50F005ED2AF /* TUTaskListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUTaskListView.h; sourceTree = "<group>"; };
+		1B2116FB0A4CA510005ED2AF /* TUTaskListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUTaskListView.m; sourceTree = "<group>"; };
 		1B2117AC0A4E10D3005ED2AF /* WaitView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = WaitView.nib; sourceTree = "<group>"; };
 		1B2117B60A4E1240005ED2AF /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ErrorView.nib; sourceTree = "<group>"; };
 		1B2AD8380A5C4BD200FAEA01 /* 7z.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = 7z.icns; sourceTree = "<group>"; };
@@ -150,6 +152,10 @@
 		1B6FA2090A58A1D800066489 /* CSFileTypeList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CSFileTypeList.h; sourceTree = "<group>"; };
 		1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CSFileTypeList.m; sourceTree = "<group>"; };
 		1B81DBD10FF98BF9005C5B23 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1B81DDA510003BBB005C5B23 /* TUArchiveTaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUArchiveTaskView.h; sourceTree = "<group>"; };
+		1B81DDA610003BBB005C5B23 /* TUArchiveTaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUArchiveTaskView.m; sourceTree = "<group>"; };
+		1B81DDCC10012A2D005C5B23 /* TUTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUTaskQueue.h; sourceTree = "<group>"; };
+		1B81DDCD10012A2D005C5B23 /* TUTaskQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUTaskQueue.m; sourceTree = "<group>"; };
 		1B932D0D0A55CFEF00F7DE66 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
 		1B932D680A560AC900F7DE66 /* TUCancelButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUCancelButton.h; sourceTree = "<group>"; };
 		1B932D690A560AC900F7DE66 /* TUCancelButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUCancelButton.m; sourceTree = "<group>"; };
@@ -212,10 +218,14 @@
 			children = (
 				1B0DE4C80A37A1620009B697 /* TUController.h */,
 				1B0DE4C90A37A1620009B697 /* TUController.m */,
+				1B81DDCC10012A2D005C5B23 /* TUTaskQueue.h */,
+				1B81DDCD10012A2D005C5B23 /* TUTaskQueue.m */,
 				1B2109F70A38F2BA005ED2AF /* TUArchiveController.h */,
 				1B2109F80A38F2BA005ED2AF /* TUArchiveController.m */,
-				1B2116FA0A4CA50F005ED2AF /* TUListView.h */,
-				1B2116FB0A4CA510005ED2AF /* TUListView.m */,
+				1B81DDA510003BBB005C5B23 /* TUArchiveTaskView.h */,
+				1B81DDA610003BBB005C5B23 /* TUArchiveTaskView.m */,
+				1B2116FA0A4CA50F005ED2AF /* TUTaskListView.h */,
+				1B2116FB0A4CA510005ED2AF /* TUTaskListView.m */,
 				1B932D680A560AC900F7DE66 /* TUCancelButton.h */,
 				1B932D690A560AC900F7DE66 /* TUCancelButton.m */,
 				1BED5DB30A600D6E00CA31C2 /* TUEncodingPopUp.h */,
@@ -480,10 +490,12 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				1B0DE4CA0A37A1620009B697 /* TUController.m in Sources */,
 				1B2109F90A38F2BA005ED2AF /* TUArchiveController.m in Sources */,
-				1B2116FC0A4CA510005ED2AF /* TUListView.m in Sources */,
+				1B2116FC0A4CA510005ED2AF /* TUTaskListView.m in Sources */,
 				1B932D6A0A560AC900F7DE66 /* TUCancelButton.m in Sources */,
 				1B6FA20B0A58A1D800066489 /* CSFileTypeList.m in Sources */,
 				1BED5DB50A600D6E00CA31C2 /* TUEncodingPopUp.m in Sources */,
+				1B81DDA710003BBB005C5B23 /* TUArchiveTaskView.m in Sources */,
+				1B81DDCE10012A2D005C5B23 /* TUTaskQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
