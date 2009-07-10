@@ -36,6 +36,8 @@
 -(void)dealloc;
 -(void)awakeFromNib;
 
+-(void)cleanupOrphanedTempDirectories;
+
 -(NSWindow *)window;
 
 -(void)applicationDidFinishLaunching:(NSNotification *)notification;

@@ -72,6 +72,15 @@ taskView:(TUArchiveTaskView *)taskview
 
 	//[view setupProgressViewInPreparingMode];
 
+	// TODO: fix tmppath handling on crash.
+//	NSString *tmpdir=[NSString stringWithFormat:@".tmp%04x%04x%04x",rand()&0xffff,rand()&0xffff,rand()&0xffff];
+
+	static int tmpcounter=0;
+	NSString *tmpdir=[NSString stringWithFormat:@".TheUnarchiverTemp%d",tmpcounter++];
+	tmpdest=[[destination stringByAppendingPathComponent:tmpdir] retain];
+
+	[self rememberTempDirectory:tmpdest];
+
 	[NSThread detachNewThreadSelector:@selector(extract) toTarget:self withObject:nil];
 }
 
@@ -81,10 +90,6 @@ taskView:(TUArchiveTaskView *)taskview
 
 	@try
 	{
-		// TODO: fix tmppath handling on crash.
-		NSString *tmpdir=[NSString stringWithFormat:@".tmp%04x%04x%04x",rand()&0xffff,rand()&0xffff,rand()&0xffff];
-		tmpdest=[[destination stringByAppendingPathComponent:tmpdir] retain];
-
 		archive=[[XADArchive alloc] initWithFile:archivename delegate:self error:NULL];
 
 		if(!archive)
@@ -148,6 +153,8 @@ taskView:(TUArchiveTaskView *)taskview
 			[fm removeFileAtPath:tmpdest handler:nil];
 		}
 
+		[self forgetTempDirectory:tmpdest];
+
 		if(copydate)
 		{
 			FSCatalogInfo archiveinfo,newinfo;
@@ -202,6 +209,7 @@ taskView:(TUArchiveTaskView *)taskview
 {
 	NSFileManager *fm=[NSFileManager defaultManager];
 	[fm removeFileAtPath:tmpdest handler:nil];
+	[self forgetTempDirectory:tmpdest];
 
 	[finishtarget performSelector:finishselector withObject:self];
 	[self release];
@@ -225,6 +233,23 @@ taskView:(TUArchiveTaskView *)taskview
 	return dest;
 }
 
+-(void)rememberTempDirectory:(NSString *)tmpdir
+{
+	NSUserDefaults *defs=[NSUserDefaults standardUserDefaults];
+	NSArray *tmpdirs=[defs arrayForKey:@"orphanedTempDirectories"];
+	if(!tmpdirs) tmpdirs=[NSArray array];
+	[defs setObject:[tmpdirs arrayByAddingObject:tmpdir] forKey:@"orphanedTempDirectories"];
+	[defs synchronize];
+}
+
+-(void)forgetTempDirectory:(NSString *)tmpdir
+{
+	NSUserDefaults *defs=[NSUserDefaults standardUserDefaults];
+	NSMutableArray *tmpdirs=[NSMutableArray arrayWithArray:[defs arrayForKey:@"orphanedTempDirectories"]];
+	[tmpdirs removeObject:tmpdir];
+	[defs setObject:tmpdirs forKey:@"orphanedTempDirectories"];
+	[defs synchronize];
+}
 
 
 -(void)archiveTaskViewCancelled:(TUArchiveTaskView *)taskview

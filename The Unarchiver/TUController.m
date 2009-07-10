@@ -51,7 +51,27 @@ static BOOL IsPathWritable(NSString *path);
 	else [encodingpopup selectItemAtIndex:[encodingpopup numberOfItems]-1];
 
 	[self changeCreateFolder:nil];
+
+	[self cleanupOrphanedTempDirectories];
 }
+
+-(void)cleanupOrphanedTempDirectories
+{
+	NSUserDefaults *defs=[NSUserDefaults standardUserDefaults];
+	NSFileManager *fm=[NSFileManager defaultManager];
+
+	NSArray *tmpdirs=[defs arrayForKey:@"orphanedTempDirectories"];
+	NSEnumerator *enumerator=[tmpdirs objectEnumerator];
+	NSString *tmpdir;
+	while(tmpdir=[enumerator nextObject])
+	{
+		[fm removeFileAtPath:tmpdir handler:nil];
+	}
+
+	[defs setObject:[NSArray array] forKey:@"orphanedTempDirectories"];
+	[defs synchronize];
+}
+
 
 
 

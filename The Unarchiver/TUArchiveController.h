@@ -33,6 +33,8 @@ taskView:(TUArchiveTaskView *)taskview;
 -(void)extractFinished;
 -(void)extractFailed;
 -(NSString *)findUniqueDestinationWithDirectory:(NSString *)directory andFilename:(NSString *)filename;
+-(void)rememberTempDirectory:(NSString *)tmpdir;
+-(void)forgetTempDirectory:(NSString *)tmpdir;
 
 -(void)archiveTaskViewCancelled:(TUArchiveTaskView *)taskview;
 
