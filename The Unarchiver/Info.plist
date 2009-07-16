@@ -429,6 +429,7 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>sit</string>
+				<string>sitx</string>
 				<string>SIT</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -601,6 +602,7 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.bzip2-archive</string>
+				<string>org.bzip.bzip2-archive</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -622,7 +624,8 @@
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>public.bzip2-tar-archive</string>
+				<string>public.tar-bzip2-archive</string>
+				<string>org.bzip.bzip2-tar-archive</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -738,6 +741,49 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>lzma</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>LZMA File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.tukaani.lzma-archive</string>
+				<string>public.lzma-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>xar</string>
+				<string>XAR</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>XAR Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.apple.xar-archive</string>
+				<string>public.xar-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>ace</string>
 				<string>ACE</string>
 			</array>
@@ -828,6 +874,7 @@
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
+				<string>public.cbz-archive</string>
 				<string>cx.c3.cbz-archive</string>
 			</array>
 			<key>LSTypeIsPackage</key>
@@ -849,6 +896,7 @@
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
+				<string>public.cbr-archive</string>
 				<string>cx.c3.cbr-archive</string>
 			</array>
 			<key>LSTypeIsPackage</key>
@@ -946,6 +994,27 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.cyclos.cpt-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>pit</string>
+				<string>PIT</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>PackIt Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.network172.pit-archive</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -1053,6 +1122,7 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>cx.c3.pax-archive</string>
+				<string>public.pax-archive</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -1276,6 +1346,27 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>pp</string>
+				<string>PP</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>amiga.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Amiga PowerPacker File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>cx.c3.pp-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>*</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -1307,23 +1398,108 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0 beta 1</string>
+	<string>2.0 beta 2</string>
 	<key>CFBundleSignature</key>
 	<string>TUnA</string>
 	<key>CFBundleVersion</key>
-	<string>2.0 beta 1</string>
+	<string>2.0 beta 2</string>
 	<key>CSHiddenDocumentTypes</key>
 	<array>
 		<string>com.sun.java-archive</string>
 	</array>
 	<key>LSUIElement</key>
-	<false/>
+	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>UTExportedTypeDeclarations</key>
+	<array/>
+	<key>UTImportedTypeDeclarations</key>
 	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Amiga PowerPacker Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>amiga.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>cx.c3.pp-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pp</string>
+					<string>PP</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PackIt Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.network172.pit-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pit</string>
+					<string>PIT</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.archive</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>XAR Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.apple.xar-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>xar</string>
+					<string>XAR</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.archive</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>LZMA File</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.tukaani.lzma-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>lzma</string>
+				</array>
+			</dict>
+		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
@@ -1409,6 +1585,52 @@
 				<key>public.mime-type</key>
 				<array>
 					<string>application/vnd.ms-cab-compressed</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Pax Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>cx.c3.pax-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pax</string>
+					<string>PAX</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.archive</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>7-Zip Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>7z.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.7-zip.7-zip-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>7z</string>
+					<string>7Z</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>application/x-7z-compressed</string>
 				</array>
 			</dict>
 		</dict>
@@ -1983,7 +2205,7 @@
 			<key>UTTypeDescription</key>
 			<string>Amiga DCS Disk Archive</string>
 			<key>UTTypeIconFile</key>
-			<string>archive.icns</string>
+			<string>amiga.icns</string>
 			<key>UTTypeIdentifier</key>
 			<string>cx.c3.dcs-archive</string>
 			<key>UTTypeTagSpecification</key>
@@ -2025,7 +2247,7 @@
 			<key>UTTypeDescription</key>
 			<string>HA Archive</string>
 			<key>UTTypeIconFile</key>
-			<string>archive.icns</string>
+			<string>amiga.icns</string>
 			<key>UTTypeIdentifier</key>
 			<string>cx.c3.ha-archive</string>
 			<key>UTTypeTagSpecification</key>
@@ -2098,7 +2320,7 @@
 			<key>UTTypeDescription</key>
 			<string>LZX Archive</string>
 			<key>UTTypeIconFile</key>
-			<string>archive.icns</string>
+			<string>amiga.icns</string>
 			<key>UTTypeIdentifier</key>
 			<string>cx.c3.lzx-archive</string>
 			<key>UTTypeTagSpecification</key>
@@ -2144,7 +2366,7 @@
 			<key>UTTypeDescription</key>
 			<string>Amiga xMash Disk Archive</string>
 			<key>UTTypeIconFile</key>
-			<string>archive.icns</string>
+			<string>amiga.icns</string>
 			<key>UTTypeIdentifier</key>
 			<string>cx.c3.xmash-archive</string>
 			<key>UTTypeTagSpecification</key>
@@ -2165,7 +2387,7 @@
 			<key>UTTypeDescription</key>
 			<string>Amiga Zoom Disk Archive</string>
 			<key>UTTypeIconFile</key>
-			<string>archive.icns</string>
+			<string>amiga.icns</string>
 			<key>UTTypeIdentifier</key>
 			<string>cx.c3.zoom-archive</string>
 			<key>UTTypeTagSpecification</key>
@@ -2180,55 +2402,6 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
-				<string>public.archive</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>7-Zip Archive</string>
-			<key>UTTypeIconFile</key>
-			<string>7z.icns</string>
-			<key>UTTypeIdentifier</key>
-			<string>org.7-zip.7-zip-archive</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>7z</string>
-					<string>7Z</string>
-				</array>
-				<key>public.mime-type</key>
-				<array>
-					<string>application/x-7z-compressed</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-				<string>public.archive</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Pax Archive</string>
-			<key>UTTypeIconFile</key>
-			<string>archive.icns</string>
-			<key>UTTypeIdentifier</key>
-			<string>cx.c3.pax-archive</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>pax</string>
-					<string>PAX</string>
-				</array>
-			</dict>
-		</dict>
-	</array>
-	<key>UTImportedTypeDeclarations</key>
-	<array>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
 				<string>public.bzip2-archive</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -2236,7 +2409,7 @@
 			<key>UTTypeIconFile</key>
 			<string>bz2.icns</string>
 			<key>UTTypeIdentifier</key>
-			<string>public.bzip2-tar-archive</string>
+			<string>public.tar-bzip2-archive</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>

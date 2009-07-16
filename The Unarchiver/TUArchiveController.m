@@ -36,7 +36,7 @@ taskView:(TUArchiveTaskView *)taskview
 		destination=[destpath retain];
 		tmpdest=nil;
 
-		if([filename matchedByPattern:@"\\.part[0-9]+\\.rar$" options:REG_ICASE])
+		if([filename matchedByPattern:@"\\.(part[0-9]+\\.rar|tar\\.gz|tar\\.bz2|tar\\.lzma|sit\\.hqx)$" options:REG_ICASE])
 		defaultname=[[[[filename lastPathComponent] stringByDeletingPathExtension] stringByDeletingPathExtension] retain];
 		else
 		defaultname=[[[filename lastPathComponent] stringByDeletingPathExtension] retain];
@@ -71,9 +71,6 @@ taskView:(TUArchiveTaskView *)taskview
 	[view setCancelAction:@selector(archiveTaskViewCancelled:) target:self];
 
 	//[view setupProgressViewInPreparingMode];
-
-	// TODO: fix tmppath handling on crash.
-//	NSString *tmpdir=[NSString stringWithFormat:@".tmp%04x%04x%04x",rand()&0xffff,rand()&0xffff,rand()&0xffff];
 
 	static int tmpcounter=0;
 	NSString *tmpdir=[NSString stringWithFormat:@".TheUnarchiverTemp%d",tmpcounter++];
