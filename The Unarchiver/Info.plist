@@ -923,6 +923,7 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.redhat.rpm-archive</string>
+				<string>com.real.realmedia</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>

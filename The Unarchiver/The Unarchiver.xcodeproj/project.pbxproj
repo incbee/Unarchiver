@@ -57,25 +57,39 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		56FBC8CE0A57528100BE98CF /* PBXContainerItemProxy */ = {
+		1B95B40A1010D537009FA09E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216 /* XADMaster.framework */;
 			remoteInfo = XADMaster;
 		};
-		56FBC8D00A57528100BE98CF /* PBXContainerItemProxy */ = {
+		1B95B40C1010D537009FA09E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 1B5A7BA30A24F9B400B189EB;
+			remoteGlobalIDString = 1B5A7BA30A24F9B400B189EB /* XADTest */;
 			remoteInfo = XADTest;
 		};
-		56FBC92F0A57542500BE98CF /* PBXContainerItemProxy */ = {
+		1B95B40E1010D537009FA09E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1BBAB68B0EC274A3007FE6A2 /* XADTest2 */;
+			remoteInfo = XADTest2;
+		};
+		1B95B4101010D537009FA09E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1BC8931A0ED6F283006B47FE /* XADTest3 */;
+			remoteInfo = XADTest3;
+		};
+		1B95B41B1010D587009FA09E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* XADMaster */;
 			remoteInfo = XADMaster;
 		};
 /* End PBXContainerItemProxy section */
@@ -195,7 +209,7 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* The Unarchiver_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "The Unarchiver_Prefix.pch"; sourceTree = "<group>"; };
-		56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XADMaster.xcodeproj; path = ../libxad/portable/mac/XADMaster.xcodeproj; sourceTree = SOURCE_ROOT; };
+		56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XADMaster.xcodeproj; path = ../XADMaster/XADMaster.xcodeproj; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* The Unarchiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Unarchiver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -288,6 +302,17 @@
 			path = icons;
 			sourceTree = "<group>";
 		};
+		1B95B4041010D537009FA09E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1B95B40B1010D537009FA09E /* XADMaster.framework */,
+				1B95B40D1010D537009FA09E /* XADTest */,
+				1B95B40F1010D537009FA09E /* XADTest2 */,
+				1B95B4111010D537009FA09E /* XADTest3 */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* The Unarchiver */ = {
 			isa = PBXGroup;
 			children = (
@@ -337,15 +362,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		56FBC8C80A57528100BE98CF /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				56FBC8CF0A57528100BE98CF /* XADMaster.framework */,
-				56FBC8D10A57528100BE98CF /* XADTest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -361,7 +377,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				56FBC9300A57542500BE98CF /* PBXTargetDependency */,
+				1B95B41C1010D587009FA09E /* PBXTargetDependency */,
 			);
 			name = "The Unarchiver";
 			productInstallPath = "$(HOME)/Applications";
@@ -392,7 +408,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 56FBC8C80A57528100BE98CF /* Products */;
+					ProductGroup = 1B95B4041010D537009FA09E /* Products */;
 					ProjectRef = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
 				},
 			);
@@ -404,18 +420,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		56FBC8CF0A57528100BE98CF /* XADMaster.framework */ = {
+		1B95B40B1010D537009FA09E /* XADMaster.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = XADMaster.framework;
-			remoteRef = 56FBC8CE0A57528100BE98CF /* PBXContainerItemProxy */;
+			remoteRef = 1B95B40A1010D537009FA09E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		56FBC8D10A57528100BE98CF /* XADTest */ = {
+		1B95B40D1010D537009FA09E /* XADTest */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = XADTest;
-			remoteRef = 56FBC8D00A57528100BE98CF /* PBXContainerItemProxy */;
+			remoteRef = 1B95B40C1010D537009FA09E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1B95B40F1010D537009FA09E /* XADTest2 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = XADTest2;
+			remoteRef = 1B95B40E1010D537009FA09E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1B95B4111010D537009FA09E /* XADTest3 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = XADTest3;
+			remoteRef = 1B95B4101010D537009FA09E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -502,10 +532,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		56FBC9300A57542500BE98CF /* PBXTargetDependency */ = {
+		1B95B41C1010D587009FA09E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = XADMaster;
-			targetProxy = 56FBC92F0A57542500BE98CF /* PBXContainerItemProxy */;
+			targetProxy = 1B95B41B1010D587009FA09E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
