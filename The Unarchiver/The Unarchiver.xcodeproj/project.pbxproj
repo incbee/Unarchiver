@@ -61,35 +61,35 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216 /* XADMaster.framework */;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = XADMaster;
 		};
 		1B95B40C1010D537009FA09E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 1B5A7BA30A24F9B400B189EB /* XADTest */;
+			remoteGlobalIDString = 1B5A7BA30A24F9B400B189EB;
 			remoteInfo = XADTest;
 		};
 		1B95B40E1010D537009FA09E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 1BBAB68B0EC274A3007FE6A2 /* XADTest2 */;
+			remoteGlobalIDString = 1BBAB68B0EC274A3007FE6A2;
 			remoteInfo = XADTest2;
 		};
 		1B95B4101010D537009FA09E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 1BC8931A0ED6F283006B47FE /* XADTest3 */;
+			remoteGlobalIDString = 1BC8931A0ED6F283006B47FE;
 			remoteInfo = XADTest3;
 		};
 		1B95B41B1010D587009FA09E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* XADMaster */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = XADMaster;
 		};
 /* End PBXContainerItemProxy section */
