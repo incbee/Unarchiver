@@ -838,75 +838,6 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>jar</string>
-				<string>JAR</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>jar.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/java-archive</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>Java Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.sun.java-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>cbz</string>
-				<string>CBZ</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>zip.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Comic Book Zip Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.cbz-archive</string>
-				<string>cx.c3.cbz-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>cbr</string>
-				<string>CBR</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>rar.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Comic Book Rar Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.cbr-archive</string>
-				<string>cx.c3.cbr-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
 				<string>rpm</string>
 				<string>RPM</string>
 			</array>
@@ -1368,6 +1299,76 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>jar</string>
+				<string>JAR</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>jar.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/java-archive</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Java Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>cbz</string>
+				<string>CBZ</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>zip.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Comic Book Zip Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>cbr</string>
+				<string>CBR</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>rar.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Comic Book Rar Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>nds</string>
+				<string>NDS</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Nintendo DS ROM file</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>*</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -1404,10 +1405,6 @@
 	<string>TUnA</string>
 	<key>CFBundleVersion</key>
 	<string>2.0 beta 2</string>
-	<key>CSHiddenDocumentTypes</key>
-	<array>
-		<string>com.sun.java-archive</string>
-	</array>
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSMainNibFile</key>
@@ -2103,47 +2100,6 @@
 					<string>A07</string>
 					<string>A08</string>
 					<string>A09</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>com.rarlab.rar-archive</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Comic Book Rar Archive</string>
-			<key>UTTypeIconFile</key>
-			<string>rar.icns</string>
-			<key>UTTypeIdentifier</key>
-			<string>cx.c3.cbr-archive</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>cbr</string>
-					<string>CBR</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>com.pkware.zip-archive</string>
-				<string>public.zip-archive</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Comic Book Zip Archive</string>
-			<key>UTTypeIconFile</key>
-			<string>zip.icns</string>
-			<key>UTTypeIdentifier</key>
-			<string>cx.c3.cbz-archive</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>cbz</string>
-					<string>CBZ</string>
 				</array>
 			</dict>
 		</dict>
