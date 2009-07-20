@@ -170,6 +170,9 @@
 		1B81DDA610003BBB005C5B23 /* TUArchiveTaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUArchiveTaskView.m; sourceTree = "<group>"; };
 		1B81DDCC10012A2D005C5B23 /* TUTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUTaskQueue.h; sourceTree = "<group>"; };
 		1B81DDCD10012A2D005C5B23 /* TUTaskQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUTaskQueue.m; sourceTree = "<group>"; };
+		1B8A8B6A1013ABB500C8534E /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Japanese; path = Japanese.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1B8A8B6B1013ABB800C8534E /* pt */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt; path = pt.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1B8A8B6C1013ABC100C8534E /* German */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = German; path = German.lproj/NotWritableView.nib; sourceTree = "<group>"; };
 		1B932D0D0A55CFEF00F7DE66 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
 		1B932D680A560AC900F7DE66 /* TUCancelButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUCancelButton.h; sourceTree = "<group>"; };
 		1B932D690A560AC900F7DE66 /* TUCancelButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUCancelButton.m; sourceTree = "<group>"; };
@@ -640,6 +643,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				1B81DBD10FF98BF9005C5B23 /* English */,
+				1B8A8B6C1013ABC100C8534E /* German */,
+				1B8A8B6A1013ABB500C8534E /* Japanese */,
+				1B8A8B6B1013ABB800C8534E /* pt */,
 			);
 			name = NotWritableView.nib;
 			sourceTree = "<group>";

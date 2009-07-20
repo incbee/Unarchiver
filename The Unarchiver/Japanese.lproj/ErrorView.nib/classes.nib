@@ -1,35 +1,139 @@
-{
-    IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {
-            ACTIONS = {
-                cancelExtraction = id; 
-                cancelWait = id; 
-                continueAfterError = id; 
-                okAfterOpenError = id; 
-                stopAfterError = id; 
-            }; 
-            CLASS = TUArchiveController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                actionfield = NSTextField; 
-                applyallcheck = NSButton; 
-                errorfield = NSTextField; 
-                erroricon = NSImageView; 
-                errorview = NSView; 
-                namefield = NSTextField; 
-                openerrorfield = NSTextField; 
-                openerroricon = NSImageView; 
-                openerrorview = NSView; 
-                progress = NSProgressIndicator; 
-                progressicon = NSImageView; 
-                progressview = NSView; 
-                waitfield = NSTextField; 
-                waiticon = NSImageView; 
-                waitview = NSView; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }
-    ); 
-    IBVersion = 1; 
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>CLASS</key>
+			<string>TUTaskView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>cancelExtraction</key>
+				<string>id</string>
+				<key>cancelWait</key>
+				<string>id</string>
+				<key>continueAfterEncoding</key>
+				<string>id</string>
+				<key>continueAfterError</key>
+				<string>id</string>
+				<key>continueAfterPassword</key>
+				<string>id</string>
+				<key>extractElsewhereAfterNotWritable</key>
+				<string>id</string>
+				<key>extractToDesktopAfterNotWritable</key>
+				<string>id</string>
+				<key>okAfterOpenError</key>
+				<string>id</string>
+				<key>selectEncoding</key>
+				<string>id</string>
+				<key>stopAfterEncoding</key>
+				<string>id</string>
+				<key>stopAfterError</key>
+				<string>id</string>
+				<key>stopAfterNotWritable</key>
+				<string>id</string>
+				<key>stopAfterPassword</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>TUArchiveTaskView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>actionfield</key>
+				<string>NSTextField</string>
+				<key>applyallcheck</key>
+				<string>NSButton</string>
+				<key>canceltarget</key>
+				<string>id</string>
+				<key>encodingfield</key>
+				<string>NSTextField</string>
+				<key>encodingicon</key>
+				<string>NSImageView</string>
+				<key>encodingpopup</key>
+				<string>TUEncodingPopUp</string>
+				<key>encodingview</key>
+				<string>NSView</string>
+				<key>errorapplyallcheck</key>
+				<string>NSButton</string>
+				<key>errorfield</key>
+				<string>NSTextField</string>
+				<key>erroricon</key>
+				<string>NSImageView</string>
+				<key>errorview</key>
+				<string>NSView</string>
+				<key>namefield</key>
+				<string>NSTextField</string>
+				<key>notwritableview</key>
+				<string>NSView</string>
+				<key>openerrorfield</key>
+				<string>NSTextField</string>
+				<key>openerroricon</key>
+				<string>NSImageView</string>
+				<key>openerrorview</key>
+				<string>NSView</string>
+				<key>passwordapplyallcheck</key>
+				<string>NSButton</string>
+				<key>passwordfield</key>
+				<string>NSTextField</string>
+				<key>passwordicon</key>
+				<string>NSImageView</string>
+				<key>passwordview</key>
+				<string>NSView</string>
+				<key>progress</key>
+				<string>NSProgressIndicator</string>
+				<key>progressicon</key>
+				<string>NSImageView</string>
+				<key>progressindicator</key>
+				<string>NSProgressIndicator</string>
+				<key>progressview</key>
+				<string>NSView</string>
+				<key>responsetarget</key>
+				<string>id</string>
+				<key>waitfield</key>
+				<string>NSTextField</string>
+				<key>waiticon</key>
+				<string>NSImageView</string>
+				<key>waitview</key>
+				<string>NSView</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>TUMultiTaskView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>TUEncodingPopUp</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSPopUpButton</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>TUMultiTaskView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>TUTaskView</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>
