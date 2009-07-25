@@ -15,7 +15,7 @@
 		argumentStrings = (
 		);
 		autoAttachOnCrash = 1;
-		breakpointsEnabled = 1;
+		breakpointsEnabled = 0;
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
@@ -271,9 +271,9 @@
 	};
 	1B2109F80A38F2BA005ED2AF /* TUArchiveController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1348, 7391}}";
-			sepNavSelRange = "{2525, 0}";
-			sepNavVisRange = "{1853, 1010}";
+			sepNavIntBoundsRect = "{{0, 0}, {1348, 7448}}";
+			sepNavSelRange = "{2581, 0}";
+			sepNavVisRange = "{1813, 1069}";
 			sepNavVisRect = "{{0, 5673}, {772, 683}}";
 		};
 	};
@@ -392,6 +392,16 @@
 		name = "TUEncodingPopUp.h: 17";
 		rLen = 0;
 		rLoc = 412;
+		rType = 0;
+		vrLen = 418;
+		vrLoc = 0;
+	};
+	1B3A67E9101A39AC00AE25A8 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1BED5DB30A600D6E00CA31C2 /* TUEncodingPopUp.h */;
+		name = "TUEncodingPopUp.h: 10";
+		rLen = 0;
+		rLoc = 154;
 		rType = 0;
 		vrLen = 418;
 		vrLoc = 0;
@@ -658,7 +668,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 269905176.465636;
+		modificationTime = 269905653.936337;
 		state = 2;
 		symbolName = malloc_error_break;
 	};
@@ -1169,10 +1179,10 @@
 		continueAfterActions = 0;
 		countType = 0;
 		delayBeforeContinue = 0;
-		hitCount = 0;
+		hitCount = 2;
 		ignoreCount = 0;
 		location = libobjc.A.dylib;
-		modificationTime = 269905176.465207;
+		modificationTime = 269905693.21062;
 		state = 1;
 		symbolName = objc_exception_throw;
 	};
@@ -1293,6 +1303,11 @@
 		name = XADArchive.m;
 		path = "/Users/dag/Code/The Unarchiver/XADMaster/XADArchive.m";
 		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1332, 27892}}";
+			sepNavSelRange = "{5187, 0}";
+			sepNavVisRange = "{18481, 1246}";
+		};
 	};
 	1BED5D140A5DE5EB00CA31C2 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -1317,7 +1332,7 @@
 	1BED5DB30A600D6E00CA31C2 /* TUEncodingPopUp.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {698, 660}}";
-			sepNavSelRange = "{412, 0}";
+			sepNavSelRange = "{154, 0}";
 			sepNavVisRange = "{0, 418}";
 			sepNavVisRect = "{{0, 0}, {781, 757}}";
 		};
@@ -1659,6 +1674,7 @@
 			1B3A65F510166D1B00AE25A8 /* PBXTextBookmark */ = 1B3A65F510166D1B00AE25A8 /* PBXTextBookmark */;
 			1B3A65F610166D1B00AE25A8 /* PBXTextBookmark */ = 1B3A65F610166D1B00AE25A8 /* PBXTextBookmark */;
 			1B3A65F710166D1B00AE25A8 /* PBXTextBookmark */ = 1B3A65F710166D1B00AE25A8 /* PBXTextBookmark */;
+			1B3A67E9101A39AC00AE25A8 /* PBXTextBookmark */ = 1B3A67E9101A39AC00AE25A8 /* PBXTextBookmark */;
 			1B6FA2330A59A88F00066489 = 1B6FA2330A59A88F00066489 /* PBXTextBookmark */;
 			1B6FA2340A59A88F00066489 = 1B6FA2340A59A88F00066489 /* PBXTextBookmark */;
 			1B6FA3000A5AC82600066489 = 1B6FA3000A5AC82600066489 /* PBXTextBookmark */;
