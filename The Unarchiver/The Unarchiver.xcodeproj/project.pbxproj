@@ -57,6 +57,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1B3A68A7101BA14A00AE25A8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1B3A68A2101BA12C00AE25A8 /* XADTest3 */;
+			remoteInfo = "XADTest3 copy";
+		};
 		1B95B40A1010D537009FA09E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
@@ -312,6 +319,7 @@
 				1B95B40D1010D537009FA09E /* XADTest */,
 				1B95B40F1010D537009FA09E /* XADTest2 */,
 				1B95B4111010D537009FA09E /* XADTest3 */,
+				1B3A68A8101BA14A00AE25A8 /* XADTest3 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -423,6 +431,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		1B3A68A8101BA14A00AE25A8 /* XADTest3 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = XADTest3;
+			remoteRef = 1B3A68A7101BA14A00AE25A8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		1B95B40B1010D537009FA09E /* XADMaster.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;

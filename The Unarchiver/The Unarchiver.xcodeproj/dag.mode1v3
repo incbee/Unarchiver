@@ -335,7 +335,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1B3A67E9101A39AC00AE25A8</string>
+										<string>1B3A68EB101BD27800AE25A8</string>
 										<key>history</key>
 										<array>
 											<string>1B932E8B0A57312B00F7DE66</string>
@@ -401,10 +401,8 @@
 											<string>1B8EEE391010038F00999952</string>
 											<string>1BC03CB8101160AE0008AC2C</string>
 											<string>1BC03CB9101160AE0008AC2C</string>
-											<string>1B8A8BB81013F78000C8534E</string>
 											<string>1B8A8BB91013F78000C8534E</string>
 											<string>1B8A8BC51013F7B200C8534E</string>
-											<string>1B3A65F410166D1B00AE25A8</string>
 											<string>1B3A65F510166D1B00AE25A8</string>
 										</array>
 										<key>prevStack</key>
@@ -476,8 +474,6 @@
 											<string>1B81DE391001725A005C5B23</string>
 											<string>1B8EEE3A1010038F00999952</string>
 											<string>1BC03CBB101160AE0008AC2C</string>
-											<string>1B8A8BBB1013F78000C8534E</string>
-											<string>1B3A65F610166D1B00AE25A8</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
