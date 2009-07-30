@@ -61,7 +61,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 1B3A68A2101BA12C00AE25A8 /* XADTest3 */;
+			remoteGlobalIDString = 1B3A68A2101BA12C00AE25A8;
 			remoteInfo = "XADTest3 copy";
 		};
 		1B95B40A1010D537009FA09E /* PBXContainerItemProxy */ = {
@@ -434,7 +434,7 @@
 		1B3A68A8101BA14A00AE25A8 /* XADTest3 */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = XADTest3;
+			path = XADTest4;
 			remoteRef = 1B3A68A7101BA14A00AE25A8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

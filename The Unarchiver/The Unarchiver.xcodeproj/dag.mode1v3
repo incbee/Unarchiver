@@ -335,7 +335,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1B3A68EB101BD27800AE25A8</string>
+										<string>1BA4E1BB10214989001AB3CA</string>
 										<key>history</key>
 										<array>
 											<string>1B932E8B0A57312B00F7DE66</string>
@@ -403,7 +403,7 @@
 											<string>1BC03CB9101160AE0008AC2C</string>
 											<string>1B8A8BB91013F78000C8534E</string>
 											<string>1B8A8BC51013F7B200C8534E</string>
-											<string>1B3A65F510166D1B00AE25A8</string>
+											<string>1B3A68EB101BD27800AE25A8</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -531,9 +531,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1B3A65EE10166CF000AE25A8</string>
+				<string>1BA4E1BC10214989001AB3CA</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>1B3A65EF10166CF000AE25A8</string>
+				<string>1BA4E1BD10214989001AB3CA</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -665,12 +665,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1B3A660310166D1B00AE25A8</string>
-		<string>1B3A660410166D1B00AE25A8</string>
-		<string>1B3A660010166D1B00AE25A8</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>1B183F2E0E09DB2600FA7F8F</string>
 		<string>/Users/dag/Code/The Unarchiver/The Unarchiver/The Unarchiver.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
