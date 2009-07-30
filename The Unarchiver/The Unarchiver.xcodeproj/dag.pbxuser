@@ -2,7 +2,7 @@
 {
 	089C165DFE840E0CC02AAC07 /* English */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {698, 660}}";
+			sepNavIntBoundsRect = "{{0, 0}, {698, 683}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 103}";
 			sepNavVisRect = "{{0, 0}, {772, 683}}";
@@ -1227,11 +1227,6 @@
 		name = XADArchive.m;
 		path = "/Users/dag/Code/The Unarchiver/XADMaster/XADArchive.m";
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {900, 27018}}";
-			sepNavSelRange = "{4898, 0}";
-			sepNavVisRange = "{4571, 445}";
-		};
 	};
 	1BED5D140A5DE5EB00CA31C2 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -1572,8 +1567,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 269614064;
-			PBXWorkspaceStateSaveDate = 269614064;
+			PBXPerProjectTemplateStateSaveDate = 270680143;
+			PBXWorkspaceStateSaveDate = 270680143;
 		};
 		perUserProjectItems = {
 			1B1B99850B07C53600EC8324 = 1B1B99850B07C53600EC8324 /* PBXTextBookmark */;
@@ -1617,7 +1612,7 @@
 			1B81E0B010058AB3005C5B23 = 1B81E0B010058AB3005C5B23 /* PBXTextBookmark */;
 			1B81E0D01006A9AA005C5B23 = 1B81E0D01006A9AA005C5B23 /* PBXTextBookmark */;
 			1B81E1191006E52C005C5B23 = 1B81E1191006E52C005C5B23 /* PBXTextBookmark */;
-			1B8A89C21011FBF500C8534E /* PBXTextBookmark */ = 1B8A89C21011FBF500C8534E /* PBXTextBookmark */;
+			1B8A89C21011FBF500C8534E = 1B8A89C21011FBF500C8534E /* PBXTextBookmark */;
 			1B8EED90100E889100999952 = 1B8EED90100E889100999952 /* PBXTextBookmark */;
 			1B8EEDB3100EAA2400999952 = 1B8EEDB3100EAA2400999952 /* PBXTextBookmark */;
 			1B8EEDD9100EB43E00999952 = 1B8EEDD9100EB43E00999952 /* PBXBookmark */;

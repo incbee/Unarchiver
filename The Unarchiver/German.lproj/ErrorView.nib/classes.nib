@@ -1,35 +1,75 @@
 {
-    IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {
-            ACTIONS = {
-                cancelExtraction = id; 
-                cancelWait = id; 
-                continueAfterError = id; 
-                okAfterOpenError = id; 
-                stopAfterError = id; 
-            }; 
-            CLASS = TUArchiveController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                actionfield = NSTextField; 
-                applyallcheck = NSButton; 
-                errorfield = NSTextField; 
-                erroricon = NSImageView; 
-                errorview = NSView; 
-                namefield = NSTextField; 
-                openerrorfield = NSTextField; 
-                openerroricon = NSImageView; 
-                openerrorview = NSView; 
-                progress = NSProgressIndicator; 
-                progressicon = NSImageView; 
-                progressview = NSView; 
-                waitfield = NSTextField; 
-                waiticon = NSImageView; 
-                waitview = NSView; 
-            }; 
-            SUPERCLASS = NSObject; 
+    IBClasses =     (
+                {
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            ACTIONS =             {
+                cancelExtraction = id;
+                cancelWait = id;
+                continueAfterEncoding = id;
+                continueAfterError = id;
+                continueAfterPassword = id;
+                extractElsewhereAfterNotWritable = id;
+                extractToDesktopAfterNotWritable = id;
+                okAfterOpenError = id;
+                selectEncoding = id;
+                stopAfterEncoding = id;
+                stopAfterError = id;
+                stopAfterNotWritable = id;
+                stopAfterPassword = id;
+            };
+            CLASS = TUArchiveTaskView;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                actionfield = NSTextField;
+                applyallcheck = NSButton;
+                canceltarget = id;
+                encodingfield = NSTextField;
+                encodingicon = NSImageView;
+                encodingpopup = TUEncodingPopUp;
+                encodingview = NSView;
+                errorapplyallcheck = NSButton;
+                errorfield = NSTextField;
+                erroricon = NSImageView;
+                errorview = NSView;
+                namefield = NSTextField;
+                notwritableview = NSView;
+                openerrorfield = NSTextField;
+                openerroricon = NSImageView;
+                openerrorview = NSView;
+                passwordapplyallcheck = NSButton;
+                passwordfield = NSTextField;
+                passwordicon = NSImageView;
+                passwordview = NSView;
+                progress = NSProgressIndicator;
+                progressicon = NSImageView;
+                progressindicator = NSProgressIndicator;
+                progressview = NSView;
+                responsetarget = id;
+                waitfield = NSTextField;
+                waiticon = NSImageView;
+                waitview = NSView;
+            };
+            SUPERCLASS = TUMultiTaskView;
+        },
+                {
+            CLASS = TUEncodingPopUp;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSPopUpButton;
+        },
+                {
+            CLASS = TUMultiTaskView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = TUTaskView;
+        },
+                {
+            CLASS = TUTaskView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSView;
         }
-    ); 
-    IBVersion = 1; 
+    );
+    IBVersion = 1;
 }

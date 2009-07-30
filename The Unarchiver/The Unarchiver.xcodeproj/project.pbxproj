@@ -92,6 +92,13 @@
 			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = XADMaster;
 		};
+		1BA4E2A81022405A001AB3CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1B3A68A2101BA12C00AE25A8 /* XADTest3 */;
+			remoteInfo = XADTest4;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -179,6 +186,18 @@
 		1B932E830A5730DD00F7DE66 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
 		1B9767BA0A6D79CA00A8E8DA /* amiga.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = amiga.icns; sourceTree = "<group>"; };
 		1B9767BB0A6D79CA00A8E8DA /* unarchiver.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = unarchiver.icns; sourceTree = "<group>"; };
+		1BA4E2A31022405A001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BA4E2AA10224066001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1BA4E2AB1022406F001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = sv.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		1BA4E2B210224084001AB3CA /* German */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = German; path = German.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1BA4E2B310224086001AB3CA /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Japanese; path = Japanese.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1BA4E2B41022408A001AB3CA /* pt */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt; path = pt.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1BA4E2B51022408D001AB3CA /* ru */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ru; path = ru.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1BA4E2B610224091001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = sv.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1BA4E2B7102240A2001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = sv.lproj/ErrorView.nib; sourceTree = "<group>"; };
+		1BA4E2B8102240AB001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = sv.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
+		1BA4E2B9102240B6001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = sv.lproj/PasswordView.nib; sourceTree = "<group>"; };
+		1BA4E2BA102240BE001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = sv.lproj/EncodingView.nib; sourceTree = "<group>"; };
 		1BBD9C720B7C0D2B00ACAA72 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1BBD9C750B7C0D4900ACAA72 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1BBD9C780B7C0D5700ACAA72 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/MainMenu.nib; sourceTree = "<group>"; };
@@ -309,6 +328,7 @@
 				1B95B40D1010D537009FA09E /* XADTest */,
 				1B95B40F1010D537009FA09E /* XADTest2 */,
 				1B95B4111010D537009FA09E /* XADTest3 */,
+				1BA4E2A91022405A001AB3CA /* XADTest3 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -403,6 +423,7 @@
 				ru,
 				zh_TW,
 				Dutch,
+				sv,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* The Unarchiver */;
 			projectDirPath = "";
@@ -446,6 +467,13 @@
 			fileType = "compiled.mach-o.executable";
 			path = XADTest3;
 			remoteRef = 1B95B4101010D537009FA09E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1BA4E2A91022405A001AB3CA /* XADTest3 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = XADTest3;
+			remoteRef = 1BA4E2A81022405A001AB3CA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -552,6 +580,7 @@
 				1BFB11400B17632A0088CDB4 /* ru */,
 				1BBD9C720B7C0D2B00ACAA72 /* zh_TW */,
 				1B2EF86A0BAF5561009F4902 /* Dutch */,
+				1BA4E2A31022405A001AB3CA /* sv */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -568,6 +597,7 @@
 				1BFB11440B1763420088CDB4 /* ru */,
 				1BBD9C750B7C0D4900ACAA72 /* zh_TW */,
 				1B2EF86D0BAF556A009F4902 /* Dutch */,
+				1BA4E2AA10224066001AB3CA /* sv */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -584,6 +614,7 @@
 				1BFB114D0B1763B60088CDB4 /* ru */,
 				1BBD9C7B0B7C0D5F00ACAA72 /* zh_TW */,
 				1B2EF8710BAF558A009F4902 /* Dutch */,
+				1BA4E2B7102240A2001AB3CA /* sv */,
 			);
 			name = ErrorView.nib;
 			sourceTree = "<group>";
@@ -600,6 +631,7 @@
 				1BFB11510B1763C50088CDB4 /* ru */,
 				1BBD9C7E0B7C0D6500ACAA72 /* zh_TW */,
 				1B2EF8740BAF5593009F4902 /* Dutch */,
+				1BA4E2B8102240AB001AB3CA /* sv */,
 			);
 			name = OpenErrorView.nib;
 			sourceTree = "<group>";
@@ -616,6 +648,7 @@
 				1BFB11550B17668C0088CDB4 /* ru */,
 				1BBD9C810B7C0D6B00ACAA72 /* zh_TW */,
 				1B2EF8750BAF559A009F4902 /* Dutch */,
+				1BA4E2B9102240B6001AB3CA /* sv */,
 			);
 			name = PasswordView.nib;
 			sourceTree = "<group>";
@@ -632,6 +665,7 @@
 				1BFB11590B1766960088CDB4 /* ru */,
 				1BBD9C840B7C0D7000ACAA72 /* zh_TW */,
 				1B2EF8760BAF55A1009F4902 /* Dutch */,
+				1BA4E2BA102240BE001AB3CA /* sv */,
 			);
 			name = EncodingView.nib;
 			sourceTree = "<group>";
@@ -640,6 +674,11 @@
 			isa = PBXVariantGroup;
 			children = (
 				1B81DBD10FF98BF9005C5B23 /* English */,
+				1BA4E2B210224084001AB3CA /* German */,
+				1BA4E2B310224086001AB3CA /* Japanese */,
+				1BA4E2B41022408A001AB3CA /* pt */,
+				1BA4E2B51022408D001AB3CA /* ru */,
+				1BA4E2B610224091001AB3CA /* sv */,
 			);
 			name = NotWritableView.nib;
 			sourceTree = "<group>";
@@ -656,6 +695,7 @@
 				1BFB11480B17639A0088CDB4 /* ru */,
 				1BBD9C780B7C0D5700ACAA72 /* zh_TW */,
 				1B2EF8700BAF557F009F4902 /* Dutch */,
+				1BA4E2AB1022406F001AB3CA /* sv */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
