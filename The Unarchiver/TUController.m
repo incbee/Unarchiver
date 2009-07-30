@@ -285,7 +285,7 @@ static BOOL IsPathWritable(NSString *path);
 			size.width,size.height)];
 
 		[mainwindow setFrame:newframe display:YES animate:NO];
-		[mainwindow setMinSize:NSMakeSize(200,newframe.size.height)];
+		[mainwindow setMinSize:NSMakeSize(250,newframe.size.height)];
 		[mainwindow setMaxSize:NSMakeSize(100000,newframe.size.height)];
 
 		/*if(![mainwindow isVisible])
@@ -304,7 +304,7 @@ static BOOL IsPathWritable(NSString *path);
 
 	[icon setSize:NSMakeSize(16,16)];
 
-	[diritem setTitle:[path lastPathComponent]];
+	[diritem setTitle:[[NSFileManager defaultManager] displayNameAtPath:path]];
 	[diritem setImage:icon];
 }
 

@@ -87,7 +87,10 @@
 -(XADAction)displayError:(NSString *)error ignoreAll:(BOOL *)ignoreall
 {
 	[self performSelectorOnMainThread:@selector(setupErrorView:) withObject:error waitUntilDone:NO];
+
 	XADAction action=[self waitForResponseFromUI];
+
+	[self setDisplayedView:progressview];
 
 	if(action==XADSkip && ignoreall)
 	{
@@ -111,7 +114,11 @@
 	[self performSelectorOnMainThread:@selector(setupEncodingViewWithEncoding:)
 	withObject:[NSNumber numberWithLong:encoding] waitUntilDone:NO];
 
-	if([self waitForResponseFromUI]) return [encodingpopup selectedTag];
+	BOOL res=[self waitForResponseFromUI];
+
+	[self setDisplayedView:progressview];
+
+	if(res) return [encodingpopup selectedTag];
 	else return 0;
 }
 
@@ -120,6 +127,8 @@
 	[self performSelectorOnMainThread:@selector(setupPasswordView) withObject:nil waitUntilDone:NO];
 
 	BOOL res=[self waitForResponseFromUI];
+
+	[self setDisplayedView:progressview];
 
 	if(res&&applyall)
 	{
@@ -368,7 +377,6 @@
 
 -(void)provideResponseFromUI:(int)response
 {
-	[self setDisplayedView:progressview];
 	if(responsetarget)
 	{
 		NSInvocation *invocation=[NSInvocation invocationWithMethodSignature:
@@ -380,6 +388,7 @@
 		[invocation setArgument:&response atIndex:3];
 
 		[invocation invoke];
+//		[invocation performSelector:@selector(invoke) withObject:nil afterDelay:0];
 	}
 	else
 	{
