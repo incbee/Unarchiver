@@ -139,7 +139,7 @@ static BOOL IsPathWritable(NSString *path);
 	[NSApp activateIgnoringOtherApps:YES];
 	[mainwindow makeKeyAndOrderFront:nil];
 
-	[[setuptasks newTaskWithTarget:self] setupExtractionOfFile:filename to:destination taskView:taskview];
+	[[setuptasks taskWithTarget:self] setupExtractionOfFile:filename to:destination taskView:taskview];
 }
 
 -(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview
@@ -188,7 +188,7 @@ static BOOL IsPathWritable(NSString *path);
 	{
 		[currtaskview setCancelAction:@selector(archiveTaskViewCancelledBeforeExtract:) target:self];
 
-		[[extracttasks newTaskWithTarget:self] startExtractionOfFile:currfilename
+		[[extracttasks taskWithTarget:self] startExtractionOfFile:currfilename
 		to:destination taskView:currtaskview];
 		[currfilename release];
 
@@ -249,9 +249,8 @@ static BOOL IsPathWritable(NSString *path);
 
 	[taskview setupProgressViewInPreparingMode];
 
-	TUArchiveController *archive=[[TUArchiveController alloc]
-	initWithFilename:filename destination:destination taskView:taskview];
-	//if(!archive) return; // big trouble TODO: fix this
+	TUArchiveController *archive=[[[TUArchiveController alloc]
+	initWithFilename:filename destination:destination taskView:taskview] autorelease];
 
 	[archive runWithFinishAction:@selector(archiveControllerFinished:) target:self];
 }

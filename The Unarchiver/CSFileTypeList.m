@@ -8,7 +8,8 @@
 {
 	if(self=[super initWithCoder:coder])
 	{
-		[self setDataSource:[[CSFileTypeListSource alloc] init]];
+		datasource=[CSFileTypeListSource new];
+		[self setDataSource:datasource];
 	}
 	return self;
 }
@@ -25,7 +26,7 @@
 
 -(void)dealloc
 {
-	[[self dataSource] release];
+	[datasource release];
 	[super dealloc];
 }
 

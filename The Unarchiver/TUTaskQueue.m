@@ -19,7 +19,7 @@
 	[super dealloc];
 }
 
--(id)newTaskWithTarget:(id)target
+-(id)taskWithTarget:(id)target
 {
 	return [[[TUTaskTrampoline alloc] initWithTarget:target queue:self] autorelease];
 }

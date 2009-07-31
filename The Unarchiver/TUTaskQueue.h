@@ -9,7 +9,7 @@
 -(id)init;
 -(void)dealloc;
 
--(id)newTaskWithTarget:(id)target;
+-(id)taskWithTarget:(id)target;
 -(void)newTaskWithTarget:(id)target invocation:(NSInvocation *)invocation;
 
 -(void)stallCurrentTask;

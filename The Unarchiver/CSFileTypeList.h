@@ -1,7 +1,10 @@
 #import <Cocoa/Cocoa.h>
 
+@class CSFileTypeListSource;
+
 @interface CSFileTypeList:NSTableView
 {
+	CSFileTypeListSource *datasource;
 }
 
 -(id)initWithCoder:(NSCoder *)coder;
