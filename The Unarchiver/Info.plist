@@ -1400,11 +1400,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0 beta 3</string>
+	<string>2.0 RC</string>
 	<key>CFBundleSignature</key>
 	<string>TUnA</string>
 	<key>CFBundleVersion</key>
-	<string>2.0 beta 3</string>
+	<string>2.0 RC</string>
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSMainNibFile</key>

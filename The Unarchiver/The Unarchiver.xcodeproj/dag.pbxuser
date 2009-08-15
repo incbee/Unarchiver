@@ -15,7 +15,7 @@
 		argumentStrings = (
 		);
 		autoAttachOnCrash = 1;
-		breakpointsEnabled = 0;
+		breakpointsEnabled = 1;
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
@@ -66,17 +66,24 @@
 	};
 	1B0DE4C90A37A1620009B697 /* TUController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1108, 7866}}";
-			sepNavSelRange = "{4800, 0}";
-			sepNavVisRange = "{3900, 1360}";
+			sepNavIntBoundsRect = "{{0, 0}, {844, 7885}}";
+			sepNavSelRange = "{4494, 0}";
+			sepNavVisRange = "{825, 998}";
 			sepNavVisRect = "{{0, 1863}, {772, 683}}";
 			sepNavWindowFrame = "{{112, 294}, {750, 558}}";
 		};
 	};
 	1B1B995E0B07C43600EC8324 /* Spanish */ = {
+		isa = PBXFileReference;
+		fileEncoding = 10;
+		lastKnownFileType = text.plist.strings;
+		name = Spanish;
+		path = "/Users/dag/Code/The Unarchiver/The Unarchiver/Spanish.lproj/InfoPlist.strings";
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {772, 683}}";
+			sepNavIntBoundsRect = "{{0, 0}, {698, 683}}";
 			sepNavSelRange = "{109, 0}";
+			sepNavVisRange = "{0, 109}";
 			sepNavVisRect = "{{0, 0}, {772, 683}}";
 		};
 	};
@@ -88,6 +95,12 @@
 		};
 	};
 	1B1B99600B07C45A00EC8324 /* Spanish */ = {
+		isa = PBXFileReference;
+		fileEncoding = 10;
+		lastKnownFileType = text.plist.strings;
+		name = Spanish;
+		path = "/Users/dag/Code/The Unarchiver/The Unarchiver/Spanish.lproj/Localizable.strings";
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1228, 1102}}";
 			sepNavSelRange = "{124, 0}";
@@ -515,8 +528,8 @@
 	1B81DDCC10012A2D005C5B23 /* TUTaskQueue.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {698, 722}}";
-			sepNavSelRange = "{143, 0}";
-			sepNavVisRange = "{0, 621}";
+			sepNavSelRange = "{168, 0}";
+			sepNavVisRange = "{0, 620}";
 		};
 	};
 	1B81DDCD10012A2D005C5B23 /* TUTaskQueue.m */ = {
@@ -577,7 +590,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 269574292.369936;
+		modificationTime = 271459209.392715;
 		state = 2;
 		symbolName = malloc_error_break;
 	};
@@ -929,10 +942,10 @@
 		continueAfterActions = 0;
 		countType = 0;
 		delayBeforeContinue = 0;
-		hitCount = 2;
+		hitCount = 0;
 		ignoreCount = 0;
 		location = libobjc.A.dylib;
-		modificationTime = 269574302.84477;
+		modificationTime = 271459209.392706;
 		state = 1;
 		symbolName = objc_exception_throw;
 	};
@@ -1234,6 +1247,11 @@
 		vrLoc = 0;
 	};
 	1BBD9C720B7C0D2B00ACAA72 /* zh_TW */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = text.plist.strings;
+		name = zh_TW;
+		path = "/Users/dag/Code/The Unarchiver/The Unarchiver/zh_TW.lproj/InfoPlist.strings";
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {772, 683}}";
 			sepNavSelRange = "{0, 0}";
@@ -1241,6 +1259,11 @@
 		};
 	};
 	1BBD9C750B7C0D4900ACAA72 /* zh_TW */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = text.plist.strings;
+		name = zh_TW;
+		path = "/Users/dag/Code/The Unarchiver/The Unarchiver/zh_TW.lproj/Localizable.strings";
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {968, 1102}}";
 			sepNavSelRange = "{576, 0}";
@@ -1530,7 +1553,7 @@
 		vrLoc = 88;
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = Release;
 		activeExecutable = 1B0DE4B20A37A0C40009B697 /* The Unarchiver */;
 		activeTarget = 8D1107260486CEB800E47090 /* The Unarchiver */;
 		addToTargets = (
