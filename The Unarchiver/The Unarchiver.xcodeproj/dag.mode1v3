@@ -336,7 +336,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1BA4E2F710227C2D001AB3CA</string>
+										<string>1BA4E36A102E1E65001AB3CA</string>
 										<key>history</key>
 										<array>
 											<string>1B932E8B0A57312B00F7DE66</string>
@@ -399,7 +399,7 @@
 											<string>1BA4E2E210227C2D001AB3CA</string>
 											<string>1BA4E2E310227C2D001AB3CA</string>
 											<string>1BA4E2E410227C2D001AB3CA</string>
-											<string>1BA4E2E510227C2D001AB3CA</string>
+											<string>1BA4E2F710227C2D001AB3CA</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -469,23 +469,6 @@
 											<string>1B81DE391001725A005C5B23</string>
 											<string>1B8EEE3A1010038F00999952</string>
 											<string>1BC03CBB101160AE0008AC2C</string>
-											<string>1BA4E2E610227C2D001AB3CA</string>
-											<string>1BA4E2E710227C2D001AB3CA</string>
-											<string>1BA4E2E810227C2D001AB3CA</string>
-											<string>1BA4E2E910227C2D001AB3CA</string>
-											<string>1BA4E2EA10227C2D001AB3CA</string>
-											<string>1BA4E2EB10227C2D001AB3CA</string>
-											<string>1BA4E2EC10227C2D001AB3CA</string>
-											<string>1BA4E2ED10227C2D001AB3CA</string>
-											<string>1BA4E2EE10227C2D001AB3CA</string>
-											<string>1BA4E2EF10227C2D001AB3CA</string>
-											<string>1BA4E2F010227C2D001AB3CA</string>
-											<string>1BA4E2F110227C2D001AB3CA</string>
-											<string>1BA4E2F210227C2D001AB3CA</string>
-											<string>1BA4E2F310227C2D001AB3CA</string>
-											<string>1BA4E2F410227C2D001AB3CA</string>
-											<string>1BA4E2F510227C2D001AB3CA</string>
-											<string>1BA4E2F610227C2D001AB3CA</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -543,9 +526,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1BA4E2F810227C2D001AB3CA</string>
+				<string>1BA4E36B102E1E65001AB3CA</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>1BA4E2F910227C2D001AB3CA</string>
+				<string>1BA4E36C102E1E65001AB3CA</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -677,9 +660,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1B183F2E0E09DB2600FA7F8F</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/dag/Code/The Unarchiver/The Unarchiver/The Unarchiver.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
