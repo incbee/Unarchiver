@@ -185,6 +185,14 @@
 		1BA4E2B9102240B6001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = sv.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1BA4E2BA102240BE001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = sv.lproj/EncodingView.nib; sourceTree = "<group>"; };
 		1BA4E3781036D2DC001AB3CA /* French */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = French; path = French.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1BA4E3871038D355001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BA4E3891038D364001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1BA4E38A1038D375001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		1BA4E38B1038D383001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1BA4E38C1038D38E001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/ErrorView.nib; sourceTree = "<group>"; };
+		1BA4E38D1038D397001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
+		1BA4E38E1038D3A6001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/PasswordView.nib; sourceTree = "<group>"; };
+		1BA4E38F1038D3B0001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/EncodingView.nib; sourceTree = "<group>"; };
 		1BED5D050A5DE56000CA31C2 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1BED5DB30A600D6E00CA31C2 /* TUEncodingPopUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUEncodingPopUp.h; sourceTree = "<group>"; };
 		1BED5DB40A600D6E00CA31C2 /* TUEncodingPopUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUEncodingPopUp.m; sourceTree = "<group>"; };
@@ -404,6 +412,7 @@
 				zh_TW,
 				Dutch,
 				sv,
+				es,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* The Unarchiver */;
 			projectDirPath = "";
@@ -558,6 +567,7 @@
 				1BFB113F0B1763270088CDB4 /* pt */,
 				1BFB11400B17632A0088CDB4 /* ru */,
 				1BA4E2A31022405A001AB3CA /* sv */,
+				1BA4E3871038D355001AB3CA /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -572,6 +582,7 @@
 				1BFB11430B17633F0088CDB4 /* pt */,
 				1BFB11440B1763420088CDB4 /* ru */,
 				1BA4E2AA10224066001AB3CA /* sv */,
+				1BA4E3891038D364001AB3CA /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -586,6 +597,7 @@
 				1BFB114C0B1763B30088CDB4 /* pt */,
 				1BFB114D0B1763B60088CDB4 /* ru */,
 				1BA4E2B7102240A2001AB3CA /* sv */,
+				1BA4E38C1038D38E001AB3CA /* es */,
 			);
 			name = ErrorView.nib;
 			sourceTree = "<group>";
@@ -600,6 +612,7 @@
 				1BFB11500B1763C30088CDB4 /* pt */,
 				1BFB11510B1763C50088CDB4 /* ru */,
 				1BA4E2B8102240AB001AB3CA /* sv */,
+				1BA4E38D1038D397001AB3CA /* es */,
 			);
 			name = OpenErrorView.nib;
 			sourceTree = "<group>";
@@ -614,6 +627,7 @@
 				1BFB11540B17668A0088CDB4 /* pt */,
 				1BFB11550B17668C0088CDB4 /* ru */,
 				1BA4E2B9102240B6001AB3CA /* sv */,
+				1BA4E38E1038D3A6001AB3CA /* es */,
 			);
 			name = PasswordView.nib;
 			sourceTree = "<group>";
@@ -628,6 +642,7 @@
 				1BFB11580B1766930088CDB4 /* pt */,
 				1BFB11590B1766960088CDB4 /* ru */,
 				1BA4E2BA102240BE001AB3CA /* sv */,
+				1BA4E38F1038D3B0001AB3CA /* es */,
 			);
 			name = EncodingView.nib;
 			sourceTree = "<group>";
@@ -642,6 +657,7 @@
 				1BA4E2B41022408A001AB3CA /* pt */,
 				1BA4E2B51022408D001AB3CA /* ru */,
 				1BA4E2B610224091001AB3CA /* sv */,
+				1BA4E38B1038D383001AB3CA /* es */,
 			);
 			name = NotWritableView.nib;
 			sourceTree = "<group>";
@@ -656,6 +672,7 @@
 				1BFB11470B1763970088CDB4 /* pt */,
 				1BFB11480B17639A0088CDB4 /* ru */,
 				1BA4E2AB1022406F001AB3CA /* sv */,
+				1BA4E38A1038D375001AB3CA /* es */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";

@@ -590,7 +590,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 271459209.392715;
+		modificationTime = 272137668.165263;
 		state = 2;
 		symbolName = malloc_error_break;
 	};
@@ -945,7 +945,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libobjc.A.dylib;
-		modificationTime = 271459209.392706;
+		modificationTime = 272137668.165242;
 		state = 1;
 		symbolName = objc_exception_throw;
 	};
@@ -1245,6 +1245,14 @@
 		rType = 0;
 		vrLen = 621;
 		vrLoc = 0;
+	};
+	1BA4E3871038D355001AB3CA /* es */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {747, 701}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 109}";
+			sepNavWindowFrame = "{{69, 44}, {806, 829}}";
+		};
 	};
 	1BBD9C720B7C0D2B00ACAA72 /* zh_TW */ = {
 		isa = PBXFileReference;
