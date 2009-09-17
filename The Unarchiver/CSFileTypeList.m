@@ -89,7 +89,7 @@
 				type,@"type",
 				description,@"description",
 				extensions,@"extensions",
-			0]];
+			nil]];
 		}
 	}
 
@@ -195,7 +195,7 @@
 
 	for(;;)
 	{
-		int index=[handlers indexOfObject:self_id];
+		NSUInteger index=[handlers indexOfObject:self_id];
 		if(index==NSNotFound) break;
 		[handlers removeObjectAtIndex:index];
 	}
