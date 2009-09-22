@@ -44,7 +44,7 @@
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app;
 -(BOOL)application:(NSApplication *)app openFile:(NSString *)filename;
 
--(void)newArchiveForFile:(NSString *)filename;
+-(void)newArchiveForFile:(NSString *)filename forceDestinationPanel:(BOOL)forcedest;
 -(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview;
 
 -(void)setupExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview;
@@ -61,6 +61,10 @@
 -(void)updateDestinationPopup;
 -(IBAction)changeDestination:(id)sender;
 -(void)destinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)context;
+
+-(IBAction)unarchive:(id)sender;
+-(IBAction)unarchiveTo:(id)sender;
+-(void)selectAndUnarchiveFilesWithDestinationPanel:(BOOL)dest;
 
 -(IBAction)changeCreateFolder:(id)sender;
 

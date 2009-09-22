@@ -100,16 +100,20 @@ static BOOL IsPathWritable(NSString *path);
 -(BOOL)application:(NSApplication *)app openFile:(NSString *)filename
 {
 	opened=YES;
-	[self newArchiveForFile:filename];
+
+	BOOL force=NO;
+	if(GetCurrentKeyModifiers()&(optionKey|shiftKey)) force=YES;
+
+	[self newArchiveForFile:filename forceDestinationPanel:force];
 	return YES;
 }
 
 
 
--(void)newArchiveForFile:(NSString *)filename
+-(void)newArchiveForFile:(NSString *)filename forceDestinationPanel:(BOOL)forcedest
 {
 	int desttype;
-	if(GetCurrentKeyModifiers()&(optionKey|shiftKey)) desttype=3;
+	if(forcedest) desttype=3;
 	else desttype=[[NSUserDefaults standardUserDefaults] integerForKey:@"extractionDestination"];
 
 	NSString *destination;
@@ -335,6 +339,40 @@ static BOOL IsPathWritable(NSString *path);
 	[destinationpopup selectItem:diritem];
 	[[NSUserDefaults standardUserDefaults] setInteger:2 forKey:@"extractionDestination"];
 }
+
+
+
+-(IBAction)unarchive:(id)sender
+{
+	[self selectAndUnarchiveFilesWithDestinationPanel:NO];
+}
+
+-(IBAction)unarchiveTo:(id)sender
+{
+	[self selectAndUnarchiveFilesWithDestinationPanel:YES];
+}
+
+-(void)selectAndUnarchiveFilesWithDestinationPanel:(BOOL)dest
+{
+	NSOpenPanel *panel=[NSOpenPanel openPanel];
+
+	[panel setCanChooseFiles:YES];
+	[panel setAllowsMultipleSelection:YES];
+	[panel setTitle:NSLocalizedString(@"Select files to unarchive",@"Panel title when choosing archives to extract")];
+	[panel setPrompt:NSLocalizedString(@"Unarchive",@"Panel OK button title when choosing archives to extract")];
+
+	int res=[panel runModal];
+
+	if(res==NSOKButton)
+	{
+		NSEnumerator *enumerator=[[panel filenames] objectEnumerator];
+		NSString *filename;
+		while(filename=[enumerator nextObject])
+		[self newArchiveForFile:filename forceDestinationPanel:dest];
+	}
+}
+
+
 
 -(IBAction)changeCreateFolder:(id)sender
 {

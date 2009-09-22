@@ -190,6 +190,14 @@
 		1B2AD8520A5C4BD200FAEA01 /* zip.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = zip.icns; sourceTree = "<group>"; };
 		1B6FA2090A58A1D800066489 /* CSFileTypeList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CSFileTypeList.h; sourceTree = "<group>"; };
 		1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CSFileTypeList.m; sourceTree = "<group>"; };
+		1B782CF210697C8B00EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1B782CF310697C9900EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1B782CF410697CA000EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		1B782CF510697CA700EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1B782CF610697CAE00EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/ErrorView.nib; sourceTree = "<group>"; };
+		1B782CF710697CB400EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
+		1B782CF810697CBA00EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/PasswordView.nib; sourceTree = "<group>"; };
+		1B782CF910697CC100EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/EncodingView.nib; sourceTree = "<group>"; };
 		1B81DBD10FF98BF9005C5B23 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NotWritableView.nib; sourceTree = "<group>"; };
 		1B81DDA510003BBB005C5B23 /* TUArchiveTaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUArchiveTaskView.h; sourceTree = "<group>"; };
 		1B81DDA610003BBB005C5B23 /* TUArchiveTaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUArchiveTaskView.m; sourceTree = "<group>"; };
@@ -351,7 +359,7 @@
 				1B95B40D1010D537009FA09E /* XADTest */,
 				1B95B40F1010D537009FA09E /* XADTest2 */,
 				1B95B4111010D537009FA09E /* XADTest3 */,
-				1BA4E2A91022405A001AB3CA /* XADTest4 */,
+				1BA4E2A91022405A001AB3CA /* XADTest3 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -507,10 +515,10 @@
 			remoteRef = 1B95B4101010D537009FA09E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1BA4E2A91022405A001AB3CA /* XADTest4 */ = {
+		1BA4E2A91022405A001AB3CA /* XADTest3 */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = XADTest4;
+			path = XADTest3;
 			remoteRef = 1BA4E2A81022405A001AB3CA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -615,6 +623,7 @@
 				1BFB11400B17632A0088CDB4 /* ru */,
 				1BA4E2A31022405A001AB3CA /* sv */,
 				1BA4E3871038D355001AB3CA /* es */,
+				1B782CF210697C8B00EBF3E8 /* zh_TW */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -630,6 +639,7 @@
 				1BFB11440B1763420088CDB4 /* ru */,
 				1BA4E2AA10224066001AB3CA /* sv */,
 				1BA4E3891038D364001AB3CA /* es */,
+				1B782CF310697C9900EBF3E8 /* zh_TW */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -645,6 +655,7 @@
 				1BFB114D0B1763B60088CDB4 /* ru */,
 				1BA4E2B7102240A2001AB3CA /* sv */,
 				1BA4E38C1038D38E001AB3CA /* es */,
+				1B782CF610697CAE00EBF3E8 /* zh_TW */,
 			);
 			name = ErrorView.nib;
 			sourceTree = "<group>";
@@ -660,6 +671,7 @@
 				1BFB11510B1763C50088CDB4 /* ru */,
 				1BA4E2B8102240AB001AB3CA /* sv */,
 				1BA4E38D1038D397001AB3CA /* es */,
+				1B782CF710697CB400EBF3E8 /* zh_TW */,
 			);
 			name = OpenErrorView.nib;
 			sourceTree = "<group>";
@@ -675,6 +687,7 @@
 				1BFB11550B17668C0088CDB4 /* ru */,
 				1BA4E2B9102240B6001AB3CA /* sv */,
 				1BA4E38E1038D3A6001AB3CA /* es */,
+				1B782CF810697CBA00EBF3E8 /* zh_TW */,
 			);
 			name = PasswordView.nib;
 			sourceTree = "<group>";
@@ -690,6 +703,7 @@
 				1BFB11590B1766960088CDB4 /* ru */,
 				1BA4E2BA102240BE001AB3CA /* sv */,
 				1BA4E38F1038D3B0001AB3CA /* es */,
+				1B782CF910697CC100EBF3E8 /* zh_TW */,
 			);
 			name = EncodingView.nib;
 			sourceTree = "<group>";
@@ -705,6 +719,7 @@
 				1BA4E2B51022408D001AB3CA /* ru */,
 				1BA4E2B610224091001AB3CA /* sv */,
 				1BA4E38B1038D383001AB3CA /* es */,
+				1B782CF510697CA700EBF3E8 /* zh_TW */,
 			);
 			name = NotWritableView.nib;
 			sourceTree = "<group>";
@@ -720,6 +735,7 @@
 				1BFB11480B17639A0088CDB4 /* ru */,
 				1BA4E2AB1022406F001AB3CA /* sv */,
 				1BA4E38A1038D375001AB3CA /* es */,
+				1B782CF410697CA000EBF3E8 /* zh_TW */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
