@@ -1411,6 +1411,54 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSServices</key>
+	<array>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>The Unarchiver/Unarchive To Current Folder</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>unarchiveToCurrentFolderWithPasteboard</string>
+			<key>NSPortName</key>
+			<string>The Unarchiver</string>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSFilenamesPboardType</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>The Unarchiver/Unarchive To Desktop</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>unarchiveToDesktopWithPasteboard</string>
+			<key>NSPortName</key>
+			<string>The Unarchiver</string>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSFilenamesPboardType</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>The Unarchiver/Unarchive To...</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>unarchiveToWithPasteboard</string>
+			<key>NSPortName</key>
+			<string>The Unarchiver</string>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSFilenamesPboardType</string>
+			</array>
+		</dict>
+	</array>
 	<key>UTExportedTypeDeclarations</key>
 	<array/>
 	<key>UTImportedTypeDeclarations</key>

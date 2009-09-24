@@ -14,6 +14,8 @@
 	NSString *currfilename;
 	TUArchiveTaskView *currtaskview;
 
+	NSString *selecteddestination;
+
 	BOOL resizeblocked,opened;
 
 	IBOutlet NSWindow *mainwindow;
@@ -44,7 +46,8 @@
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app;
 -(BOOL)application:(NSApplication *)app openFile:(NSString *)filename;
 
--(void)newArchiveForFile:(NSString *)filename forceDestinationPanel:(BOOL)forcedest;
+-(void)newArchivesForFiles:(NSArray *)filenames destination:(int)desttype;
+-(void)newArchiveForFile:(NSString *)filename destination:(int)desttype;
 -(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview;
 
 -(void)setupExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview;
@@ -62,9 +65,17 @@
 -(IBAction)changeDestination:(id)sender;
 -(void)destinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)context;
 
--(IBAction)unarchive:(id)sender;
+-(void)unarchiveToCurrentFolderWithPasteboard:(NSPasteboard *)pboard
+userData:(NSString *)data error:(NSString **)error;
+-(void)unarchiveToDesktopWithPasteboard:(NSPasteboard *)pboard
+userData:(NSString *)data error:(NSString **)error;
+-(void)unarchiveToWithPasteboard:(NSPasteboard *)pboard
+userData:(NSString *)data error:(NSString **)error;
+
+-(IBAction)unarchiveToCurrentFolder:(id)sender;
+-(IBAction)unarchiveToDesktop:(id)sender;
 -(IBAction)unarchiveTo:(id)sender;
--(void)selectAndUnarchiveFilesWithDestinationPanel:(BOOL)dest;
+-(void)selectAndUnarchiveFilesWithDestination:(int)desttype;
 
 -(IBAction)changeCreateFolder:(id)sender;
 

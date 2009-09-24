@@ -39,6 +39,7 @@
 		1B2AD86C0A5C4BD200FAEA01 /* z.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B2AD8510A5C4BD200FAEA01 /* z.icns */; };
 		1B2AD86D0A5C4BD200FAEA01 /* zip.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B2AD8520A5C4BD200FAEA01 /* zip.icns */; };
 		1B6FA20B0A58A1D800066489 /* CSFileTypeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */; };
+		1B782D21106ACC1700EBF3E8 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B782D20106ACC1700EBF3E8 /* ServicesMenu.strings */; };
 		1B81DBD20FF98BF9005C5B23 /* NotWritableView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1B81DBD00FF98BF9005C5B23 /* NotWritableView.nib */; };
 		1B81DDA710003BBB005C5B23 /* TUArchiveTaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B81DDA610003BBB005C5B23 /* TUArchiveTaskView.m */; };
 		1B81DDCE10012A2D005C5B23 /* TUTaskQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B81DDCD10012A2D005C5B23 /* TUTaskQueue.m */; };
@@ -198,6 +199,15 @@
 		1B782CF710697CB400EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
 		1B782CF810697CBA00EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1B782CF910697CC100EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/EncodingView.nib; sourceTree = "<group>"; };
+		1B782D1E106ACBFD00EBF3E8 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D22106ACC2200EBF3E8 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D23106ACC2C00EBF3E8 /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D24106ACC3000EBF3E8 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D25106ACC3400EBF3E8 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D26106ACC3800EBF3E8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D27106ACC3B00EBF3E8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D28106ACC3E00EBF3E8 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D29106ACC4400EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
 		1B81DBD10FF98BF9005C5B23 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NotWritableView.nib; sourceTree = "<group>"; };
 		1B81DDA510003BBB005C5B23 /* TUArchiveTaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUArchiveTaskView.h; sourceTree = "<group>"; };
 		1B81DDA610003BBB005C5B23 /* TUArchiveTaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUArchiveTaskView.m; sourceTree = "<group>"; };
@@ -313,6 +323,7 @@
 			children = (
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1B1D47060AFC294E009AA7EB /* Localizable.strings */,
+				1B782D20106ACC1700EBF3E8 /* ServicesMenu.strings */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
 				1B81DBD00FF98BF9005C5B23 /* NotWritableView.nib */,
 				1B1D47B90AFCBE94009AA7EB /* ErrorView.nib */,
@@ -579,6 +590,7 @@
 				1B9767BD0A6D79CA00A8E8DA /* unarchiver.icns in Resources */,
 				1B1D47070AFC294E009AA7EB /* Localizable.strings in Resources */,
 				1B81DBD20FF98BF9005C5B23 /* NotWritableView.nib in Resources */,
+				1B782D21106ACC1700EBF3E8 /* ServicesMenu.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -708,6 +720,22 @@
 			name = EncodingView.nib;
 			sourceTree = "<group>";
 		};
+		1B782D20106ACC1700EBF3E8 /* ServicesMenu.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1B782D1E106ACBFD00EBF3E8 /* English */,
+				1B782D22106ACC2200EBF3E8 /* German */,
+				1B782D23106ACC2C00EBF3E8 /* Japanese */,
+				1B782D24106ACC3000EBF3E8 /* French */,
+				1B782D25106ACC3400EBF3E8 /* pt */,
+				1B782D26106ACC3800EBF3E8 /* ru */,
+				1B782D27106ACC3B00EBF3E8 /* sv */,
+				1B782D28106ACC3E00EBF3E8 /* es */,
+				1B782D29106ACC4400EBF3E8 /* zh_TW */,
+			);
+			name = ServicesMenu.strings;
+			sourceTree = "<group>";
+		};
 		1B81DBD00FF98BF9005C5B23 /* NotWritableView.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -746,6 +774,7 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;

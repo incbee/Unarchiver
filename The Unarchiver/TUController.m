@@ -8,6 +8,9 @@
 #import <Carbon/Carbon.h>
 
 
+#define CurrentFolderDestination 1
+#define DesktopDestination 2
+#define SelectedDestination 3
 
 static BOOL IsPathWritable(NSString *path);
 
@@ -20,7 +23,9 @@ static BOOL IsPathWritable(NSString *path);
 	if(self=[super init])
 	{
 		setuptasks=[TUTaskQueue new];
+		[setuptasks setFinishAction:@selector(setupQueueEmpty:) target:self];
 		extracttasks=[TUTaskQueue new];
+		selecteddestination=nil;
 		resizeblocked=NO;
 		opened=NO;
 	}
@@ -31,6 +36,7 @@ static BOOL IsPathWritable(NSString *path);
 {
 	[setuptasks release];
 	[extracttasks release];
+	[selecteddestination release];
 	[super dealloc];
 }
 
@@ -90,6 +96,8 @@ static BOOL IsPathWritable(NSString *path);
 		}
 		[prefswindow makeKeyAndOrderFront:nil];
 	}
+
+	[NSApp setServicesProvider:self];
 }
 
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app 
@@ -101,34 +109,38 @@ static BOOL IsPathWritable(NSString *path);
 {
 	opened=YES;
 
-	BOOL force=NO;
-	if(GetCurrentKeyModifiers()&(optionKey|shiftKey)) force=YES;
+	int desttype;
+	if(GetCurrentKeyModifiers()&(optionKey|shiftKey)) desttype=SelectedDestination;
+	else desttype=[[NSUserDefaults standardUserDefaults] integerForKey:@"extractionDestination"];
 
-	[self newArchiveForFile:filename forceDestinationPanel:force];
+	[self newArchiveForFile:filename destination:desttype];
 	return YES;
 }
 
 
 
--(void)newArchiveForFile:(NSString *)filename forceDestinationPanel:(BOOL)forcedest
+-(void)newArchivesForFiles:(NSArray *)filenames destination:(int)desttype
 {
-	int desttype;
-	if(forcedest) desttype=3;
-	else desttype=[[NSUserDefaults standardUserDefaults] integerForKey:@"extractionDestination"];
+	NSEnumerator *enumerator=[filenames objectEnumerator];
+	NSString *filename;
+	while(filename=[enumerator nextObject]) [self newArchiveForFile:filename destination:desttype];
+}
 
+-(void)newArchiveForFile:(NSString *)filename destination:(int)desttype
+{
 	NSString *destination;
 	switch(desttype)
 	{
 		default:
-		case 1:
+		case CurrentFolderDestination:
 			destination=[filename stringByDeletingLastPathComponent];
 		break;
 
-		case 2:
+		case DesktopDestination:
 			destination=[[NSUserDefaults standardUserDefaults] stringForKey:@"extractionDestinationPath"];
 		break;
 
-		case 3:
+		case SelectedDestination:
 			destination=nil;
 		break;
 	}
@@ -145,18 +157,18 @@ static BOOL IsPathWritable(NSString *path);
 	[[setuptasks taskWithTarget:self] setupExtractionOfFile:filename to:destination taskView:taskview];
 }
 
+
+
 -(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview
 {
 	[mainlist removeTaskView:taskview];
 }
 
-
-
 -(void)setupExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview
 {
 	if(![mainlist containsTaskView:taskview]) // This archive has been cancelled
 	{
-		[extracttasks finishCurrentTask];
+		[setuptasks finishCurrentTask];
 		return;
 	}
 
@@ -165,6 +177,7 @@ static BOOL IsPathWritable(NSString *path);
 
 	[taskview setCancelAction:NULL target:nil];
 
+	if(!destination) destination=selecteddestination;
 	[self tryDestination:destination];
 }
 
@@ -203,7 +216,9 @@ static BOOL IsPathWritable(NSString *path);
 {
 	if(res==NSOKButton)
 	{
-		[self tryDestination:[panel directory]];
+		[selecteddestination release];
+		selecteddestination=[[panel directory] retain];
+		[self tryDestination:selecteddestination];
 	}
 	else // cancel
 	{
@@ -236,11 +251,19 @@ static BOOL IsPathWritable(NSString *path);
 	}
 }
 
+-(void)setupQueueEmpty:(TUTaskQueue *)queue
+{
+	[selecteddestination release];
+	selecteddestination=nil;
+}
+
+
+
+
 -(void)archiveTaskViewCancelledBeforeExtract:(TUArchiveTaskView *)taskview
 {
 	[mainlist removeTaskView:taskview];
 }
-
 
 -(void)startExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview
 {
@@ -342,17 +365,54 @@ static BOOL IsPathWritable(NSString *path);
 
 
 
--(IBAction)unarchive:(id)sender
+-(void)unarchiveToCurrentFolderWithPasteboard:(NSPasteboard *)pboard
+userData:(NSString *)data error:(NSString **)error
 {
-	[self selectAndUnarchiveFilesWithDestinationPanel:NO];
+	if([[pboard types] containsObject:NSFilenamesPboardType])
+	{
+		NSArray *filenames=[pboard propertyListForType:NSFilenamesPboardType];
+		[self newArchivesForFiles:filenames destination:CurrentFolderDestination];
+	}
+}
+
+-(void)unarchiveToDesktopWithPasteboard:(NSPasteboard *)pboard
+userData:(NSString *)data error:(NSString **)error
+{
+	if([[pboard types] containsObject:NSFilenamesPboardType])
+	{
+		NSArray *filenames=[pboard propertyListForType:NSFilenamesPboardType];
+		[self newArchivesForFiles:filenames destination:DesktopDestination];
+	}
+}
+
+-(void)unarchiveToWithPasteboard:(NSPasteboard *)pboard
+userData:(NSString *)data error:(NSString **)error
+{
+	if([[pboard types] containsObject:NSFilenamesPboardType])
+	{
+		NSArray *filenames=[pboard propertyListForType:NSFilenamesPboardType];
+		[self newArchivesForFiles:filenames destination:SelectedDestination];
+	}
+}
+
+
+
+-(IBAction)unarchiveToCurrentFolder:(id)sender
+{
+	[self selectAndUnarchiveFilesWithDestination:CurrentFolderDestination];
+}
+
+-(IBAction)unarchiveToDesktop:(id)sender
+{
+	[self selectAndUnarchiveFilesWithDestination:DesktopDestination];
 }
 
 -(IBAction)unarchiveTo:(id)sender
 {
-	[self selectAndUnarchiveFilesWithDestinationPanel:YES];
+	[self selectAndUnarchiveFilesWithDestination:SelectedDestination];
 }
 
--(void)selectAndUnarchiveFilesWithDestinationPanel:(BOOL)dest
+-(void)selectAndUnarchiveFilesWithDestination:(int)desttype
 {
 	NSOpenPanel *panel=[NSOpenPanel openPanel];
 
@@ -363,13 +423,7 @@ static BOOL IsPathWritable(NSString *path);
 
 	int res=[panel runModal];
 
-	if(res==NSOKButton)
-	{
-		NSEnumerator *enumerator=[[panel filenames] objectEnumerator];
-		NSString *filename;
-		while(filename=[enumerator nextObject])
-		[self newArchiveForFile:filename forceDestinationPanel:dest];
-	}
+	if(res==NSOKButton) [self newArchivesForFiles:[panel filenames] destination:desttype];
 }
 
 

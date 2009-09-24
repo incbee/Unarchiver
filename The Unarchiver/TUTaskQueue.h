@@ -4,10 +4,15 @@
 {
 	NSMutableArray *tasks;
 	BOOL running,stalled;
+
+	id finishtarget;
+	SEL finishselector;
 }
 
 -(id)init;
 -(void)dealloc;
+
+-(void)setFinishAction:(SEL)selector target:(id)target;
 
 -(id)taskWithTarget:(id)target;
 -(void)newTaskWithTarget:(id)target invocation:(NSInvocation *)invocation;

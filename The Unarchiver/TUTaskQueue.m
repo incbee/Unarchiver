@@ -9,6 +9,8 @@
 		tasks=[NSMutableArray new];
 		running=NO;
 		stalled=NO;
+		finishtarget=nil;
+		finishselector=NULL;
 	}
 	return self;
 }
@@ -17,6 +19,12 @@
 {
 	[tasks release];
 	[super dealloc];
+}
+
+-(void)setFinishAction:(SEL)selector target:(id)target
+{
+	finishtarget=target;
+	finishselector=selector;
 }
 
 -(id)taskWithTarget:(id)target
@@ -66,7 +74,11 @@
 -(void)restart
 {
 	if(running) return;
-	if(![tasks count]) return;
+	if(![tasks count])
+	{
+		[finishtarget performSelector:finishselector withObject:self];
+		return;
+	}
 
 	running=YES;
 	stalled=NO;
