@@ -136,11 +136,11 @@ taskView:(TUArchiveTaskView *)taskview
 		if(LSSetItemAttribute)
 		{
 			FSRef src,dest;
-			if(CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:archivename],&src)!=noErr)
-			if(CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:tmpdest],&dest)!=noErr)
+			if(CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:archivename],&src))
+			if(CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:tmpdest],&dest))
 			{
 				CFDictionaryRef dicref;
-				if(LSCopyItemAttribute(&src,kLSRolesAll,kLSItemQuarantineProperties,(CFTypeRef*)&dicref))
+				if(LSCopyItemAttribute(&src,kLSRolesAll,kLSItemQuarantineProperties,(CFTypeRef*)&dicref)==noErr)
 				if(dicref)
 				{
 					[self setQuarantineAttributes:dicref forDirectoryRef:&dest];

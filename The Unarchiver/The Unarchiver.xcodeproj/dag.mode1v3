@@ -277,7 +277,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>6</integer>
+									<integer>7</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -304,7 +304,7 @@
 							<real>218</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>171 117 1021 761 0 0 1440 878 </string>
+						<string>310 117 1021 761 0 0 1440 878 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -322,7 +322,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>emulation.c</string>
+								<string>TUArchiveController.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -330,11 +330,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>emulation.c</string>
+										<string>TUArchiveController.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1B782E41106C4E4A00EBF3E8</string>
+										<string>1B782EAA106C6B7900EBF3E8</string>
 										<key>history</key>
 										<array>
 											<string>1B932E8B0A57312B00F7DE66</string>
@@ -414,8 +414,9 @@
 											<string>1B782DB5106C3D8700EBF3E8</string>
 											<string>1B782DD1106C430500EBF3E8</string>
 											<string>1B782DD2106C430500EBF3E8</string>
-											<string>1B782DEB106C47FE00EBF3E8</string>
-											<string>1B782DEC106C47FE00EBF3E8</string>
+											<string>1B782E90106C67EC00EBF3E8</string>
+											<string>1B782E99106C699700EBF3E8</string>
+											<string>1B782E9A106C699700EBF3E8</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -429,7 +430,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {759, 715}}</string>
 								<key>RubberWindowFrame</key>
-								<string>171 117 1021 761 0 0 1440 878 </string>
+								<string>310 117 1021 761 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -449,7 +450,7 @@
 								<key>Frame</key>
 								<string>{{0, 720}, {759, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>171 117 1021 761 0 0 1440 878 </string>
+								<string>310 117 1021 761 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -609,18 +610,19 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1B782E42106C4E4A00EBF3E8</string>
+		<string>1B782EA7106C6B5200EBF3E8</string>
+		<string>1B782E56106C527700EBF3E8</string>
 		<string>1B782E02106C496200EBF3E8</string>
 		<string>1C530D57069F1CE1000CFCEE</string>
 		<string>1B782D77106C24B600EBF3E8</string>
 		<string>1B782D78106C24B600EBF3E8</string>
 		<string>1B183F2E0E09DB2600FA7F8F</string>
-		<string>/Users/dag/Code/The Unarchiver/The Unarchiver/The Unarchiver.xcodeproj</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
+		<string>1C78EAAD065D492600B07095</string>
+		<string>/Users/dag/Code/The Unarchiver/The Unarchiver/The Unarchiver.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>171 117 1021 761 0 0 1440 878 </string>
+	<string>310 117 1021 761 0 0 1440 878 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -636,8 +638,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -660,6 +660,8 @@
 							<string>449pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -710,7 +712,7 @@
 			<key>WindowToolGUID</key>
 			<string>1B183F2E0E09DB2600FA7F8F</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
@@ -784,11 +786,13 @@
 									<key>DebugVariablesTableConfiguration</key>
 									<array>
 										<string>Name</string>
-										<real>204</real>
+										<real>174</real>
+										<string>Type</string>
+										<real>84</real>
 										<string>Value</string>
-										<real>85</real>
+										<real>97</real>
 										<string>Summary</string>
-										<real>94</real>
+										<real>80</real>
 									</array>
 									<key>Frame</key>
 									<string>{{0, 384}, {408, 374}}</string>
