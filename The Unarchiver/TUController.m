@@ -23,11 +23,13 @@ static BOOL IsPathWritable(NSString *path);
 	if(self=[super init])
 	{
 		setuptasks=[TUTaskQueue new];
-		[setuptasks setFinishAction:@selector(setupQueueEmpty:) target:self];
 		extracttasks=[TUTaskQueue new];
+		queuedfiles=[NSMutableSet new];
 		selecteddestination=nil;
-		resizeblocked=NO;
 		opened=NO;
+
+		[setuptasks setFinishAction:@selector(setupQueueEmpty:) target:self];
+		[extracttasks setFinishAction:@selector(extractQueueEmpty:) target:self];
 	}
 	return self;
 }
@@ -36,6 +38,7 @@ static BOOL IsPathWritable(NSString *path);
 {
 	[setuptasks release];
 	[extracttasks release];
+	[queuedfiles release];
 	[selecteddestination release];
 	[super dealloc];
 }
@@ -128,6 +131,8 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)newArchiveForFile:(NSString *)filename destination:(int)desttype
 {
+	if([queuedfiles containsObject:filename]) return;
+
 	NSString *destination;
 	switch(desttype)
 	{
@@ -151,6 +156,8 @@ static BOOL IsPathWritable(NSString *path);
 	[mainlist addTaskView:taskview];
 	[taskview release];
 
+	[queuedfiles addObject:filename];
+
 	[NSApp activateIgnoringOtherApps:YES];
 	[mainwindow makeKeyAndOrderFront:nil];
 
@@ -168,6 +175,7 @@ static BOOL IsPathWritable(NSString *path);
 {
 	if(![mainlist containsTaskView:taskview]) // This archive has been cancelled
 	{
+		[queuedfiles removeObject:filename];
 		[setuptasks finishCurrentTask];
 		return;
 	}
@@ -207,6 +215,7 @@ static BOOL IsPathWritable(NSString *path);
 		[[extracttasks taskWithTarget:self] startExtractionOfFile:currfilename
 		to:destination taskView:currtaskview];
 		[currfilename release];
+		currfilename=nil;
 
 		[setuptasks finishCurrentTask];
 	}
@@ -223,8 +232,10 @@ static BOOL IsPathWritable(NSString *path);
 	else // cancel
 	{
 		[mainlist removeTaskView:currtaskview];
+		[queuedfiles removeObject:currfilename];
 		[setuptasks finishCurrentTask];
 		[currfilename release];
+		currfilename=nil;
 	}
 }
 
@@ -236,8 +247,10 @@ static BOOL IsPathWritable(NSString *path);
 	{
 		case 0: // cancel
 			[mainlist removeTaskView:taskview];
+			[queuedfiles removeObject:currfilename];
 			[setuptasks finishCurrentTask];
 			[currfilename release];
+			currfilename=nil;
 		break;
 
 		case 1: // to desktop
@@ -269,6 +282,7 @@ static BOOL IsPathWritable(NSString *path);
 {
 	if(![mainlist containsTaskView:taskview]) // This archive has been cancelled
 	{
+		[queuedfiles removeObject:filename];
 		[extracttasks finishCurrentTask];
 		return;
 	}
@@ -283,13 +297,15 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)archiveControllerFinished:(TUArchiveController *)archive
 {
-	//resizeblocked=YES;
 	[mainlist removeTaskView:[archive taskView]];
-	//resizeblocked=NO;
-
+	[queuedfiles removeObject:[archive filename]];
 	[extracttasks finishCurrentTask];
+}
 
-	if(![extracttasks isRunning]) [TUArchiveController clearGlobalPassword];
+-(void)extractQueueEmpty:(TUTaskQueue *)queue
+{
+	[mainwindow orderOut:nil];
+	[TUArchiveController clearGlobalPassword];
 }
 
 
@@ -297,27 +313,16 @@ static BOOL IsPathWritable(NSString *path);
 -(void)listResized:(id)sender
 {
 	NSSize size=[mainlist preferredSize];
+	if(size.height==0) return;
 
-	if(size.height==0)
-	{
-		[mainwindow orderOut:nil];
-	}
-	else if(!resizeblocked)
-	{
-		NSRect frame=[mainwindow contentRectForFrameRect:[mainwindow frame]];
-		NSRect newframe=[mainwindow frameRectForContentRect:
-			NSMakeRect(frame.origin.x,frame.origin.y+frame.size.height-size.height,
-			size.width,size.height)];
+	NSRect frame=[mainwindow contentRectForFrameRect:[mainwindow frame]];
+	NSRect newframe=[mainwindow frameRectForContentRect:
+		NSMakeRect(frame.origin.x,frame.origin.y+frame.size.height-size.height,
+		size.width,size.height)];
 
-		[mainwindow setFrame:newframe display:YES animate:NO];
-		[mainwindow setMinSize:NSMakeSize(250,newframe.size.height)];
-		[mainwindow setMaxSize:NSMakeSize(100000,newframe.size.height)];
-
-		/*if(![mainwindow isVisible])
-		{
-			[mainwindow makeKeyAndOrderFront:nil];
-		}*/
-	}
+	[mainwindow setFrame:newframe display:YES animate:NO];
+	[mainwindow setMinSize:NSMakeSize(250,newframe.size.height)];
+	[mainwindow setMaxSize:NSMakeSize(100000,newframe.size.height)];
 }
 
 

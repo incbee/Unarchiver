@@ -35,11 +35,6 @@ taskView:(TUArchiveTaskView *)taskview
 
 		destination=[destpath retain];
 		tmpdest=nil;
-
-		if([filename matchedByPattern:@"\\.(part[0-9]+\\.rar|tar\\.gz|tar\\.bz2|tar\\.lzma|sit\\.hqx)$" options:REG_ICASE])
-		defaultname=[[[[filename lastPathComponent] stringByDeletingPathExtension] stringByDeletingPathExtension] retain];
-		else
-		defaultname=[[[filename lastPathComponent] stringByDeletingPathExtension] retain];
 	}
 	return self;
 }
@@ -51,12 +46,13 @@ taskView:(TUArchiveTaskView *)taskview
 	[archivename release];
 	[destination release];
 	[tmpdest release];
-	[defaultname release];
 
 	[super dealloc];
 }
 
 
+
+-(NSString *)filename { return archivename; }
 
 -(TUArchiveTaskView *)taskView { return view; }
 
@@ -136,8 +132,32 @@ taskView:(TUArchiveTaskView *)taskview
 
 		NSString *finaldest;
 
+		// Propagate quarantine
+		if(LSSetItemAttribute)
+		{
+			FSRef src,dest;
+			if(CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:archivename],&src)!=noErr)
+			if(CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:tmpdest],&dest)!=noErr)
+			{
+				CFDictionaryRef dicref;
+				if(LSCopyItemAttribute(&src,kLSRolesAll,kLSItemQuarantineProperties,(CFTypeRef*)&dicref))
+				if(dicref)
+				{
+					[self setQuarantineAttributes:dicref forDirectoryRef:&dest];
+					CFRelease(dicref);
+				}
+			}
+		}
+
+		// Move files into place
 		if(makefolder)
 		{
+			NSString *defaultname;
+			if([archivename matchedByPattern:@"\\.(part[0-9]+\\.rar|tar\\.gz|tar\\.bz2|tar\\.lzma|sit\\.hqx)$" options:REG_ICASE])
+			defaultname=[[[archivename lastPathComponent] stringByDeletingPathExtension] stringByDeletingPathExtension];
+			else
+			defaultname=[[archivename lastPathComponent] stringByDeletingPathExtension];
+
 			finaldest=[self findUniqueDestinationWithDirectory:destination andFilename:defaultname];
 			[fm movePath:tmpdest toPath:finaldest handler:nil];
 		}
@@ -150,8 +170,10 @@ taskView:(TUArchiveTaskView *)taskview
 			[fm removeFileAtPath:tmpdest handler:nil];
 		}
 
+		// Remove temporary directory from crash recovery list
 		[self forgetTempDirectory:tmpdest];
 
+		// Set correct date for extracted directory
 		if(copydate)
 		{
 			FSCatalogInfo archiveinfo,newinfo;
@@ -168,6 +190,7 @@ taskView:(TUArchiveTaskView *)taskview
 			SetCatalogInfoForFilename(finaldest,kFSCatInfoContentMod,&newinfo);
 		}
 
+		// Delete archive if requested
 		if(deletearchivepref)
 		{
 			NSString *directory=[archivename stringByDeletingLastPathComponent];
@@ -186,6 +209,7 @@ taskView:(TUArchiveTaskView *)taskview
 			//[self playSound:@"/System/Library/Components/CoreAudio.component/Contents/Resources/SystemSounds/dock/drag to trash.aif"];
 		}
 
+		// Open folder if requested
 		if(openfolderpref)
 		{
 			BOOL isdir;
@@ -210,6 +234,30 @@ taskView:(TUArchiveTaskView *)taskview
 
 	[finishtarget performSelector:finishselector withObject:self];
 	[self release];
+}
+
+-(void)setQuarantineAttributes:(CFDictionaryRef)dicref forDirectoryRef:(FSRef *)dirref
+{
+	FSIterator iterator;
+	if(FSOpenIterator(dirref,kFSIterateFlat,&iterator)!=noErr) return;
+
+	for(;;)
+	{
+		FSRef ref;
+		ItemCount num;
+		OSErr err=FSGetCatalogInfoBulk(iterator,1,&num,NULL,kFSCatInfoNone,NULL,&ref,NULL,NULL);
+
+		if(err==errFSNoMoreItems) break;
+
+		LSSetItemAttribute(&ref,kLSRolesAll,kLSItemQuarantineProperties,dicref);
+
+		FSCatalogInfo catinfo={0};
+		FSGetCatalogInfo(&ref,kFSCatInfoNodeFlags,&catinfo,NULL,NULL,NULL);
+		if(catinfo.nodeFlags&kFSNodeIsDirectoryMask)
+		[self setQuarantineAttributes:dicref forDirectoryRef:&ref];
+	}
+
+	FSCloseIterator(iterator);
 }
 
 -(NSString *)findUniqueDestinationWithDirectory:(NSString *)directory andFilename:(NSString *)filename
@@ -247,6 +295,8 @@ taskView:(TUArchiveTaskView *)taskview
 	[defs setObject:tmpdirs forKey:@"orphanedTempDirectories"];
 	[defs synchronize];
 }
+
+
 
 
 -(void)archiveTaskViewCancelled:(TUArchiveTaskView *)taskview

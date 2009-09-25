@@ -10,7 +10,7 @@
 	TUController *maincontroller;
 	TUArchiveTaskView *view;
 	XADArchive *archive;
-	NSString *archivename,*destination,*tmpdest,*defaultname;
+	NSString *archivename,*destination,*tmpdest;
 	NSStringEncoding selected_encoding;
 
 	id finishtarget;
@@ -25,6 +25,7 @@
 taskView:(TUArchiveTaskView *)taskview;
 -(void)dealloc;
 
+-(NSString *)filename;
 -(TUArchiveTaskView *)taskView;
 
 -(void)runWithFinishAction:(SEL)selector target:(id)target;
@@ -32,6 +33,7 @@ taskView:(TUArchiveTaskView *)taskview;
 -(void)extract;
 -(void)extractFinished;
 -(void)extractFailed;
+-(void)setQuarantineAttributes:(CFDictionaryRef)dicref forDirectoryRef:(FSRef *)dirref;
 -(NSString *)findUniqueDestinationWithDirectory:(NSString *)directory andFilename:(NSString *)filename;
 -(void)rememberTempDirectory:(NSString *)tmpdir;
 -(void)forgetTempDirectory:(NSString *)tmpdir;

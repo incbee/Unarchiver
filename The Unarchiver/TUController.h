@@ -10,13 +10,14 @@
 @interface TUController:NSObject
 {
 	TUTaskQueue *setuptasks,*extracttasks;
+	NSMutableSet *queuedfiles;
 
 	NSString *currfilename;
 	TUArchiveTaskView *currtaskview;
 
 	NSString *selecteddestination;
 
-	BOOL resizeblocked,opened;
+	BOOL opened;
 
 	IBOutlet NSWindow *mainwindow;
 	IBOutlet TUTaskListView *mainlist;
