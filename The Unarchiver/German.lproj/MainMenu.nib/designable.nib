@@ -230,7 +230,7 @@
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="96270599">
 									<reference key="NSMenu" ref="706463160"/>
-									<string key="NSTitle">Unarchive To Current Folder...</string>
+									<string key="NSTitle">Aktuellen Ordner entpacken ...</string>
 									<string key="NSKeyEquiv">o</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -239,7 +239,7 @@
 								</object>
 								<object class="NSMenuItem" id="1038599704">
 									<reference key="NSMenu" ref="706463160"/>
-									<string key="NSTitle">Unarchive To Desktop...</string>
+									<string key="NSTitle">Auf Schreibtisch entpacken ...</string>
 									<string key="NSKeyEquiv">o</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -248,7 +248,7 @@
 								</object>
 								<object class="NSMenuItem" id="519529661">
 									<reference key="NSMenu" ref="706463160"/>
-									<string key="NSTitle">Unarchive To...</string>
+									<string key="NSTitle">Entpacken nach ...</string>
 									<string key="NSKeyEquiv">O</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -267,7 +267,7 @@
 								</object>
 								<object class="NSMenuItem" id="650711094">
 									<reference key="NSMenu" ref="706463160"/>
-									<string key="NSTitle">Close Window</string>
+									<string key="NSTitle">Fenster schließen</string>
 									<string key="NSKeyEquiv">w</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -3516,7 +3516,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{219, 84}, {296, 93}}</string>
+					<string>{{219, 84}, {300, 93}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4271,7 +4271,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1040" key="NS.object.0"/>
+			<integer value="1050" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
