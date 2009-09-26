@@ -1677,6 +1677,17 @@
 		rLen = 0;
 		rLoc = 9223372036854775807;
 	};
+	1B782F1F106D2F6B00EBF3E8 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/dag/Code/The Unarchiver/The Unarchiver/Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
 	1B784B330AB866620052C494 /* PBXBookmark */ = {
 		isa = PBXBookmark;
 		fRef = 1B2AD84F0A5C4BD200FAEA01 /* sit.icns */;
@@ -2149,7 +2160,7 @@
 		vrLoc = 0;
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Release;
+		activeBuildConfigurationName = Debug;
 		activeExecutable = 1B0DE4B20A37A0C40009B697 /* The Unarchiver */;
 		activeTarget = 8D1107260486CEB800E47090 /* The Unarchiver */;
 		addToTargets = (
@@ -2400,6 +2411,7 @@
 			1B782ED0106D26F400EBF3E8 /* PBXTextBookmark */ = 1B782ED0106D26F400EBF3E8 /* PBXTextBookmark */;
 			1B782ED5106D271F00EBF3E8 /* PBXTextBookmark */ = 1B782ED5106D271F00EBF3E8 /* PBXTextBookmark */;
 			1B782ED6106D271F00EBF3E8 /* PlistBookmark */ = 1B782ED6106D271F00EBF3E8 /* PlistBookmark */;
+			1B782F1F106D2F6B00EBF3E8 /* PlistBookmark */ = 1B782F1F106D2F6B00EBF3E8 /* PlistBookmark */;
 			1B784B330AB866620052C494 = 1B784B330AB866620052C494 /* PBXBookmark */;
 			1B784B340AB866620052C494 = 1B784B340AB866620052C494 /* PBXBookmark */;
 			1B784B350AB866620052C494 = 1B784B350AB866620052C494 /* PBXBookmark */;
