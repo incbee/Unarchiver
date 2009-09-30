@@ -1819,9 +1819,9 @@
 		path = "/Users/dag/Code/The Unarchiver/XADMaster/XADArchive.m";
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {884, 27094}}";
+			sepNavIntBoundsRect = "{{0, 0}, {893, 27227}}";
 			sepNavSelRange = "{23309, 0}";
-			sepNavVisRange = "{22823, 738}";
+			sepNavVisRange = "{23044, 403}";
 		};
 	};
 	1B782F65106F7E9A00EBF3E8 /* PBXTextBookmark */ = {
@@ -2017,7 +2017,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 275868086.434315;
+		modificationTime = 276037699.50198;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 		symbolName = malloc_error_break;
@@ -2184,10 +2184,10 @@
 		continueAfterActions = 0;
 		countType = 0;
 		delayBeforeContinue = 0;
-		hitCount = 1;
+		hitCount = 0;
 		ignoreCount = 0;
 		location = libobjc.A.dylib;
-		modificationTime = 275868106.315909;
+		modificationTime = 276037700.710911;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 		symbolName = objc_exception_throw;
