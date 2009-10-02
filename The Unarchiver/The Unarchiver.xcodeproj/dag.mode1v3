@@ -304,7 +304,7 @@
 							<real>218</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>144 117 1021 761 0 0 1440 878 </string>
+						<string>199 117 1021 761 0 0 1440 878 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -322,7 +322,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>XADArchive.m</string>
+								<string>TUArchiveController.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -330,11 +330,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>XADArchive.m</string>
+										<string>TUArchiveController.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1B782F7A106F7F7900EBF3E8</string>
+										<string>1B782FE010741CC900EBF3E8</string>
 										<key>history</key>
 										<array>
 											<string>1B932E8B0A57312B00F7DE66</string>
@@ -379,9 +379,7 @@
 											<string>1BC03CB8101160AE0008AC2C</string>
 											<string>1BA4E2E010227C2D001AB3CA</string>
 											<string>1BA4E2E110227C2D001AB3CA</string>
-											<string>1B0D448D10642805005A85A2</string>
 											<string>1B0D476A10684D07005A85A2</string>
-											<string>1B0D47891068529C005A85A2</string>
 											<string>1B0D47AB10692C10005A85A2</string>
 											<string>1B0D47AC10692C10005A85A2</string>
 											<string>1B0D47AF10692C10005A85A2</string>
@@ -403,8 +401,6 @@
 											<string>1B782DB5106C3D8700EBF3E8</string>
 											<string>1B782DD1106C430500EBF3E8</string>
 											<string>1B782DD2106C430500EBF3E8</string>
-											<string>1B782E90106C67EC00EBF3E8</string>
-											<string>1B782E99106C699700EBF3E8</string>
 											<string>1B782EB2106D225700EBF3E8</string>
 											<string>1B782EB3106D225700EBF3E8</string>
 											<string>1B782EB4106D225700EBF3E8</string>
@@ -418,8 +414,7 @@
 											<string>1B782F48106F7D1A00EBF3E8</string>
 											<string>1B782F4A106F7D1A00EBF3E8</string>
 											<string>1B782F4B106F7D1A00EBF3E8</string>
-											<string>1B782F5B106F7DE100EBF3E8</string>
-											<string>1B782F79106F7F7900EBF3E8</string>
+											<string>1B782FDF10741CC900EBF3E8</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -433,7 +428,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {759, 715}}</string>
 								<key>RubberWindowFrame</key>
-								<string>144 117 1021 761 0 0 1440 878 </string>
+								<string>199 117 1021 761 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -453,7 +448,7 @@
 								<key>Frame</key>
 								<string>{{0, 720}, {759, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>144 117 1021 761 0 0 1440 878 </string>
+								<string>199 117 1021 761 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -613,7 +608,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1B782F7B106F7F7900EBF3E8</string>
 		<string>1B782E56106C527700EBF3E8</string>
 		<string>1B782E02106C496200EBF3E8</string>
 		<string>1C530D57069F1CE1000CFCEE</string>
@@ -625,7 +619,7 @@
 		<string>/Users/dag/Code/The Unarchiver/The Unarchiver/The Unarchiver.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>144 117 1021 761 0 0 1440 878 </string>
+	<string>199 117 1021 761 0 0 1440 878 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -648,7 +642,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>XADArchive.m</string>
+								<string>TUArchiveController.m</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
