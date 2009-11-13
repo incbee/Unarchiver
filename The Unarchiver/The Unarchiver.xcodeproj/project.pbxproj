@@ -243,6 +243,15 @@
 		1BA4E38D1038D397001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
 		1BA4E38E1038D3A6001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1BA4E38F1038D3B0001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/EncodingView.nib; sourceTree = "<group>"; };
+		1BE7850F10ACF093007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Korean; path = Korean.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BE7851010ACF0A3007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Korean; path = Korean.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1BE7851110ACF0B3007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Korean; path = Korean.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1BE7851210ACF0B9007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Korean; path = Korean.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		1BE7851310ACF0BF007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Korean; path = Korean.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1BE7851410ACF0CC007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Korean; path = Korean.lproj/ErrorView.nib; sourceTree = "<group>"; };
+		1BE7851510ACF0D2007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Korean; path = Korean.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
+		1BE7851610ACF0D8007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Korean; path = Korean.lproj/PasswordView.nib; sourceTree = "<group>"; };
+		1BE7851710ACF0EA007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Korean; path = Korean.lproj/EncodingView.nib; sourceTree = "<group>"; };
 		1BED5D050A5DE56000CA31C2 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1BED5DB30A600D6E00CA31C2 /* TUEncodingPopUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUEncodingPopUp.h; sourceTree = "<group>"; };
 		1BED5DB40A600D6E00CA31C2 /* TUEncodingPopUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUEncodingPopUp.m; sourceTree = "<group>"; };
@@ -370,7 +379,7 @@
 				1B95B40D1010D537009FA09E /* XADTest */,
 				1B95B40F1010D537009FA09E /* XADTest2 */,
 				1B95B4111010D537009FA09E /* XADTest3 */,
-				1BA4E2A91022405A001AB3CA /* XADTest4 */,
+				1BA4E2A91022405A001AB3CA /* XADTest3 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -477,6 +486,7 @@
 				Dutch,
 				sv,
 				es,
+				Korean,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* The Unarchiver */;
 			projectDirPath = "";
@@ -526,10 +536,10 @@
 			remoteRef = 1B95B4101010D537009FA09E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1BA4E2A91022405A001AB3CA /* XADTest4 */ = {
+		1BA4E2A91022405A001AB3CA /* XADTest3 */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = XADTest4;
+			path = XADTest3;
 			remoteRef = 1BA4E2A81022405A001AB3CA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -636,6 +646,7 @@
 				1BA4E2A31022405A001AB3CA /* sv */,
 				1BA4E3871038D355001AB3CA /* es */,
 				1B782CF210697C8B00EBF3E8 /* zh_TW */,
+				1BE7850F10ACF093007EA6F6 /* Korean */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -652,6 +663,7 @@
 				1BA4E2AA10224066001AB3CA /* sv */,
 				1BA4E3891038D364001AB3CA /* es */,
 				1B782CF310697C9900EBF3E8 /* zh_TW */,
+				1BE7851010ACF0A3007EA6F6 /* Korean */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -668,6 +680,7 @@
 				1BA4E2B7102240A2001AB3CA /* sv */,
 				1BA4E38C1038D38E001AB3CA /* es */,
 				1B782CF610697CAE00EBF3E8 /* zh_TW */,
+				1BE7851410ACF0CC007EA6F6 /* Korean */,
 			);
 			name = ErrorView.nib;
 			sourceTree = "<group>";
@@ -684,6 +697,7 @@
 				1BA4E2B8102240AB001AB3CA /* sv */,
 				1BA4E38D1038D397001AB3CA /* es */,
 				1B782CF710697CB400EBF3E8 /* zh_TW */,
+				1BE7851510ACF0D2007EA6F6 /* Korean */,
 			);
 			name = OpenErrorView.nib;
 			sourceTree = "<group>";
@@ -700,6 +714,7 @@
 				1BA4E2B9102240B6001AB3CA /* sv */,
 				1BA4E38E1038D3A6001AB3CA /* es */,
 				1B782CF810697CBA00EBF3E8 /* zh_TW */,
+				1BE7851610ACF0D8007EA6F6 /* Korean */,
 			);
 			name = PasswordView.nib;
 			sourceTree = "<group>";
@@ -716,6 +731,7 @@
 				1BA4E2BA102240BE001AB3CA /* sv */,
 				1BA4E38F1038D3B0001AB3CA /* es */,
 				1B782CF910697CC100EBF3E8 /* zh_TW */,
+				1BE7851710ACF0EA007EA6F6 /* Korean */,
 			);
 			name = EncodingView.nib;
 			sourceTree = "<group>";
@@ -732,6 +748,7 @@
 				1B782D27106ACC3B00EBF3E8 /* sv */,
 				1B782D28106ACC3E00EBF3E8 /* es */,
 				1B782D29106ACC4400EBF3E8 /* zh_TW */,
+				1BE7851110ACF0B3007EA6F6 /* Korean */,
 			);
 			name = ServicesMenu.strings;
 			sourceTree = "<group>";
@@ -748,6 +765,7 @@
 				1BA4E2B610224091001AB3CA /* sv */,
 				1BA4E38B1038D383001AB3CA /* es */,
 				1B782CF510697CA700EBF3E8 /* zh_TW */,
+				1BE7851310ACF0BF007EA6F6 /* Korean */,
 			);
 			name = NotWritableView.nib;
 			sourceTree = "<group>";
@@ -764,6 +782,7 @@
 				1BA4E2AB1022406F001AB3CA /* sv */,
 				1BA4E38A1038D375001AB3CA /* es */,
 				1B782CF410697CA000EBF3E8 /* zh_TW */,
+				1BE7851210ACF0B9007EA6F6 /* Korean */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
