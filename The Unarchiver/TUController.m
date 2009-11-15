@@ -89,6 +89,14 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)applicationDidFinishLaunching:(NSNotification *)notification
 {
+	[NSApp setServicesProvider:self];
+	[self performSelector:@selector(delayedAfterLaunch) withObject:nil afterDelay:0.3];
+}
+
+-(void)delayedAfterLaunch
+{
+	// This is an ugly kludge because we can't tell if we're launched
+	// because of a service call.
 	if(!opened)
 	{
 		ProcessSerialNumber psn={0,kCurrentProcess};
@@ -99,8 +107,6 @@ static BOOL IsPathWritable(NSString *path);
 		}
 		[prefswindow makeKeyAndOrderFront:nil];
 	}
-
-	[NSApp setServicesProvider:self];
 }
 
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app 
@@ -373,6 +379,7 @@ static BOOL IsPathWritable(NSString *path);
 -(void)unarchiveToCurrentFolderWithPasteboard:(NSPasteboard *)pboard
 userData:(NSString *)data error:(NSString **)error
 {
+	opened=YES;
 	if([[pboard types] containsObject:NSFilenamesPboardType])
 	{
 		NSArray *filenames=[pboard propertyListForType:NSFilenamesPboardType];
@@ -383,6 +390,7 @@ userData:(NSString *)data error:(NSString **)error
 -(void)unarchiveToDesktopWithPasteboard:(NSPasteboard *)pboard
 userData:(NSString *)data error:(NSString **)error
 {
+	opened=YES;
 	if([[pboard types] containsObject:NSFilenamesPboardType])
 	{
 		NSArray *filenames=[pboard propertyListForType:NSFilenamesPboardType];
@@ -393,6 +401,7 @@ userData:(NSString *)data error:(NSString **)error
 -(void)unarchiveToWithPasteboard:(NSPasteboard *)pboard
 userData:(NSString *)data error:(NSString **)error
 {
+	opened=YES;
 	if([[pboard types] containsObject:NSFilenamesPboardType])
 	{
 		NSArray *filenames=[pboard propertyListForType:NSFilenamesPboardType];
