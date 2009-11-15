@@ -272,7 +272,6 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)setupQueueEmpty:(TUTaskQueue *)queue
 {
-NSLog(@"what %d",[extracttasks isEmpty]);
 	if([extracttasks isEmpty]) [mainwindow orderOut:nil];
 
 	[selecteddestination release];
