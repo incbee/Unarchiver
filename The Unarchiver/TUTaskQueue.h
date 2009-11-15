@@ -22,6 +22,7 @@
 
 -(BOOL)isRunning;
 -(BOOL)isStalled;
+-(BOOL)isEmpty;
 
 -(void)restart;
 

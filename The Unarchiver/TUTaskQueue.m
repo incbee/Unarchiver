@@ -71,6 +71,11 @@
 	return stalled;
 }
 
+-(BOOL)isEmpty
+{
+	return !running&&!stalled;
+}
+
 -(void)restart
 {
 	if(running) return;
