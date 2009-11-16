@@ -379,7 +379,7 @@
 				1B95B40D1010D537009FA09E /* XADTest */,
 				1B95B40F1010D537009FA09E /* XADTest2 */,
 				1B95B4111010D537009FA09E /* XADTest3 */,
-				1BA4E2A91022405A001AB3CA /* XADTest3 */,
+				1BA4E2A91022405A001AB3CA /* XADTest4 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -536,10 +536,10 @@
 			remoteRef = 1B95B4101010D537009FA09E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1BA4E2A91022405A001AB3CA /* XADTest3 */ = {
+		1BA4E2A91022405A001AB3CA /* XADTest4 */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = XADTest3;
+			path = XADTest4;
 			remoteRef = 1BA4E2A81022405A001AB3CA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
