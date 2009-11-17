@@ -243,6 +243,15 @@
 		1BA4E38D1038D397001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
 		1BA4E38E1038D3A6001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1BA4E38F1038D3B0001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/EncodingView.nib; sourceTree = "<group>"; };
+		1BBC3EB310B331C000A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BBC3EB410B331D600A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1BBC3EB510B331DF00A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1BBC3EB610B331E500A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		1BBC3EB710B331EC00A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1BBC3EB810B331F200A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/ErrorView.nib; sourceTree = "<group>"; };
+		1BBC3EB910B331F800A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
+		1BBC3EBA10B331FF00A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/PasswordView.nib; sourceTree = "<group>"; };
+		1BBC3EBB10B3320400A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/EncodingView.nib; sourceTree = "<group>"; };
 		1BE7850F10ACF093007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Korean; path = Korean.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1BE7851010ACF0A3007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Korean; path = Korean.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1BE7851110ACF0B3007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Korean; path = Korean.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
@@ -487,6 +496,7 @@
 				sv,
 				es,
 				Korean,
+				zh_CN,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* The Unarchiver */;
 			projectDirPath = "";
@@ -647,6 +657,7 @@
 				1BA4E3871038D355001AB3CA /* es */,
 				1B782CF210697C8B00EBF3E8 /* zh_TW */,
 				1BE7850F10ACF093007EA6F6 /* Korean */,
+				1BBC3EB310B331C000A05E29 /* zh_CN */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -664,6 +675,7 @@
 				1BA4E3891038D364001AB3CA /* es */,
 				1B782CF310697C9900EBF3E8 /* zh_TW */,
 				1BE7851010ACF0A3007EA6F6 /* Korean */,
+				1BBC3EB410B331D600A05E29 /* zh_CN */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -681,6 +693,7 @@
 				1BA4E38C1038D38E001AB3CA /* es */,
 				1B782CF610697CAE00EBF3E8 /* zh_TW */,
 				1BE7851410ACF0CC007EA6F6 /* Korean */,
+				1BBC3EB810B331F200A05E29 /* zh_CN */,
 			);
 			name = ErrorView.nib;
 			sourceTree = "<group>";
@@ -698,6 +711,7 @@
 				1BA4E38D1038D397001AB3CA /* es */,
 				1B782CF710697CB400EBF3E8 /* zh_TW */,
 				1BE7851510ACF0D2007EA6F6 /* Korean */,
+				1BBC3EB910B331F800A05E29 /* zh_CN */,
 			);
 			name = OpenErrorView.nib;
 			sourceTree = "<group>";
@@ -715,6 +729,7 @@
 				1BA4E38E1038D3A6001AB3CA /* es */,
 				1B782CF810697CBA00EBF3E8 /* zh_TW */,
 				1BE7851610ACF0D8007EA6F6 /* Korean */,
+				1BBC3EBA10B331FF00A05E29 /* zh_CN */,
 			);
 			name = PasswordView.nib;
 			sourceTree = "<group>";
@@ -732,6 +747,7 @@
 				1BA4E38F1038D3B0001AB3CA /* es */,
 				1B782CF910697CC100EBF3E8 /* zh_TW */,
 				1BE7851710ACF0EA007EA6F6 /* Korean */,
+				1BBC3EBB10B3320400A05E29 /* zh_CN */,
 			);
 			name = EncodingView.nib;
 			sourceTree = "<group>";
@@ -749,6 +765,7 @@
 				1B782D28106ACC3E00EBF3E8 /* es */,
 				1B782D29106ACC4400EBF3E8 /* zh_TW */,
 				1BE7851110ACF0B3007EA6F6 /* Korean */,
+				1BBC3EB510B331DF00A05E29 /* zh_CN */,
 			);
 			name = ServicesMenu.strings;
 			sourceTree = "<group>";
@@ -766,6 +783,7 @@
 				1BA4E38B1038D383001AB3CA /* es */,
 				1B782CF510697CA700EBF3E8 /* zh_TW */,
 				1BE7851310ACF0BF007EA6F6 /* Korean */,
+				1BBC3EB710B331EC00A05E29 /* zh_CN */,
 			);
 			name = NotWritableView.nib;
 			sourceTree = "<group>";
@@ -783,6 +801,7 @@
 				1BA4E38A1038D375001AB3CA /* es */,
 				1B782CF410697CA000EBF3E8 /* zh_TW */,
 				1BE7851210ACF0B9007EA6F6 /* Korean */,
+				1BBC3EB610B331E500A05E29 /* zh_CN */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
