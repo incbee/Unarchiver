@@ -635,6 +635,54 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>xz</string>
+				<string>XZ</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-xz</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>XZ File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.tukaani.xz-archive</string>
+				<string>public.xz-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>txz</string>
+				<string>TXZ</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>tar.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>XZ Tar Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.tukaani.xz-tar-archive</string>
+				<string>public.tar-xz-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>tar</string>
 				<string>TAR</string>
 			</array>
@@ -1290,6 +1338,48 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>cx.c3.pp-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>nsa</string>
+				<string>NSA</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>NSA Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.nscripter.nsa-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>sar</string>
+				<string>SAR</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>SAR Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.nscripter.sar</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -2407,27 +2497,6 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.bzip2-archive</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Bzip2 Tar Archive</string>
-			<key>UTTypeIconFile</key>
-			<string>bz2.icns</string>
-			<key>UTTypeIdentifier</key>
-			<string>public.tar-bzip2-archive</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>tbz2</string>
-					<string>tbz</string>
-					<string>TBZ</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
 				<string>public.data</string>
 				<string>public.archive</string>
 			</array>
@@ -2457,6 +2526,114 @@
 					<string>application/bzip</string>
 					<string>application/x-bzip2</string>
 					<string>application/x-bzip</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.bzip2-archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Bzip2 Tar Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>bz2.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.tar-bzip2-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>tbz2</string>
+					<string>tbz</string>
+					<string>TBZ</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>XZ File</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.tukaani.xz-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>xz</string>
+					<string>XZ</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>application/x-xz</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>org.tukaani.xz-archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>XZ Tar Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>tar.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.tukaani.tar-xz-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>txz</string>
+					<string>TXZ</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>NSA Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.nscripter.nsa-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>nsa</string>
+					<string>NSA</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>SAR Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.nscripter.sar-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>sar</string>
+					<string>SAR</string>
 				</array>
 			</dict>
 		</dict>
