@@ -100,11 +100,8 @@ static BOOL IsPathWritable(NSString *path);
 	if(!opened)
 	{
 		ProcessSerialNumber psn={0,kCurrentProcess};
-		OSStatus res=TransformProcessType(&psn,kProcessTransformToForegroundApplication);
-		if(res!=0)
-		{
-			[NSApp activateIgnoringOtherApps:YES];
-		}
+		TransformProcessType(&psn,kProcessTransformToForegroundApplication);
+		[NSApp activateIgnoringOtherApps:YES];
 		[prefswindow makeKeyAndOrderFront:nil];
 	}
 }
