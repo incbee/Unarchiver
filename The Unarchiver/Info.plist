@@ -1389,6 +1389,70 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>001</string>
+				<string>002</string>
+				<string>003</string>
+				<string>004</string>
+				<string>005</string>
+				<string>006</string>
+				<string>007</string>
+				<string>008</string>
+				<string>009</string>
+				<string>010</string>
+				<string>011</string>
+				<string>012</string>
+				<string>013</string>
+				<string>014</string>
+				<string>015</string>
+				<string>016</string>
+				<string>017</string>
+				<string>018</string>
+				<string>019</string>
+				<string>020</string>
+				<string>021</string>
+				<string>022</string>
+				<string>023</string>
+				<string>024</string>
+				<string>025</string>
+				<string>026</string>
+				<string>027</string>
+				<string>028</string>
+				<string>029</string>
+				<string>030</string>
+				<string>031</string>
+				<string>032</string>
+				<string>033</string>
+				<string>034</string>
+				<string>035</string>
+				<string>036</string>
+				<string>037</string>
+				<string>038</string>
+				<string>039</string>
+				<string>040</string>
+				<string>041</string>
+				<string>042</string>
+				<string>043</string>
+				<string>044</string>
+				<string>045</string>
+				<string>046</string>
+				<string>047</string>
+				<string>048</string>
+				<string>049</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Split File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>jar</string>
 				<string>JAR</string>
 			</array>
@@ -1490,11 +1554,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.2</string>
+	<string>2.3</string>
 	<key>CFBundleSignature</key>
 	<string>TUnA</string>
 	<key>CFBundleVersion</key>
-	<string>2.2</string>
+	<string>2.3</string>
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSMainNibFile</key>
