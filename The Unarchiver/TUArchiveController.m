@@ -160,6 +160,14 @@ taskView:(TUArchiveTaskView *)taskview
 
 			finaldest=[self findUniqueDestinationWithDirectory:destination andFilename:defaultname];
 			[fm movePath:tmpdest toPath:finaldest handler:nil];
+
+			// Check if we accidentally created a package.
+			if([[NSWorkspace sharedWorkspace] isFilePackageAtPath:finaldest])
+			{
+				NSString *newfinaldest=[finaldest stringByDeletingPathExtension];
+				[fm movePath:finaldest toPath:newfinaldest handler:nil];
+				finaldest=newfinaldest;
+			}
 		}
 		else
 		{
