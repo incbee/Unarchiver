@@ -27,5 +27,15 @@ int main(int argc,const char **argv)
 	nil]];
     [pool release];
 
+	// Try to increase number of available file descriptors for huge multi-part archives.
+	struct rlimit rl;
+	int err=getrlimit(RLIMIT_NOFILE,&rl);
+	if(err==0)
+	{
+		//rl.rlim_cur=RLIM_INFINITY;
+		rl.rlim_cur=rl.rlim_max;
+		setrlimit(RLIMIT_NOFILE,&rl);
+	}
+
 	return NSApplicationMain(argc,argv);
 }
