@@ -758,7 +758,7 @@
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>cx.c3.compress-archive</string>
+				<string>public.z-archive</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -1554,11 +1554,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.3</string>
+	<string>2.4</string>
 	<key>CFBundleSignature</key>
 	<string>TUnA</string>
 	<key>CFBundleVersion</key>
-	<string>2.3</string>
+	<string>2.4</string>
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSMainNibFile</key>
@@ -2316,7 +2316,7 @@
 			<key>UTTypeIconFile</key>
 			<string>z.icns</string>
 			<key>UTTypeIdentifier</key>
-			<string>cx.c3.compress-archive</string>
+			<string>public.z-archive</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>
