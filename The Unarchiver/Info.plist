@@ -11,6 +11,8 @@
 			<array>
 				<string>zip</string>
 				<string>ZIP</string>
+				<string>z01</string>
+				<string>Z01</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>zip.icns</string>
@@ -33,6 +35,7 @@
 			<array>
 				<string>com.pkware.zip-archive</string>
 				<string>public.zip-archive</string>
+				<string>public.zip-archive.first-part</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -1617,6 +1620,26 @@
 	<array/>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.zip-archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Zip Archive Part</string>
+			<key>UTTypeIconFile</key>
+			<string>zip.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.zip-archive.first-part</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>z01</string>
+					<string>Z01</string>
+				</array>
+			</dict>
+		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
