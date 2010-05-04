@@ -132,7 +132,7 @@ NSComparisonResult encoding_sort(NSDictionary *enc1,NSDictionary *enc2,void *dum
 	while(*encodings!=kCFStringEncodingInvalidId)
 	{
 		CFStringEncoding cfencoding=*encodings++;
-		NSString *name=[self nameOfEncoding:cfencoding];
+		NSString *name=[NSString localizedNameOfStringEncoding:CFStringConvertEncodingToNSStringEncoding(cfencoding)];
 		NSStringEncoding encoding=CFStringConvertEncodingToNSStringEncoding(cfencoding);
 
 		if(!name) continue;
@@ -145,20 +145,6 @@ NSComparisonResult encoding_sort(NSDictionary *enc1,NSDictionary *enc2,void *dum
 	}
 
 	return [encodingarray sortedArrayUsingFunction:encoding_sort context:nil];
-}
-
-+(NSString *)nameOfEncoding:(CFStringEncoding)encoding
-{
-	UInt8 str[256];
-	ByteCount namelen;
-	TextEncoding nameenc;
-
-	if(GetTextEncodingName(encoding,kTextEncodingFullName,
-	GetScriptManagerVariable(smRegionCode),kCFStringEncodingUTF8,
-	256,&namelen,NULL,&nameenc,str)!=noErr) return nil;
-
-//	return [[[NSString alloc] initWithBytes:str length:namelen encoding:CFStringConvertEncodingToNSStringEncoding(nameenc)] autorelease];
-	return [[[NSString alloc] initWithBytes:str length:namelen encoding:NSUTF8StringEncoding] autorelease];
 }
 
 +(float)maximumEncodingNameWidthWithAttributes:(NSDictionary *)attrs

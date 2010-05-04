@@ -101,7 +101,14 @@ static BOOL IsPathWritable(NSString *path);
 	{
 		ProcessSerialNumber psn={0,kCurrentProcess};
 		TransformProcessType(&psn,kProcessTransformToForegroundApplication);
+
+		// Kludge for an OS X bug: TransformProcessType does not activate
+		// the app menu bar, so switch to another application and then back.
+		[[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier:@"com.apple.dock"
+		options:NSWorkspaceLaunchDefault additionalEventParamDescriptor:nil
+		launchIdentifier:nil];
 		[NSApp activateIgnoringOtherApps:YES];
+
 		[prefswindow makeKeyAndOrderFront:nil];
 	}
 }
