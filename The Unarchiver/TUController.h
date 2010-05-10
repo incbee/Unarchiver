@@ -10,7 +10,7 @@
 @interface TUController:NSObject
 {
 	TUTaskQueue *setuptasks,*extracttasks;
-	NSMutableSet *queuedfiles;
+	NSMutableDictionary *queuedfileviews;
 
 	NSString *currfilename;
 	TUArchiveTaskView *currtaskview;

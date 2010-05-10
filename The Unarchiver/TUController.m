@@ -24,7 +24,7 @@ static BOOL IsPathWritable(NSString *path);
 	{
 		setuptasks=[TUTaskQueue new];
 		extracttasks=[TUTaskQueue new];
-		queuedfiles=[NSMutableSet new];
+		queuedfileviews=[NSMutableDictionary new];
 		selecteddestination=nil;
 		opened=NO;
 
@@ -38,7 +38,7 @@ static BOOL IsPathWritable(NSString *path);
 {
 	[setuptasks release];
 	[extracttasks release];
-	[queuedfiles release];
+	[queuedfileviews release];
 	[selecteddestination release];
 	[super dealloc];
 }
@@ -141,7 +141,7 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)newArchiveForFile:(NSString *)filename destination:(int)desttype
 {
-	if([queuedfiles containsObject:filename]) return;
+	if([queuedfileviews objectForKey:filename]) return;
 
 	NSString *destination;
 	switch(desttype)
@@ -166,7 +166,7 @@ static BOOL IsPathWritable(NSString *path);
 	[mainlist addTaskView:taskview];
 	[taskview release];
 
-	[queuedfiles addObject:filename];
+	[queuedfileviews setObject:taskview forKey:filename];
 
 	[NSApp activateIgnoringOtherApps:YES];
 	[mainwindow makeKeyAndOrderFront:nil];
@@ -178,6 +178,7 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview
 {
+	// TODO: should this remove from queuedfileviews too?
 	[mainlist removeTaskView:taskview];
 }
 
@@ -185,7 +186,7 @@ static BOOL IsPathWritable(NSString *path);
 {
 	if(![mainlist containsTaskView:taskview]) // This archive has been cancelled
 	{
-		[queuedfiles removeObject:filename];
+		[queuedfileviews removeObjectForKey:filename];
 		[setuptasks finishCurrentTask];
 		return;
 	}
@@ -242,7 +243,7 @@ static BOOL IsPathWritable(NSString *path);
 	else // cancel
 	{
 		[mainlist removeTaskView:currtaskview];
-		[queuedfiles removeObject:currfilename];
+		[queuedfileviews removeObjectForKey:currfilename];
 		[setuptasks finishCurrentTask];
 		[currfilename release];
 		currfilename=nil;
@@ -257,7 +258,7 @@ static BOOL IsPathWritable(NSString *path);
 	{
 		case 0: // cancel
 			[mainlist removeTaskView:taskview];
-			[queuedfiles removeObject:currfilename];
+			[queuedfileviews removeObjectForKey:currfilename];
 			[setuptasks finishCurrentTask];
 			[currfilename release];
 			currfilename=nil;
@@ -287,6 +288,7 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)archiveTaskViewCancelledBeforeExtract:(TUArchiveTaskView *)taskview
 {
+	// TODO: should this remove from queuedfileviews too?
 	[mainlist removeTaskView:taskview];
 }
 
@@ -294,7 +296,7 @@ static BOOL IsPathWritable(NSString *path);
 {
 	if(![mainlist containsTaskView:taskview]) // This archive has been cancelled
 	{
-		[queuedfiles removeObject:filename];
+		[queuedfileviews removeObjectForKey:filename];
 		[extracttasks finishCurrentTask];
 		return;
 	}
@@ -309,8 +311,18 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)archiveControllerFinished:(TUArchiveController *)archive
 {
+	// TODO: this could be removed since the later loop would do it anyway, maybe.
 	[mainlist removeTaskView:[archive taskView]];
-	[queuedfiles removeObject:[archive filename]];
+	[queuedfileviews removeObjectForKey:[archive filename]];
+
+	NSEnumerator *enumerator=[[[archive archive] allFilenames] objectEnumerator];
+	NSString *filename;
+	while(filename=[enumerator nextObject])
+	{
+		TUTaskView *taskview=[queuedfileviews objectForKey:filename];
+		if(taskview) [mainlist removeTaskView:taskview]; // TODO: should this remove from queuedfileview too?
+	}
+
 	[extracttasks finishCurrentTask];
 }
 

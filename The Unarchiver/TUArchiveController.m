@@ -54,6 +54,8 @@ taskView:(TUArchiveTaskView *)taskview
 
 -(NSString *)filename { return archivename; }
 
+-(XADArchive *)archive { return archive; }
+
 -(TUArchiveTaskView *)taskView { return view; }
 
 

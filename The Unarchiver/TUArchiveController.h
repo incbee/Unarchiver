@@ -26,6 +26,7 @@ taskView:(TUArchiveTaskView *)taskview;
 -(void)dealloc;
 
 -(NSString *)filename;
+-(XADArchive *)archive;
 -(TUArchiveTaskView *)taskView;
 
 -(void)runWithFinishAction:(SEL)selector target:(id)target;
