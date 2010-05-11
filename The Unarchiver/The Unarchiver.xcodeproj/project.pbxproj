@@ -76,6 +76,13 @@
 			remoteGlobalIDString = 1B23E0871190F29400620319;
 			remoteInfo = libUniversalDetector;
 		};
+		1B23E5F41198BC3E00620319 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1B23E5EF1198BC2000620319 /* unar */;
+			remoteInfo = "unar copy";
+		};
 		1B95B40A1010D537009FA09E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
@@ -422,6 +429,7 @@
 				1B95B4111010D537009FA09E /* XADTest3 */,
 				1BA4E2A91022405A001AB3CA /* XADTest4 */,
 				1B23DDC81185EBC300620319 /* unar */,
+				1B23E5F51198BC3E00620319 /* unar */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -567,6 +575,13 @@
 			fileType = archive.ar;
 			path = libUniversalDetector.a;
 			remoteRef = 1B23E08E1190F2B500620319 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1B23E5F51198BC3E00620319 /* unar */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = unar;
+			remoteRef = 1B23E5F41198BC3E00620319 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1B95B40B1010D537009FA09E /* XADMaster.framework */ = {
