@@ -1,20 +1,7 @@
-#import "XADRARHandle.h"
-#import "SystemSpecific.h"
+#import "XADRAROfficialHandle.h"
+#import "../XADMaster/SystemSpecific.h"
 
-@implementation XADRARHandle
-
--(id)initWithRARParser:(XADRARParser *)parent version:(int)version skipOffset:(off_t)skipoffset
-inputLength:(off_t)inputlength outputLength:(off_t)outputlength encrypted:(BOOL)encrypted salt:(NSData *)salt
-{
-	return [self initWithRARParser:parent version:version
-	parts:[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:
-		[NSNumber numberWithLongLong:skipoffset],@"SkipOffset",
-		[NSNumber numberWithLongLong:inputlength],@"InputLength",
-		[NSNumber numberWithLongLong:outputlength],@"OutputLength",
-		[NSNumber numberWithBool:encrypted],@"Encrypted",
-		salt,@"Salt", // ends the list if nil
-	nil]]];
-}
+@implementation XADRAROfficialHandle
 
 -(id)initWithRARParser:(XADRARParser *)parent version:(int)version parts:(NSArray *)partarray
 {

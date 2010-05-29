@@ -1,8 +1,8 @@
-#import "CSBlockStreamHandle.h"
-#import "XADRARParser.h"
+#import "../XADMaster/CSBlockStreamHandle.h"
+#import "../XADMaster/XADRARParser.h"
 #import "RARUnpacker.h"
 
-@interface XADRARHandle:CSBlockStreamHandle
+@interface XADRAROfficialHandle:CSBlockStreamHandle
 {
 	XADRARParser *parser;
 	NSArray *parts;
@@ -14,8 +14,6 @@
 	off_t currsize,bytesdone;
 }
 
--(id)initWithRARParser:(XADRARParser *)parent version:(int)version skipOffset:(off_t)skipoffset
-inputLength:(off_t)inputlength outputLength:(off_t)outputlength encrypted:(BOOL)encrypted salt:(NSData *)salt;
 -(id)initWithRARParser:(XADRARParser *)parent version:(int)version parts:(NSArray *)partarray;
 -(void)dealloc;
 

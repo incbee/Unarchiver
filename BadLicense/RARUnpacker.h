@@ -1,5 +1,5 @@
-#ifndef __RARUnpacker_h__
-#define __RARUnpacker_h__
+#ifndef __RARUNPACKER_h__
+#define __RARUNPACKER_h__
 
 #ifdef __cplusplus
 extern "C" {
