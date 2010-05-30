@@ -1,7 +1,7 @@
 #ifndef _RAR_VM_
 #define _RAR_VM_
 
-//#define VM_STANDARDFILTERS
+#define VM_STANDARDFILTERS
 
 #ifndef SFX_MODULE
 #define VM_OPTIMIZE
