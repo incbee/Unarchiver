@@ -120,7 +120,7 @@
 		1B0DDC740A2CDD2E0009B697 /* UniversalDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniversalDetector.m; sourceTree = "<group>"; };
 		1B0DDCAB0A2D0AD10009B697 /* DetectorTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DetectorTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B0DDCB10A2D0B240009B697 /* DetectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetectorTest.m; sourceTree = "<group>"; };
-		1B23E0871190F29400620319 /* liblibUniversalDetector.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibUniversalDetector.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B23E0871190F29400620319 /* libUniversalDetector.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUniversalDetector.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B23E22211922A7700620319 /* prtypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prtypes.h; sourceTree = "<group>"; };
 		1B23E22311922A7700620319 /* protypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protypes.h; sourceTree = "<group>"; };
 		1B23E22411922A7700620319 /* prmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prmem.h; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 			children = (
 				8DC2EF5B0486A6940098B216 /* UniversalDetector.framework */,
 				1B0DDCAB0A2D0AD10009B697 /* DetectorTest */,
-				1B23E0871190F29400620319 /* liblibUniversalDetector.a */,
+				1B23E0871190F29400620319 /* libUniversalDetector.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -433,7 +433,7 @@
 			);
 			name = libUniversalDetector;
 			productName = libUniversalDetector;
-			productReference = 1B23E0871190F29400620319 /* liblibUniversalDetector.a */;
+			productReference = 1B23E0871190F29400620319 /* libUniversalDetector.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		8DC2EF4F0486A6940098B216 /* UniversalDetector */ = {
