@@ -1,5 +1,4 @@
 #import "XADRAROfficialHandle.h"
-#import "../XADMaster/SystemSpecific.h"
 
 @implementation XADRAROfficialHandle
 

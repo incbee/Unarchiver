@@ -80,7 +80,10 @@ void ComprDataIO::UnpWrite(byte *Addr,uint Count)
 	unpack->SetSuspended(true);
 
 	if(unpacker->blocklength+Count>unpacker->maxblocklength)
-	unpacker->blockbytes=reallocf(unpacker->blockbytes,unpacker->maxblocklength=unpacker->blocklength+Count);
+	{
+		unpacker->maxblocklength=unpacker->blocklength+Count;
+		unpacker->blockbytes=reallocf(unpacker->blockbytes,unpacker->maxblocklength);
+	}
 
 	memcpy(((unsigned char *)unpacker->blockbytes)+unpacker->blocklength,Addr,Count);
 
