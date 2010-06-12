@@ -215,8 +215,8 @@
 			isa = PBXGroup;
 			children = (
 				8DC2EF5B0486A6940098B216 /* UniversalDetector.framework */,
-				1B0DDCAB0A2D0AD10009B697 /* DetectorTest */,
 				1B23E0871190F29400620319 /* libUniversalDetector.a */,
+				1B0DDCAB0A2D0AD10009B697 /* DetectorTest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -469,8 +469,8 @@
 			projectRoot = "";
 			targets = (
 				8DC2EF4F0486A6940098B216 /* UniversalDetector */,
-				1B0DDCAA0A2D0AD10009B697 /* DetectorTest */,
 				1B23E0861190F29400620319 /* libUniversalDetector */,
+				1B0DDCAA0A2D0AD10009B697 /* DetectorTest */,
 			);
 		};
 /* End PBXProject section */
