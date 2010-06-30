@@ -80,104 +80,6 @@
 **
 **
 ***********************************************************************/
-#if defined(WIN32)
-
-#define PR_EXPORT(__type) extern __declspec(dllexport) __type
-#define PR_EXPORT_DATA(__type) extern __declspec(dllexport) __type
-#define PR_IMPORT(__type) __declspec(dllimport) __type
-#define PR_IMPORT_DATA(__type) __declspec(dllimport) __type
-
-#define PR_EXTERN(__type) extern __declspec(dllexport) __type
-#define PR_IMPLEMENT(__type) __declspec(dllexport) __type
-#define PR_EXTERN_DATA(__type) extern __declspec(dllexport) __type
-#define PR_IMPLEMENT_DATA(__type) __declspec(dllexport) __type
-
-#define PR_CALLBACK
-#define PR_CALLBACK_DECL
-#define PR_STATIC_CALLBACK(__x) static __x
-
-#elif defined(XP_BEOS)
-
-#define PR_EXPORT(__type) extern __declspec(dllexport) __type
-#define PR_EXPORT_DATA(__type) extern __declspec(dllexport) __type
-#define PR_IMPORT(__type) extern __declspec(dllexport) __type
-#define PR_IMPORT_DATA(__type) extern __declspec(dllexport) __type
-
-#define PR_EXTERN(__type) extern __declspec(dllexport) __type
-#define PR_IMPLEMENT(__type) __declspec(dllexport) __type
-#define PR_EXTERN_DATA(__type) extern __declspec(dllexport) __type
-#define PR_IMPLEMENT_DATA(__type) __declspec(dllexport) __type
-
-#define PR_CALLBACK
-#define PR_CALLBACK_DECL
-#define PR_STATIC_CALLBACK(__x) static __x
-
-#elif defined(WIN16)
-
-#define PR_CALLBACK_DECL        __cdecl
-
-#if defined(_WINDLL)
-#define PR_EXPORT(__type) extern __type _cdecl _export _loadds
-#define PR_IMPORT(__type) extern __type _cdecl _export _loadds
-#define PR_EXPORT_DATA(__type) extern __type _export
-#define PR_IMPORT_DATA(__type) extern __type _export
-
-#define PR_EXTERN(__type) extern __type _cdecl _export _loadds
-#define PR_IMPLEMENT(__type) __type _cdecl _export _loadds
-#define PR_EXTERN_DATA(__type) extern __type _export
-#define PR_IMPLEMENT_DATA(__type) __type _export
-
-#define PR_CALLBACK             __cdecl __loadds
-#define PR_STATIC_CALLBACK(__x) static __x PR_CALLBACK
-
-#else /* this must be .EXE */
-#define PR_EXPORT(__type) extern __type _cdecl _export
-#define PR_IMPORT(__type) extern __type _cdecl _export
-#define PR_EXPORT_DATA(__type) extern __type _export
-#define PR_IMPORT_DATA(__type) extern __type _export
-
-#define PR_EXTERN(__type) extern __type _cdecl _export
-#define PR_IMPLEMENT(__type) __type _cdecl _export
-#define PR_EXTERN_DATA(__type) extern __type _export
-#define PR_IMPLEMENT_DATA(__type) __type _export
-
-#define PR_CALLBACK             __cdecl __loadds
-#define PR_STATIC_CALLBACK(__x) __x PR_CALLBACK
-#endif /* _WINDLL */
-
-// goafix
-#elif defined(NOT_XP_MAC)
-
-#define PR_EXPORT(__type) extern __declspec(export) __type
-#define PR_EXPORT_DATA(__type) extern __declspec(export) __type
-#define PR_IMPORT(__type) extern __declspec(export) __type
-#define PR_IMPORT_DATA(__type) extern __declspec(export) __type
-
-#define PR_EXTERN(__type) extern __declspec(export) __type
-#define PR_IMPLEMENT(__type) __declspec(export) __type
-#define PR_EXTERN_DATA(__type) extern __declspec(export) __type
-#define PR_IMPLEMENT_DATA(__type) __declspec(export) __type
-
-#define PR_CALLBACK
-#define PR_CALLBACK_DECL
-#define PR_STATIC_CALLBACK(__x) static __x
-
-#elif defined(XP_OS2_VACPP) 
-
-#define PR_EXPORT(__type) extern __type
-#define PR_EXPORT_DATA(__type) extern __type
-#define PR_IMPORT(__type) extern __type
-#define PR_IMPORT_DATA(__type) extern __type
-
-#define PR_EXTERN(__type) extern __type
-#define PR_IMPLEMENT(__type) __type
-#define PR_EXTERN_DATA(__type) extern __type
-#define PR_IMPLEMENT_DATA(__type) __type
-#define PR_CALLBACK _Optlink
-#define PR_CALLBACK_DECL
-#define PR_STATIC_CALLBACK(__x) static __x PR_CALLBACK
-
-#else /* Unix */
 
 #ifdef HAVE_VISIBILITY_PRAGMA
 #define PR_VISIBILITY_DEFAULT __attribute__((visibility("default")))
@@ -197,8 +99,6 @@
 #define PR_CALLBACK
 #define PR_CALLBACK_DECL
 #define PR_STATIC_CALLBACK(__x) static __x
-
-#endif
 
 #if defined(_NSPR_BUILD_)
 #define NSPR_API(__type) PR_EXPORT(__type)

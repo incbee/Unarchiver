@@ -1,3 +1,6 @@
+#import "NSStringEncodingForCocotron.h"
+
+#import <objc/objc.h>
 
 void Swizzle(Class class,SEL old,SEL new)
 {
@@ -6,13 +9,26 @@ void Swizzle(Class class,SEL old,SEL new)
 
 	if(class_addMethod(class,old,method_getImplementation(newmethod),
 	method_getTypeEncoding(newmethod)))
-	class_replaceMethod(class,new,method_getImplementation(oldmethod),
-	method_getTypeEncoding(oldethod));
+	{
+		class_replaceMethod(class,new,method_getImplementation(oldmethod),
+		method_getTypeEncoding(oldmethod));
+	}
 	else
-	method_exchangeImplementations(oldmethod,newmethod);
+	{
+		method_exchangeImplementations(oldmethod,newmethod);
+	}
 }
 
+
+
+@interface NSString (WindowsCodepage)
+@end
+
 @implementation NSString (WindowsCodepage)
+
+#ifndef MB_ERR_INVALID_CHARS
+#define MB_ERR_INVALID_CHARS 0x8
+#endif
 
 -(id)swizzledInitWithBytes:(const void *)bytes length:(NSUInteger)length
 encoding:(NSStringEncoding)encoding
@@ -36,21 +52,7 @@ encoding:(NSStringEncoding)encoding
 }
 
 
-NSStringEncoding WindowsCodePageToNSStringEncoding(int codepage)
-{
-	return 0xc0de0000+codepage;
-}
 
-BOOL IsNSStringEncodingWindowsCodePage(NSStringEncoding encoding)
-{
-	return (encoding&0xffff0000)==0xc0de0000;
-}
-
-int NSStringEncodingToWindowsCodePage(NSStringEncoding encoding)
-{
-	if(ISNSStringEncodingWindowsCodePage(encoding)) return encoding&0xffff;
-	else return 0;
-}
 
 int IANACharSetNameToWindowsCodePage(NSString *name)
 {
@@ -216,6 +218,7 @@ int IANACharSetNameToWindowsCodePage(NSString *name)
 	return [encoding unsignedIntValue];
 }
 
+@end
 
 
 

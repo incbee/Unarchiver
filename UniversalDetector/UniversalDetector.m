@@ -1,6 +1,10 @@
 #import "UniversalDetector.h"
 #import "WrappedUniversalDetector.h"
 
+#ifdef __COCOTRON__
+#import "NSStringEncodingForCocotron.h"
+#endif
+
 @implementation UniversalDetector
 
 +(UniversalDetector *)detector
@@ -58,24 +62,7 @@
 	return confidence;
 }
 
-#ifndef GNUSTEP
-
--(NSStringEncoding)encoding
-{
-	NSString *mimecharset=[self MIMECharset];
-	if(!mimecharset) return 0;
-
-	CFStringEncoding cfenc=CFStringConvertIANACharSetNameToEncoding((CFStringRef)mimecharset);
-	if(cfenc==kCFStringEncodingInvalidId) return 0;
-
-	// UniversalDetector detects CP949 but returns "EUC-KR" because CP949 lacks an IANA name.
-	// Kludge to make strings decode properly anyway.
-	if(cfenc==kCFStringEncodingEUC_KR) cfenc=kCFStringEncodingDOSKorean;
-
-	return CFStringConvertEncodingToNSStringEncoding(cfenc);
-}
-
-#else
+#if defined(GNUSTEP)
 
 -(NSStringEncoding)encoding
 {
@@ -134,6 +121,36 @@
 	if(!encoding) return 0;
 
 	return [encoding unsignedIntValue];
+}
+
+#elif defined(__COCOTRON__)
+
+-(NSStringEncoding)encoding
+{
+	NSString *mimecharset=[self MIMECharset];
+	if(!mimecharset) return 0;
+
+	int codepage=IANACharSetNameToWindowsCodePage(mimecharset);
+	if(codepage==0) return 0;
+
+	return WindowsCodePageToNSStringEncoding(codepage);
+}
+
+#else
+
+-(NSStringEncoding)encoding
+{
+	NSString *mimecharset=[self MIMECharset];
+	if(!mimecharset) return 0;
+
+	CFStringEncoding cfenc=CFStringConvertIANACharSetNameToEncoding((CFStringRef)mimecharset);
+	if(cfenc==kCFStringEncodingInvalidId) return 0;
+
+	// UniversalDetector detects CP949 but returns "EUC-KR" because CP949 lacks an IANA name.
+	// Kludge to make strings decode properly anyway.
+	if(cfenc==kCFStringEncodingEUC_KR) cfenc=kCFStringEncodingDOSKorean;
+
+	return CFStringConvertEncodingToNSStringEncoding(cfenc);
 }
 
 #endif
