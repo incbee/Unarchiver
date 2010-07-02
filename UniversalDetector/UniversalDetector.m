@@ -51,6 +51,11 @@
 	{
 		const char *cstr=UniversalDetectorCharset(detector,&confidence);
 		if(!cstr) return nil;
+
+		// nsUniversalDetector detects CP949 but returns "EUC-KR" because CP949
+		// lacks an IANA name. Kludge the name to make sure decoding succeeds.
+		if(strcmp(cstr,"EUC-KR")==0) cstr="CP949";
+
 		charset=[[NSString alloc] initWithUTF8String:cstr];
 	}
 	return charset;
@@ -62,7 +67,7 @@
 	return confidence;
 }
 
-#if defined(GNUSTEP)
+#if 0
 
 -(NSStringEncoding)encoding
 {
@@ -123,21 +128,9 @@
 	return [encoding unsignedIntValue];
 }
 
-#elif defined(__COCOTRON__)
+#endif
 
--(NSStringEncoding)encoding
-{
-	NSString *mimecharset=[self MIMECharset];
-	if(!mimecharset) return 0;
-
-	int codepage=IANACharSetNameToWindowsCodePage(mimecharset);
-	if(codepage==0) return 0;
-
-	return WindowsCodePageToNSStringEncoding(codepage);
-}
-
-#else
-
+#ifdef __APPLE__
 -(NSStringEncoding)encoding
 {
 	NSString *mimecharset=[self MIMECharset];
@@ -145,10 +138,6 @@
 
 	CFStringEncoding cfenc=CFStringConvertIANACharSetNameToEncoding((CFStringRef)mimecharset);
 	if(cfenc==kCFStringEncodingInvalidId) return 0;
-
-	// UniversalDetector detects CP949 but returns "EUC-KR" because CP949 lacks an IANA name.
-	// Kludge to make strings decode properly anyway.
-	if(cfenc==kCFStringEncodingEUC_KR) cfenc=kCFStringEncodingDOSKorean;
 
 	return CFStringConvertEncodingToNSStringEncoding(cfenc);
 }
