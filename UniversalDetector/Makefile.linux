@@ -128,6 +128,7 @@ LIBRARY_FILES =	libUniversalDetector.a
 all: libUniversalDetector.a
 
 libUniversalDetector.a: $(LIBRARY_OBJS)
+	rm $@
 	$(AR) rcs $@ $^
 
 clean:
