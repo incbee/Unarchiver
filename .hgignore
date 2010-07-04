@@ -1,6 +1,11 @@
 ^crap$
+^XADMaster/XADTest2$
+^XADMaster/XADTest3$
+^XADMaster/XADTest4$
+^XADMaster/unar$
+\.o$
+\.a$
 \.mode1$
 \.mode1v3$
 \.pbxuser$
 \.DS_Store$
-
