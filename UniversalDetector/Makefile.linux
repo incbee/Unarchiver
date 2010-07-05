@@ -85,15 +85,15 @@ ALL_CXX_FILES = 	$(LIBRARY_CXX_FILES)
 
 
 
-LIBARY_OBJC_OBJS = 	$(LIBRARY_OBJC_FILES:.m=.o)
+LIBRARY_OBJC_OBJS = 	$(LIBRARY_OBJC_FILES:.m=.o)
 
-LIBARY_C_OBJS =		$(LIBRARY_C_FILES:.c=.o)
+LIBRARY_C_OBJS =	$(LIBRARY_C_FILES:.c=.o)
 
-LIBRARY_CXX_OBJS =	$(LIBARY_CXX_FILES:.cpp=.o)
+LIBRARY_CXX_OBJS =	$(LIBRARY_CXX_FILES:.cpp=.o)
 
-LIBRARY_OBJS =		$(LIBARY_OBJC_OBJS) \
-			$(LIBARY_C_OBJS) \
-			$(LIBARY_CXX_OBJS)
+LIBRARY_OBJS =		$(LIBRARY_OBJC_OBJS) \
+			$(LIBRARY_C_OBJS) \
+			$(LIBRARY_CXX_OBJS)
 
 ALL_OBJS =		$(LIBRARY_OBJS)
 
@@ -101,6 +101,8 @@ ALL_OBJS =		$(LIBRARY_OBJS)
 
 
 EXECUTABLE_FILES =	
+
+LIBRARY_FILES =	libUniversalDetector.a
 
 
 
@@ -126,11 +128,13 @@ EXECUTABLE_FILES =
 all: libUniversalDetector.a
 
 libUniversalDetector.a: $(LIBRARY_OBJS)
+	rm $@
 	$(AR) rcs $@ $^
 
 clean:
 	rm -f 	$(ALL_OBJS) \
 		$(EXECUTABLE_FILES) \
+		$(LIBRARY_FILES) \
 		*~ \
 		universalchardet/*~
 

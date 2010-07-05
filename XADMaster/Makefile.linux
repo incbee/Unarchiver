@@ -48,6 +48,7 @@ LIBS =	-Wl,--no-whole-archive \
 	-lgnustep-base \
 	-lcrypto \
 	-lbz2 \
+	-licuuc \
 	-lobjc \
 	-lstdc++ \
 	-lm
@@ -166,6 +167,7 @@ LIBRARY_OBJC_FILES =	CarrylessRangeCoder.m \
 			XADSkipHandle.m \
 			XADSplitFileParser.m \
 			XADString.m \
+			XADStringICU.m \
 			XADStuffIt13Handle.m \
 			XADStuffIt5Parser.m \
 			XADStuffItArsenicHandle.m \
@@ -274,6 +276,7 @@ EXECUTABLE_FILES =	XADTest2 \
 			XADTest4 \
 			unar
 
+LIBRARY_FILES = 	libXADMaster.a
 
 
 
@@ -298,10 +301,11 @@ EXECUTABLE_FILES =	XADTest2 \
 all: unar XADTest2 XADTest3 XADTest4
 
 libXADMaster.a: $(LIBRARY_OBJS)
+	rm $@
 	$(AR) rcs $@ $^
 
 ../UniversalDetector/libUniversalDetector.a:
-	make -f ../UniversalDetector/Makefile.linux
+	make -C ../UniversalDetector -f Makefile.linux
 
 XADTest2: $(XADTEST2_OBJS) libXADMaster.a ../UniversalDetector/libUniversalDetector.a
 	$(LD) $(LDFLAGS) -o $@ $^ $(LIBS)
@@ -318,12 +322,11 @@ unar: $(UNAR_OBJS) $(CMDLINE_OBJS) libXADMaster.a ../UniversalDetector/libUniver
 clean:
 	rm -f 	$(ALL_OBJS) \
 		$(EXECUTABLE_FILES) \
+		$(LIBRARY_FILES) \
 		*~ \
 		lzma/*~ \
-		unrar/*~ \
-		../UniversalDetector/*~ \
-		../UniversalDetector/universalchardet/*~
-	make -f ../UniversalDetector/Makefile.linux clean
+		unrar/*~
+	make -C ../UniversalDetector -f Makefile.linux clean
 
 depend:
 	$(OBJCC) -MM $(OBJCFLAGS) $(ALL_OBJC_FILES) >Makefile.dependtmp

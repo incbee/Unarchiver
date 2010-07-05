@@ -47,15 +47,14 @@
 -(void)printToFile:(FILE *)fh
 {
 	int length=[self length];
-	unichar buffer[length+1];
+	unichar buffer[length];
 	[self getCharacters:buffer range:NSMakeRange(0,length)];
-	buffer[length]=0;
 
-	int bufsize=WideCharToMultiByte(GetConsoleOutputCP(),0,buffer,-1,NULL,0,NULL,NULL);
+	int bufsize=WideCharToMultiByte(GetConsoleOutputCP(),0,buffer,length,NULL,0,NULL,NULL);
 	char mbuffer[bufsize]; 
-	WideCharToMultiByte(GetConsoleOutputCP(),0,buffer,-1,mbuffer,bufsize,NULL,NULL);
+	WideCharToMultiByte(GetConsoleOutputCP(),0,buffer,length,mbuffer,bufsize,NULL,NULL);
 
-	fwrite(mbuffer,bufsize-1,1,fh);
+	fwrite(mbuffer,bufsize,1,fh);
 }
 
 #else
@@ -77,7 +76,7 @@
 
 -(void)printToFile:(FILE *)fh
 {
-	int length=[self lengthOfBytesUsingEncoding:NSUTF8StringEncoding]+1;
+	int length=[self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
 	char buffer[length+1];
 	[self getCString:buffer maxLength:length+1 encoding:NSUTF8StringEncoding];
 
