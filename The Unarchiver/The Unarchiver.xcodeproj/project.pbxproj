@@ -80,8 +80,43 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 1B34A97511C2FD0500396C26 /* libXADMaster.a */;
+			remoteGlobalIDString = 1B34A97511C2FD0500396C26;
 			remoteInfo = libXADMaster;
+		};
+		1B433CE611E8036D00DA1EFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D664F4B103776C900A679EF /* UniversalDetector.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1B91CBE011D821A70081E40A /* libUniversalDetector.a */;
+			remoteInfo = "libUniversalDetector (Windows)";
+		};
+		1B433CF211E8036D00DA1EFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1B91D18F11E1677B0081E40A /* lsar */;
+			remoteInfo = lsar;
+		};
+		1B433CF411E8036D00DA1EFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1B91CD5E11D97E7C0081E40A /* libXADMaster.a */;
+			remoteInfo = "libXADMaster.a (Windows)";
+		};
+		1B433CF611E8036D00DA1EFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1B91CDAC11D981E20081E40A /* unar.exe */;
+			remoteInfo = "unar.exe (Windows)";
+		};
+		1B433CF811E8036D00DA1EFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1B91D2EE11E694860081E40A /* lsar.exe */;
+			remoteInfo = "lsar.exe (Windows)";
 		};
 		1B95B40A1010D537009FA09E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -430,6 +465,10 @@
 				1BA4E2A91022405A001AB3CA /* XADTest4 */,
 				1B34ABB611CEB9F700396C26 /* libXADMaster.a */,
 				1B23DDC81185EBC300620319 /* unar */,
+				1B433CF311E8036D00DA1EFB /* lsar */,
+				1B433CF511E8036D00DA1EFB /* libXADMaster.a */,
+				1B433CF711E8036D00DA1EFB /* unar.exe */,
+				1B433CF911E8036D00DA1EFB /* lsar.exe */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -489,6 +528,7 @@
 			children = (
 				3D664F51103776C900A679EF /* UniversalDetector.framework */,
 				1B23E08F1190F2B500620319 /* libUniversalDetector.a */,
+				1B433CE711E8036D00DA1EFB /* libUniversalDetector.a */,
 				3D664F53103776C900A679EF /* DetectorTest */,
 			);
 			name = Products;
@@ -582,6 +622,41 @@
 			fileType = archive.ar;
 			path = libXADMaster.a;
 			remoteRef = 1B34ABB511CEB9F700396C26 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1B433CE711E8036D00DA1EFB /* libUniversalDetector.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libUniversalDetector.a;
+			remoteRef = 1B433CE611E8036D00DA1EFB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1B433CF311E8036D00DA1EFB /* lsar */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = lsar;
+			remoteRef = 1B433CF211E8036D00DA1EFB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1B433CF511E8036D00DA1EFB /* libXADMaster.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libXADMaster.a;
+			remoteRef = 1B433CF411E8036D00DA1EFB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1B433CF711E8036D00DA1EFB /* unar.exe */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = unar.exe;
+			remoteRef = 1B433CF611E8036D00DA1EFB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1B433CF911E8036D00DA1EFB /* lsar.exe */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = lsar.exe;
+			remoteRef = 1B433CF811E8036D00DA1EFB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1B95B40B1010D537009FA09E /* XADMaster.framework */ = {
