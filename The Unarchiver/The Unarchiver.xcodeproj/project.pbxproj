@@ -462,7 +462,7 @@
 				1B95B40D1010D537009FA09E /* XADTest */,
 				1B95B40F1010D537009FA09E /* XADTest2 */,
 				1B95B4111010D537009FA09E /* XADTest3 */,
-				1BA4E2A91022405A001AB3CA /* XADTest3 */,
+				1BA4E2A91022405A001AB3CA /* XADTest4 */,
 				1B34ABB611CEB9F700396C26 /* libXADMaster.a */,
 				1B23DDC81185EBC300620319 /* unar */,
 				1B433CF311E8036D00DA1EFB /* lsar */,
@@ -564,6 +564,7 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "The Unarchiver" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -687,10 +688,10 @@
 			remoteRef = 1B95B4101010D537009FA09E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1BA4E2A91022405A001AB3CA /* XADTest3 */ = {
+		1BA4E2A91022405A001AB3CA /* XADTest4 */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = XADTest3;
+			path = XADTest4;
 			remoteRef = 1BA4E2A81022405A001AB3CA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
