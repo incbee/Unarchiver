@@ -691,7 +691,7 @@
 		1BA4E2A91022405A001AB3CA /* XADTest4 */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = XADTest4;
+			path = XADTest3;
 			remoteRef = 1BA4E2A81022405A001AB3CA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
