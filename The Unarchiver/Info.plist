@@ -716,6 +716,31 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>iso</string>
+				<string>ISO</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-iso-image</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>ISO Disk Image</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.iso-image</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>gtar</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -1677,11 +1702,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.6</string>
+	<string>2.7</string>
 	<key>CFBundleSignature</key>
 	<string>TUnA</string>
 	<key>CFBundleVersion</key>
-	<string>2.6</string>
+	<string>2.7</string>
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSMainNibFile</key>
