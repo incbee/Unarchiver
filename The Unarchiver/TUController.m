@@ -467,6 +467,24 @@ userData:(NSString *)data error:(NSString **)error
 	[singlefilecheckbox setEnabled:createfolder==1];
 }
 
+
+
+
+-(IBAction)openSupportBoard:(id)sender
+{
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wakaba.c3.cx/sup/"]];
+}
+
+-(IBAction)openBugReport:(id)sender
+{
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://code.google.com/p/theunarchiver/issues/list"]];
+}
+
+-(IBAction)openHomePage:(id)sender
+{
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wakaba.c3.cx/s/apps/unarchiver"]];
+}
+
 @end
 
 

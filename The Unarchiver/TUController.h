@@ -80,6 +80,9 @@ userData:(NSString *)data error:(NSString **)error;
 
 -(IBAction)changeCreateFolder:(id)sender;
 
+-(IBAction)openSupportBoard:(id)sender;
+-(IBAction)openBugReport:(id)sender;
+-(IBAction)openHomePage:(id)sender;
 
 /*-(void)lockFileSystem:(NSString *)filename;
 -(BOOL)tryFileSystemLock:(NSString *)filename;
