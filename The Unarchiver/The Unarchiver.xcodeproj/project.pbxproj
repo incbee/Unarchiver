@@ -122,7 +122,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 1B342390131D8B5B00CCDF77 /* XADTest5 */;
+			remoteGlobalIDString = 1B342390131D8B5B00CCDF77;
 			remoteInfo = XADTest5;
 		};
 		1B95B40A1010D537009FA09E /* PBXContainerItemProxy */ = {
@@ -232,12 +232,12 @@
 		1B2116FB0A4CA510005ED2AF /* TUTaskListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUTaskListView.m; sourceTree = "<group>"; };
 		1B2117AC0A4E10D3005ED2AF /* WaitView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = WaitView.nib; sourceTree = "<group>"; };
 		1B2117B60A4E1240005ED2AF /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ErrorView.nib; sourceTree = "<group>"; };
-		1B23DF67118CA32500620319 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1B23DF68118CA32800620319 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1B23DF6A118CA33E00620319 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
-		1B23DF6B118CA34100620319 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/Localizable.strings; sourceTree = "<group>"; };
-		1B23DF6D118CA34D00620319 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
-		1B23DF6E118CA35000620319 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B23DF67118CA32500620319 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1B23DF68118CA32800620319 /* Italian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1B23DF6A118CA33E00620319 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1B23DF6B118CA34100620319 /* Italian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1B23DF6D118CA34D00620319 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B23DF6E118CA35000620319 /* Italian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
 		1B23DF70118CA35C00620319 /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		1B23DF71118CA35E00620319 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Italian.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		1B23DF73118CA37700620319 /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/NotWritableView.nib; sourceTree = "<group>"; };
@@ -272,23 +272,23 @@
 		1B2AD8520A5C4BD200FAEA01 /* zip.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = zip.icns; sourceTree = "<group>"; };
 		1B6FA2090A58A1D800066489 /* CSFileTypeList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CSFileTypeList.h; sourceTree = "<group>"; };
 		1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CSFileTypeList.m; sourceTree = "<group>"; };
-		1B782CF210697C8B00EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1B782CF310697C9900EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1B782CF210697C8B00EBF3E8 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1B782CF310697C9900EBF3E8 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1B782CF410697CA000EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		1B782CF510697CA700EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/NotWritableView.nib; sourceTree = "<group>"; };
 		1B782CF610697CAE00EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/ErrorView.nib; sourceTree = "<group>"; };
 		1B782CF710697CB400EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
 		1B782CF810697CBA00EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1B782CF910697CC100EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/EncodingView.nib; sourceTree = "<group>"; };
-		1B782D1E106ACBFD00EBF3E8 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
-		1B782D22106ACC2200EBF3E8 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
-		1B782D23106ACC2C00EBF3E8 /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
-		1B782D24106ACC3000EBF3E8 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
-		1B782D25106ACC3400EBF3E8 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
-		1B782D26106ACC3800EBF3E8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
-		1B782D27106ACC3B00EBF3E8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
-		1B782D28106ACC3E00EBF3E8 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
-		1B782D29106ACC4400EBF3E8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D1E106ACBFD00EBF3E8 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D22106ACC2200EBF3E8 /* German */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D23106ACC2C00EBF3E8 /* Japanese */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D24106ACC3000EBF3E8 /* French */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D25106ACC3400EBF3E8 /* pt */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D26106ACC3800EBF3E8 /* ru */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D27106ACC3B00EBF3E8 /* sv */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D28106ACC3E00EBF3E8 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B782D29106ACC4400EBF3E8 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
 		1B81DBD10FF98BF9005C5B23 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NotWritableView.nib; sourceTree = "<group>"; };
 		1B81DDA510003BBB005C5B23 /* TUArchiveTaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUArchiveTaskView.h; sourceTree = "<group>"; };
 		1B81DDA610003BBB005C5B23 /* TUArchiveTaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUArchiveTaskView.m; sourceTree = "<group>"; };
@@ -303,8 +303,8 @@
 		1B932E830A5730DD00F7DE66 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
 		1B9767BA0A6D79CA00A8E8DA /* amiga.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = amiga.icns; sourceTree = "<group>"; };
 		1B9767BB0A6D79CA00A8E8DA /* unarchiver.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = unarchiver.icns; sourceTree = "<group>"; };
-		1BA4E2A31022405A001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1BA4E2AA10224066001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1BA4E2A31022405A001AB3CA /* sv */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BA4E2AA10224066001AB3CA /* sv */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1BA4E2AB1022406F001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = sv.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		1BA4E2B210224084001AB3CA /* German */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = German; path = German.lproj/NotWritableView.nib; sourceTree = "<group>"; };
 		1BA4E2B310224086001AB3CA /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Japanese; path = Japanese.lproj/NotWritableView.nib; sourceTree = "<group>"; };
@@ -316,26 +316,26 @@
 		1BA4E2B9102240B6001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = sv.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1BA4E2BA102240BE001AB3CA /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = sv.lproj/EncodingView.nib; sourceTree = "<group>"; };
 		1BA4E3781036D2DC001AB3CA /* French */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = French; path = French.lproj/NotWritableView.nib; sourceTree = "<group>"; };
-		1BA4E3871038D355001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1BA4E3891038D364001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1BA4E3871038D355001AB3CA /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BA4E3891038D364001AB3CA /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1BA4E38A1038D375001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		1BA4E38B1038D383001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/NotWritableView.nib; sourceTree = "<group>"; };
 		1BA4E38C1038D38E001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/ErrorView.nib; sourceTree = "<group>"; };
 		1BA4E38D1038D397001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
 		1BA4E38E1038D3A6001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1BA4E38F1038D3B0001AB3CA /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = es.lproj/EncodingView.nib; sourceTree = "<group>"; };
-		1BBC3EB310B331C000A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1BBC3EB410B331D600A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
-		1BBC3EB510B331DF00A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1BBC3EB310B331C000A05E29 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BBC3EB410B331D600A05E29 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1BBC3EB510B331DF00A05E29 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
 		1BBC3EB610B331E500A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		1BBC3EB710B331EC00A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/NotWritableView.nib; sourceTree = "<group>"; };
 		1BBC3EB810B331F200A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/ErrorView.nib; sourceTree = "<group>"; };
 		1BBC3EB910B331F800A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
 		1BBC3EBA10B331FF00A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1BBC3EBB10B3320400A05E29 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/EncodingView.nib; sourceTree = "<group>"; };
-		1BE7850F10ACF093007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Korean; path = Korean.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1BE7851010ACF0A3007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Korean; path = Korean.lproj/Localizable.strings; sourceTree = "<group>"; };
-		1BE7851110ACF0B3007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Korean; path = Korean.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1BE7850F10ACF093007EA6F6 /* Korean */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Korean; path = Korean.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BE7851010ACF0A3007EA6F6 /* Korean */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Korean; path = Korean.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1BE7851110ACF0B3007EA6F6 /* Korean */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Korean; path = Korean.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
 		1BE7851210ACF0B9007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Korean; path = Korean.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		1BE7851310ACF0BF007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Korean; path = Korean.lproj/NotWritableView.nib; sourceTree = "<group>"; };
 		1BE7851410ACF0CC007EA6F6 /* Korean */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Korean; path = Korean.lproj/ErrorView.nib; sourceTree = "<group>"; };
@@ -346,10 +346,10 @@
 		1BED5DB30A600D6E00CA31C2 /* TUEncodingPopUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUEncodingPopUp.h; sourceTree = "<group>"; };
 		1BED5DB40A600D6E00CA31C2 /* TUEncodingPopUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUEncodingPopUp.m; sourceTree = "<group>"; };
 		1BED5F1B0A60562300CA31C2 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/EncodingView.nib; sourceTree = "<group>"; };
-		1BFB113F0B1763270088CDB4 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1BFB11400B17632A0088CDB4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1BFB11430B17633F0088CDB4 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
-		1BFB11440B1763420088CDB4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1BFB113F0B1763270088CDB4 /* pt */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BFB11400B17632A0088CDB4 /* ru */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BFB11430B17633F0088CDB4 /* pt */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1BFB11440B1763420088CDB4 /* ru */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1BFB11470B1763970088CDB4 /* pt */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt; path = pt.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		1BFB11480B17639A0088CDB4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ru; path = ru.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		1BFB114C0B1763B30088CDB4 /* pt */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt; path = pt.lproj/ErrorView.nib; sourceTree = "<group>"; };
@@ -489,8 +489,8 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				3D664F4B103776C900A679EF /* UniversalDetector.xcodeproj */,
 				56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */,
+				3D664F4B103776C900A679EF /* UniversalDetector.xcodeproj */,
 			);
 			name = "The Unarchiver";
 			sourceTree = "<group>";
@@ -984,34 +984,22 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		1B541358132970FF002AF4B8 /* App Store */ = {
+		1B541358132970FF002AF4B8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-					ppc,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PREFIX_HEADER = "The Unarchiver_Prefix.pch";
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET_i386 = 10.4;
-				MACOSX_DEPLOYMENT_TARGET_ppc = 10.3;
-				MACOSX_DEPLOYMENT_TARGET_x86_64 = 10.5;
-				SDKROOT = macosx10.4;
+				SDKROOT_i386 = "";
+				SDKROOT_ppc = "";
 			};
-			name = "App Store";
+			name = Release;
 		};
-		1B541359132970FF002AF4B8 /* App Store */ = {
+		1B541359132970FF002AF4B8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-				);
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Dag Agren";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1028,17 +1016,60 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = "The Unarchiver";
-				SDKROOT = macosx10.5;
 				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
-			name = "App Store";
+			name = Release;
+		};
+		1BAF014B132AAD72002B6FE0 /* Old */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_PREFIX_HEADER = "The Unarchiver_Prefix.pch";
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET_i386 = 10.4;
+				MACOSX_DEPLOYMENT_TARGET_ppc = 10.3;
+				SDKROOT_i386 = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
+				SDKROOT_ppc = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
+			};
+			name = Old;
+		};
+		1BAF014C132AAD72002B6FE0 /* Old */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Dag Agren";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					/Library/Frameworks,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SYMROOT)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				IBC_STRIP_NIBS = YES;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "The Unarchiver";
+				STRIP_INSTALLED_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Old;
 		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -1054,77 +1085,23 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = "The Unarchiver";
-				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
 			name = Debug;
-		};
-		C01FCF4C08A954540054247B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					/Library/Frameworks,
-				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SYMROOT)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				IBC_STRIP_NIBS = YES;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = "The Unarchiver";
-				SDKROOT = macosx10.5;
-				STRIP_INSTALLED_PRODUCT = YES;
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
-			};
-			name = Release;
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-					ppc,
-				);
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PREFIX_HEADER = "The Unarchiver_Prefix.pch";
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET_i386 = 10.4;
-				MACOSX_DEPLOYMENT_TARGET_ppc = 10.3;
-				MACOSX_DEPLOYMENT_TARGET_x86_64 = 10.5;
-				SDKROOT = macosx10.4;
+				SDKROOT_i386 = "";
+				SDKROOT_ppc = "";
 			};
 			name = Debug;
-		};
-		C01FCF5008A954540054247B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-					ppc,
-				);
-				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
-				GCC_PREFIX_HEADER = "The Unarchiver_Prefix.pch";
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET_i386 = 10.4;
-				MACOSX_DEPLOYMENT_TARGET_ppc = 10.3;
-				MACOSX_DEPLOYMENT_TARGET_x86_64 = 10.5;
-				SDKROOT = macosx10.4;
-			};
-			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1133,8 +1110,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
-				C01FCF4C08A954540054247B /* Release */,
-				1B541359132970FF002AF4B8 /* App Store */,
+				1B541359132970FF002AF4B8 /* Release */,
+				1BAF014C132AAD72002B6FE0 /* Old */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1143,8 +1120,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
-				C01FCF5008A954540054247B /* Release */,
-				1B541358132970FF002AF4B8 /* App Store */,
+				1B541358132970FF002AF4B8 /* Release */,
+				1BAF014B132AAD72002B6FE0 /* Old */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

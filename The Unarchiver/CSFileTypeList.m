@@ -6,7 +6,7 @@
 
 -(id)initWithCoder:(NSCoder *)coder
 {
-	if(self=[super initWithCoder:coder])
+	if((self=[super initWithCoder:coder]))
 	{
 		datasource=[CSFileTypeListSource new];
 		[self setDataSource:datasource];
@@ -16,7 +16,7 @@
 
 -(id)initWithFrame:(NSRect)frame
 {
-	if(self=[super initWithFrame:frame])
+	if((self=[super initWithFrame:frame]))
 	{
 		NSLog(@"Custom view mode in IB not supported yet");
 		[self setDataSource:[[CSFileTypeListSource alloc] init]];
@@ -50,7 +50,7 @@
 
 -(id)init
 {
-	if(self=[super init])
+	if((self=[super init]))
 	{
 		filetypes=[[self readFileTypes] retain];
 	}
@@ -71,7 +71,7 @@
 	NSEnumerator *enumerator=[types objectEnumerator];
 	NSDictionary *dict;
 
-	while(dict=[enumerator nextObject])
+	while((dict=[enumerator nextObject]))
 	{
 		NSArray *types=[dict objectForKey:@"LSItemContentTypes"];
 		if(types)
@@ -135,14 +135,14 @@
 {
 	NSEnumerator *enumerator=[filetypes objectEnumerator];
 	NSDictionary *type;
-	while(type=[enumerator nextObject]) [self claimType:[type objectForKey:@"type"]];
+	while((type=[enumerator nextObject])) [self claimType:[type objectForKey:@"type"]];
 }
 
 -(void)surrenderAllTypes
 {
 	NSEnumerator *enumerator=[filetypes objectEnumerator];
 	NSDictionary *type;
-	while(type=[enumerator nextObject]) [self surrenderType:[type objectForKey:@"type"]];
+	while((type=[enumerator nextObject])) [self surrenderType:[type objectForKey:@"type"]];
 }
 
 -(void)claimType:(NSString *)type
@@ -187,7 +187,7 @@
 
 	NSEnumerator *enumerator=[apps objectEnumerator];
 	NSURL *url;
-	while(url=[enumerator nextObject])
+	while((url=[enumerator nextObject]))
 	{
 		NSString *app=[url path];
 		[handlers addObject:[[NSBundle bundleWithPath:app] bundleIdentifier]];

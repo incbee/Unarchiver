@@ -24,7 +24,7 @@ static NSString *globalpassword=nil;
 -(id)initWithFilename:(NSString *)filename destination:(NSString *)destpath
 taskView:(TUArchiveTaskView *)taskview
 {
-	if(self=[super init])
+	if((self=[super init]))
 	{
 		cancelled=NO;
 		ignoreall=NO;
@@ -208,7 +208,7 @@ taskView:(TUArchiveTaskView *)taskview
 			NSMutableArray *allfiles=[NSMutableArray arrayWithCapacity:[allpaths count]];
 			NSEnumerator *enumerator=[allpaths objectEnumerator];
 			NSString *path;
-			while(path=[enumerator nextObject])
+			while((path=[enumerator nextObject]))
 			{
 				if([[path stringByDeletingLastPathComponent] isEqual:directory])
 				[allfiles addObject:[path lastPathComponent]];
@@ -381,9 +381,7 @@ taskView:(TUArchiveTaskView *)taskview
 
 -(XADAction)archive:(XADArchive *)archive creatingDirectoryDidFailForEntry:(int)n
 {
-	[view displayOpenError:[NSString stringWithFormat:
-		NSLocalizedString(@"Could not write to the destination directory.",@"Error message string when writing is impossible.")]
-	];
+	[view displayOpenError:NSLocalizedString(@"Could not write to the destination directory.",@"Error message string when writing is impossible.")];
 	return XADAbort;
 }
 

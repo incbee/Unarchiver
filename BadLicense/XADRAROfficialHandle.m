@@ -4,7 +4,7 @@
 
 -(id)initWithRARParser:(XADRARParser *)parent version:(int)version parts:(NSArray *)partarray
 {
-	if(self=[super initWithName:[parent name]])
+	if((self=[super initWithName:[parent name]]))
 	{
 		parser=parent;
 		parts=[partarray retain];

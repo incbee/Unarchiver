@@ -20,7 +20,7 @@ static BOOL IsPathWritable(NSString *path);
 
 -(id)init
 {
-	if(self=[super init])
+	if((self=[super init]))
 	{
 		setuptasks=[TUTaskQueue new];
 		extracttasks=[TUTaskQueue new];
@@ -71,7 +71,7 @@ static BOOL IsPathWritable(NSString *path);
 	NSArray *tmpdirs=[defs arrayForKey:@"orphanedTempDirectories"];
 	NSEnumerator *enumerator=[tmpdirs objectEnumerator];
 	NSString *tmpdir;
-	while(tmpdir=[enumerator nextObject])
+	while((tmpdir=[enumerator nextObject]))
 	{
 		[fm removeFileAtPath:tmpdir handler:nil];
 	}
@@ -136,7 +136,7 @@ static BOOL IsPathWritable(NSString *path);
 {
 	NSEnumerator *enumerator=[filenames objectEnumerator];
 	NSString *filename;
-	while(filename=[enumerator nextObject]) [self newArchiveForFile:filename destination:desttype];
+	while((filename=[enumerator nextObject])) [self newArchiveForFile:filename destination:desttype];
 }
 
 -(void)newArchiveForFile:(NSString *)filename destination:(int)desttype
@@ -317,7 +317,7 @@ static BOOL IsPathWritable(NSString *path);
 
 	NSEnumerator *enumerator=[[[archive archive] allFilenames] objectEnumerator];
 	NSString *filename;
-	while(filename=[enumerator nextObject])
+	while((filename=[enumerator nextObject]))
 	{
 		TUTaskView *taskview=[queuedfileviews objectForKey:filename];
 		if(taskview) [mainlist removeTaskView:taskview]; // TODO: should this remove from queuedfileview too?

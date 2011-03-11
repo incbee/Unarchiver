@@ -692,29 +692,6 @@
 			};
 			name = Debug;
 		};
-		1B0DDCB00A2D0AFD0009B697 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INSTALL_PATH = "$(HOME)/bin";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = DetectorTest;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 		1B23E0881190F29600620319 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -738,7 +715,39 @@
 			};
 			name = Debug;
 		};
-		1B23E0891190F29600620319 /* Release */ = {
+		1B54130813296EE3002AF4B8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				USE_HEADERMAP = NO;
+			};
+			name = Release;
+		};
+		1B54130913296EE3002AF4B8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				PRODUCT_NAME = UniversalDetector;
+				WRAPPER_EXTENSION = framework;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		1B54130A13296EE3002AF4B8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -756,63 +765,7 @@
 			};
 			name = Release;
 		};
-		1B54130813296EE3002AF4B8 /* App Store */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
-				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_ppc = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_x86_64 = /Developer/SDKs/MacOSX10.5.sdk;
-				USE_HEADERMAP = NO;
-			};
-			name = "App Store";
-		};
-		1B54130913296EE3002AF4B8 /* App Store */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "@executable_path/../Frameworks";
-				PRODUCT_NAME = UniversalDetector;
-				WRAPPER_EXTENSION = framework;
-				ZERO_LINK = NO;
-			};
-			name = "App Store";
-		};
-		1B54130A13296EE3002AF4B8 /* App Store */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				INSTALL_PATH = /usr/local/lib;
-				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
-				PRODUCT_NAME = UniversalDetector;
-				ZERO_LINK = NO;
-			};
-			name = "App Store";
-		};
-		1B54130B13296EE3002AF4B8 /* App Store */ = {
+		1B54130B13296EE3002AF4B8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -842,9 +795,9 @@
 				SYMROOT = /Users/dag/Code/Build/Windows;
 				ZERO_LINK = NO;
 			};
-			name = "App Store";
+			name = Release;
 		};
-		1B54130C13296EE3002AF4B8 /* App Store */ = {
+		1B54130C13296EE3002AF4B8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -865,7 +818,7 @@
 				PRODUCT_NAME = DetectorTest;
 				ZERO_LINK = NO;
 			};
-			name = "App Store";
+			name = Release;
 		};
 		1B91CBDE11D821A70081E40A /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -900,7 +853,65 @@
 			};
 			name = Debug;
 		};
-		1B91CBDF11D821A70081E40A /* Release */ = {
+		1BAF0146132AA23A002B6FE0 /* Old */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET_i386 = 10.4;
+				MACOSX_DEPLOYMENT_TARGET_ppc = 10.3;
+				SDKROOT_i386 = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
+				SDKROOT_ppc = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
+				USE_HEADERMAP = NO;
+			};
+			name = Old;
+		};
+		1BAF0147132AA23A002B6FE0 /* Old */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				PRODUCT_NAME = UniversalDetector;
+				WRAPPER_EXTENSION = framework;
+				ZERO_LINK = NO;
+			};
+			name = Old;
+		};
+		1BAF0148132AA23A002B6FE0 /* Old */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = UniversalDetector;
+				ZERO_LINK = NO;
+			};
+			name = Old;
+		};
+		1BAF0149132AA23A002B6FE0 /* Old */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -930,7 +941,30 @@
 				SYMROOT = /Users/dag/Code/Build/Windows;
 				ZERO_LINK = NO;
 			};
-			name = Release;
+			name = Old;
+		};
+		1BAF014A132AA23A002B6FE0 /* Old */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = "$(HOME)/bin";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = DetectorTest;
+				ZERO_LINK = NO;
+			};
+			name = Old;
 		};
 		1DEB91AE08733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -952,59 +986,17 @@
 			};
 			name = Debug;
 		};
-		1DEB91AF08733DA50010E9CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "@executable_path/../Frameworks";
-				PRODUCT_NAME = UniversalDetector;
-				WRAPPER_EXTENSION = framework;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
-				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_ppc = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_x86_64 = /Developer/SDKs/MacOSX10.5.sdk;
 				USE_HEADERMAP = NO;
 			};
 			name = Debug;
-		};
-		1DEB91B308733DA50010E9CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
-				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
-				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_ppc = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_x86_64 = /Developer/SDKs/MacOSX10.5.sdk;
-				USE_HEADERMAP = NO;
-			};
-			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1013,8 +1005,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1B0DDCAF0A2D0AFD0009B697 /* Debug */,
-				1B0DDCB00A2D0AFD0009B697 /* Release */,
-				1B54130C13296EE3002AF4B8 /* App Store */,
+				1B54130C13296EE3002AF4B8 /* Release */,
+				1BAF014A132AA23A002B6FE0 /* Old */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1023,8 +1015,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1B23E0881190F29600620319 /* Debug */,
-				1B23E0891190F29600620319 /* Release */,
-				1B54130A13296EE3002AF4B8 /* App Store */,
+				1B54130A13296EE3002AF4B8 /* Release */,
+				1BAF0148132AA23A002B6FE0 /* Old */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1033,8 +1025,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1B91CBDE11D821A70081E40A /* Debug */,
-				1B91CBDF11D821A70081E40A /* Release */,
-				1B54130B13296EE3002AF4B8 /* App Store */,
+				1B54130B13296EE3002AF4B8 /* Release */,
+				1BAF0149132AA23A002B6FE0 /* Old */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1043,8 +1035,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91AE08733DA50010E9CD /* Debug */,
-				1DEB91AF08733DA50010E9CD /* Release */,
-				1B54130913296EE3002AF4B8 /* App Store */,
+				1B54130913296EE3002AF4B8 /* Release */,
+				1BAF0147132AA23A002B6FE0 /* Old */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1053,8 +1045,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91B208733DA50010E9CD /* Debug */,
-				1DEB91B308733DA50010E9CD /* Release */,
-				1B54130813296EE3002AF4B8 /* App Store */,
+				1B54130813296EE3002AF4B8 /* Release */,
+				1BAF0146132AA23A002B6FE0 /* Old */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

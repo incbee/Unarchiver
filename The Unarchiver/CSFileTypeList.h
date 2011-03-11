@@ -24,7 +24,7 @@
 	[type] (string)
 */
 
-@interface CSFileTypeListSource:NSObject
+@interface CSFileTypeListSource:NSObject <NSTableViewDataSource>
 {
 	NSArray *filetypes;
 }
