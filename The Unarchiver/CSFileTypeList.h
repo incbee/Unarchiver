@@ -24,7 +24,11 @@
 	[type] (string)
 */
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED>=1060
 @interface CSFileTypeListSource:NSObject <NSTableViewDataSource>
+#else
+@interface CSFileTypeListSource:NSObject
+#endif
 {
 	NSArray *filetypes;
 }
