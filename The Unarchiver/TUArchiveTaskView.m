@@ -6,7 +6,7 @@
 
 -(id)initWithFilename:(NSString *)filename
 {
-	if(self=[super init])
+	if((self=[super init]))
 	{
 		waitview=nil;
 		progressview=nil;

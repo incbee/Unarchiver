@@ -4,7 +4,7 @@
 
 -(id)init
 {
-	if(self=[super init])
+	if((self=[super init]))
 	{
 		tasks=[NSMutableArray new];
 		running=NO;
