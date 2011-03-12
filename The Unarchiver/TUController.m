@@ -73,7 +73,11 @@ static BOOL IsPathWritable(NSString *path);
 	NSString *tmpdir;
 	while((tmpdir=[enumerator nextObject]))
 	{
+		#if MAC_OS_X_VERSION_MAX_ALLOWED>=1050
+		[fm removeItemAtPath:tmpdir error:nil];
+		#else
 		[fm removeFileAtPath:tmpdir handler:nil];
+		#endif
 	}
 
 	[defs setObject:[NSArray array] forKey:@"orphanedTempDirectories"];

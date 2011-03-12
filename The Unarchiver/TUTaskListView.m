@@ -5,7 +5,7 @@
 
 -(id)initWithFrame:(NSRect)frame
 {
-	if(self=[super initWithFrame:frame])
+	if((self=[super initWithFrame:frame]))
 	{
 		resizetarget=nil;
 		totalheight=-1;
@@ -58,14 +58,14 @@
 
 	totalheight=0;
 	enumerator=[[self subviews] reverseObjectEnumerator];
-	while(subview=[enumerator nextObject]) totalheight+=[subview frame].size.height+1;
+	while((subview=[enumerator nextObject])) totalheight+=[subview frame].size.height+1;
 	if(totalheight) totalheight-=1;
 
 	NSRect listframe=[self frame];
 	float y=listframe.size.height-totalheight;
 
 	enumerator=[[self subviews] reverseObjectEnumerator];
-	while(subview=[enumerator nextObject])
+	while((subview=[enumerator nextObject]))
 	{
 		NSRect frame=[subview frame];
 
@@ -98,7 +98,7 @@
 	NSColor *whitecol=[NSColor whiteColor];
 	NSColor *bluecol=[NSColor colorWithCalibratedRed:237.0/255.0 green:242.0/255.0 blue:1 alpha:1];
 
-	while(subview=[enumerator nextObject])
+	while((subview=[enumerator nextObject]))
 	{
 		NSRect frame=[subview frame];
 
@@ -133,7 +133,7 @@
 
 -(id)init
 {
-	if(self=[super init])
+	if((self=[super init]))
 	{
 	}
 	return self;
@@ -156,7 +156,7 @@
 
 -(id)init
 {
-	if(self=[super init])
+	if((self=[super init]))
 	{
 		[self setAutoresizesSubviews:YES];
 	}
@@ -167,7 +167,7 @@
 {
 	NSEnumerator *enumerator=[[self subviews] objectEnumerator];
 	NSView *subview;
-	while(subview=[enumerator nextObject]) [subview removeFromSuperview];
+	while((subview=[enumerator nextObject])) [subview removeFromSuperview];
 
 	NSSize viewsize=[dispview frame].size;
 	NSSize selfsize=[self frame].size;

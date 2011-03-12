@@ -1,19 +1,10 @@
-//
-//  TUEncodingPopUp.m
-//  The Unarchiver
-//
-//  Created by Dag Ågren on 2006-07-08.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
-//
-
 #import "TUEncodingPopUp.h"
-
 
 @implementation TUEncodingPopUp
 
 -(id)initWithFrame:(NSRect)frame
 {
-	if(self=[super initWithFrame:frame])
+	if((self=[super initWithFrame:frame]))
 	{
 		//[self buildEncodingList];
 	}
@@ -22,7 +13,7 @@
 
 -(id)initWithCoder:(NSCoder *)coder
 {
-	if(self=[super initWithCoder:coder])
+	if((self=[super initWithCoder:coder]))
 	{
 		//[self buildEncodingList];
 	}
@@ -75,7 +66,7 @@
 	NSArray *encodings=[[self class] encodings];
 	NSEnumerator *enumerator=[encodings objectEnumerator];
 	NSDictionary *encdict;
-	while(encdict=[enumerator nextObject])
+	while((encdict=[enumerator nextObject]))
 	{
 		NSStringEncoding encoding=[[encdict objectForKey:@"Encoding"] longValue];
 
@@ -154,7 +145,7 @@ NSComparisonResult encoding_sort(NSDictionary *enc1,NSDictionary *enc2,void *dum
 	NSArray *encodings=[[self class] encodings];
 	NSEnumerator *enumerator=[encodings objectEnumerator];
 	NSDictionary *encdict;
-	while(encdict=[enumerator nextObject])
+	while((encdict=[enumerator nextObject]))
 	{
 		NSString *name=[encdict objectForKey:@"Name"];
 		float width=[name sizeWithAttributes:attrs].width;

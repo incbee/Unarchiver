@@ -116,7 +116,12 @@ taskView:(TUArchiveTaskView *)taskview
 -(void)extractFinished
 {
 	NSFileManager *fm=[NSFileManager defaultManager];
+
+	#if MAC_OS_X_VERSION_MAX_ALLOWED>=1050
+	NSArray *files=[fm contentsOfDirectoryAtPath:tmpdest error:NULL];
+	#else
 	NSArray *files=[fm directoryContentsAtPath:tmpdest];
+	#endif
 
 	if(files)
 	{
@@ -161,13 +166,24 @@ taskView:(TUArchiveTaskView *)taskview
 			defaultname=[[archivename lastPathComponent] stringByDeletingPathExtension];
 
 			finaldest=[self findUniqueDestinationWithDirectory:destination andFilename:defaultname];
+
+			#if MAC_OS_X_VERSION_MAX_ALLOWED>=1050
+			[fm moveItemAtPath:tmpdest toPath:finaldest error:NULL];
+			#else
 			[fm movePath:tmpdest toPath:finaldest handler:nil];
+			#endif
 
 			// Check if we accidentally created a package.
 			if([[NSWorkspace sharedWorkspace] isFilePackageAtPath:finaldest])
 			{
 				NSString *newfinaldest=[finaldest stringByDeletingPathExtension];
+
+				#if MAC_OS_X_VERSION_MAX_ALLOWED>=1050
+				[fm moveItemAtPath:finaldest toPath:newfinaldest error:NULL];
+				#else
 				[fm movePath:finaldest toPath:newfinaldest handler:nil];
+				#endif
+
 				finaldest=newfinaldest;
 			}
 		}
@@ -176,8 +192,14 @@ taskView:(TUArchiveTaskView *)taskview
 			NSString *filename=[files objectAtIndex:0];
 			NSString *src=[tmpdest stringByAppendingPathComponent:filename];
 			finaldest=[self findUniqueDestinationWithDirectory:destination andFilename:filename];
+
+			#if MAC_OS_X_VERSION_MAX_ALLOWED>=1050
+			[fm moveItemAtPath:src toPath:finaldest error:NULL];
+			[fm removeItemAtPath:tmpdest error:NULL];
+			#else
 			[fm movePath:src toPath:finaldest handler:nil];
 			[fm removeFileAtPath:tmpdest handler:nil];
+			#endif
 		}
 
 		// Remove temporary directory from crash recovery list
@@ -238,8 +260,12 @@ taskView:(TUArchiveTaskView *)taskview
 
 -(void)extractFailed
 {
-	NSFileManager *fm=[NSFileManager defaultManager];
-	[fm removeFileAtPath:tmpdest handler:nil];
+	#if MAC_OS_X_VERSION_MAX_ALLOWED>=1050
+	[[NSFileManager defaultManager] removeItemAtPath:tmpdest error:NULL];
+	#else
+	[[NSFileManager defaultManager] removeFileAtPath:tmpdest handler:nil];
+	#endif
+
 	[self forgetTempDirectory:tmpdest];
 
 	[finishtarget performSelector:finishselector withObject:self];

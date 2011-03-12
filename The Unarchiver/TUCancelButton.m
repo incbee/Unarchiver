@@ -5,7 +5,7 @@
 
 -(id)initWithCoder:(NSCoder *)coder
 {
-	if(self=[super initWithCoder:coder])
+	if((self=[super initWithCoder:coder]))
 	{
 		normal=[[NSImage imageNamed:@"close_normal"] retain];
 		hover=[[NSImage imageNamed:@"close_hover"] retain];
