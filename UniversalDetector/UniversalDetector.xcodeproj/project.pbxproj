@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -212,7 +212,7 @@
 		1B2F16370EE8895C0000DAFF /* nsUTF8Prober.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nsUTF8Prober.h; sourceTree = "<group>"; };
 		1B2F16B60EE890CF0000DAFF /* WrappedUniversalDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WrappedUniversalDetector.cpp; sourceTree = "<group>"; };
 		1B2F16B80EE890E10000DAFF /* WrappedUniversalDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrappedUniversalDetector.h; sourceTree = "<group>"; };
-		1B91CBE011D821A70081E40A /* libUniversalDetector.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUniversalDetector.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B91CBE011D821A70081E40A /* libUniversalDetector.win.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUniversalDetector.win.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* UniversalDetector.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UniversalDetector.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -250,7 +250,7 @@
 			children = (
 				8DC2EF5B0486A6940098B216 /* UniversalDetector.framework */,
 				1B23E0871190F29400620319 /* libUniversalDetector.a */,
-				1B91CBE011D821A70081E40A /* libUniversalDetector.a */,
+				1B91CBE011D821A70081E40A /* libUniversalDetector.win.a */,
 				1B0DDCAB0A2D0AD10009B697 /* DetectorTest */,
 			);
 			name = Products;
@@ -441,9 +441,9 @@
 			productReference = 1B0DDCAB0A2D0AD10009B697 /* DetectorTest */;
 			productType = "com.apple.product-type.tool";
 		};
-		1B23E0861190F29400620319 /* libUniversalDetector */ = {
+		1B23E0861190F29400620319 /* libUniversalDetector.a */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1B23E0BE1190F2F200620319 /* Build configuration list for PBXNativeTarget "libUniversalDetector" */;
+			buildConfigurationList = 1B23E0BE1190F2F200620319 /* Build configuration list for PBXNativeTarget "libUniversalDetector.a" */;
 			buildPhases = (
 				1B23E0841190F29400620319 /* Sources */,
 				1B23E0851190F29400620319 /* Frameworks */,
@@ -452,14 +452,14 @@
 			);
 			dependencies = (
 			);
-			name = libUniversalDetector;
+			name = libUniversalDetector.a;
 			productName = libUniversalDetector;
 			productReference = 1B23E0871190F29400620319 /* libUniversalDetector.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		1B91CBB711D821A70081E40A /* libUniversalDetector (Windows) */ = {
+		1B91CBB711D821A70081E40A /* libUniversalDetector.win.a */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1B91CBDD11D821A70081E40A /* Build configuration list for PBXNativeTarget "libUniversalDetector (Windows)" */;
+			buildConfigurationList = 1B91CBDD11D821A70081E40A /* Build configuration list for PBXNativeTarget "libUniversalDetector.win.a" */;
 			buildPhases = (
 				1B91CBBF11D821A70081E40A /* Sources */,
 			);
@@ -468,9 +468,9 @@
 			);
 			dependencies = (
 			);
-			name = "libUniversalDetector (Windows)";
+			name = libUniversalDetector.win.a;
 			productName = libUniversalDetector;
-			productReference = 1B91CBE011D821A70081E40A /* libUniversalDetector.a */;
+			productReference = 1B91CBE011D821A70081E40A /* libUniversalDetector.win.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		8DC2EF4F0486A6940098B216 /* UniversalDetector */ = {
@@ -498,7 +498,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "UniversalDetector" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -513,8 +513,8 @@
 			projectRoot = "";
 			targets = (
 				8DC2EF4F0486A6940098B216 /* UniversalDetector */,
-				1B23E0861190F29400620319 /* libUniversalDetector */,
-				1B91CBB711D821A70081E40A /* libUniversalDetector (Windows) */,
+				1B23E0861190F29400620319 /* libUniversalDetector.a */,
+				1B91CBB711D821A70081E40A /* libUniversalDetector.win.a */,
 				1B0DDCAA0A2D0AD10009B697 /* DetectorTest */,
 			);
 		};
@@ -719,8 +719,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -733,8 +732,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -789,7 +787,7 @@
 				MACH_O_TYPE = mh_object;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				PRODUCT_NAME = UniversalDetector;
+				PRODUCT_NAME = UniversalDetector.win;
 				SDKROOT_i386 = "";
 				SDKROOT_ppc = "";
 				SDKROOT_x86_64 = "";
@@ -846,7 +844,7 @@
 				MACH_O_TYPE = mh_object;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				PRODUCT_NAME = UniversalDetector;
+				PRODUCT_NAME = UniversalDetector.win;
 				SDKROOT_i386 = "";
 				SDKROOT_ppc = "";
 				SDKROOT_x86_64 = "";
@@ -880,8 +878,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -936,7 +933,7 @@
 				MACH_O_TYPE = mh_object;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				PRODUCT_NAME = UniversalDetector;
+				PRODUCT_NAME = UniversalDetector.win;
 				SDKROOT_i386 = "";
 				SDKROOT_ppc = "";
 				SDKROOT_x86_64 = "";
@@ -1014,7 +1011,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1B23E0BE1190F2F200620319 /* Build configuration list for PBXNativeTarget "libUniversalDetector" */ = {
+		1B23E0BE1190F2F200620319 /* Build configuration list for PBXNativeTarget "libUniversalDetector.a" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1B23E0881190F29600620319 /* Debug */,
@@ -1024,7 +1021,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1B91CBDD11D821A70081E40A /* Build configuration list for PBXNativeTarget "libUniversalDetector (Windows)" */ = {
+		1B91CBDD11D821A70081E40A /* Build configuration list for PBXNativeTarget "libUniversalDetector.win.a" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1B91CBDE11D821A70081E40A /* Debug */,
