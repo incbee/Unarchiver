@@ -474,7 +474,7 @@
 				1B34ABB611CEB9F700396C26 /* libXADMaster.a */,
 				1B23DDC81185EBC300620319 /* unar */,
 				1B433CF311E8036D00DA1EFB /* lsar */,
-				1B433CF511E8036D00DA1EFB /* libXADMaster.a */,
+				1B433CF511E8036D00DA1EFB /* libXADMaster.win.a */,
 				1B433CF711E8036D00DA1EFB /* unar.exe */,
 				1B433CF911E8036D00DA1EFB /* lsar.exe */,
 			);
@@ -536,7 +536,7 @@
 			children = (
 				3D664F51103776C900A679EF /* UniversalDetector.framework */,
 				1B23E08F1190F2B500620319 /* libUniversalDetector.a */,
-				1B433CE711E8036D00DA1EFB /* libUniversalDetector.a */,
+				1B433CE711E8036D00DA1EFB /* libUniversalDetector.win.a */,
 				3D664F53103776C900A679EF /* DetectorTest */,
 			);
 			name = Products;
@@ -572,7 +572,6 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "The Unarchiver" */;
 			compatibilityVersion = "Xcode 3.1";
-			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -633,10 +632,10 @@
 			remoteRef = 1B34ABB511CEB9F700396C26 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1B433CE711E8036D00DA1EFB /* libUniversalDetector.a */ = {
+		1B433CE711E8036D00DA1EFB /* libUniversalDetector.win.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libUniversalDetector.a;
+			path = libUniversalDetector.win.a;
 			remoteRef = 1B433CE611E8036D00DA1EFB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -647,10 +646,10 @@
 			remoteRef = 1B433CF211E8036D00DA1EFB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1B433CF511E8036D00DA1EFB /* libXADMaster.a */ = {
+		1B433CF511E8036D00DA1EFB /* libXADMaster.win.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libXADMaster.a;
+			path = libXADMaster.win.a;
 			remoteRef = 1B433CF411E8036D00DA1EFB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1032,7 +1031,7 @@
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PREFIX_HEADER = "The Unarchiver_Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = 4.2;
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
