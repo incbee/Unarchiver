@@ -6,7 +6,7 @@ int main(int argc,const char **argv)
 
 	NSString *desktop;
 
-	#if MAC_OS_X_VERSION_MAX_ALLOWED>=MAC_OS_X_VERSION_10_4
+	#if MAC_OS_X_VERSION_MIN_REQUIRED>=MAC_OS_X_VERSION_10_4
 	NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask,YES);
 	if([paths count]) desktop=[paths objectAtIndex:0];
 	else desktop=[NSHomeDirectory() stringByAppendingPathComponent:@"Desktop"];

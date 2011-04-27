@@ -117,7 +117,7 @@ taskView:(TUArchiveTaskView *)taskview
 {
 	NSFileManager *fm=[NSFileManager defaultManager];
 
-	#if MAC_OS_X_VERSION_MAX_ALLOWED>=1050
+	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
 	NSArray *files=[fm contentsOfDirectoryAtPath:tmpdest error:NULL];
 	#else
 	NSArray *files=[fm directoryContentsAtPath:tmpdest];
@@ -167,7 +167,7 @@ taskView:(TUArchiveTaskView *)taskview
 
 			finaldest=[self findUniqueDestinationWithDirectory:destination andFilename:defaultname];
 
-			#if MAC_OS_X_VERSION_MAX_ALLOWED>=1050
+			#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
 			[fm moveItemAtPath:tmpdest toPath:finaldest error:NULL];
 			#else
 			[fm movePath:tmpdest toPath:finaldest handler:nil];
@@ -178,7 +178,7 @@ taskView:(TUArchiveTaskView *)taskview
 			{
 				NSString *newfinaldest=[finaldest stringByDeletingPathExtension];
 
-				#if MAC_OS_X_VERSION_MAX_ALLOWED>=1050
+				#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
 				[fm moveItemAtPath:finaldest toPath:newfinaldest error:NULL];
 				#else
 				[fm movePath:finaldest toPath:newfinaldest handler:nil];
@@ -193,7 +193,7 @@ taskView:(TUArchiveTaskView *)taskview
 			NSString *src=[tmpdest stringByAppendingPathComponent:filename];
 			finaldest=[self findUniqueDestinationWithDirectory:destination andFilename:filename];
 
-			#if MAC_OS_X_VERSION_MAX_ALLOWED>=1050
+			#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
 			[fm moveItemAtPath:src toPath:finaldest error:NULL];
 			[fm removeItemAtPath:tmpdest error:NULL];
 			#else
@@ -260,7 +260,7 @@ taskView:(TUArchiveTaskView *)taskview
 
 -(void)extractFailed
 {
-	#if MAC_OS_X_VERSION_MAX_ALLOWED>=1050
+	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
 	[[NSFileManager defaultManager] removeItemAtPath:tmpdest error:NULL];
 	#else
 	[[NSFileManager defaultManager] removeFileAtPath:tmpdest handler:nil];

@@ -184,7 +184,7 @@
 	[[NSFileManager defaultManager] createFileAtPath:filename contents:nil attributes:nil];
 	NSArray *apps=[(NSArray *)LSCopyApplicationURLsForURL((CFURLRef)[NSURL fileURLWithPath:filename],kLSRolesAll) autorelease];
 
-	#if MAC_OS_X_VERSION_MAX_ALLOWED>=1050
+	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
 	[[NSFileManager defaultManager] removeItemAtPath:filename error:NULL];
 	#else
 	[[NSFileManager defaultManager] removeFileAtPath:filename handler:nil];
