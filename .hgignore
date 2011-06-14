@@ -4,6 +4,7 @@
 ^XADMaster/XADTest4$
 ^XADMaster/unar$
 ^XADMaster/lsar$
+^XADMaster/WinZipJPEG/RawDecoder$
 ^XADMaster/tests/
 \.o$
 \.a$
