@@ -6,6 +6,7 @@
 ^XADMaster/lsar$
 ^XADMaster/WinZipJPEG/RawDecoder$
 ^XADMaster/WinZipJPEG/Test$
+^XADMaster/WinZipJPEG/MakeTest$
 ^XADMaster/tests/
 \.o$
 \.a$
