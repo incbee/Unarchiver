@@ -15,3 +15,4 @@
 \.pbxuser$
 \.DS_Store$
 \.xcuserdatad/
+glob:*.exe
