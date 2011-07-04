@@ -9,6 +9,283 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>lha</string>
+				<string>lzh</string>
+				<string>LHA</string>
+				<string>LZH</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>lha.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-lzh-compressed</string>
+				<string>application/lha</string>
+				<string>application/x-lha</string>
+				<string>application/lzh</string>
+				<string>application/x-lzh</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>LhA Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>cx.c3.lha-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>hqx</string>
+				<string>HQX</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>hqx.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/mac-binhex40</string>
+				<string>application/mac-binhex</string>
+				<string>application/binhex</string>
+				<string>application/binhex4</string>
+				<string>application/x-binhex40</string>
+				<string>application/x-mac-binhex40</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>BinHex File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.apple.binhex-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>bin</string>
+				<string>macbin</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>bin.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-macbinary</string>
+				<string>application/macbinary</string>
+				<string>application/mac-binary</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>MacBinary File</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>BINA</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.apple.macbinary-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>7z</string>
+				<string>7Z</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>7z.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-7z-compressed</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>7-Zip Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.7-zip.7-zip-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>gz</string>
+				<string>gzip</string>
+				<string>GZ</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>gz.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/gzip</string>
+				<string>application/x-gzip</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Gzip File</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>Gzip</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.gnu.gnu-zip-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>tgz</string>
+				<string>tar-gz</string>
+				<string>TGZ</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>gz.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Gzip Tar Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.gnu.gnu-zip-tar-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>bz2</string>
+				<string>bzip2</string>
+				<string>bz</string>
+				<string>BZ2</string>
+				<string>BZ</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>bz2.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/bzip2</string>
+				<string>application/bzip</string>
+				<string>application/x-bzip2</string>
+				<string>application/x-bzip</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Bzip2 File</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>Bzp2</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.bzip2-archive</string>
+				<string>org.bzip.bzip2-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>tbz2</string>
+				<string>tbz</string>
+				<string>TBZ</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>bz2.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Bzip2 Tar Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.tar-bzip2-archive</string>
+				<string>org.bzip.bzip2-tar-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>xz</string>
+				<string>XZ</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-xz</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>XZ File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.tukaani.xz-archive</string>
+				<string>public.xz-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>txz</string>
+				<string>TXZ</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>tar.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>XZ Tar Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.tukaani.xz-tar-archive</string>
+				<string>public.tar-xz-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>zip</string>
 				<string>ZIP</string>
 				<string>z01</string>
@@ -36,6 +313,120 @@
 				<string>com.pkware.zip-archive</string>
 				<string>public.zip-archive</string>
 				<string>public.zip-archive.first-part</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>sit</string>
+				<string>sitx</string>
+				<string>SIT</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>sit.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-stuffit</string>
+				<string>application/x-sit</string>
+				<string>application/stuffit</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>StuffIt Archive</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>SIT!</string>
+				<string>SITD</string>
+				<string>SIT5</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.allume.stuffit-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>tar</string>
+				<string>TAR</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>tar.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-tar</string>
+				<string>application/tar</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Tar Archive</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>TARF</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.tar-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>iso</string>
+				<string>ISO</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-iso-image</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>ISO Disk Image</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.iso-image</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>gtar</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>tar.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-gtar</string>
+				<string>application/gnutar</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>GNU Tar Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.gnu.gnu-tar-archive</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -375,397 +766,6 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>7z</string>
-				<string>7Z</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>7z.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-7z-compressed</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>7-Zip Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.7-zip.7-zip-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>lha</string>
-				<string>lzh</string>
-				<string>LHA</string>
-				<string>LZH</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>lha.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-lzh-compressed</string>
-				<string>application/lha</string>
-				<string>application/x-lha</string>
-				<string>application/lzh</string>
-				<string>application/x-lzh</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>LhA Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>cx.c3.lha-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>sit</string>
-				<string>sitx</string>
-				<string>SIT</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>sit.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-stuffit</string>
-				<string>application/x-sit</string>
-				<string>application/stuffit</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>StuffIt Archive</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>SIT!</string>
-				<string>SITD</string>
-				<string>SIT5</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.allume.stuffit-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>hqx</string>
-				<string>HQX</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>hqx.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/mac-binhex40</string>
-				<string>application/mac-binhex</string>
-				<string>application/binhex</string>
-				<string>application/binhex4</string>
-				<string>application/x-binhex40</string>
-				<string>application/x-mac-binhex40</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>BinHex File</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.apple.binhex-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>bin</string>
-				<string>macbin</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>bin.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-macbinary</string>
-				<string>application/macbinary</string>
-				<string>application/mac-binary</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>MacBinary File</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>BINA</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.apple.macbinary-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>gz</string>
-				<string>gzip</string>
-				<string>GZ</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>gz.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/gzip</string>
-				<string>application/x-gzip</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>Gzip File</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>Gzip</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.gnu.gnu-zip-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>tgz</string>
-				<string>tar-gz</string>
-				<string>TGZ</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>gz.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Gzip Tar Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.gnu.gnu-zip-tar-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>bz2</string>
-				<string>bzip2</string>
-				<string>bz</string>
-				<string>BZ2</string>
-				<string>BZ</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>bz2.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/bzip2</string>
-				<string>application/bzip</string>
-				<string>application/x-bzip2</string>
-				<string>application/x-bzip</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>Bzip2 File</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>Bzp2</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.bzip2-archive</string>
-				<string>org.bzip.bzip2-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>tbz2</string>
-				<string>tbz</string>
-				<string>TBZ</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>bz2.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Bzip2 Tar Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.tar-bzip2-archive</string>
-				<string>org.bzip.bzip2-tar-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>xz</string>
-				<string>XZ</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>archive.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-xz</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>XZ File</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.tukaani.xz-archive</string>
-				<string>public.xz-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>txz</string>
-				<string>TXZ</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>tar.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>XZ Tar Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.tukaani.xz-tar-archive</string>
-				<string>public.tar-xz-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>tar</string>
-				<string>TAR</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>tar.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-tar</string>
-				<string>application/tar</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>Tar Archive</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>TARF</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.tar-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>iso</string>
-				<string>ISO</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>archive.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-iso-image</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>ISO Disk Image</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.iso-image</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>gtar</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>tar.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-gtar</string>
-				<string>application/gnutar</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>GNU Tar Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.gnu.gnu-tar-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
 				<string>z</string>
 				<string>Z</string>
 			</array>
@@ -1028,6 +1028,23 @@
 			<false/>
 			<key>NSPersistentStoreTypeKey</key>
 			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>deb</string>
+				<string>DEB</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Deb Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.debian.deb-archive</string>
+			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
@@ -1659,6 +1676,8 @@
 				<string>nds</string>
 				<string>NDS</string>
 			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>Nintendo DS ROM file</string>
 			<key>CFBundleTypeRole</key>
@@ -1674,6 +1693,8 @@
 				<string>pkg</string>
 				<string>PKG</string>
 			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>Installer package</string>
 			<key>CFBundleTypeRole</key>
@@ -1682,6 +1703,19 @@
 			<false/>
 			<key>NSPersistentStoreTypeKey</key>
 			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>a</string>
+				<string>A</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Ar Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
@@ -1720,6 +1754,8 @@
 	<string>2.7.1</string>
 	<key>CFBundleSignature</key>
 	<string>TUnA</string>
+	<key>CFBundleURLTypes</key>
+	<array/>
 	<key>CFBundleVersion</key>
 	<string>2.7.1</string>
 	<key>LSApplicationCategoryType</key>
@@ -3003,6 +3039,31 @@
 				<array>
 					<string>sar</string>
 					<string>SAR</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Deb Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.debian.deb-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>deb</string>
+					<string>DEB</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>application/x-deb</string>
 				</array>
 			</dict>
 		</dict>
