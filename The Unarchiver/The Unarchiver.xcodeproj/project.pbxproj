@@ -478,13 +478,13 @@
 				1B95B4111010D537009FA09E /* XADTest3 */,
 				1BA4E2A91022405A001AB3CA /* XADTest4 */,
 				1B54134713296F8C002AF4B8 /* XADTest5 */,
+				1B31CB9613C6423800ED119E /* XADTest6 */,
 				1B34ABB611CEB9F700396C26 /* libXADMaster.a */,
 				1B23DDC81185EBC300620319 /* unar */,
 				1B433CF311E8036D00DA1EFB /* lsar */,
 				1B433CF511E8036D00DA1EFB /* libXADMaster.win.a */,
 				1B433CF711E8036D00DA1EFB /* unar.exe */,
 				1B433CF911E8036D00DA1EFB /* lsar.exe */,
-				1B31CB9613C6423800ED119E /* XADTest5 copy */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -634,10 +634,10 @@
 			remoteRef = 1B23E08E1190F2B500620319 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1B31CB9613C6423800ED119E /* XADTest5 copy */ = {
+		1B31CB9613C6423800ED119E /* XADTest6 */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = "XADTest5 copy";
+			path = XADTest6;
 			remoteRef = 1B31CB9513C6423800ED119E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
