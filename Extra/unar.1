@@ -1,0 +1,39 @@
+.TH unar 1 2011-05-15 "The Unarchiver" "User Commands"
+.SH NAME
+unar \- extract archive file contents
+.SH SYNOPSIS
+.B unar
+[\fIOPTION\fR]... \fIARCHIVE\fR... [\fIDESTINATION\fR]
+.SH DESCRIPTION
+Extract the contents of \fIARCHIVE\fRs to \fIDESTINTATION\fR.
+.SH OPTIONS
+.TP
+.BR \-p ", " \-password " \fIPASSWORD"
+The password to use for decrypting protected archives.
+.TP
+.BR \-e ", " \-encoding " \fIENCODING"
+The encoding to use for filenames in the archive, when it is not
+known. If not specified, the program attempts to auto-detect the
+encoding used. Use \"help\" or \"list\" as the argument to give
+a listing of all supported encodings.
+.TP
+.BR \-E ", " \-password-encoding " \fIPASSWORDENCODING"
+The encoding to use for the password for the archive, when it is
+not known. If not specified, then either the encoding given by
+the -encoding option or the auto-detected encoding is used.
+.TP
+.BR \-nr ", " \-no\-recursion
+Do not attempt to list the contents of archives contained in other
+archives. For instance, when listing a .tar.gz file, only list
+the .tar file and not its contents.
+.TP
+.BR \-f ", " "\-forks visible" | hidden | skip
+How to handle Mac OS resource forks.  \fBvisible\fR creates
+AppleDouble files with the extension ".rsrc", \fBhidden\fR creates
+AppleDouble files with the prefix "._", and \fBskip\fR discards all
+resource forks.
+.TP
+.BR \-h ", " \-help
+Display help information.
+.SH SEE ALSO
+.BR lsar (1)

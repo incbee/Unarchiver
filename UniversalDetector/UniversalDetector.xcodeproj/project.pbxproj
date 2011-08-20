@@ -497,6 +497,9 @@
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0410;
+			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "UniversalDetector" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -673,7 +676,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -686,7 +688,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = DetectorTest;
 				ZERO_LINK = NO;
 			};
@@ -698,7 +699,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -710,7 +710,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = UniversalDetector;
 			};
 			name = Debug;
@@ -753,13 +752,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = UniversalDetector;
 				ZERO_LINK = NO;
 			};
@@ -774,7 +771,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXECUTABLE_PREFIX = lib;
 				FRAMEWORK_SEARCH_PATHS = /Developer/Cocotron/1.0/Windows/i386/Frameworks;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_MODULE_STATIC_INITIALIZER = NO;
 				GCC_FAST_OBJC_DISPATCH = NO;
 				GCC_MODEL_TUNING = G5;
@@ -787,7 +783,6 @@
 				LIBTOOL = "$(SRCROOT)/../XADMaster/Windows/bin/libtoolstub.pl";
 				MACH_O_TYPE = mh_object;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = UniversalDetector.win;
 				SDKROOT_i386 = "";
 				SDKROOT_ppc = "";
@@ -802,7 +797,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -814,7 +808,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = DetectorTest;
 				ZERO_LINK = NO;
 			};
@@ -830,7 +823,6 @@
 				EXECUTABLE_PREFIX = lib;
 				FRAMEWORK_SEARCH_PATHS = /Developer/Cocotron/1.0/Windows/i386/Frameworks;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_MODULE_STATIC_INITIALIZER = NO;
 				GCC_FAST_OBJC_DISPATCH = NO;
 				GCC_MODEL_TUNING = G5;
@@ -844,7 +836,6 @@
 				LIBTOOL = "$(SRCROOT)/../XADMaster/Windows/bin/libtoolstub.pl";
 				MACH_O_TYPE = mh_object;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = UniversalDetector.win;
 				SDKROOT_i386 = "";
 				SDKROOT_ppc = "";
@@ -900,13 +891,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = UniversalDetector;
 				ZERO_LINK = NO;
 			};
@@ -921,7 +910,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXECUTABLE_PREFIX = lib;
 				FRAMEWORK_SEARCH_PATHS = /Developer/Cocotron/1.0/Windows/i386/Frameworks;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_MODULE_STATIC_INITIALIZER = NO;
 				GCC_FAST_OBJC_DISPATCH = NO;
 				GCC_MODEL_TUNING = G5;
@@ -934,7 +922,6 @@
 				LIBTOOL = "$(SRCROOT)/../XADMaster/Windows/bin/libtoolstub.pl";
 				MACH_O_TYPE = mh_object;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = UniversalDetector.win;
 				SDKROOT_i386 = "";
 				SDKROOT_ppc = "";
@@ -949,7 +936,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -961,7 +947,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = DetectorTest;
 				ZERO_LINK = NO;
 			};
@@ -976,7 +961,6 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
