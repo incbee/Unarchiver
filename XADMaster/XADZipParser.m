@@ -7,6 +7,7 @@
 #import "XADZipCryptHandle.h"
 #import "XADWinZipAESHandle.h"
 #import "XADWinZipWavPackHandle.h"
+#import "XADWinZipJPEGHandle.h"
 #import "CSZlibHandle.h"
 #import "CSBzip2Handle.h"
 #import "XADCRCHandle.h"
@@ -753,6 +754,7 @@ isLastEntry:(BOOL)islastentry
 		case 9: compressionname=@"Deflate64"; break;
 		case 12: compressionname=@"Bzip2"; break;
 		case 14: compressionname=@"LZMA"; break;
+		case 96: compressionname=@"Compressed JPEG"; break;
 		case 97: compressionname=@"WavPack"; break;
 		case 98: compressionname=@"PPMd"; break;
 	}
@@ -990,6 +992,7 @@ isLastEntry:(BOOL)islastentry
 			return [[[XADLZMAHandle alloc] initWithHandle:parent length:size propertyData:props] autorelease];
 		}
 		break;
+		case 96: return [[[XADWinZipJPEGHandle alloc] initWithHandle:parent length:size] autorelease];
 		case 97: return [[[XADWinZipWavPackHandle alloc] initWithHandle:parent length:size] autorelease];
 		case 98:
 		{

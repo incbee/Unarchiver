@@ -888,6 +888,36 @@
 		1BE07E6B10C9953400B17F91 /* XADCABBlockReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE07E6910C9953400B17F91 /* XADCABBlockReader.m */; };
 		1BE785C710AF78D0007EA6F6 /* XADNSAParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE785C510AF78D0007EA6F6 /* XADNSAParser.m */; };
 		1BE785EF10AF8607007EA6F6 /* XADSARParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE785ED10AF8607007EA6F6 /* XADSARParser.m */; };
+		1BF0EE2E13FF2FA3007B8CF8 /* ArithmeticDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0EE2213FF2FA3007B8CF8 /* ArithmeticDecoder.c */; };
+		1BF0EE2F13FF2FA3007B8CF8 /* ArithmeticDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0EE2213FF2FA3007B8CF8 /* ArithmeticDecoder.c */; };
+		1BF0EE3013FF2FA3007B8CF8 /* ArithmeticDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0EE2213FF2FA3007B8CF8 /* ArithmeticDecoder.c */; };
+		1BF0EE3113FF2FA3007B8CF8 /* ArithmeticDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2313FF2FA3007B8CF8 /* ArithmeticDecoder.h */; };
+		1BF0EE3213FF2FA3007B8CF8 /* ArithmeticDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2313FF2FA3007B8CF8 /* ArithmeticDecoder.h */; };
+		1BF0EE3313FF2FA3007B8CF8 /* ArithmeticDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2313FF2FA3007B8CF8 /* ArithmeticDecoder.h */; };
+		1BF0EE3413FF2FA3007B8CF8 /* Decompressor.c in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0EE2413FF2FA3007B8CF8 /* Decompressor.c */; };
+		1BF0EE3513FF2FA3007B8CF8 /* Decompressor.c in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0EE2413FF2FA3007B8CF8 /* Decompressor.c */; };
+		1BF0EE3613FF2FA3007B8CF8 /* Decompressor.c in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0EE2413FF2FA3007B8CF8 /* Decompressor.c */; };
+		1BF0EE3713FF2FA3007B8CF8 /* Decompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2513FF2FA3007B8CF8 /* Decompressor.h */; };
+		1BF0EE3813FF2FA3007B8CF8 /* Decompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2513FF2FA3007B8CF8 /* Decompressor.h */; };
+		1BF0EE3913FF2FA3007B8CF8 /* Decompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2513FF2FA3007B8CF8 /* Decompressor.h */; };
+		1BF0EE3B13FF2FA3007B8CF8 /* InputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2713FF2FA3007B8CF8 /* InputStream.h */; };
+		1BF0EE3C13FF2FA3007B8CF8 /* InputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2713FF2FA3007B8CF8 /* InputStream.h */; };
+		1BF0EE3D13FF2FA3007B8CF8 /* InputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2713FF2FA3007B8CF8 /* InputStream.h */; };
+		1BF0EE3E13FF2FA3007B8CF8 /* JPEG.c in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0EE2813FF2FA3007B8CF8 /* JPEG.c */; };
+		1BF0EE3F13FF2FA3007B8CF8 /* JPEG.c in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0EE2813FF2FA3007B8CF8 /* JPEG.c */; };
+		1BF0EE4013FF2FA3007B8CF8 /* JPEG.c in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0EE2813FF2FA3007B8CF8 /* JPEG.c */; };
+		1BF0EE4113FF2FA3007B8CF8 /* JPEG.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2913FF2FA3007B8CF8 /* JPEG.h */; };
+		1BF0EE4213FF2FA3007B8CF8 /* JPEG.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2913FF2FA3007B8CF8 /* JPEG.h */; };
+		1BF0EE4313FF2FA3007B8CF8 /* JPEG.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2913FF2FA3007B8CF8 /* JPEG.h */; };
+		1BF0EE4413FF2FA3007B8CF8 /* LZMA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2A13FF2FA3007B8CF8 /* LZMA.h */; };
+		1BF0EE4513FF2FA3007B8CF8 /* LZMA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2A13FF2FA3007B8CF8 /* LZMA.h */; };
+		1BF0EE4613FF2FA3007B8CF8 /* LZMA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE2A13FF2FA3007B8CF8 /* LZMA.h */; };
+		1BF0EE531400134C007B8CF8 /* XADWinZipJPEGHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE511400134B007B8CF8 /* XADWinZipJPEGHandle.h */; };
+		1BF0EE541400134C007B8CF8 /* XADWinZipJPEGHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE511400134B007B8CF8 /* XADWinZipJPEGHandle.h */; };
+		1BF0EE551400134C007B8CF8 /* XADWinZipJPEGHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF0EE511400134B007B8CF8 /* XADWinZipJPEGHandle.h */; };
+		1BF0EE561400134C007B8CF8 /* XADWinZipJPEGHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0EE521400134C007B8CF8 /* XADWinZipJPEGHandle.m */; };
+		1BF0EE571400134C007B8CF8 /* XADWinZipJPEGHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0EE521400134C007B8CF8 /* XADWinZipJPEGHandle.m */; };
+		1BF0EE581400134C007B8CF8 /* XADWinZipJPEGHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0EE521400134C007B8CF8 /* XADWinZipJPEGHandle.m */; };
 		1BF3BA9013EE08A300BE7400 /* XADPlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF3BA8F13EE08A300BE7400 /* XADPlatform.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1BF3BA9113EE08A300BE7400 /* XADPlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF3BA8F13EE08A300BE7400 /* XADPlatform.h */; };
 		1BF3BA9213EE08A300BE7400 /* XADPlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BF3BA8F13EE08A300BE7400 /* XADPlatform.h */; };
@@ -1586,6 +1616,18 @@
 		1BE785C510AF78D0007EA6F6 /* XADNSAParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XADNSAParser.m; sourceTree = "<group>"; };
 		1BE785EC10AF8607007EA6F6 /* XADSARParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XADSARParser.h; sourceTree = "<group>"; };
 		1BE785ED10AF8607007EA6F6 /* XADSARParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XADSARParser.m; sourceTree = "<group>"; };
+		1BF0EE2213FF2FA3007B8CF8 /* ArithmeticDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ArithmeticDecoder.c; sourceTree = "<group>"; };
+		1BF0EE2313FF2FA3007B8CF8 /* ArithmeticDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArithmeticDecoder.h; sourceTree = "<group>"; };
+		1BF0EE2413FF2FA3007B8CF8 /* Decompressor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Decompressor.c; sourceTree = "<group>"; };
+		1BF0EE2513FF2FA3007B8CF8 /* Decompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decompressor.h; sourceTree = "<group>"; };
+		1BF0EE2713FF2FA3007B8CF8 /* InputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputStream.h; sourceTree = "<group>"; };
+		1BF0EE2813FF2FA3007B8CF8 /* JPEG.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = JPEG.c; sourceTree = "<group>"; };
+		1BF0EE2913FF2FA3007B8CF8 /* JPEG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPEG.h; sourceTree = "<group>"; };
+		1BF0EE2A13FF2FA3007B8CF8 /* LZMA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZMA.h; sourceTree = "<group>"; };
+		1BF0EE2C13FF2FA3007B8CF8 /* RawDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = RawDecoder.c; sourceTree = "<group>"; };
+		1BF0EE2D13FF2FA3007B8CF8 /* Test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Test.c; sourceTree = "<group>"; };
+		1BF0EE511400134B007B8CF8 /* XADWinZipJPEGHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XADWinZipJPEGHandle.h; sourceTree = "<group>"; };
+		1BF0EE521400134C007B8CF8 /* XADWinZipJPEGHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XADWinZipJPEGHandle.m; sourceTree = "<group>"; };
 		1BF3BA8F13EE08A300BE7400 /* XADPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XADPlatform.h; sourceTree = "<group>"; };
 		32DBCF5E0370ADEE00C91783 /* XADMaster_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XADMaster_Prefix.pch; sourceTree = "<group>"; };
 		56FBC8DC0A57531D00BE98CF /* UniversalDetector.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = UniversalDetector.xcodeproj; path = ../UniversalDetector/UniversalDetector.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -2291,7 +2333,10 @@
 				1BC885CC0ECD11CF006B47FE /* XADWinZipAESHandle.m */,
 				1B3443D613A6EAF800C89872 /* XADWinZipWavPackHandle.h */,
 				1B3443D713A6EAF800C89872 /* XADWinZipWavPackHandle.m */,
+				1BF0EE511400134B007B8CF8 /* XADWinZipJPEGHandle.h */,
+				1BF0EE521400134C007B8CF8 /* XADWinZipJPEGHandle.m */,
 				1B3443DF13A6EB2700C89872 /* wavpack */,
+				1BF0EE2113FF2FA3007B8CF8 /* WinZipJPEG */,
 			);
 			name = Zip;
 			sourceTree = "<group>";
@@ -2576,6 +2621,23 @@
 			name = "Man Pages";
 			sourceTree = "<group>";
 		};
+		1BF0EE2113FF2FA3007B8CF8 /* WinZipJPEG */ = {
+			isa = PBXGroup;
+			children = (
+				1BF0EE2213FF2FA3007B8CF8 /* ArithmeticDecoder.c */,
+				1BF0EE2313FF2FA3007B8CF8 /* ArithmeticDecoder.h */,
+				1BF0EE2413FF2FA3007B8CF8 /* Decompressor.c */,
+				1BF0EE2513FF2FA3007B8CF8 /* Decompressor.h */,
+				1BF0EE2713FF2FA3007B8CF8 /* InputStream.h */,
+				1BF0EE2813FF2FA3007B8CF8 /* JPEG.c */,
+				1BF0EE2913FF2FA3007B8CF8 /* JPEG.h */,
+				1BF0EE2A13FF2FA3007B8CF8 /* LZMA.h */,
+				1BF0EE2C13FF2FA3007B8CF8 /* RawDecoder.c */,
+				1BF0EE2D13FF2FA3007B8CF8 /* Test.c */,
+			);
+			path = WinZipJPEG;
+			sourceTree = "<group>";
+		};
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -2619,6 +2681,12 @@
 				1B31CB8213C523A300ED119E /* XADPNGWriter.h in Headers */,
 				1BDDC7EE13E0E78C00A8C079 /* XADSimpleUnarchiver.h in Headers */,
 				1BF3BA9113EE08A300BE7400 /* XADPlatform.h in Headers */,
+				1BF0EE3213FF2FA3007B8CF8 /* ArithmeticDecoder.h in Headers */,
+				1BF0EE3813FF2FA3007B8CF8 /* Decompressor.h in Headers */,
+				1BF0EE3C13FF2FA3007B8CF8 /* InputStream.h in Headers */,
+				1BF0EE4213FF2FA3007B8CF8 /* JPEG.h in Headers */,
+				1BF0EE4513FF2FA3007B8CF8 /* LZMA.h in Headers */,
+				1BF0EE541400134C007B8CF8 /* XADWinZipJPEGHandle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2654,6 +2722,12 @@
 				1B31CB8313C523A300ED119E /* XADPNGWriter.h in Headers */,
 				1BDDC7EF13E0E78C00A8C079 /* XADSimpleUnarchiver.h in Headers */,
 				1BF3BA9213EE08A300BE7400 /* XADPlatform.h in Headers */,
+				1BF0EE3313FF2FA3007B8CF8 /* ArithmeticDecoder.h in Headers */,
+				1BF0EE3913FF2FA3007B8CF8 /* Decompressor.h in Headers */,
+				1BF0EE3D13FF2FA3007B8CF8 /* InputStream.h in Headers */,
+				1BF0EE4313FF2FA3007B8CF8 /* JPEG.h in Headers */,
+				1BF0EE4613FF2FA3007B8CF8 /* LZMA.h in Headers */,
+				1BF0EE551400134C007B8CF8 /* XADWinZipJPEGHandle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2843,6 +2917,12 @@
 				1B31CB8113C523A300ED119E /* XADPNGWriter.h in Headers */,
 				1BDDC7ED13E0E78C00A8C079 /* XADSimpleUnarchiver.h in Headers */,
 				1BF3BA9013EE08A300BE7400 /* XADPlatform.h in Headers */,
+				1BF0EE3113FF2FA3007B8CF8 /* ArithmeticDecoder.h in Headers */,
+				1BF0EE3713FF2FA3007B8CF8 /* Decompressor.h in Headers */,
+				1BF0EE3B13FF2FA3007B8CF8 /* InputStream.h in Headers */,
+				1BF0EE4113FF2FA3007B8CF8 /* JPEG.h in Headers */,
+				1BF0EE4413FF2FA3007B8CF8 /* LZMA.h in Headers */,
+				1BF0EE531400134C007B8CF8 /* XADWinZipJPEGHandle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3385,6 +3465,10 @@
 				1B31CB7D13C2890700ED119E /* XADSWFParser.m in Sources */,
 				1B31CB8513C523A300ED119E /* XADPNGWriter.m in Sources */,
 				1BDDC7F113E0E78C00A8C079 /* XADSimpleUnarchiver.m in Sources */,
+				1BF0EE2F13FF2FA3007B8CF8 /* ArithmeticDecoder.c in Sources */,
+				1BF0EE3513FF2FA3007B8CF8 /* Decompressor.c in Sources */,
+				1BF0EE3F13FF2FA3007B8CF8 /* JPEG.c in Sources */,
+				1BF0EE571400134C007B8CF8 /* XADWinZipJPEGHandle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3592,6 +3676,10 @@
 				1B31CB7E13C2890700ED119E /* XADSWFParser.m in Sources */,
 				1B31CB8613C523A300ED119E /* XADPNGWriter.m in Sources */,
 				1BDDC7F213E0E78C00A8C079 /* XADSimpleUnarchiver.m in Sources */,
+				1BF0EE3013FF2FA3007B8CF8 /* ArithmeticDecoder.c in Sources */,
+				1BF0EE3613FF2FA3007B8CF8 /* Decompressor.c in Sources */,
+				1BF0EE4013FF2FA3007B8CF8 /* JPEG.c in Sources */,
+				1BF0EE581400134C007B8CF8 /* XADWinZipJPEGHandle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3834,6 +3922,10 @@
 				1B31CB7C13C2890700ED119E /* XADSWFParser.m in Sources */,
 				1B31CB8413C523A300ED119E /* XADPNGWriter.m in Sources */,
 				1BDDC7F013E0E78C00A8C079 /* XADSimpleUnarchiver.m in Sources */,
+				1BF0EE2E13FF2FA3007B8CF8 /* ArithmeticDecoder.c in Sources */,
+				1BF0EE3413FF2FA3007B8CF8 /* Decompressor.c in Sources */,
+				1BF0EE3E13FF2FA3007B8CF8 /* JPEG.c in Sources */,
+				1BF0EE561400134C007B8CF8 /* XADWinZipJPEGHandle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
