@@ -9,6 +9,7 @@
 
 -(id)initWithCoder:(NSCoder *)coder;
 -(void)dealloc;
+
 -(void)mouseEntered:(NSEvent *)event;
 -(void)mouseExited:(NSEvent *)event;
 

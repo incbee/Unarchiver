@@ -1,5 +1,7 @@
 #import "TUEncodingPopUp.h"
 
+static BOOL SanityCheckString(NSString *string);
+
 @implementation TUEncodingPopUp
 
 -(id)initWithFrame:(NSRect)frame
@@ -22,12 +24,12 @@
 
 -(void)buildEncodingList
 {
-	[self buildEncodingListMatchingData:nil];
+	[self buildEncodingListMatchingXADString:nil];
 }
 
 -(void)buildEncodingListWithAutoDetect
 {
-	[self buildEncodingListMatchingData:nil];
+	[self buildEncodingListMatchingXADString:nil];
 
 	[[self menu] addItem:[NSMenuItem separatorItem]];
 
@@ -38,12 +40,12 @@
 	[item release];
 }
 
--(void)buildEncodingListMatchingData:(NSData *)data
+-(void)buildEncodingListMatchingXADString:(id <XADString>)string
 {
 	[self removeAllItems];
 
 	NSMutableDictionary *normalattrs,*smallattrs;
-	if(data)
+	if(string)
 	{
 		normalattrs=[NSMutableDictionary dictionaryWithObjectsAndKeys:
 			[NSFont menuFontOfSize:[NSFont systemFontSize]],NSFontAttributeName,
@@ -70,35 +72,31 @@
 	{
 		NSStringEncoding encoding=[[encdict objectForKey:@"Encoding"] longValue];
 
-		NSString *str=nil;
-		if(data)
-		{
-			str=[[NSString alloc] initWithData:data encoding:encoding];
-			if(!str) continue;
-		}
+		if(string && ![string canDecodeWithEncoding:encoding]) continue;
 
-		NSString *encname=[encdict objectForKey:@"Name"];
-		NSMenuItem *item=[[NSMenuItem alloc] init];
+		NSString *encodingname=[encdict objectForKey:@"Name"];
+		NSMenuItem *item=[[NSMenuItem new] autorelease];
 
-		if(str)
+		if(string)
 		{
+			NSString *decoded=[string stringWithEncoding:encoding];
+			if(!SanityCheckString(decoded)) continue;
+
 			NSMutableAttributedString *attrstr=[[[NSMutableAttributedString alloc]
-			initWithString:[NSString stringWithFormat:@"%@\t%C %@",encname,0x27a4,str]
+			initWithString:[NSString stringWithFormat:@"%@\t%C %@",encodingname,0x27a4,decoded]
 			attributes:normalattrs] autorelease];
-			[attrstr setAttributes:smallattrs range:NSMakeRange([encname length],[str length]+3)];
+
+			[attrstr setAttributes:smallattrs range:NSMakeRange([encodingname length],[decoded length]+3)];
 
 			[item setAttributedTitle:attrstr];
 		}
 		else
 		{
-			[item setTitle:encname];
+			[item setTitle:encodingname];
 		}
 
 		[item setTag:encoding];
 		[[self menu] addItem:item];
-
-		[item release];
-		[str release];
 	}
 }
 
@@ -155,6 +153,25 @@ NSComparisonResult encoding_sort(NSDictionary *enc1,NSDictionary *enc2,void *dum
 }
 
 @end
+
+static BOOL SanityCheckString(NSString *string)
+{
+	int length=[string length];
+	for(int i=0;i<length;i++)
+	{
+		unichar c=[string characterAtIndex:i];
+		if(CFStringIsSurrogateHighCharacter(c)) return NO;
+		if(CFStringIsSurrogateLowCharacter(c))
+		{
+			i++;
+			if(i>=length) return NO;
+			unichar c2=[string characterAtIndex:i];
+			if(!CFStringIsSurrogateHighCharacter(c2)) return NO;
+		}
+	}
+	return YES;
+}
+
 
 /*+(NSDictionary *)encodingDictionary
 {

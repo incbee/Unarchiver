@@ -1,4 +1,4 @@
-#import <XADMaster/XADArchive.h>
+#import <XADMaster/XADSimpleUnarchiver.h>
 
 #import "TUArchiveTaskView.h"
 
@@ -9,14 +9,14 @@
 {
 	TUController *maincontroller;
 	TUArchiveTaskView *view;
-	XADArchive *archive;
+	XADSimpleUnarchiver *unarchiver;
 	NSString *archivename,*destination,*tmpdest;
 	NSStringEncoding selected_encoding;
 
 	id finishtarget;
 	SEL finishselector;
 
-	BOOL cancelled,hasstopped,ignoreall;
+	BOOL cancelled,ignoreall;
 }
 
 +(void)clearGlobalPassword;
@@ -26,7 +26,7 @@ taskView:(TUArchiveTaskView *)taskview;
 -(void)dealloc;
 
 -(NSString *)filename;
--(XADArchive *)archive;
+-(NSArray *)allFilenames;
 -(TUArchiveTaskView *)taskView;
 
 -(void)runWithFinishAction:(SEL)selector target:(id)target;
@@ -34,22 +34,10 @@ taskView:(TUArchiveTaskView *)taskview;
 -(void)extract;
 -(void)extractFinished;
 -(void)extractFailed;
--(void)setQuarantineAttributes:(CFDictionaryRef)dicref forDirectoryRef:(FSRef *)dirref;
 -(NSString *)findUniqueDestinationWithDirectory:(NSString *)directory andFilename:(NSString *)filename;
 -(void)rememberTempDirectory:(NSString *)tmpdir;
 -(void)forgetTempDirectory:(NSString *)tmpdir;
 
 -(void)archiveTaskViewCancelled:(TUArchiveTaskView *)taskview;
-
--(BOOL)archiveExtractionShouldStop:(XADArchive *)archive;
-
--(NSStringEncoding)archive:(XADArchive *)archive encodingForData:(NSData *)data guess:(NSStringEncoding)guess confidence:(float)confidence;
-
--(void)archive:(XADArchive *)msgarchive extractionOfEntryWillStart:(int)n;
--(void)archive:(XADArchive *)sender extractionProgressBytes:(off_t)bytes of:(off_t)total;
--(XADAction)archive:(XADArchive *)archive nameDecodingDidFailForEntry:(int)n data:(NSData *)data;
--(XADAction)archive:(XADArchive *)archive creatingDirectoryDidFailForEntry:(int)n;
--(XADAction)archive:(XADArchive *)sender extractionOfEntryDidFail:(int)n error:(XADError)error;
--(XADAction)archive:(XADArchive *)sender extractionOfResourceForkForEntryDidFail:(int)n error:(XADError)error;
 
 @end

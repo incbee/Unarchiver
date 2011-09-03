@@ -15,7 +15,7 @@
 	NSConditionLock *pauselock;
 	int uiresponse;
 
-	NSData *namedata;
+	XADString *namestring;
 
 	IBOutlet NSView *waitview;
 	IBOutlet NSTextField *waitfield;
@@ -61,9 +61,9 @@
 
 
 -(void)displayNotWritableErrorWithResponseAction:(SEL)selector target:(id)target;
--(XADAction)displayError:(NSString *)error ignoreAll:(BOOL *)ignoreall;
+-(BOOL)displayError:(NSString *)error ignoreAll:(BOOL *)ignoreall;
 -(void)displayOpenError:(NSString *)error;
--(NSStringEncoding)displayEncodingSelectorForData:(NSData *)data encoding:(NSStringEncoding)encoding;
+-(NSStringEncoding)displayEncodingSelectorForXADString:(id <XADString>)string;
 -(NSString *)displayPasswordInputWithApplyToAllPointer:(BOOL *)applyall;
 
 -(void)setupWaitView;
@@ -72,7 +72,7 @@
 -(void)setupErrorView:(NSString *)error;
 -(void)setupOpenErrorView:(NSString *)error;
 -(void)setupPasswordView;
--(void)setupEncodingViewWithEncoding:(NSNumber *)encodingnum;
+-(void)setupEncodingViewForXADString:(id <XADString>)string;
 
 -(void)getUserAttention;
 

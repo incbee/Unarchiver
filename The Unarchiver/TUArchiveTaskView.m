@@ -84,21 +84,21 @@
 	[self setUIResponseAction:selector target:target];
 }
 
--(XADAction)displayError:(NSString *)error ignoreAll:(BOOL *)ignoreall
+-(BOOL)displayError:(NSString *)error ignoreAll:(BOOL *)ignoreall
 {
 	[self performSelectorOnMainThread:@selector(setupErrorView:) withObject:error waitUntilDone:NO];
 
-	XADAction action=[self waitForResponseFromUI];
+	BOOL res=[self waitForResponseFromUI];
 
 	[self setDisplayedView:progressview];
 
-	if(action==XADSkip && ignoreall)
+	if(res && ignoreall)
 	{
 		if([errorapplyallcheck state]==NSOnState) *ignoreall=YES;
 		else *ignoreall=NO;
 	}
 
-	return action;
+	return res;
 }
 
 -(void)displayOpenError:(NSString *)error
@@ -107,12 +107,10 @@
 	[self waitForResponseFromUI];
 }
 
--(NSStringEncoding)displayEncodingSelectorForData:(NSData *)data encoding:(NSStringEncoding)encoding
+-(NSStringEncoding)displayEncodingSelectorForXADString:(id <XADString>)string
 {
-	namedata=data;
-
-	[self performSelectorOnMainThread:@selector(setupEncodingViewWithEncoding:)
-	withObject:[NSNumber numberWithLong:encoding] waitUntilDone:NO];
+	[self performSelectorOnMainThread:@selector(setupEncodingViewForXADString:)
+	withObject:string waitUntilDone:NO];
 
 	BOOL res=[self waitForResponseFromUI];
 
@@ -130,7 +128,7 @@
 
 	[self setDisplayedView:progressview];
 
-	if(res&&applyall)
+	if(res && applyall)
 	{
 		if([passwordapplyallcheck state]==NSOnState) *applyall=YES;
 		else *applyall=NO;
@@ -238,9 +236,9 @@
 	[self getUserAttention];
 }
 
--(void)setupEncodingViewWithEncoding:(NSNumber *)encodingnum
+-(void)setupEncodingViewForXADString:(id <XADString>)string
 {
-	NSStringEncoding encoding=[encodingnum longValue];
+	namestring=string; // Does not need retaining, as the thread that provided it is paused.
 
 	if(!encodingview)
 	{
@@ -252,7 +250,9 @@
 	[icon setSize:[encodingicon frame].size];
 	[encodingicon setImage:icon];
 
-	[encodingpopup buildEncodingListMatchingData:namedata];
+	NSStringEncoding encoding=[string encoding];
+
+	[encodingpopup buildEncodingListMatchingXADString:string];
 	if(encoding)
 	{
 		int index=[encodingpopup indexOfItemWithTag:encoding];
@@ -306,16 +306,12 @@
 
 -(IBAction)stopAfterError:(id)sender
 {
-	// KLUDGE: for some reason the button releases itself if sent an Esc keystroke.
-	// This will drive up the retain count, but as the button should never be released
-	// anyway this shouldn't be a problem.
-	//[sender retain];
-	[self provideResponseFromUI:XADAbort];
+	[self provideResponseFromUI:NO];
 }
 
 -(IBAction)continueAfterError:(id)sender
 {
-	[self provideResponseFromUI:XADSkip];
+	[self provideResponseFromUI:YES];
 }
 
 -(IBAction)okAfterOpenError:(id)sender
@@ -325,10 +321,6 @@
 
 -(IBAction)stopAfterPassword:(id)sender
 {
-	// KLUDGE: for some reason the button releases itself if sent an Esc keystroke.
-	// This will drive up the retain count, but as the button should never be released
-	// anyway this shouldn't be a problem.
-	//[sender retain];
 	[self provideResponseFromUI:NO];
 }
 
@@ -339,10 +331,6 @@
 
 -(IBAction)stopAfterEncoding:(id)sender
 {
-	// KLUDGE: for some reason the button releases itself if sent an Esc keystroke.
-	// This will drive up the retain count, but as the button should never be released
-	// anyway this shouldn't be a problem.
-	//[sender retain];
 	[self provideResponseFromUI:NO];
 }
 
@@ -354,8 +342,8 @@
 -(IBAction)selectEncoding:(id)sender
 {
 	NSStringEncoding encoding=[encodingpopup selectedTag];
-	NSString *str=[[[NSString alloc] initWithData:namedata encoding:encoding] autorelease];
-	[encodingfield setStringValue:str?str:@""];
+	if([namestring canDecodeWithEncoding:encoding]) [encodingfield setStringValue:[namestring stringWithEncoding:encoding]];
+	else [encodingfield setStringValue:@""]; // Can't happen, probably.
 }
 
 

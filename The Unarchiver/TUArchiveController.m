@@ -26,15 +26,22 @@ taskView:(TUArchiveTaskView *)taskview
 {
 	if((self=[super init]))
 	{
-		cancelled=NO;
-		ignoreall=NO;
-		hasstopped=NO;
+		maincontroller=nil;
 
 		view=[taskview retain];
-		archivename=[filename retain];
+		unarchiver=nil;
 
+		archivename=[filename retain];
 		destination=[destpath retain];
 		tmpdest=nil;
+
+		selected_encoding=0;
+
+		finishtarget=nil;
+		finishselector=NULL;
+
+		cancelled=NO;
+		ignoreall=NO;
 	}
 	return self;
 }
@@ -42,7 +49,7 @@ taskView:(TUArchiveTaskView *)taskview
 -(void)dealloc
 {
 	[view release];
-	[archive release];
+	[unarchiver release];
 	[archivename release];
 	[destination release];
 	[tmpdest release];
@@ -52,9 +59,10 @@ taskView:(TUArchiveTaskView *)taskview
 
 
 
+// TODO: Rather than change the value, this should use unarchiver when available
 -(NSString *)filename { return archivename; }
 
--(XADArchive *)archive { return archive; }
+-(NSArray *)allFilenames { return [[unarchiver archiveParser] allFilenames]; }
 
 -(TUArchiveTaskView *)taskView { return view; }
 
@@ -83,33 +91,35 @@ taskView:(TUArchiveTaskView *)taskview
 {
 	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
 
-	@try
+	unarchiver=[[XADSimpleUnarchiver simpleUnarchiverForPath:archivename error:NULL] retain];
+	if(!unarchiver)
 	{
-		archive=[[XADArchive alloc] initWithFile:archivename delegate:self error:NULL];
+		[view displayOpenError:[NSString stringWithFormat:
+		NSLocalizedString(@"The contents of the file \"%@\" can not be extracted with this program.",@"Error message for files not extractable by The Unarchiver"),
+		[archivename lastPathComponent]]];
 
-		if(!archive)
-		{
-			[view displayOpenError:[NSString stringWithFormat:
-			NSLocalizedString(@"The contents of the file \"%@\" can not be extracted with this program.",@"Error message for files not extractable by The Unarchiver"),
-			[archivename lastPathComponent]]];
-			@throw @"Failed to open archive";
-		}
-
-		[archivename release];
-		archivename=[[archive filename] retain];
-
-		//[archive setDelegate:self];
-
-		BOOL res=[archive extractTo:tmpdest subArchives:YES];
-		if(!res) @throw @"Archive extraction failed or was cancelled";
-
-		[self performSelectorOnMainThread:@selector(extractFinished) withObject:nil waitUntilDone:NO];
+		[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
+		goto exit;
 	}
-	@catch(id e)
+
+	// TODO: remove this.
+	[archivename release];
+	archivename=[[[unarchiver archiveParser] filename] retain];
+
+	[unarchiver setDelegate:self];
+	[unarchiver setDestination:tmpdest];
+	[unarchiver setPropagatesRelevantMetadata:YES];
+
+	XADError error=[unarchiver parseAndUnarchive];
+	if(error)
 	{
 		[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
+		goto exit;
 	}
 
+	[self performSelectorOnMainThread:@selector(extractFinished) withObject:nil waitUntilDone:NO];
+
+	exit:
 	[pool release];
 }
 
@@ -138,23 +148,6 @@ taskView:(TUArchiveTaskView *)taskview
 		BOOL resetdate=!makefolder&&changefilespref&&!copydatepref;
 
 		NSString *finaldest;
-
-		// Propagate quarantine
-		if(LSSetItemAttribute)
-		{
-			FSRef src,dest;
-			if(CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:archivename],&src))
-			if(CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:tmpdest],&dest))
-			{
-				CFDictionaryRef dicref;
-				if(LSCopyItemAttribute(&src,kLSRolesAll,kLSItemQuarantineProperties,(CFTypeRef*)&dicref)==noErr)
-				if(dicref)
-				{
-					[self setQuarantineAttributes:dicref forDirectoryRef:&dest];
-					CFRelease(dicref);
-				}
-			}
-		}
 
 		// Move files into place
 		if(makefolder)
@@ -226,7 +219,7 @@ taskView:(TUArchiveTaskView *)taskview
 		if(deletearchivepref)
 		{
 			NSString *directory=[archivename stringByDeletingLastPathComponent];
-			NSArray *allpaths=[archive allFilenames];
+			NSArray *allpaths=[[unarchiver archiveParser] allFilenames];
 			NSMutableArray *allfiles=[NSMutableArray arrayWithCapacity:[allpaths count]];
 			NSEnumerator *enumerator=[allpaths objectEnumerator];
 			NSString *path;
@@ -270,30 +263,6 @@ taskView:(TUArchiveTaskView *)taskview
 
 	[finishtarget performSelector:finishselector withObject:self];
 	[self release];
-}
-
--(void)setQuarantineAttributes:(CFDictionaryRef)dicref forDirectoryRef:(FSRef *)dirref
-{
-	FSIterator iterator;
-	if(FSOpenIterator(dirref,kFSIterateFlat,&iterator)!=noErr) return;
-
-	for(;;)
-	{
-		FSRef ref;
-		ItemCount num;
-		OSErr err=FSGetCatalogInfoBulk(iterator,1,&num,NULL,kFSCatInfoNone,NULL,&ref,NULL,NULL);
-
-		if(err==errFSNoMoreItems) break;
-
-		LSSetItemAttribute(&ref,kLSRolesAll,kLSItemQuarantineProperties,dicref);
-
-		FSCatalogInfo catinfo={0};
-		FSGetCatalogInfo(&ref,kFSCatInfoNodeFlags,&catinfo,NULL,NULL,NULL);
-		if(catinfo.nodeFlags&kFSNodeIsDirectoryMask)
-		[self setQuarantineAttributes:dicref forDirectoryRef:&ref];
-	}
-
-	FSCloseIterator(iterator);
 }
 
 -(NSString *)findUniqueDestinationWithDirectory:(NSString *)directory andFilename:(NSString *)filename
@@ -342,30 +311,47 @@ taskView:(TUArchiveTaskView *)taskview
 
 
 
--(BOOL)archiveExtractionShouldStop:(XADArchive *)sender { return cancelled; }
 
--(NSStringEncoding)archive:(XADArchive *)sender encodingForData:(NSData *)data guess:(NSStringEncoding)guess confidence:(float)confidence
+-(BOOL)extractionShouldStopForSimpleUnarchiver:(XADSimpleUnarchiver *)unarchiver
 {
-	NSStringEncoding encoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
-	int threshold=[[NSUserDefaults standardUserDefaults] integerForKey:@"autoDetectionThreshold"];
-
-	if(cancelled) return guess;
-	else if(encoding) return encoding;
-	else if(selected_encoding) return selected_encoding;
-	else if(confidence*100<threshold)
-	{
-		selected_encoding=[view displayEncodingSelectorForData:data encoding:guess];
-		if(!selected_encoding)
-		{
-			cancelled=YES;
-			return guess;
-		}
-		return selected_encoding;
-	}
-	else return guess;
+	return cancelled;
 }
 
--(void)archiveNeedsPassword:(XADArchive *)sender
+-(NSString *)simpleUnarchiver:(XADSimpleUnarchiver *)sender encodingNameForXADString:(id <XADString>)string
+{
+	// TODO: Stop using NSStringEncoding.
+
+	// If the user has set an encoding in the preferences, always use this.
+	NSStringEncoding setencoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
+	if(setencoding) return [XADString encodingNameForEncoding:setencoding];
+
+	XADStringSource *source=[[sender archiveParser] stringSource];
+	NSStringEncoding guess=[source encoding];
+	float confidence=[source confidence];
+
+	int threshold=[[NSUserDefaults standardUserDefaults] integerForKey:@"autoDetectionThreshold"];
+
+	// If the user has already been asked for an encoding, try to use it.
+	// Otherwise, if the confidence in the guessed encoding is high enough, try that.
+	NSStringEncoding encoding=0;
+	if(selected_encoding) encoding=selected_encoding;
+	else if(confidence*100<threshold) encoding=guess;
+
+	// If we have an encoding we trust, and it can decode the string, use it.
+	if(encoding && [string canDecodeWithEncoding:encoding])
+	return [XADString encodingNameForEncoding:encoding];
+
+	// Otherwise, ask the user for an encoding.
+	selected_encoding=[view displayEncodingSelectorForXADString:string];
+	if(!selected_encoding)
+	{
+		cancelled=YES;
+		return nil;
+	}
+	return [XADString encodingNameForEncoding:selected_encoding];
+}
+
+-(void)simpleUnarchiverNeedsPassword:(XADSimpleUnarchiver *)sender
 {
 	if(globalpassword)
 	{
@@ -388,58 +374,63 @@ taskView:(TUArchiveTaskView *)taskview
 	}
 }
 
--(void)archive:(XADArchive *)sender extractionOfEntryWillStart:(int)n
+-(void)simpleUnarchiver:(XADSimpleUnarchiver *)sender willExtractEntryWithDictionary:(NSDictionary *)dict to:(NSString *)path
 {
-	NSString *name=[sender nameOfEntry:n];
-	if(name) [view setName:name];
+	XADPath *name=[dict objectForKey:XADFileNameKey];
+	if(name) [view setName:[name string]]; // TODO: what about encodings?
+	else [view setName:@""];
 }
 
--(void)archive:(XADArchive *)sender extractionProgressBytes:(off_t)bytes of:(off_t)total
+-(void)simpleUnarchiver:(XADSimpleUnarchiver *)sender
+extractionProgressForEntryWithDictionary:(NSDictionary *)dict
+fileProgress:(off_t)fileprogress of:(off_t)filesize
+totalProgress:(off_t)totalprogress of:(off_t)totalsize
 {
-	[view setProgress:(double)bytes/(double)total];
+	[view setProgress:(double)totalprogress/(double)totalsize];
 }
 
-
--(XADAction)archive:(XADArchive *)archive nameDecodingDidFailForEntry:(int)n data:(NSData *)data
+-(void)simpleUnarchiver:(XADSimpleUnarchiver *)sender
+estimatedExtractionProgressForEntryWithDictionary:(NSDictionary *)dict
+fileProgress:(double)fileprogress totalProgress:(double)totalprogress
 {
-	return [view displayEncodingSelectorForData:data encoding:0];
+	[view setProgress:totalprogress];
 }
 
--(XADAction)archive:(XADArchive *)archive creatingDirectoryDidFailForEntry:(int)n
+-(void)simpleUnarchiver:(XADSimpleUnarchiver *)sender didExtractEntryWithDictionary:(NSDictionary *)dict to:(NSString *)path error:(XADError)error;
 {
-	[view displayOpenError:NSLocalizedString(@"Could not write to the destination directory.",@"Error message string when writing is impossible.")];
-	return XADAbort;
+	if(ignoreall||cancelled) return;
+
+	if(error)
+	{
+		NSString *errstr=[XADException describeXADError:error];
+		XADPath *filename=[dict objectForKey:XADFileNameKey];
+		NSNumber *isresfork=[dict objectForKey:XADIsResourceForkKey];
+
+		if(isresfork&&[isresfork boolValue])
+		{
+			cancelled=![view displayError:
+				[NSString stringWithFormat:
+				NSLocalizedString(@"Could not extract the resource fork for the file \"%@\":\n%@",@"Error message for resource forks. The first %@ is the file name, the second the error message"),
+				[filename string], // TODO: encodings
+				[[NSBundle mainBundle] localizedStringForKey:errstr value:errstr table:nil]]
+			ignoreAll:&ignoreall];
+		}
+		else
+		{
+			cancelled=![view displayError:
+				[NSString stringWithFormat:
+				NSLocalizedString(@"Could not extract the file \"%@\": %@",@"Error message string. The first %@ is the file name, the second the error message"),
+				[filename string], // TODO: encodings
+				[[NSBundle mainBundle] localizedStringForKey:errstr value:errstr table:nil]]
+			ignoreAll:&ignoreall];
+		}
+	}
 }
 
--(XADAction)archive:(XADArchive *)sender extractionOfEntryDidFail:(int)n error:(XADError)error
-{
-	if(ignoreall) return XADSkip;
-	if(hasstopped) return XADAbort;
-
-	NSString *errstr=[archive describeError:error];
-	XADAction action=[view displayError:
-		[NSString stringWithFormat:
-		NSLocalizedString(@"Could not extract the file \"%@\": %@",@"Error message string. The first %@ is the file name, the second the error message"),
-		[sender nameOfEntry:n],[[NSBundle mainBundle] localizedStringForKey:errstr value:errstr table:nil]]
-	ignoreAll:&ignoreall];
-
-	if(action==XADAbort) hasstopped=YES;
-
-	return action;
-}
-
--(XADAction)archive:(XADArchive *)sender extractionOfResourceForkForEntryDidFail:(int)n error:(XADError)error
-{
-	if(ignoreall) return XADSkip;
-
-	NSString *errstr=[archive describeError:error];
-	return [view displayError:
-		[NSString stringWithFormat:
-		NSLocalizedString(@"Could not extract the resource fork for the file \"%@\":\n%@",@"Error message for resource forks. The first %@ is the file name, the second the error message"),
-		[sender nameOfEntry:n],[[NSBundle mainBundle] localizedStringForKey:errstr value:errstr table:nil]]
-	ignoreAll:&ignoreall];
-}
-
+/*-(NSString *)simpleUnarchiver:(XADSimpleUnarchiver *)sender replacementPathForEntryWithDictionary:(NSDictionary *)dict
+originalPath:(NSString *)path suggestedPath:(NSString *)unique;
+-(NSString *)simpleUnarchiver:(XADSimpleUnarchiver *)sender deferredReplacementPathForOriginalPath:(NSString *)path
+suggestedPath:(NSString *)unique;*/
 
 @end
 

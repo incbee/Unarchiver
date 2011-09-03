@@ -309,7 +309,8 @@ static BOOL IsPathWritable(NSString *path);
 	[mainlist removeTaskView:[archive taskView]];
 	[queuedfileviews removeObjectForKey:[archive filename]];
 
-	NSEnumerator *enumerator=[[[archive archive] allFilenames] objectEnumerator];
+	// TODO: Change this to check before adding archives to the list!
+	NSEnumerator *enumerator=[[archive  allFilenames] objectEnumerator];
 	NSString *filename;
 	while((filename=[enumerator nextObject]))
 	{
