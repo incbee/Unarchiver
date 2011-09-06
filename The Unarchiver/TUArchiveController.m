@@ -106,9 +106,18 @@ taskView:(TUArchiveTaskView *)taskview
 	[archivename release];
 	archivename=[[[unarchiver archiveParser] filename] retain];
 
+	BOOL alwayscreatepref=[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"]==2;
+	BOOL copydatepref=[[NSUserDefaults standardUserDefaults] integerForKey:@"folderModifiedDate"]==2;
+	BOOL changefilespref=[[NSUserDefaults standardUserDefaults] boolForKey:@"changeDateOfFiles"];
+
 	[unarchiver setDelegate:self];
 	[unarchiver setDestination:tmpdest];
 	[unarchiver setPropagatesRelevantMetadata:YES];
+	[unarchiver setAlwaysRenamesFiles:YES];
+	[unarchiver setRemovesEnclosingDirectoryForSoloItems:!alwayscreatepref];
+	[unarchiver setCopiesArchiveModificationTimeToEnclosingDirectory:copydatepref];
+	[unarchiver setCopiesArchiveModificationTimeToSoloItems:copydatepref && changefilespref];
+	[unarchiver setResetsDateForSoloItems:!copydatepref && changefilespref];
 
 	XADError error=[unarchiver parseAndUnarchive];
 	if(error)
@@ -125,125 +134,63 @@ taskView:(TUArchiveTaskView *)taskview
 
 -(void)extractFinished
 {
-	NSFileManager *fm=[NSFileManager defaultManager];
+	BOOL deletearchivepref=[[NSUserDefaults standardUserDefaults] boolForKey:@"deleteExtractedArchive"];
+	BOOL openfolderpref=[[NSUserDefaults standardUserDefaults] boolForKey:@"openExtractedFolder"];
 
-	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
-	NSArray *files=[fm contentsOfDirectoryAtPath:tmpdest error:NULL];
-	#else
-	NSArray *files=[fm directoryContentsAtPath:tmpdest];
-	#endif
+	BOOL soloitem=[unarchiver wasSoloItem];
 
-	if(files)
+	NSString *path=[unarchiver createdItem];
+	NSString *filename=[path lastPathComponent];
+	NSString *newpath=[destination stringByAppendingPathComponent:filename];
+
+	// Check if we accidentally created a package.
+	if(!soloitem)
+	if([[NSWorkspace sharedWorkspace] isFilePackageAtPath:path])
 	{
-		BOOL alwayscreatepref=[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"]==2;
-		BOOL copydatepref=[[NSUserDefaults standardUserDefaults] integerForKey:@"folderModifiedDate"]==2;
-		BOOL changefilespref=[[NSUserDefaults standardUserDefaults] boolForKey:@"changeDateOfFiles"];
-		BOOL deletearchivepref=[[NSUserDefaults standardUserDefaults] boolForKey:@"deleteExtractedArchive"];
-		BOOL openfolderpref=[[NSUserDefaults standardUserDefaults] boolForKey:@"openExtractedFolder"];
+		newpath=[newpath stringByDeletingPathExtension];
+	}
 
-		BOOL singlefile=[files count]==1;
+	// Avoid collisions.
+	newpath=[unarchiver _findUniquePathForOriginalPath:newpath];
 
-		BOOL makefolder=!singlefile || alwayscreatepref;
-		BOOL copydate=(makefolder&&copydatepref)||(!makefolder&&changefilespref&&copydatepref);
-		BOOL resetdate=!makefolder&&changefilespref&&!copydatepref;
+	// Move files into place
+	[unarchiver _moveItemAtPath:path toPath:newpath];
+	[unarchiver _removeItemAtPath:tmpdest];
 
-		NSString *finaldest;
+	// Remove temporary directory from crash recovery list
+	[self forgetTempDirectory:tmpdest];
 
-		// Move files into place
-		if(makefolder)
+	// Delete archive if requested
+	if(deletearchivepref)
+	{
+		NSString *directory=[archivename stringByDeletingLastPathComponent];
+		NSArray *allpaths=[[unarchiver archiveParser] allFilenames];
+		NSMutableArray *allfiles=[NSMutableArray arrayWithCapacity:[allpaths count]];
+		NSEnumerator *enumerator=[allpaths objectEnumerator];
+		NSString *path;
+		while((path=[enumerator nextObject]))
 		{
-			NSString *defaultname;
-			if([archivename matchedByPattern:@"\\.(part[0-9]+\\.rar|tar\\.gz|tar\\.bz2|tar\\.lzma|sit\\.hqx)$" options:REG_ICASE])
-			defaultname=[[[archivename lastPathComponent] stringByDeletingPathExtension] stringByDeletingPathExtension];
-			else
-			defaultname=[[archivename lastPathComponent] stringByDeletingPathExtension];
+			if([[path stringByDeletingLastPathComponent] isEqual:directory])
+			[allfiles addObject:[path lastPathComponent]];
+		}
 
-			finaldest=[self findUniqueDestinationWithDirectory:destination andFilename:defaultname];
+		[[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation
+		source:directory destination:nil files:allfiles tag:nil];
+		//[self playSound:@"/System/Library/Components/CoreAudio.component/Contents/Resources/SystemSounds/dock/drag to trash.aif"];
+	}
 
-			#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
-			[fm moveItemAtPath:tmpdest toPath:finaldest error:NULL];
-			#else
-			[fm movePath:tmpdest toPath:finaldest handler:nil];
-			#endif
-
-			// Check if we accidentally created a package.
-			if([[NSWorkspace sharedWorkspace] isFilePackageAtPath:finaldest])
-			{
-				NSString *newfinaldest=[finaldest stringByDeletingPathExtension];
-
-				#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
-				[fm moveItemAtPath:finaldest toPath:newfinaldest error:NULL];
-				#else
-				[fm movePath:finaldest toPath:newfinaldest handler:nil];
-				#endif
-
-				finaldest=newfinaldest;
-			}
+	// Open folder if requested
+	if(openfolderpref)
+	{
+		BOOL isdir;
+		[[NSFileManager defaultManager] fileExistsAtPath:newpath isDirectory:&isdir];
+		if(isdir&&![[NSWorkspace sharedWorkspace] isFilePackageAtPath:newpath])
+		{
+			[[NSWorkspace sharedWorkspace] openFile:newpath];
 		}
 		else
 		{
-			NSString *filename=[files objectAtIndex:0];
-			NSString *src=[tmpdest stringByAppendingPathComponent:filename];
-			finaldest=[self findUniqueDestinationWithDirectory:destination andFilename:filename];
-
-			#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
-			[fm moveItemAtPath:src toPath:finaldest error:NULL];
-			[fm removeItemAtPath:tmpdest error:NULL];
-			#else
-			[fm movePath:src toPath:finaldest handler:nil];
-			[fm removeFileAtPath:tmpdest handler:nil];
-			#endif
-		}
-
-		// Remove temporary directory from crash recovery list
-		[self forgetTempDirectory:tmpdest];
-
-		// Set correct date for extracted directory
-		if(copydate)
-		{
-			FSCatalogInfo archiveinfo,newinfo;
-
-			GetCatalogInfoForFilename(archivename,kFSCatInfoContentMod,&archiveinfo);
-			newinfo.contentModDate=archiveinfo.contentModDate;
-			SetCatalogInfoForFilename(finaldest,kFSCatInfoContentMod,&newinfo);
-		}
-		else if(resetdate)
-		{
-			FSCatalogInfo newinfo;
-
-			UCConvertCFAbsoluteTimeToUTCDateTime(CFAbsoluteTimeGetCurrent(),&newinfo.contentModDate);
-			SetCatalogInfoForFilename(finaldest,kFSCatInfoContentMod,&newinfo);
-		}
-
-		// Delete archive if requested
-		if(deletearchivepref)
-		{
-			NSString *directory=[archivename stringByDeletingLastPathComponent];
-			NSArray *allpaths=[[unarchiver archiveParser] allFilenames];
-			NSMutableArray *allfiles=[NSMutableArray arrayWithCapacity:[allpaths count]];
-			NSEnumerator *enumerator=[allpaths objectEnumerator];
-			NSString *path;
-			while((path=[enumerator nextObject]))
-			{
-				if([[path stringByDeletingLastPathComponent] isEqual:directory])
-				[allfiles addObject:[path lastPathComponent]];
-			}
-
-			[[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation
-			source:directory destination:nil files:allfiles tag:nil];
-			//[self playSound:@"/System/Library/Components/CoreAudio.component/Contents/Resources/SystemSounds/dock/drag to trash.aif"];
-		}
-
-		// Open folder if requested
-		if(openfolderpref)
-		{
-			BOOL isdir;
-			[[NSFileManager defaultManager] fileExistsAtPath:finaldest isDirectory:&isdir];
-			if(isdir&&![[NSWorkspace sharedWorkspace] isFilePackageAtPath:finaldest])
-			{
-				[[NSWorkspace sharedWorkspace] openFile:finaldest];
-			}
-			else [[NSWorkspace sharedWorkspace] selectFile:finaldest inFileViewerRootedAtPath:@""];
+			[[NSWorkspace sharedWorkspace] selectFile:newpath inFileViewerRootedAtPath:@""];
 		}
 	}
 
@@ -263,24 +210,6 @@ taskView:(TUArchiveTaskView *)taskview
 
 	[finishtarget performSelector:finishselector withObject:self];
 	[self release];
-}
-
--(NSString *)findUniqueDestinationWithDirectory:(NSString *)directory andFilename:(NSString *)filename
-{
-	NSString *basename=[filename stringByDeletingPathExtension];
-	NSString *extension=[filename pathExtension];
-	if([extension length]) extension=[@"." stringByAppendingString:extension];
-
-	NSString *dest=[directory stringByAppendingPathComponent:filename];
-	int n=1;
-
-	while([[NSFileManager defaultManager] fileExistsAtPath:dest])
-	{
-		dest=[directory stringByAppendingPathComponent:
-		[NSString stringWithFormat:@"%@-%d%@",basename,n++,extension]];
-	}
-
-	return dest;
 }
 
 -(void)rememberTempDirectory:(NSString *)tmpdir
