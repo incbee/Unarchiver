@@ -6,9 +6,6 @@
 
 
 
-static BOOL GetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info);
-static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info);
-
 
 static NSString *globalpassword=nil;
 
@@ -362,24 +359,3 @@ originalPath:(NSString *)path suggestedPath:(NSString *)unique;
 suggestedPath:(NSString *)unique;*/
 
 @end
-
-
-
-
-static BOOL GetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info)
-{
-	FSRef ref;
-	if(FSPathMakeRefWithOptions((const UInt8 *)[filename fileSystemRepresentation],
-	kFSPathMakeRefDoNotFollowLeafSymlink,&ref,NULL)!=noErr) return NO;
-	if(FSGetCatalogInfo(&ref,bitmap,info,NULL,NULL,NULL)!=noErr) return NO;
-	return YES;
-}
-
-static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info)
-{
-	FSRef ref;
-	if(FSPathMakeRefWithOptions((const UInt8 *)[filename fileSystemRepresentation],
-	kFSPathMakeRefDoNotFollowLeafSymlink,&ref,NULL)!=noErr) return NO;
-	if(FSSetCatalogInfo(&ref,bitmap,info)!=noErr) return NO;
-	return YES;
-}
