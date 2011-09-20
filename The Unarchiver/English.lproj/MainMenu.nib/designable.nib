@@ -543,24 +543,22 @@
 															<object class="NSTableView" id="591475378">
 																<reference key="NSNextResponder" ref="705239607"/>
 																<int key="NSvFlags">256</int>
-																<string key="NSFrameSize">{377, 223}</string>
+																<string key="NSFrameSize">{392, 223}</string>
 																<reference key="NSSuperview" ref="705239607"/>
 																<reference key="NSWindow"/>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTableHeaderView" key="NSHeaderView" id="433502039">
 																	<reference key="NSNextResponder" ref="737039185"/>
 																	<int key="NSvFlags">256</int>
-																	<string key="NSFrameSize">{377, 17}</string>
+																	<string key="NSFrameSize">{392, 17}</string>
 																	<reference key="NSSuperview" ref="737039185"/>
 																	<reference key="NSWindow"/>
 																	<reference key="NSTableView" ref="591475378"/>
 																</object>
-																<object class="_NSCornerView" key="NSCornerView" id="721149421">
-																	<reference key="NSNextResponder" ref="366064615"/>
+																<object class="_NSCornerView" key="NSCornerView">
+																	<nil key="NSNextResponder"/>
 																	<int key="NSvFlags">256</int>
 																	<string key="NSFrame">{{378, 0}, {16, 17}}</string>
-																	<reference key="NSSuperview" ref="366064615"/>
-																	<reference key="NSWindow"/>
 																</object>
 																<object class="NSMutableArray" key="NSTableColumns">
 																	<bool key="EncodedWithXMLCoder">YES</bool>
@@ -620,7 +618,7 @@
 																	</object>
 																	<object class="NSTableColumn" id="355418144">
 																		<string key="NSIdentifier">description</string>
-																		<double key="NSWidth">166</double>
+																		<double key="NSWidth">174</double>
 																		<double key="NSMinWidth">40</double>
 																		<double key="NSMaxWidth">1000</double>
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -662,7 +660,7 @@
 																	</object>
 																	<object class="NSTableColumn" id="686641618">
 																		<string key="NSIdentifier">extensions</string>
-																		<double key="NSWidth">177.75537109375</double>
+																		<double key="NSWidth">184.75537109375</double>
 																		<double key="NSMinWidth">61.75537109375</double>
 																		<double key="NSMaxWidth">1000</double>
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -718,7 +716,7 @@
 																<int key="NSTableViewGroupRowStyle">1</int>
 															</object>
 														</object>
-														<string key="NSFrame">{{1, 17}, {377, 223}}</string>
+														<string key="NSFrame">{{1, 17}, {392, 223}}</string>
 														<reference key="NSSuperview" ref="366064615"/>
 														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="591475378"/>
@@ -754,7 +752,7 @@
 															<bool key="EncodedWithXMLCoder">YES</bool>
 															<reference ref="433502039"/>
 														</object>
-														<string key="NSFrame">{{1, 0}, {377, 17}}</string>
+														<string key="NSFrame">{{1, 0}, {392, 17}}</string>
 														<reference key="NSSuperview" ref="366064615"/>
 														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="433502039"/>
@@ -762,7 +760,6 @@
 														<reference key="NSBGColor" ref="646890407"/>
 														<int key="NScvFlags">4</int>
 													</object>
-													<reference ref="721149421"/>
 												</object>
 												<string key="NSFrame">{{20, 32}, {394, 241}}</string>
 												<reference key="NSSuperview" ref="416291026"/>
@@ -773,7 +770,6 @@
 												<reference key="NSHScroller" ref="366934169"/>
 												<reference key="NSContentView" ref="705239607"/>
 												<reference key="NSHeaderClipView" ref="737039185"/>
-												<reference key="NSCornerView" ref="721149421"/>
 												<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 											</object>
 											<object class="NSButton" id="349910824">

@@ -252,16 +252,14 @@ taskView:(TUArchiveTaskView *)taskview
 	if(setencoding) return [XADString encodingNameForEncoding:setencoding];
 
 	XADStringSource *source=[[sender archiveParser] stringSource];
-	NSStringEncoding guess=[source encoding];
-	float confidence=[source confidence];
-
-	int threshold=[[NSUserDefaults standardUserDefaults] integerForKey:@"autoDetectionThreshold"];
 
 	// If the user has already been asked for an encoding, try to use it.
 	// Otherwise, if the confidence in the guessed encoding is high enough, try that.
+	int threshold=[[NSUserDefaults standardUserDefaults] integerForKey:@"autoDetectionThreshold"];
+
 	NSStringEncoding encoding=0;
 	if(selected_encoding) encoding=selected_encoding;
-	else if(confidence*100<threshold) encoding=guess;
+	else if([source confidence]*100<threshold) encoding=[source encoding];
 
 	// If we have an encoding we trust, and it can decode the string, use it.
 	if(encoding && [string canDecodeWithEncoding:encoding])
@@ -328,26 +326,31 @@ fileProgress:(double)fileprogress totalProgress:(double)totalprogress
 
 	if(error)
 	{
-		NSString *errstr=[XADException describeXADError:error];
 		XADPath *filename=[dict objectForKey:XADFileNameKey];
-		NSNumber *isresfork=[dict objectForKey:XADIsResourceForkKey];
+		NSStringEncoding encoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
+		if(!encoding) encoding=selected_encoding;
+		if(!encoding) encoding=[filename encoding];
+		NSString *filenamestr=[filename stringWithEncoding:encoding];
 
+		NSString *currfilename=[[unarchiver archiveParser] currentFilename];
+		NSString *currarchivename=[currfilename lastPathComponent];
+
+		NSString *errorstr=[XADException describeXADError:error];
+		NSString *localizederror=[[NSBundle mainBundle] localizedStringForKey:errorstr value:errorstr table:nil];
+
+		NSNumber *isresfork=[dict objectForKey:XADIsResourceForkKey];
 		if(isresfork&&[isresfork boolValue])
 		{
-			cancelled=![view displayError:
-				[NSString stringWithFormat:
-				NSLocalizedString(@"Could not extract the resource fork for the file \"%@\":\n%@",@"Error message for resource forks. The first %@ is the file name, the second the error message"),
-				[filename string], // TODO: encodings
-				[[NSBundle mainBundle] localizedStringForKey:errstr value:errstr table:nil]]
+			cancelled=![view displayError:[NSString stringWithFormat:
+				NSLocalizedString(@"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@",@"Error message string. The first %@ is the file name, the second the archive name, the third is error message"),
+				filenamestr,currarchivename,localizederror]
 			ignoreAll:&ignoreall];
 		}
 		else
 		{
-			cancelled=![view displayError:
-				[NSString stringWithFormat:
-				NSLocalizedString(@"Could not extract the file \"%@\": %@",@"Error message string. The first %@ is the file name, the second the error message"),
-				[filename string], // TODO: encodings
-				[[NSBundle mainBundle] localizedStringForKey:errstr value:errstr table:nil]]
+			cancelled=![view displayError:[NSString stringWithFormat:
+				NSLocalizedString(@"Could not extract the file \"%@\" from the archive \"%@\": %@",@"Error message string. The first %@ is the file name, the second the archive name, the third is error message"),
+				filenamestr,currarchivename,localizederror]
 			ignoreAll:&ignoreall];
 		}
 	}
