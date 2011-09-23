@@ -65,6 +65,32 @@ taskView:(TUArchiveTaskView *)taskview
 
 
 
+
+-(NSString *)currentArchiveName
+{
+	NSString *currfilename=[[unarchiver archiveParser] currentFilename];
+	NSString *currarchivename=[currfilename lastPathComponent];
+	return currarchivename;
+}
+
+-(NSString *)localizedDescriptionOfError:(XADError)error
+{
+	NSString *errorstr=[XADException describeXADError:error];
+	NSString *localizederror=[[NSBundle mainBundle] localizedStringForKey:errorstr value:errorstr table:nil];
+	return localizederror;
+}
+
+-(NSString *)stringForXADPath:(XADPath *)path
+{
+	NSStringEncoding encoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
+	if(!encoding) encoding=selected_encoding;
+	if(!encoding) encoding=[path encoding];
+	return [path stringWithEncoding:encoding];
+}
+
+
+
+
 -(void)runWithFinishAction:(SEL)selector target:(id)target
 {
 	finishtarget=target;
@@ -81,13 +107,18 @@ taskView:(TUArchiveTaskView *)taskview
 
 	[self rememberTempDirectory:tmpdest];
 
-	[NSThread detachNewThreadSelector:@selector(extract) toTarget:self withObject:nil];
+	[NSThread detachNewThreadSelector:@selector(extractThreadEntry) toTarget:self withObject:nil];
+}
+
+-(void)extractThreadEntry
+{
+	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+	[self extract];
+	[pool release];
 }
 
 -(void)extract
 {
-	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
-
 	unarchiver=[[XADSimpleUnarchiver simpleUnarchiverForPath:archivename error:NULL] retain];
 	if(!unarchiver)
 	{
@@ -96,7 +127,7 @@ taskView:(TUArchiveTaskView *)taskview
 		[archivename lastPathComponent]]];
 
 		[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
-		goto exit;
+		return;
 	}
 
 	// TODO: remove this.
@@ -116,17 +147,39 @@ taskView:(TUArchiveTaskView *)taskview
 	[unarchiver setCopiesArchiveModificationTimeToSoloItems:copydatepref && changefilespref];
 	[unarchiver setResetsDateForSoloItems:!copydatepref && changefilespref];
 
-	XADError error=[unarchiver parseAndUnarchive];
-	if(error)
+	XADError error=[unarchiver parse];
+	if(error==XADBreakError)
 	{
 		[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
-		goto exit;
+		return;
+	}
+	else if(error)
+	{
+		if(![view displayError:[NSString stringWithFormat:
+			NSLocalizedString(@"There was a problem while reading the contents of the file \"%@\": %@",@"Error message when encountering an error while parsing an archive"),
+			[self currentArchiveName],
+			[self localizedDescriptionOfError:error]]
+		ignoreAll:&ignoreall])
+		{
+			[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
+			return;
+		}
+	}
+
+	error=[unarchiver unarchive];
+	if(error)
+	{
+		if(error!=XADBreakError)
+		[view displayOpenError:[NSString stringWithFormat:
+			NSLocalizedString(@"There was a problem while extracting the contents of the file \"%@\": %@",@"Error message when encountering an error while extracting entries"),
+			[self currentArchiveName],
+			[self localizedDescriptionOfError:error]]];
+
+		[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
+		return;
 	}
 
 	[self performSelectorOnMainThread:@selector(extractFinished) withObject:nil waitUntilDone:NO];
-
-	exit:
-	[pool release];
 }
 
 -(void)extractFinished
@@ -327,30 +380,24 @@ fileProgress:(double)fileprogress totalProgress:(double)totalprogress
 	if(error)
 	{
 		XADPath *filename=[dict objectForKey:XADFileNameKey];
-		NSStringEncoding encoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
-		if(!encoding) encoding=selected_encoding;
-		if(!encoding) encoding=[filename encoding];
-		NSString *filenamestr=[filename stringWithEncoding:encoding];
-
-		NSString *currfilename=[[unarchiver archiveParser] currentFilename];
-		NSString *currarchivename=[currfilename lastPathComponent];
-
-		NSString *errorstr=[XADException describeXADError:error];
-		NSString *localizederror=[[NSBundle mainBundle] localizedStringForKey:errorstr value:errorstr table:nil];
 
 		NSNumber *isresfork=[dict objectForKey:XADIsResourceForkKey];
 		if(isresfork&&[isresfork boolValue])
 		{
 			cancelled=![view displayError:[NSString stringWithFormat:
 				NSLocalizedString(@"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@",@"Error message string. The first %@ is the file name, the second the archive name, the third is error message"),
-				filenamestr,currarchivename,localizederror]
+				[self stringForXADPath:filename],
+				[self currentArchiveName],
+				[self localizedDescriptionOfError:error]]
 			ignoreAll:&ignoreall];
 		}
 		else
 		{
 			cancelled=![view displayError:[NSString stringWithFormat:
 				NSLocalizedString(@"Could not extract the file \"%@\" from the archive \"%@\": %@",@"Error message string. The first %@ is the file name, the second the archive name, the third is error message"),
-				filenamestr,currarchivename,localizederror]
+				[self stringForXADPath:filename],
+				[self currentArchiveName],
+				[self localizedDescriptionOfError:error]]
 			ignoreAll:&ignoreall];
 		}
 	}

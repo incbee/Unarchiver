@@ -29,8 +29,13 @@ taskView:(TUArchiveTaskView *)taskview;
 -(NSArray *)allFilenames;
 -(TUArchiveTaskView *)taskView;
 
+-(NSString *)currentArchiveName;
+-(NSString *)localizedDescriptionOfError:(XADError)error;
+-(NSString *)stringForXADPath:(XADPath *)path;
+
 -(void)runWithFinishAction:(SEL)selector target:(id)target;
 
+-(void)extractThreadEntry;
 -(void)extract;
 -(void)extractFinished;
 -(void)extractFailed;

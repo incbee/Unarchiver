@@ -307,6 +307,7 @@ static BOOL IsPathWritable(NSString *path);
 {
 	// TODO: this could be removed since the later loop would do it anyway, maybe.
 	[mainlist removeTaskView:[archive taskView]];
+	// TODO: This is broken because [archive filename] changes.
 	[queuedfileviews removeObjectForKey:[archive filename]];
 
 	// TODO: Change this to check before adding archives to the list!
