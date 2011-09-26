@@ -35,9 +35,9 @@ C_OPTS =	-std=gnu99
 
 CXX_OPTS =
 
-OBJCFLAGS = $(OBJC_OPTS) $(GCC_OPTS) $(GNUSTEP_OPTS)
-CFLAGS = $(C_OPTS) $(GCC_OPTS)
-CXXFLAGS = $(CXX_OPTS) $(GCC_OPTS)
+ALL_OBJCFLAGS = $(OBJC_OPTS) $(GCC_OPTS) $(GNUSTEP_OPTS) $(OBJCFLAGS)
+ALL_CFLAGS = $(C_OPTS) $(GCC_OPTS) $(CFLAGS)
+ALL_CXXFLAGS = $(CXX_OPTS) $(GCC_OPTS) $(CXXFLAGS)
 
 
 
@@ -112,13 +112,13 @@ LIBRARY_FILES =	libUniversalDetector.a
 .SUFFIXES: .o .m .c
 
 .m.o:
-	$(OBJCC) $(OBJCFLAGS) $< -o $@	
+	$(OBJCC) $(ALL_OBJCFLAGS) $< -o $@
 
 .c.o:
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(ALL_CFLAGS) $< -o $@
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CXX) $(ALL_CXXFLAGS) $< -o $@
 
 
 
@@ -139,9 +139,9 @@ clean:
 		universalchardet/*~
 
 depend:
-	$(OBJCC) -MM $(OBJCFLAGS) $(ALL_OBJC_FILES) >Makefile.dependtmp
-	$(CC) -MM $(CFLAGS) $(ALL_C_FILES) >>Makefile.dependtmp
-	$(CXX) -MM $(CXXFLAGS) $(ALL_CXX_FILES) >>Makefile.dependtmp
+	$(OBJCC) -MM $(ALL_OBJCFLAGS) $(ALL_OBJC_FILES) >Makefile.dependtmp
+	$(CC) -MM $(ALL_CFLAGS) $(ALL_C_FILES) >>Makefile.dependtmp
+	$(CXX) -MM $(ALL_CXXFLAGS) $(ALL_CXX_FILES) >>Makefile.dependtmp
 	sed 's/.*: *\([^ ]*\)\.\([^ ]*\)/\1.o: \1.\2/g' <Makefile.dependtmp >Makefile.depend
 	rm Makefile.dependtmp
 
