@@ -90,7 +90,7 @@
 
 	BOOL res=[self waitForResponseFromUI];
 
-	[self setDisplayedView:progressview];
+	[self performSelectorOnMainThread:@selector(setDisplayedView:) withObject:progressview waitUntilDone:NO];
 
 	if(res && ignoreall)
 	{
@@ -114,7 +114,7 @@
 
 	BOOL res=[self waitForResponseFromUI];
 
-	[self setDisplayedView:progressview];
+	[self performSelectorOnMainThread:@selector(setDisplayedView:) withObject:progressview waitUntilDone:NO];
 
 	if(res) return [encodingpopup selectedTag];
 	else return 0;
@@ -126,7 +126,7 @@
 
 	BOOL res=[self waitForResponseFromUI];
 
-	[self setDisplayedView:progressview];
+	[self performSelectorOnMainThread:@selector(setDisplayedView:) withObject:progressview waitUntilDone:NO];
 
 	if(res && applyall)
 	{
