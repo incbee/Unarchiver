@@ -41,6 +41,7 @@
 	IBOutlet NSImageView *openerroricon;
 
 	IBOutlet NSView *passwordview;
+	IBOutlet NSTextField *passwordmessagefield;
 	IBOutlet NSTextField *passwordfield;
 	IBOutlet NSImageView *passwordicon;
 	IBOutlet NSButton *passwordapplyallcheck;

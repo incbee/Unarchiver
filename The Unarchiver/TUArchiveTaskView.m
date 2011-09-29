@@ -240,6 +240,10 @@
 		[nib instantiateNibWithOwner:self topLevelObjects:nil];
 	}
 
+	[passwordmessagefield setStringValue:[NSString stringWithFormat:
+	NSLocalizedString(@"You need to supply a password to open the archive \"%@\".",@"Status text when asking for a password"),
+	[[archive filename] lastPathComponent]]];
+
 	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:[archive filename]];
 	[icon setSize:[passwordicon frame].size];
 	[passwordicon setImage:icon];
@@ -282,11 +286,18 @@
 
 
 
+
 -(void)getUserAttention
+{
+	[self performSelectorOnMainThread:@selector(getUserAttentionOnMainThread) withObject:nil waitUntilDone:NO];
+}
+
+-(void)getUserAttentionOnMainThread
 {
 	[NSApp activateIgnoringOtherApps:YES];
 	[[self window] makeKeyAndOrderFront:self];
 }
+
 
 
 
