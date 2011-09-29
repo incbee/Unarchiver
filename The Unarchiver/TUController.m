@@ -24,7 +24,7 @@ static BOOL IsPathWritable(NSString *path);
 	{
 		setuptasks=[TUTaskQueue new];
 		extracttasks=[TUTaskQueue new];
-		queuedfileviews=[NSMutableDictionary new];
+		archivecontrollers=[NSMutableArray new];
 		selecteddestination=nil;
 		opened=NO;
 
@@ -38,7 +38,7 @@ static BOOL IsPathWritable(NSString *path);
 {
 	[setuptasks release];
 	[extracttasks release];
-	[queuedfileviews release];
+	[archivecontrollers release];
 	[selecteddestination release];
 	[super dealloc];
 }
@@ -135,8 +135,16 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)newArchiveForFile:(NSString *)filename destination:(int)desttype
 {
-	if([queuedfileviews objectForKey:filename]) return;
+	// Check if this file is already included in any of the currently queued archives.
+	NSEnumerator *enumerator=[archivecontrollers objectEnumerator];
+	TUArchiveController *currarchive;
+	while((currarchive=[enumerator nextObject]))
+	{
+		NSArray *filenames=[currarchive allFilenames];
+		if([filenames containsObject:filename]) return;
+	}
 
+	// Pick a destination.
 	NSString *destination;
 	switch(desttype)
 	{
@@ -154,50 +162,57 @@ static BOOL IsPathWritable(NSString *path);
 		break;
 	}
 
-	TUArchiveTaskView *taskview=[[TUArchiveTaskView alloc] initWithFilename:filename];
-	[taskview setupWaitView];
-	[taskview setCancelAction:@selector(archiveTaskViewCancelledBeforeSetup:) target:self];
-	[mainlist addTaskView:taskview];
-	[taskview release];
+	// Create status view and archive controller.
+	TUArchiveTaskView *taskview=[[[TUArchiveTaskView alloc] init] autorelease];
 
-	[queuedfileviews setObject:taskview forKey:filename];
+	TUArchiveController *archive=[[[TUArchiveController alloc]
+	initWithFilename:filename taskView:taskview] autorelease];
+	[archivecontrollers addObject:archive];
+
+	[taskview setCancelAction:@selector(archiveTaskViewCancelledBeforeSetup:) target:self];
+	[taskview setArchiveController:archive];
+	[taskview setupWaitView];
+	[mainlist addTaskView:taskview];
 
 	[NSApp activateIgnoringOtherApps:YES];
 	[mainwindow makeKeyAndOrderFront:nil];
 
-	[[setuptasks taskWithTarget:self] setupExtractionOfFile:filename to:destination taskView:taskview];
+	[[setuptasks taskWithTarget:self] setupExtractionForArchiveController:archive
+	to:destination];
 }
-
-
 
 -(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview
 {
-	// TODO: should this remove from queuedfileviews too?
 	[mainlist removeTaskView:taskview];
 }
 
--(void)setupExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview
+
+
+
+-(void)setupExtractionForArchiveController:(TUArchiveController *)archive to:(NSString *)destination
 {
-	if(![mainlist containsTaskView:taskview]) // This archive has been cancelled
+	if(![mainlist containsTaskView:[archive taskView]])
 	{
-		[queuedfileviews removeObjectForKey:filename];
+		// This archive has been cancelled.
+ 		[archivecontrollers removeObjectIdenticalTo:archive];
 		[setuptasks finishCurrentTask];
 		return;
 	}
 
-	currfilename=[filename retain];
-	currtaskview=taskview;
+//	currfilename=[filename retain];
+//	currtaskview=taskview;
 
-	[taskview setCancelAction:NULL target:nil];
+	[[archive taskView] setCancelAction:NULL target:nil];
 
 	if(!destination) destination=selecteddestination;
-	[self tryDestination:destination];
+	[self tryDestination:destination forArchiveController:archive];
 }
 
--(void)tryDestination:(NSString *)destination
+-(void)tryDestination:(NSString *)destination forArchiveController:(TUArchiveController *)archive
 {
 	if(!destination)
 	{
+		// No destination supplied. This means we need to ask the user.
 		NSOpenPanel *panel=[NSOpenPanel openPanel];
 		[panel setCanCreateDirectories:YES];
 		[panel setCanChooseDirectories:YES];
@@ -207,20 +222,21 @@ static BOOL IsPathWritable(NSString *path);
 
 		[panel beginSheetForDirectory:nil file:nil modalForWindow:mainwindow
 		modalDelegate:self didEndSelector:@selector(archiveDestinationPanelDidEnd:returnCode:contextInfo:)
-		contextInfo:NULL];
+		contextInfo:archive];
 	}
 	else if(!IsPathWritable(destination))
 	{
-		[currtaskview displayNotWritableErrorWithResponseAction:@selector(archiveTaskView:notWritableResponse:) target:self];
+		// Can not write to the given destination. Show an error.
+		[[archive taskView] displayNotWritableErrorWithResponseAction:@selector(archiveTaskView:notWritableResponse:) target:self];
 	}
-	else // go ahead and start an extraction task
+	else
 	{
-		[currtaskview setCancelAction:@selector(archiveTaskViewCancelledBeforeExtract:) target:self];
+		// Go ahead and start an extraction task.
+		[[archive taskView] setCancelAction:@selector(archiveTaskViewCancelledBeforeExtract:) target:self];
 
-		[[extracttasks taskWithTarget:self] startExtractionOfFile:currfilename
-		to:destination taskView:currtaskview];
-		[currfilename release];
-		currfilename=nil;
+		[archive setDestination:destination];
+
+		[[extracttasks taskWithTarget:self] startExtractionForArchiveController:archive];
 
 		[setuptasks finishCurrentTask];
 	}
@@ -228,43 +244,44 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)archiveDestinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)info
 {
+	TUArchiveController *archive=(id)info;
+
 	if(res==NSOKButton)
 	{
 		[selecteddestination release];
 		selecteddestination=[[panel directory] retain];
-		[self tryDestination:selecteddestination];
+		[self tryDestination:selecteddestination forArchiveController:archive];
 	}
-	else // cancel
+	else
 	{
-		[mainlist removeTaskView:currtaskview];
-		[queuedfileviews removeObjectForKey:currfilename];
+		[mainlist removeTaskView:[archive taskView]];
+		[archivecontrollers removeObjectIdenticalTo:archive];
 		[setuptasks finishCurrentTask];
-		[currfilename release];
-		currfilename=nil;
 	}
 }
 
 -(void)archiveTaskView:(TUArchiveTaskView *)taskview notWritableResponse:(int)response
 {
-	if(taskview!=currtaskview) NSLog(@"Sanity check failure");
+	TUArchiveController *archive=[taskview archiveController];
 
 	switch(response)
 	{
-		case 0: // cancel
+		case 0: // Cancel.
 			[mainlist removeTaskView:taskview];
-			[queuedfileviews removeObjectForKey:currfilename];
+			[archivecontrollers removeObjectIdenticalTo:archive];
 			[setuptasks finishCurrentTask];
-			[currfilename release];
-			currfilename=nil;
 		break;
 
-		case 1: // to desktop
-			[self tryDestination:[NSSearchPathForDirectoriesInDomains(
-			NSDesktopDirectory,NSUserDomainMask,YES) objectAtIndex:0]];
+		case 1: // To desktop.
+		{
+			NSString *desktop=[NSSearchPathForDirectoriesInDomains(
+			NSDesktopDirectory,NSUserDomainMask,YES) objectAtIndex:0];
+			[self tryDestination:desktop forArchiveController:archive];
+		}
 		break;
 
-		case 2: // elsewhere
-			[self tryDestination:nil];
+		case 2: // Elsewhere.
+			[self tryDestination:nil forArchiveController:archive];
 		break;
 	}
 }
@@ -277,48 +294,31 @@ static BOOL IsPathWritable(NSString *path);
 	selecteddestination=nil;
 }
 
-
-
-
 -(void)archiveTaskViewCancelledBeforeExtract:(TUArchiveTaskView *)taskview
 {
-	// TODO: should this remove from queuedfileviews too?
 	[mainlist removeTaskView:taskview];
 }
 
--(void)startExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview
+
+
+
+-(void)startExtractionForArchiveController:(TUArchiveController *)archive
 {
-	if(![mainlist containsTaskView:taskview]) // This archive has been cancelled
+	if(![mainlist containsTaskView:[archive taskView]]) // This archive has been cancelled
 	{
-		[queuedfileviews removeObjectForKey:filename];
+		[archivecontrollers removeObjectIdenticalTo:archive];
 		[extracttasks finishCurrentTask];
 		return;
 	}
 
-	[taskview setupProgressViewInPreparingMode];
-
-	TUArchiveController *archive=[[[TUArchiveController alloc]
-	initWithFilename:filename destination:destination taskView:taskview] autorelease];
+	[[archive taskView] setupProgressViewInPreparingMode];
 
 	[archive runWithFinishAction:@selector(archiveControllerFinished:) target:self];
 }
 
 -(void)archiveControllerFinished:(TUArchiveController *)archive
 {
-	// TODO: this could be removed since the later loop would do it anyway, maybe.
 	[mainlist removeTaskView:[archive taskView]];
-	// TODO: This is broken because [archive filename] changes.
-	[queuedfileviews removeObjectForKey:[archive filename]];
-
-	// TODO: Change this to check before adding archives to the list!
-	NSEnumerator *enumerator=[[archive  allFilenames] objectEnumerator];
-	NSString *filename;
-	while((filename=[enumerator nextObject]))
-	{
-		TUTaskView *taskview=[queuedfileviews objectForKey:filename];
-		if(taskview) [mainlist removeTaskView:taskview]; // TODO: should this remove from queuedfileview too?
-	}
-
 	[extracttasks finishCurrentTask];
 }
 

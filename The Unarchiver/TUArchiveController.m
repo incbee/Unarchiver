@@ -18,18 +18,17 @@ static NSString *globalpassword=nil;
 	globalpassword=nil;
 }
 
--(id)initWithFilename:(NSString *)filename destination:(NSString *)destpath
-taskView:(TUArchiveTaskView *)taskview
+-(id)initWithFilename:(NSString *)filename taskView:(TUArchiveTaskView *)taskview
 {
 	if((self=[super init]))
 	{
 		maincontroller=nil;
 
 		view=[taskview retain];
-		unarchiver=nil;
+		unarchiver=[[XADSimpleUnarchiver simpleUnarchiverForPath:filename error:NULL] retain];
 
 		archivename=[filename retain];
-		destination=[destpath retain];
+		destination=nil;
 		tmpdest=nil;
 
 		selected_encoding=0;
@@ -56,12 +55,18 @@ taskView:(TUArchiveTaskView *)taskview
 
 
 
-// TODO: Rather than change the value, this should use unarchiver when available
--(NSString *)filename { return archivename; }
+-(NSString *)filename { return [[unarchiver outerArchiveParser] filename]; }
 
--(NSArray *)allFilenames { return [[unarchiver archiveParser] allFilenames]; }
+-(NSArray *)allFilenames { return [[unarchiver outerArchiveParser] allFilenames]; }
 
 -(TUArchiveTaskView *)taskView { return view; }
+
+
+-(void)setDestination:(NSString *)newdestination
+{
+	[destination autorelease];
+	destination=[newdestination retain];
+}
 
 
 
@@ -119,7 +124,6 @@ taskView:(TUArchiveTaskView *)taskview
 
 -(void)extract
 {
-	unarchiver=[[XADSimpleUnarchiver simpleUnarchiverForPath:archivename error:NULL] retain];
 	if(!unarchiver)
 	{
 		[view displayOpenError:[NSString stringWithFormat:
@@ -129,10 +133,6 @@ taskView:(TUArchiveTaskView *)taskview
 		[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
 		return;
 	}
-
-	// TODO: remove this.
-	[archivename release];
-	archivename=[[[unarchiver archiveParser] filename] retain];
 
 	BOOL alwayscreatepref=[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"]==2;
 	BOOL copydatepref=[[NSUserDefaults standardUserDefaults] integerForKey:@"folderModifiedDate"]==2;
@@ -214,7 +214,7 @@ taskView:(TUArchiveTaskView *)taskview
 	if(deletearchivepref)
 	{
 		NSString *directory=[archivename stringByDeletingLastPathComponent];
-		NSArray *allpaths=[[unarchiver archiveParser] allFilenames];
+		NSArray *allpaths=[[unarchiver outerArchiveParser] allFilenames];
 		NSMutableArray *allfiles=[NSMutableArray arrayWithCapacity:[allpaths count]];
 		NSEnumerator *enumerator=[allpaths objectEnumerator];
 		NSString *path;

@@ -10,10 +10,7 @@
 @interface TUController:NSObject
 {
 	TUTaskQueue *setuptasks,*extracttasks;
-	NSMutableDictionary *queuedfileviews;
-
-	NSString *currfilename;
-	TUArchiveTaskView *currtaskview;
+	NSMutableArray *archivecontrollers;
 
 	NSString *selecteddestination;
 
@@ -51,13 +48,13 @@
 -(void)newArchiveForFile:(NSString *)filename destination:(int)desttype;
 -(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview;
 
--(void)setupExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview;
--(void)tryDestination:(NSString *)destination;
+-(void)setupExtractionForArchiveController:(TUArchiveController *)archive to:(NSString *)destination;
+-(void)tryDestination:(NSString *)destination forArchiveController:(TUArchiveController *)archive;
 -(void)archiveDestinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)info;
 -(void)archiveTaskView:(TUArchiveTaskView *)taskview notWritableResponse:(int)response;
 -(void)archiveTaskViewCancelledBeforeExtract:(TUArchiveTaskView *)taskview;
 
--(void)startExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview;
+-(void)startExtractionForArchiveController:(TUArchiveController *)archive;
 -(void)archiveControllerFinished:(TUArchiveController *)archive;
 
 -(void)listResized:(id)sender;

@@ -21,13 +21,14 @@
 
 +(void)clearGlobalPassword;
 
--(id)initWithFilename:(NSString *)filename destination:(NSString *)destpath
-taskView:(TUArchiveTaskView *)taskview;
+-(id)initWithFilename:(NSString *)filename taskView:(TUArchiveTaskView *)taskview;
 -(void)dealloc;
 
 -(NSString *)filename;
 -(NSArray *)allFilenames;
 -(TUArchiveTaskView *)taskView;
+
+-(void)setDestination:(NSString *)destination;
 
 -(NSString *)currentArchiveName;
 -(NSString *)localizedDescriptionOfError:(XADError)error;

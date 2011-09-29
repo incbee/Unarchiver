@@ -3,9 +3,11 @@
 #import "TUTaskListView.h"
 #import "TUEncodingPopup.h"
 
+@class TUArchiveController;
+
 @interface TUArchiveTaskView:TUMultiTaskView
 {
-	NSString *archivename;
+	TUArchiveController *archive;
 
 	id canceltarget;
 	SEL cancelselector;
@@ -49,8 +51,11 @@
 	IBOutlet NSImageView *encodingicon;
 }
 
--(id)initWithFilename:(NSString *)filename;
+-(id)init;
 -(void)dealloc;
+
+-(TUArchiveController *)archiveController;
+-(void)setArchiveController:(TUArchiveController *)archivecontroller;
 
 -(void)setCancelAction:(SEL)selector target:(id)target;
 

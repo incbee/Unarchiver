@@ -1,22 +1,21 @@
 #import "TUArchiveTaskView.h"
-
+#import "TUArchiveController.h"
 
 
 @implementation TUArchiveTaskView
 
--(id)initWithFilename:(NSString *)filename
+-(id)init
 {
 	if((self=[super init]))
 	{
+		archive=nil;
+
 		waitview=nil;
 		progressview=nil;
 		errorview=nil;
 		openerrorview=nil;
 		passwordview=nil;
 		encodingview=nil;
-
-		archivename=[filename retain];
-		//maincontroller=controller;
 
 		pauselock=[[NSConditionLock alloc] initWithCondition:0];
 	}
@@ -25,8 +24,6 @@
 
 -(void)dealloc
 {
-	[archivename release];
-
 	[pauselock release];
 
 	[waitview release];
@@ -38,6 +35,11 @@
 
 	[super dealloc];
 }
+
+-(TUArchiveController *)archiveController { return archive; }
+
+-(void)setArchiveController:(TUArchiveController *)archivecontroller { archive=archivecontroller; }
+
 
 
 
@@ -66,7 +68,7 @@
 	{
 		[actionfield setStringValue:[NSString stringWithFormat:
 		NSLocalizedString(@"Extracting \"%@\"",@"Status text while extracting an archive"),
-		[archivename lastPathComponent]]];
+		[[archive filename] lastPathComponent]]];
 		[progressindicator setDoubleValue:0];
 		[progressindicator setMaxValue:1];
 		[progressindicator setIndeterminate:NO];
@@ -148,9 +150,9 @@
 		[nib instantiateNibWithOwner:self topLevelObjects:nil];
 	}
 
-	[waitfield setStringValue:[archivename lastPathComponent]];
+	[waitfield setStringValue:[[archive filename] lastPathComponent]];
 
-	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:archivename];
+	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:[archive filename]];
 	[icon setSize:[waiticon frame].size];
 	[waiticon setImage:icon];
 
@@ -167,11 +169,11 @@
 
 	[actionfield setStringValue:[NSString stringWithFormat:
 	NSLocalizedString(@"Preparing to extract \"%@\"",@"Status text when preparing to extract an archive"),
-	[archivename lastPathComponent]]];
+	[[archive filename] lastPathComponent]]];
 
 	[namefield setStringValue:@""];
 
-	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:archivename];
+	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:[archive filename]];
 	[icon setSize:[progressicon frame].size];
 	[progressicon setImage:icon];
 
@@ -227,7 +229,7 @@
 		[nib instantiateNibWithOwner:self topLevelObjects:nil];
 	}
 
-	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:archivename];
+	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:[archive filename]];
 	[icon setSize:[passwordicon frame].size];
 	[passwordicon setImage:icon];
 
@@ -246,7 +248,7 @@
 		[nib instantiateNibWithOwner:self topLevelObjects:nil];
 	}
 
-	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:archivename];
+	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:[archive filename]];
 	[icon setSize:[encodingicon frame].size];
 	[encodingicon setImage:icon];
 
