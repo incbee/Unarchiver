@@ -150,7 +150,18 @@
 		[nib instantiateNibWithOwner:self topLevelObjects:nil];
 	}
 
-	[waitfield setStringValue:[[archive filename] lastPathComponent]];
+	NSString *filename=[[archive filename] lastPathComponent];
+	int count=[[archive allFilenames] count];
+	if(count>1)
+	{
+		[waitfield setStringValue:[NSString stringWithFormat:
+		NSLocalizedString(@"%@ (+%d more)",@"Status text for queued multi-part archives"),
+		filename,count-1]];
+	}
+	else
+	{
+		[waitfield setStringValue:filename];
+	}
 
 	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:[archive filename]];
 	[icon setSize:[waiticon frame].size];
