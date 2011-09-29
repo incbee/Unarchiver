@@ -140,6 +140,7 @@ static BOOL IsPathWritable(NSString *path);
 	TUArchiveController *currarchive;
 	while((currarchive=[enumerator nextObject]))
 	{
+		if([currarchive isCancelled]) continue;
 		NSArray *filenames=[currarchive allFilenames];
 		if([filenames containsObject:filename]) return;
 	}
@@ -184,6 +185,7 @@ static BOOL IsPathWritable(NSString *path);
 -(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview
 {
 	[mainlist removeTaskView:taskview];
+	[[taskview archiveController] setIsCancelled:YES];
 }
 
 
@@ -191,16 +193,12 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)setupExtractionForArchiveController:(TUArchiveController *)archive to:(NSString *)destination
 {
-	if(![mainlist containsTaskView:[archive taskView]])
+	if([archive isCancelled])
 	{
-		// This archive has been cancelled.
  		[archivecontrollers removeObjectIdenticalTo:archive];
 		[setuptasks finishCurrentTask];
 		return;
 	}
-
-//	currfilename=[filename retain];
-//	currtaskview=taskview;
 
 	[[archive taskView] setCancelAction:NULL target:nil];
 
@@ -297,6 +295,7 @@ static BOOL IsPathWritable(NSString *path);
 -(void)archiveTaskViewCancelledBeforeExtract:(TUArchiveTaskView *)taskview
 {
 	[mainlist removeTaskView:taskview];
+	[[taskview archiveController] setIsCancelled:YES];
 }
 
 
@@ -304,7 +303,7 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)startExtractionForArchiveController:(TUArchiveController *)archive
 {
-	if(![mainlist containsTaskView:[archive taskView]]) // This archive has been cancelled
+	if([archive isCancelled])
 	{
 		[archivecontrollers removeObjectIdenticalTo:archive];
 		[extracttasks finishCurrentTask];
@@ -319,6 +318,7 @@ static BOOL IsPathWritable(NSString *path);
 -(void)archiveControllerFinished:(TUArchiveController *)archive
 {
 	[mainlist removeTaskView:[archive taskView]];
+	[archivecontrollers removeObjectIdenticalTo:archive];
 	[extracttasks finishCurrentTask];
 }
 
@@ -328,6 +328,7 @@ static BOOL IsPathWritable(NSString *path);
 
 	[TUArchiveController clearGlobalPassword];
 }
+
 
 
 

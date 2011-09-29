@@ -22,8 +22,6 @@ static NSString *globalpassword=nil;
 {
 	if((self=[super init]))
 	{
-		maincontroller=nil;
-
 		view=[taskview retain];
 		unarchiver=[[XADSimpleUnarchiver simpleUnarchiverForPath:filename error:NULL] retain];
 
@@ -55,12 +53,18 @@ static NSString *globalpassword=nil;
 
 
 
+-(BOOL)isCancelled { return cancelled; }
+
 -(NSString *)filename { return [[unarchiver outerArchiveParser] filename]; }
 
 -(NSArray *)allFilenames { return [[unarchiver outerArchiveParser] allFilenames]; }
 
 -(TUArchiveTaskView *)taskView { return view; }
 
+
+
+
+-(void)setIsCancelled:(BOOL)iscancelled { cancelled=iscancelled; }
 
 -(void)setDestination:(NSString *)newdestination
 {

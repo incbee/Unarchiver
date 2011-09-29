@@ -7,7 +7,6 @@
 
 @interface TUArchiveController:NSObject
 {
-	TUController *maincontroller;
 	TUArchiveTaskView *view;
 	XADSimpleUnarchiver *unarchiver;
 	NSString *archivename,*destination,*tmpdest;
@@ -24,10 +23,12 @@
 -(id)initWithFilename:(NSString *)filename taskView:(TUArchiveTaskView *)taskview;
 -(void)dealloc;
 
+-(BOOL)isCancelled;
 -(NSString *)filename;
 -(NSArray *)allFilenames;
 -(TUArchiveTaskView *)taskView;
 
+-(void)setIsCancelled:(BOOL)iscancelled;
 -(void)setDestination:(NSString *)destination;
 
 -(NSString *)currentArchiveName;
