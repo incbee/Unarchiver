@@ -44,6 +44,7 @@
 	IBOutlet NSTextField *passwordmessagefield;
 	IBOutlet NSTextField *passwordfield;
 	IBOutlet NSImageView *passwordicon;
+	IBOutlet TUEncodingPopUp *passwordpopup;
 	IBOutlet NSButton *passwordapplyallcheck;
 
 	IBOutlet NSView *encodingview;
@@ -70,7 +71,7 @@
 -(BOOL)displayError:(NSString *)error ignoreAll:(BOOL *)ignoreall;
 -(void)displayOpenError:(NSString *)error;
 -(NSStringEncoding)displayEncodingSelectorForXADString:(id <XADString>)string;
--(NSString *)displayPasswordInputWithApplyToAllPointer:(BOOL *)applyall;
+-(NSString *)displayPasswordInputWithApplyToAllPointer:(BOOL *)applyall encodingPointer:(NSStringEncoding *)encoding;
 
 -(void)setupWaitView;
 -(void)setupProgressViewInPreparingMode;

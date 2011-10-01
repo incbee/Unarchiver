@@ -8,6 +8,7 @@
 
 
 static NSString *globalpassword=nil;
+NSStringEncoding globalpasswordencoding=0;
 
 
 @implementation TUArchiveController
@@ -16,6 +17,7 @@ static NSString *globalpassword=nil;
 {
 	[globalpassword release];
 	globalpassword=nil;
+	globalpasswordencoding=0;
 }
 
 -(id)initWithFilename:(NSString *)filename taskView:(TUArchiveTaskView *)taskview
@@ -58,6 +60,8 @@ static NSString *globalpassword=nil;
 -(NSString *)filename { return [[unarchiver outerArchiveParser] filename]; }
 
 -(NSArray *)allFilenames { return [[unarchiver outerArchiveParser] allFilenames]; }
+
+-(BOOL)caresAboutPasswordEncoding { return [[unarchiver archiveParser] caresAboutPasswordEncoding]; }
 
 -(TUArchiveTaskView *)taskView { return view; }
 
@@ -337,16 +341,33 @@ static NSString *globalpassword=nil;
 	if(globalpassword)
 	{
 		[sender setPassword:globalpassword];
+		if(globalpasswordencoding)
+		{
+			[[sender archiveParser] setPasswordEncodingName:
+			[XADString encodingNameForEncoding:globalpasswordencoding]];
+		}
 	}
 	else
 	{
 		BOOL applytoall;
-		NSString *password=[view displayPasswordInputWithApplyToAllPointer:&applytoall];
+		NSStringEncoding encoding;
+		NSString *password=[view displayPasswordInputWithApplyToAllPointer:&applytoall
+		encodingPointer:&encoding];
 
 		if(password)
 		{
 			[sender setPassword:password];
-			if(applytoall) globalpassword=[password retain];
+			if(encoding)
+			{
+				[[sender archiveParser] setPasswordEncodingName:
+				[XADString encodingNameForEncoding:encoding]];
+			}
+
+			if(applytoall)
+			{
+				globalpassword=[password retain];
+				globalpasswordencoding=encoding;
+			}
 		}
 		else
 		{

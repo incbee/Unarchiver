@@ -122,13 +122,16 @@
 	else return 0;
 }
 
--(NSString *)displayPasswordInputWithApplyToAllPointer:(BOOL *)applyall
+-(NSString *)displayPasswordInputWithApplyToAllPointer:(BOOL *)applyall encodingPointer:(NSStringEncoding *)encoding
 {
 	[self performSelectorOnMainThread:@selector(setupPasswordView) withObject:nil waitUntilDone:NO];
 
 	BOOL res=[self waitForResponseFromUI];
 
 	[self performSelectorOnMainThread:@selector(setDisplayedView:) withObject:progressview waitUntilDone:NO];
+
+	if([archive caresAboutPasswordEncoding]) *encoding=[passwordpopup selectedTag];
+	else *encoding=0;
 
 	if(res && applyall)
 	{
@@ -247,6 +250,16 @@
 	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:[archive filename]];
 	[icon setSize:[passwordicon frame].size];
 	[passwordicon setImage:icon];
+
+	if([archive caresAboutPasswordEncoding])
+	{
+		[passwordpopup buildEncodingListWithDefaultEncoding];
+		[passwordpopup selectItemWithTag:0];
+	}
+	else
+	{
+		[passwordpopup setHidden:YES];
+	}
 
 	[self setDisplayedView:passwordview];
 	[[passwordfield window] makeFirstResponder:passwordfield];

@@ -40,6 +40,19 @@ static BOOL SanityCheckString(NSString *string);
 	[item release];
 }
 
+-(void)buildEncodingListWithDefaultEncoding
+{
+	[self buildEncodingListMatchingXADString:nil];
+
+	[[self menu] insertItem:[NSMenuItem separatorItem] atIndex:0];
+
+	NSMenuItem *item=[[NSMenuItem alloc] init];
+	[item setTitle:NSLocalizedString(@"Default encoding",@"Option in the password encoding pop-up to use the default encoding")];
+	[item setTag:0];
+	[[self menu] insertItem:item atIndex:0];
+	[item release];
+}
+
 -(void)buildEncodingListMatchingXADString:(id <XADString>)string
 {
 	[self removeAllItems];

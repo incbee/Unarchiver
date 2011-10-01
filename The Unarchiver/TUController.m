@@ -342,7 +342,7 @@ static BOOL IsPathWritable(NSString *path);
 		NSMakeRect(frame.origin.x,frame.origin.y+frame.size.height-size.height,
 		size.width,size.height)];
 
-	[mainwindow setMinSize:NSMakeSize(250,newframe.size.height)];
+	[mainwindow setMinSize:NSMakeSize(316,newframe.size.height)];
 	[mainwindow setMaxSize:NSMakeSize(100000,newframe.size.height)];
 	[mainwindow setFrame:newframe display:YES animate:NO];
 }

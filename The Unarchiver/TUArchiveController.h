@@ -26,6 +26,7 @@
 -(BOOL)isCancelled;
 -(NSString *)filename;
 -(NSArray *)allFilenames;
+-(BOOL)caresAboutPasswordEncoding;
 -(TUArchiveTaskView *)taskView;
 
 -(void)setIsCancelled:(BOOL)iscancelled;

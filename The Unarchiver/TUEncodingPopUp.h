@@ -10,6 +10,7 @@
 
 -(void)buildEncodingList;
 -(void)buildEncodingListWithAutoDetect;
+-(void)buildEncodingListWithDefaultEncoding;
 -(void)buildEncodingListMatchingXADString:(id <XADString>)string;
 
 +(NSArray *)encodings;
