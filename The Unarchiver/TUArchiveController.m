@@ -320,7 +320,7 @@ NSStringEncoding globalpasswordencoding=0;
 
 	NSStringEncoding encoding=0;
 	if(selected_encoding) encoding=selected_encoding;
-	else if([source confidence]*100<threshold) encoding=[source encoding];
+	else if([source confidence]*100>=threshold) encoding=[source encoding];
 
 	// If we have an encoding we trust, and it can decode the string, use it.
 	if(encoding && [string canDecodeWithEncoding:encoding])
