@@ -312,7 +312,7 @@ NSStringEncoding globalpasswordencoding=0;
 	NSStringEncoding setencoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
 	if(setencoding) return [XADString encodingNameForEncoding:setencoding];
 
-	XADStringSource *source=[[sender archiveParser] stringSource];
+	XADStringSource *source=[string source];
 
 	// If the user has already been asked for an encoding, try to use it.
 	// Otherwise, if the confidence in the guessed encoding is high enough, try that.
@@ -379,7 +379,14 @@ NSStringEncoding globalpasswordencoding=0;
 -(void)simpleUnarchiver:(XADSimpleUnarchiver *)sender willExtractEntryWithDictionary:(NSDictionary *)dict to:(NSString *)path
 {
 	XADPath *name=[dict objectForKey:XADFileNameKey];
-	if(name) [view setName:[name string]]; // TODO: what about encodings?
+	XADStringSource *source=[name source];
+
+	// TODO: Do something prettier here.
+	NSStringEncoding encoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
+	if(!encoding) encoding=selected_encoding;
+	if(!encoding) encoding=[source encoding];
+
+	if(name) [view setName:[name stringWithEncoding:encoding]];
 	else [view setName:@""];
 }
 
