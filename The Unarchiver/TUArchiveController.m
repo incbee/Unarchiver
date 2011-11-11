@@ -312,15 +312,13 @@ NSStringEncoding globalpasswordencoding=0;
 	NSStringEncoding setencoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
 	if(setencoding) return [XADString encodingNameForEncoding:setencoding];
 
-	XADStringSource *source=[string source];
-
 	// If the user has already been asked for an encoding, try to use it.
 	// Otherwise, if the confidence in the guessed encoding is high enough, try that.
 	int threshold=[[NSUserDefaults standardUserDefaults] integerForKey:@"autoDetectionThreshold"];
 
 	NSStringEncoding encoding=0;
 	if(selected_encoding) encoding=selected_encoding;
-	else if([source confidence]*100>=threshold) encoding=[source encoding];
+	else if([string confidence]*100>=threshold) encoding=[string encoding];
 
 	// If we have an encoding we trust, and it can decode the string, use it.
 	if(encoding && [string canDecodeWithEncoding:encoding])
@@ -379,12 +377,11 @@ NSStringEncoding globalpasswordencoding=0;
 -(void)simpleUnarchiver:(XADSimpleUnarchiver *)sender willExtractEntryWithDictionary:(NSDictionary *)dict to:(NSString *)path
 {
 	XADPath *name=[dict objectForKey:XADFileNameKey];
-	XADStringSource *source=[name source];
 
 	// TODO: Do something prettier here.
 	NSStringEncoding encoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
 	if(!encoding) encoding=selected_encoding;
-	if(!encoding) encoding=[source encoding];
+	if(!encoding) encoding=[name encoding];
 
 	if(name) [view setName:[name stringWithEncoding:encoding]];
 	else [view setName:@""];
