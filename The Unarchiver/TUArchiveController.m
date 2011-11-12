@@ -142,18 +142,35 @@ NSStringEncoding globalpasswordencoding=0;
 		return;
 	}
 
-	BOOL alwayscreatepref=[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"]==2;
+	int foldermode=[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"];
 	BOOL copydatepref=[[NSUserDefaults standardUserDefaults] integerForKey:@"folderModifiedDate"]==2;
 	BOOL changefilespref=[[NSUserDefaults standardUserDefaults] boolForKey:@"changeDateOfFiles"];
 
 	[unarchiver setDelegate:self];
-	[unarchiver setDestination:tmpdest];
 	[unarchiver setPropagatesRelevantMetadata:YES];
 	[unarchiver setAlwaysRenamesFiles:YES];
-	[unarchiver setRemovesEnclosingDirectoryForSoloItems:!alwayscreatepref];
 	[unarchiver setCopiesArchiveModificationTimeToEnclosingDirectory:copydatepref];
 	[unarchiver setCopiesArchiveModificationTimeToSoloItems:copydatepref && changefilespref];
 	[unarchiver setResetsDateForSoloItems:!copydatepref && changefilespref];
+
+	switch(foldermode)
+	{
+		case 1: // Enclose multiple items.
+		default:
+			[unarchiver setDestination:tmpdest];
+			[unarchiver setRemovesEnclosingDirectoryForSoloItems:YES];
+		break;
+
+		case 2: // Always enclose.
+			[unarchiver setDestination:tmpdest];
+			[unarchiver setRemovesEnclosingDirectoryForSoloItems:NO];
+		break;
+
+		case 3: // Never enclose.
+			[unarchiver setDestination:destination];
+			[unarchiver setEnclosingDirectoryName:nil];
+		break;
+	}
 
 	XADError error=[unarchiver parse];
 	if(error==XADBreakError)
@@ -197,23 +214,28 @@ NSStringEncoding globalpasswordencoding=0;
 
 	BOOL soloitem=[unarchiver wasSoloItem];
 
-	NSString *path=[unarchiver createdItem];
-	NSString *filename=[path lastPathComponent];
-	NSString *newpath=[destination stringByAppendingPathComponent:filename];
-
-	// Check if we accidentally created a package.
-	if(!soloitem)
-	if([[NSWorkspace sharedWorkspace] isFilePackageAtPath:path])
+	// Move files out of temporary directory, if we used one.
+	NSString *newpath=nil;
+	if([unarchiver enclosingDirectoryName])
 	{
-		newpath=[newpath stringByDeletingPathExtension];
+		NSString *path=[unarchiver createdItem];
+		NSString *filename=[path lastPathComponent];
+		NSString *newpath=[destination stringByAppendingPathComponent:filename];
+
+		// Check if we accidentally created a package.
+		if(!soloitem)
+		if([[NSWorkspace sharedWorkspace] isFilePackageAtPath:path])
+		{
+			newpath=[newpath stringByDeletingPathExtension];
+		}
+
+		// Avoid collisions.
+		newpath=[unarchiver _findUniquePathForOriginalPath:newpath];
+
+		// Move files into place
+		[unarchiver _moveItemAtPath:path toPath:newpath];
+		[unarchiver _removeItemAtPath:tmpdest];
 	}
-
-	// Avoid collisions.
-	newpath=[unarchiver _findUniquePathForOriginalPath:newpath];
-
-	// Move files into place
-	[unarchiver _moveItemAtPath:path toPath:newpath];
-	[unarchiver _removeItemAtPath:tmpdest];
 
 	// Remove temporary directory from crash recovery list
 	[self forgetTempDirectory:tmpdest];
@@ -240,15 +262,22 @@ NSStringEncoding globalpasswordencoding=0;
 	// Open folder if requested
 	if(openfolderpref)
 	{
-		BOOL isdir;
-		[[NSFileManager defaultManager] fileExistsAtPath:newpath isDirectory:&isdir];
-		if(isdir&&![[NSWorkspace sharedWorkspace] isFilePackageAtPath:newpath])
+		if(newpath)
 		{
-			[[NSWorkspace sharedWorkspace] openFile:newpath];
+			BOOL isdir;
+			[[NSFileManager defaultManager] fileExistsAtPath:newpath isDirectory:&isdir];
+			if(isdir&&![[NSWorkspace sharedWorkspace] isFilePackageAtPath:newpath])
+			{
+				[[NSWorkspace sharedWorkspace] openFile:newpath];
+			}
+			else
+			{
+				[[NSWorkspace sharedWorkspace] selectFile:newpath inFileViewerRootedAtPath:@""];
+			}
 		}
 		else
 		{
-			[[NSWorkspace sharedWorkspace] selectFile:newpath inFileViewerRootedAtPath:@""];
+			[[NSWorkspace sharedWorkspace] openFile:destination];
 		}
 	}
 
