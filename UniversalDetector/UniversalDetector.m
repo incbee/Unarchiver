@@ -14,6 +14,7 @@
 	{
 		detector=AllocUniversalDetector();
 		charset=nil;
+		lastcstring=NULL;
 	}
 	return self;
 }
@@ -33,8 +34,6 @@
 -(void)analyzeBytes:(const char *)data length:(int)len
 {
 	UniversalDetectorHandleData(detector,data,len);
-	[charset release];
-	charset=nil;
 }
 
 -(void)reset { UniversalDetectorReset(detector); }
@@ -56,17 +55,19 @@ The possible return values of -[UniversalDetector MIMECharset] should be as foll
 
 -(NSString *)MIMECharset
 {
-	if(!charset)
+	const char *cstr=UniversalDetectorCharset(detector,&confidence);
+	if(!cstr) return nil;
+
+	// nsUniversalDetector detects CP949 but returns "EUC-KR" because CP949
+	// lacks an IANA name. Kludge the name to make sure decoding succeeds.
+	if(strcmp(cstr,"EUC-KR")==0) cstr="CP949";
+
+	if(cstr!=lastcstring)
 	{
-		const char *cstr=UniversalDetectorCharset(detector,&confidence);
-		if(!cstr) return nil;
-
-		// nsUniversalDetector detects CP949 but returns "EUC-KR" because CP949
-		// lacks an IANA name. Kludge the name to make sure decoding succeeds.
-		if(strcmp(cstr,"EUC-KR")==0) cstr="CP949";
-
 		charset=[[NSString alloc] initWithUTF8String:cstr];
+		lastcstring=cstr;
 	}
+
 	return charset;
 }
 
