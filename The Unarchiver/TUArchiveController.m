@@ -82,8 +82,8 @@ NSStringEncoding globalpasswordencoding=0;
 -(NSString *)currentArchiveName
 {
 	NSString *currfilename=[[unarchiver archiveParser] currentFilename];
-	NSString *currarchivename=[currfilename lastPathComponent];
-	return currarchivename;
+	if(!currfilename) currfilename=[[unarchiver outerArchiveParser] currentFilename];
+	return [currfilename lastPathComponent];
 }
 
 -(NSString *)localizedDescriptionOfError:(XADError)error
@@ -230,11 +230,11 @@ NSStringEncoding globalpasswordencoding=0;
 		}
 
 		// Avoid collisions.
-		newpath=[unarchiver _findUniquePathForOriginalPath:newpath];
+		newpath=[XADSimpleUnarchiver _findUniquePathForOriginalPath:newpath];
 
 		// Move files into place
-		[unarchiver _moveItemAtPath:path toPath:newpath];
-		[unarchiver _removeItemAtPath:tmpdest];
+		[XADSimpleUnarchiver _moveItemAtPath:path toPath:newpath];
+		[XADSimpleUnarchiver _removeItemAtPath:tmpdest];
 	}
 
 	// Remove temporary directory from crash recovery list
