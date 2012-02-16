@@ -9,6 +9,7 @@
 }
 
 +(UniversalDetector *)detector;
++(NSArray *)possibleMIMECharsets;
 
 -(id)init;
 -(void)dealloc;
