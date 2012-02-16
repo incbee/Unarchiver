@@ -9,287 +9,8 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>lha</string>
-				<string>lzh</string>
-				<string>LHA</string>
-				<string>LZH</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>lha.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-lzh-compressed</string>
-				<string>application/lha</string>
-				<string>application/x-lha</string>
-				<string>application/lzh</string>
-				<string>application/x-lzh</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>LhA Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>cx.c3.lha-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>hqx</string>
-				<string>HQX</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>hqx.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/mac-binhex40</string>
-				<string>application/mac-binhex</string>
-				<string>application/binhex</string>
-				<string>application/binhex4</string>
-				<string>application/x-binhex40</string>
-				<string>application/x-mac-binhex40</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>BinHex File</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.apple.binhex-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>bin</string>
-				<string>macbin</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>bin.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-macbinary</string>
-				<string>application/macbinary</string>
-				<string>application/mac-binary</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>MacBinary File</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>BINA</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.apple.macbinary-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>7z</string>
-				<string>7Z</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>7z.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-7z-compressed</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>7-Zip Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.7-zip.7-zip-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>gz</string>
-				<string>gzip</string>
-				<string>GZ</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>gz.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/gzip</string>
-				<string>application/x-gzip</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>Gzip File</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>Gzip</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.gnu.gnu-zip-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>tgz</string>
-				<string>tar-gz</string>
-				<string>TGZ</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>gz.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Gzip Tar Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.gnu.gnu-zip-tar-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>bz2</string>
-				<string>bzip2</string>
-				<string>bz</string>
-				<string>BZ2</string>
-				<string>BZ</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>bz2.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/bzip2</string>
-				<string>application/bzip</string>
-				<string>application/x-bzip2</string>
-				<string>application/x-bzip</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>Bzip2 File</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>Bzp2</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.bzip2-archive</string>
-				<string>org.bzip.bzip2-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>tbz2</string>
-				<string>tbz</string>
-				<string>TBZ</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>bz2.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Bzip2 Tar Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.tar-bzip2-archive</string>
-				<string>org.bzip.bzip2-tar-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>xz</string>
-				<string>XZ</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>archive.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-xz</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>XZ File</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.tukaani.xz-archive</string>
-				<string>public.xz-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>txz</string>
-				<string>TXZ</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>tar.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>XZ Tar Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.tukaani.xz-tar-archive</string>
-				<string>public.tar-xz-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
 				<string>zip</string>
-				<string>ZIP</string>
 				<string>z01</string>
-				<string>Z01</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>zip.icns</string>
@@ -322,142 +43,7 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>zipx</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>zip.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Zipx Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.winzip.zipx-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>sit</string>
-				<string>sitx</string>
-				<string>SIT</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>sit.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-stuffit</string>
-				<string>application/x-sit</string>
-				<string>application/stuffit</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>StuffIt Archive</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>SIT!</string>
-				<string>SITD</string>
-				<string>SIT5</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.allume.stuffit-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>tar</string>
-				<string>TAR</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>tar.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-tar</string>
-				<string>application/tar</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>Tar Archive</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>TARF</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.tar-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>iso</string>
-				<string>ISO</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>archive.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-iso-image</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>ISO Disk Image</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.iso-image</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>gtar</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>tar.icns</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-gtar</string>
-				<string>application/gnutar</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>GNU Tar Archive</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.gnu.gnu-tar-archive</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>XML</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
 				<string>rar</string>
-				<string>RAR</string>
 				<string>r00</string>
 				<string>r01</string>
 				<string>r02</string>
@@ -558,106 +144,6 @@
 				<string>r97</string>
 				<string>r98</string>
 				<string>r99</string>
-				<string>R00</string>
-				<string>R01</string>
-				<string>R02</string>
-				<string>R03</string>
-				<string>R04</string>
-				<string>R05</string>
-				<string>R06</string>
-				<string>R07</string>
-				<string>R08</string>
-				<string>R09</string>
-				<string>R10</string>
-				<string>R11</string>
-				<string>R12</string>
-				<string>R13</string>
-				<string>R14</string>
-				<string>R15</string>
-				<string>R16</string>
-				<string>R17</string>
-				<string>R18</string>
-				<string>R19</string>
-				<string>R20</string>
-				<string>R21</string>
-				<string>R22</string>
-				<string>R23</string>
-				<string>R24</string>
-				<string>R25</string>
-				<string>R26</string>
-				<string>R27</string>
-				<string>R28</string>
-				<string>R29</string>
-				<string>R30</string>
-				<string>R31</string>
-				<string>R32</string>
-				<string>R33</string>
-				<string>R34</string>
-				<string>R35</string>
-				<string>R36</string>
-				<string>R37</string>
-				<string>R38</string>
-				<string>R39</string>
-				<string>R40</string>
-				<string>R41</string>
-				<string>R42</string>
-				<string>R43</string>
-				<string>R44</string>
-				<string>R45</string>
-				<string>R46</string>
-				<string>R47</string>
-				<string>R48</string>
-				<string>R49</string>
-				<string>R50</string>
-				<string>R51</string>
-				<string>R52</string>
-				<string>R53</string>
-				<string>R54</string>
-				<string>R55</string>
-				<string>R56</string>
-				<string>R57</string>
-				<string>R58</string>
-				<string>R59</string>
-				<string>R60</string>
-				<string>R61</string>
-				<string>R62</string>
-				<string>R63</string>
-				<string>R64</string>
-				<string>R65</string>
-				<string>R66</string>
-				<string>R67</string>
-				<string>R68</string>
-				<string>R69</string>
-				<string>R70</string>
-				<string>R71</string>
-				<string>R72</string>
-				<string>R73</string>
-				<string>R74</string>
-				<string>R75</string>
-				<string>R76</string>
-				<string>R77</string>
-				<string>R78</string>
-				<string>R79</string>
-				<string>R80</string>
-				<string>R81</string>
-				<string>R82</string>
-				<string>R83</string>
-				<string>R84</string>
-				<string>R85</string>
-				<string>R86</string>
-				<string>R87</string>
-				<string>R88</string>
-				<string>R89</string>
-				<string>R90</string>
-				<string>R91</string>
-				<string>R92</string>
-				<string>R93</string>
-				<string>R94</string>
-				<string>R95</string>
-				<string>R96</string>
-				<string>R97</string>
-				<string>R98</string>
-				<string>R99</string>
 				<string>000</string>
 				<string>001</string>
 				<string>002</string>
@@ -786,8 +272,464 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>7z</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>7z.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-7z-compressed</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>7-Zip Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.7-zip.7-zip-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>lha</string>
+				<string>lzh</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>lha.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-lzh-compressed</string>
+				<string>application/lha</string>
+				<string>application/x-lha</string>
+				<string>application/lzh</string>
+				<string>application/x-lzh</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>LhA Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>cx.c3.lha-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+ 		<dict>
+ 			<key>CFBundleTypeExtensions</key>
+ 			<array>
+				<string>zipx</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>zip.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Zipx Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.winzip.zipx-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>sit</string>
+				<string>sitx</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>sit.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-stuffit</string>
+				<string>application/x-sit</string>
+				<string>application/stuffit</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>StuffIt Archive</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>SIT!</string>
+				<string>SITD</string>
+				<string>SIT5</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.allume.stuffit-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>hqx</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>hqx.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/mac-binhex40</string>
+				<string>application/mac-binhex</string>
+				<string>application/binhex</string>
+				<string>application/binhex4</string>
+				<string>application/x-binhex40</string>
+				<string>application/x-mac-binhex40</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>BinHex File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.apple.binhex-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>bin</string>
+				<string>macbin</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>bin.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-macbinary</string>
+				<string>application/macbinary</string>
+				<string>application/mac-binary</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>MacBinary File</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>BINA</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.apple.macbinary-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>gz</string>
+				<string>gzip</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>gz.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/gzip</string>
+				<string>application/x-gzip</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Gzip File</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>Gzip</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.gnu.gnu-zip-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>tgz</string>
+				<string>tar-gz</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>gz.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Gzip Tar Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.gnu.gnu-zip-tar-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>bz2</string>
+				<string>bzip2</string>
+				<string>bz</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>bz2.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/bzip2</string>
+				<string>application/bzip</string>
+				<string>application/x-bzip2</string>
+				<string>application/x-bzip</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Bzip2 File</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>Bzp2</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.bzip2-archive</string>
+				<string>org.bzip.bzip2-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>tbz2</string>
+				<string>tbz</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>bz2.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Bzip2 Tar Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.tar-bzip2-archive</string>
+				<string>org.bzip.bzip2-tar-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>xz</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-xz</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>XZ File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.tukaani.xz-archive</string>
+				<string>public.xz-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>txz</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>tar.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>XZ Tar Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.tukaani.xz-tar-archive</string>
+				<string>public.tar-xz-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>tar</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>tar.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-tar</string>
+				<string>application/tar</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Tar Archive</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>TARF</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.tar-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>iso</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-iso-image</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>ISO Disk Image</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.iso-image</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>cdi</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>CDI Disk Image</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.padus.cdi-image</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>nrg</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>NRG Disk Image</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.nero.nrg-image</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>mdf</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>MDF Disk Image</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.alcohol-soft.mdf-image</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>gtar</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>tar.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-gtar</string>
+				<string>application/gnutar</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>GNU Tar Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.gnu.gnu-tar-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>z</string>
-				<string>Z</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>z.icns</string>
@@ -859,7 +801,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>xar</string>
-				<string>XAR</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -881,7 +822,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>ace</string>
-				<string>ACE</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>ace.icns</string>
@@ -910,7 +850,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>arj</string>
-				<string>ARJ</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -931,11 +870,8 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>arc</string>
-				<string>ARC</string>
 				<string>pak</string>
-				<string>PAK</string>
 				<string>spk</string>
-				<string>SPK</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -956,7 +892,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>zoo</string>
-				<string>ZOO</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -977,11 +912,8 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>lbr</string>
-				<string>LBR</string>
 				<string>lqr</string>
-				<string>LQR</string>
 				<string>lzr</string>
-				<string>LZR</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1002,7 +934,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>cab</string>
-				<string>CAB</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>cab.icns</string>
@@ -1027,7 +958,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>rpm</string>
-				<string>RPM</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>rpm.icns</string>
@@ -1053,7 +983,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>deb</string>
-				<string>DEB</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1070,7 +999,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>alz</string>
-				<string>ALZ</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1091,7 +1019,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>dd</string>
-				<string>DD</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1116,7 +1043,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>cpt</string>
-				<string>CPT</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1141,7 +1067,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>pit</string>
-				<string>PIT</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1162,7 +1087,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>now</string>
-				<string>NOW</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1190,7 +1114,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>sea</string>
-				<string>SEA</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1211,7 +1134,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>exe</string>
-				<string>EXE</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>exe.icns</string>
@@ -1276,7 +1198,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>pax</string>
-				<string>PAX</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1298,7 +1219,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>ha</string>
-				<string>HA</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1319,7 +1239,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>adf</string>
-				<string>ADF</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>adf.icns</string>
@@ -1340,7 +1259,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>adz</string>
-				<string>ADZ</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>adz.icns</string>
@@ -1361,7 +1279,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>dms</string>
-				<string>DMS</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>dms.icns</string>
@@ -1382,7 +1299,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>f</string>
-				<string>F</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>amiga.icns</string>
@@ -1403,7 +1319,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>lzx</string>
-				<string>LZX</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>amiga.icns</string>
@@ -1428,7 +1343,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>dcs</string>
-				<string>DCS</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>amiga.icns</string>
@@ -1449,7 +1363,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>pkd</string>
-				<string>PKD</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>amiga.icns</string>
@@ -1470,7 +1383,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>xms</string>
-				<string>XMS</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>amiga.icns</string>
@@ -1491,7 +1403,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>zom</string>
-				<string>ZOM</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>amiga.icns</string>
@@ -1512,7 +1423,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>pp</string>
-				<string>PP</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>amiga.icns</string>
@@ -1533,7 +1443,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>nsa</string>
-				<string>NSA</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1554,7 +1463,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>sar</string>
-				<string>SAR</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1639,7 +1547,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>jar</string>
-				<string>JAR</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>jar.icns</string>
@@ -1660,7 +1567,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>cbz</string>
-				<string>CBZ</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>zip.icns</string>
@@ -1677,7 +1583,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>cbr</string>
-				<string>CBR</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>rar.icns</string>
@@ -1694,7 +1599,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>nds</string>
-				<string>NDS</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1711,7 +1615,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>pkg</string>
-				<string>PKG</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1728,7 +1631,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>a</string>
-				<string>A</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>archive.icns</string>
@@ -1832,8 +1734,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>UTExportedTypeDeclarations</key>
-	<array/>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -1880,7 +1780,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>now</string>
-					<string>NOW</string>
 				</array>
 			</dict>
 		</dict>
@@ -1901,11 +1800,8 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>lbr</string>
-					<string>LBR</string>
 					<string>lqr</string>
-					<string>LQR</string>
 					<string>lzr</string>
-					<string>LZR</string>
 				</array>
 			</dict>
 		</dict>
@@ -1926,7 +1822,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>zoo</string>
-					<string>ZOO</string>
 				</array>
 			</dict>
 		</dict>
@@ -1947,7 +1842,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>arj</string>
-					<string>ARJ</string>
 				</array>
 			</dict>
 		</dict>
@@ -1968,11 +1862,8 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>arc</string>
-					<string>ARC</string>
 					<string>pak</string>
-					<string>PAK</string>
 					<string>spk</string>
-					<string>SPK</string>
 				</array>
 			</dict>
 		</dict>
@@ -1992,7 +1883,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>z01</string>
-					<string>Z01</string>
 				</array>
 			</dict>
 		</dict>
@@ -2013,7 +1903,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>pp</string>
-					<string>PP</string>
 				</array>
 			</dict>
 		</dict>
@@ -2034,7 +1923,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>pit</string>
-					<string>PIT</string>
 				</array>
 			</dict>
 		</dict>
@@ -2055,7 +1943,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>xar</string>
-					<string>XAR</string>
 				</array>
 			</dict>
 		</dict>
@@ -2096,7 +1983,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>adf</string>
-					<string>ADF</string>
 				</array>
 			</dict>
 		</dict>
@@ -2117,7 +2003,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>adz</string>
-					<string>ADZ</string>
 				</array>
 			</dict>
 		</dict>
@@ -2138,7 +2023,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>sea</string>
-					<string>SEA</string>
 				</array>
 			</dict>
 		</dict>
@@ -2159,7 +2043,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>cab</string>
-					<string>CAB</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
@@ -2184,7 +2067,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>pax</string>
-					<string>PAX</string>
 				</array>
 			</dict>
 		</dict>
@@ -2205,7 +2087,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>7z</string>
-					<string>7Z</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
@@ -2230,7 +2111,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>rar</string>
-					<string>RAR</string>
 					<string>r00</string>
 					<string>r01</string>
 					<string>r02</string>
@@ -2331,106 +2211,6 @@
 					<string>r97</string>
 					<string>r98</string>
 					<string>r99</string>
-					<string>R00</string>
-					<string>R01</string>
-					<string>R02</string>
-					<string>R03</string>
-					<string>R04</string>
-					<string>R05</string>
-					<string>R06</string>
-					<string>R07</string>
-					<string>R08</string>
-					<string>R09</string>
-					<string>R10</string>
-					<string>R11</string>
-					<string>R12</string>
-					<string>R13</string>
-					<string>R14</string>
-					<string>R15</string>
-					<string>R16</string>
-					<string>R17</string>
-					<string>R18</string>
-					<string>R19</string>
-					<string>R20</string>
-					<string>R21</string>
-					<string>R22</string>
-					<string>R23</string>
-					<string>R24</string>
-					<string>R25</string>
-					<string>R26</string>
-					<string>R27</string>
-					<string>R28</string>
-					<string>R29</string>
-					<string>R30</string>
-					<string>R31</string>
-					<string>R32</string>
-					<string>R33</string>
-					<string>R34</string>
-					<string>R35</string>
-					<string>R36</string>
-					<string>R37</string>
-					<string>R38</string>
-					<string>R39</string>
-					<string>R40</string>
-					<string>R41</string>
-					<string>R42</string>
-					<string>R43</string>
-					<string>R44</string>
-					<string>R45</string>
-					<string>R46</string>
-					<string>R47</string>
-					<string>R48</string>
-					<string>R49</string>
-					<string>R50</string>
-					<string>R51</string>
-					<string>R52</string>
-					<string>R53</string>
-					<string>R54</string>
-					<string>R55</string>
-					<string>R56</string>
-					<string>R57</string>
-					<string>R58</string>
-					<string>R59</string>
-					<string>R60</string>
-					<string>R61</string>
-					<string>R62</string>
-					<string>R63</string>
-					<string>R64</string>
-					<string>R65</string>
-					<string>R66</string>
-					<string>R67</string>
-					<string>R68</string>
-					<string>R69</string>
-					<string>R70</string>
-					<string>R71</string>
-					<string>R72</string>
-					<string>R73</string>
-					<string>R74</string>
-					<string>R75</string>
-					<string>R76</string>
-					<string>R77</string>
-					<string>R78</string>
-					<string>R79</string>
-					<string>R80</string>
-					<string>R81</string>
-					<string>R82</string>
-					<string>R83</string>
-					<string>R84</string>
-					<string>R85</string>
-					<string>R86</string>
-					<string>R87</string>
-					<string>R88</string>
-					<string>R89</string>
-					<string>R90</string>
-					<string>R91</string>
-					<string>R92</string>
-					<string>R93</string>
-					<string>R94</string>
-					<string>R95</string>
-					<string>R96</string>
-					<string>R97</string>
-					<string>R98</string>
-					<string>R99</string>
 					<string>000</string>
 					<string>001</string>
 					<string>002</string>
@@ -2556,7 +2336,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>rpm</string>
-					<string>RPM</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
@@ -2585,7 +2364,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>dd</string>
-					<string>DD</string>
 				</array>
 			</dict>
 		</dict>
@@ -2610,7 +2388,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>cpt</string>
-					<string>CPT</string>
 				</array>
 			</dict>
 		</dict>
@@ -2635,7 +2412,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>ace</string>
-					<string>ACE</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
@@ -2660,7 +2436,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>alz</string>
-					<string>ALZ</string>
 					<string>a00</string>
 					<string>a01</string>
 					<string>a02</string>
@@ -2671,16 +2446,16 @@
 					<string>a07</string>
 					<string>a08</string>
 					<string>a09</string>
-					<string>A00</string>
-					<string>A01</string>
-					<string>A02</string>
-					<string>A03</string>
-					<string>A04</string>
-					<string>A05</string>
-					<string>A06</string>
-					<string>A07</string>
-					<string>A08</string>
-					<string>A09</string>
+					<string>a10</string>
+					<string>a11</string>
+					<string>a12</string>
+					<string>a13</string>
+					<string>a14</string>
+					<string>a15</string>
+					<string>a16</string>
+					<string>a17</string>
+					<string>a18</string>
+					<string>a19</string>
 				</array>
 			</dict>
 		</dict>
@@ -2705,7 +2480,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>z</string>
-					<string>Z</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
@@ -2751,7 +2525,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>dcs</string>
-					<string>DCS</string>
 				</array>
 			</dict>
 		</dict>
@@ -2772,7 +2545,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>dms</string>
-					<string>DMS</string>
 				</array>
 			</dict>
 		</dict>
@@ -2793,7 +2565,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>ha</string>
-					<string>HA</string>
 				</array>
 			</dict>
 		</dict>
@@ -2815,8 +2586,6 @@
 				<array>
 					<string>lha</string>
 					<string>lzh</string>
-					<string>LHA</string>
-					<string>LZH</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
@@ -2845,7 +2614,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>f</string>
-					<string>F</string>
 				</array>
 			</dict>
 		</dict>
@@ -2866,7 +2634,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>lzx</string>
-					<string>LZX</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
@@ -2891,7 +2658,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>pkd</string>
-					<string>PKD</string>
 				</array>
 			</dict>
 		</dict>
@@ -2912,7 +2678,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>xms</string>
-					<string>XMS</string>
 				</array>
 			</dict>
 		</dict>
@@ -2933,7 +2698,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>zom</string>
-					<string>ZOM</string>
 				</array>
 			</dict>
 		</dict>
@@ -2960,8 +2724,6 @@
 					<string>bz2</string>
 					<string>bzip2</string>
 					<string>bz</string>
-					<string>BZ2</string>
-					<string>BZ</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
@@ -2989,7 +2751,6 @@
 				<array>
 					<string>tbz2</string>
 					<string>tbz</string>
-					<string>TBZ</string>
 				</array>
 			</dict>
 		</dict>
@@ -3010,7 +2771,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>xz</string>
-					<string>XZ</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
@@ -3034,7 +2794,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>txz</string>
-					<string>TXZ</string>
 				</array>
 			</dict>
 		</dict>
@@ -3055,7 +2814,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>nsa</string>
-					<string>NSA</string>
 				</array>
 			</dict>
 		</dict>
@@ -3076,7 +2834,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>sar</string>
-					<string>SAR</string>
 				</array>
 			</dict>
 		</dict>
@@ -3097,11 +2854,67 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>deb</string>
-					<string>DEB</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
 					<string>application/x-deb</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.iso-image</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>CDI Disk Image</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.padus.cdi-image</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>cdi</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.iso-image</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>NRG Disk Image</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.nero.nrg-image</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>nrg</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.iso-image</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>MDF Disk Image</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.alcohol-soft.mdf-image</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mdf</string>
 				</array>
 			</dict>
 		</dict>

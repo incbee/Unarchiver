@@ -37,7 +37,7 @@
 -(void)dealloc;
 -(NSArray *)readFileTypes;
 
--(int)numberOfRowsInTableView:(NSTableView *)table;
+-(NSInteger)numberOfRowsInTableView:(NSTableView *)table;
 -(id)tableView:(NSTableView *)table objectValueForTableColumn:(NSTableColumn *)column row:(int)row;
 -(void)tableView:(NSTableView *)table setObjectValue:(id)object forTableColumn:(NSTableColumn *)column row:(int)row;
 

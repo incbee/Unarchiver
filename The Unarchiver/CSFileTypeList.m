@@ -19,7 +19,8 @@
 	if((self=[super initWithFrame:frame]))
 	{
 		NSLog(@"Custom view mode in IB not supported yet");
-		[self setDataSource:[[CSFileTypeListSource alloc] init]];
+		datasource=[CSFileTypeListSource new];
+		[self setDataSource:datasource];
 	}
 	return self;
 }
@@ -32,13 +33,13 @@
 
 -(IBAction)selectAll:(id)sender
 {
-	[(CSFileTypeListSource *)[self dataSource] claimAllTypes];
+	[datasource claimAllTypes];
 	[self reloadData];
 }
 
 -(IBAction)deselectAll:(id)sender
 {
-	[(CSFileTypeListSource *)[self dataSource] surrenderAllTypes];
+	[datasource surrenderAllTypes];
 	[self reloadData];
 }
 
@@ -96,7 +97,7 @@
 	return [NSArray arrayWithArray:array];
 }
 
--(int)numberOfRowsInTableView:(NSTableView *)table
+-(NSInteger)numberOfRowsInTableView:(NSTableView *)table
 {
 	return [filetypes count];
 }
