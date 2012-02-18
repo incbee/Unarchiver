@@ -347,6 +347,7 @@
 			<array>
 				<string>sit</string>
 				<string>sitx</string>
+				<string>1</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>sit.icns</string>
