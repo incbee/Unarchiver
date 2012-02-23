@@ -171,7 +171,7 @@ static BOOL IsPathWritable(NSString *path);
 	}
 
 	// Create status view and archive controller.
-	TUArchiveTaskView *taskview=[[[TUArchiveTaskView alloc] init] autorelease];
+	TUArchiveTaskView *taskview=[[TUArchiveTaskView new] autorelease];
 
 	TUArchiveController *archive=[[[TUArchiveController alloc]
 	initWithFilename:filename taskView:taskview] autorelease];

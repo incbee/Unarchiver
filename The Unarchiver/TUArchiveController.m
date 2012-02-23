@@ -57,7 +57,11 @@ NSStringEncoding globalpasswordencoding=0;
 
 -(BOOL)isCancelled { return cancelled; }
 
--(NSString *)filename { return [[unarchiver outerArchiveParser] filename]; }
+-(NSString *)filename
+{
+	if(!unarchiver) return archivename;
+	else return [[unarchiver outerArchiveParser] filename];
+}
 
 -(NSArray *)allFilenames { return [[unarchiver outerArchiveParser] allFilenames]; }
 
