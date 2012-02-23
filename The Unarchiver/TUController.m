@@ -133,6 +133,13 @@ static BOOL IsPathWritable(NSString *path);
 	while((filename=[enumerator nextObject])) [self newArchiveForFile:filename destination:desttype];
 }
 
+-(void)newArchivesForURLs:(NSArray *)urls destination:(int)desttype
+{
+	NSEnumerator *enumerator=[urls objectEnumerator];
+	NSURL *url;
+	while((url=[enumerator nextObject])) [self newArchiveForFile:[url path] destination:desttype];
+}
+
 -(void)newArchiveForFile:(NSString *)filename destination:(int)desttype
 {
 	// Check if this file is already included in any of the currently queued archives.
@@ -218,9 +225,15 @@ static BOOL IsPathWritable(NSString *path);
 		//[panel setTitle:NSLocalizedString(@"Extract Archive",@"Panel title when choosing an unarchiving destination for an archive")];
 		[panel setPrompt:NSLocalizedString(@"Extract",@"Panel OK button title when choosing an unarchiving destination for an archive")];
 
+		#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
+		[panel beginSheetModalForWindow:mainwindow completionHandler:^(NSInteger result) {
+			[self archiveDestinationPanelDidEnd:panel returnCode:result contextInfo:archive];
+		}];
+		#else
 		[panel beginSheetForDirectory:nil file:nil modalForWindow:mainwindow
 		modalDelegate:self didEndSelector:@selector(archiveDestinationPanelDidEnd:returnCode:contextInfo:)
 		contextInfo:archive];
+		#endif
 	}
 	else if(!IsPathWritable(destination))
 	{
@@ -247,7 +260,13 @@ static BOOL IsPathWritable(NSString *path);
 	if(res==NSOKButton)
 	{
 		[selecteddestination release];
+
+		#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
+		selecteddestination=[[[panel URL] path] retain];
+		#else
 		selecteddestination=[[panel directory] retain];
+		#endif
+
 		[self tryDestination:selecteddestination forArchiveController:archive];
 	}
 	else
@@ -372,10 +391,18 @@ static BOOL IsPathWritable(NSString *path);
 		[panel setCanChooseFiles:NO];
 		[panel setPrompt:NSLocalizedString(@"Select",@"Panel OK button title when choosing a default unarchiving destination")];
 
+		#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
+		[panel setDirectoryURL:[NSURL fileURLWithPath:oldpath]];
+		[panel setAllowedFileTypes:nil];
+		[panel beginSheetModalForWindow:prefswindow completionHandler:^(NSInteger result) {
+			[self destinationPanelDidEnd:panel returnCode:result contextInfo:nil];
+		}];
+		#else
 		[panel beginSheetForDirectory:oldpath file:@"" types:nil
 		modalForWindow:prefswindow modalDelegate:self
 		didEndSelector:@selector(destinationPanelDidEnd:returnCode:contextInfo:)
 		contextInfo:nil];
+		#endif
 	}
 }
 
@@ -383,7 +410,13 @@ static BOOL IsPathWritable(NSString *path);
 {
 	if(res==NSOKButton)
 	{
-		[[NSUserDefaults standardUserDefaults] setObject:[panel directory] forKey:@"extractionDestinationPath"];
+		#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
+		NSString *directory=[[panel URL] path];
+		#else
+		NSString *directory=[panel directory];
+		#endif
+
+		[[NSUserDefaults standardUserDefaults] setObject:directory forKey:@"extractionDestinationPath"];
 		[self updateDestinationPopup];
 	}
 	[destinationpopup selectItem:diritem];
@@ -453,7 +486,14 @@ userData:(NSString *)data error:(NSString **)error
 
 	int res=[panel runModal];
 
-	if(res==NSOKButton) [self newArchivesForFiles:[panel filenames] destination:desttype];
+	if(res==NSOKButton)
+	{
+		#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
+		[self newArchivesForURLs:[panel URLs] destination:desttype];
+		#else
+		[self newArchivesForFiles:[panel filenames] destination:desttype];
+		#endif
+	}
 }
 
 

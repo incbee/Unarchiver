@@ -45,6 +45,7 @@
 -(BOOL)application:(NSApplication *)app openFile:(NSString *)filename;
 
 -(void)newArchivesForFiles:(NSArray *)filenames destination:(int)desttype;
+-(void)newArchivesForURLs:(NSArray *)urls destination:(int)desttype;
 -(void)newArchiveForFile:(NSString *)filename destination:(int)desttype;
 -(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview;
 
