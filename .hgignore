@@ -20,3 +20,5 @@ glob:*.pbxuser
 glob:.DS_Store
 glob:*.xcuserdatad
 glob:*.exe
+glob:Build
+

@@ -36,6 +36,11 @@ ALL_OBJCFLAGS = $(OBJC_OPTS) $(GCC_OPTS) $(GNUSTEP_OPTS) $(OBJCFLAGS) $(AUTODEPE
 ALL_CFLAGS = $(C_OPTS) $(GCC_OPTS) $(CFLAGS) $(AUTODEPENDENCY_CFLAGS)
 ALL_CXXFLAGS = $(CXX_OPTS) $(GCC_OPTS) $(CXXFLAGS) $(AUTODEPENDENCY_CFLAGS)
 
+# Paths
+
+SOURCE_DIR = .
+BUILD_DIR = Build
+
 # Source files
 
 LIBRARY_OBJC_FILES =	UniversalDetector.m
@@ -71,9 +76,9 @@ LIBRARY_CXX_FILES =	WrappedUniversalDetector.cpp \
 
 # Object files
 
-LIBRARY_OBJS = 		$(LIBRARY_OBJC_FILES:.m=.o) \
-			$(LIBRARY_C_FILES:.c=.o) \
-			$(LIBRARY_CXX_FILES:.cpp=.o)
+LIBRARY_OBJS = 		$(LIBRARY_OBJC_FILES:%.m=$(BUILD_DIR)/%.o) \
+			$(LIBRARY_C_FILES:%.c=$(BUILD_DIR)/%.o) \
+			$(LIBRARY_CXX_FILES:%.cpp=$(BUILD_DIR)/%.o)
 
 # Other files
 
