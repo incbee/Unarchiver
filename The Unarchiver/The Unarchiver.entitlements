@@ -10,6 +10,7 @@
 	<array>
 		<string>/Users/</string>
 		<string>/Volumes/</string>
+		<string>/private/</string>
 	</array>
 </dict>
 </plist>
