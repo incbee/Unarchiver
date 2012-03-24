@@ -253,11 +253,20 @@
 
 	if([archive caresAboutPasswordEncoding])
 	{
+		NSRect frame=[passwordview frame];
+		frame.size.height=106;
+		[passwordview setFrame:frame];
+
 		[passwordpopup buildEncodingListWithDefaultEncoding];
 		[passwordpopup selectItemWithTag:0];
 	}
 	else
 	{
+		NSRect frame=[passwordview frame];
+		frame.size.height=86;
+		[passwordview setFrame:frame];
+
+		[passwordpopuplabel setHidden:YES];
 		[passwordpopup setHidden:YES];
 	}
 

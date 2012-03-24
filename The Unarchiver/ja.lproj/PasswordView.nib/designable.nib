@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">11C74</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1617</string>
-		<string key="IBDocument.AppKitVersion">1138.23</string>
-		<string key="IBDocument.HIToolboxVersion">567.00</string>
+		<string key="IBDocument.SystemVersion">11D50b</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
+		<string key="IBDocument.AppKitVersion">1138.32</string>
+		<string key="IBDocument.HIToolboxVersion">568.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">1617</string>
+			<string key="NS.object.0">2182</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSPopUpButton</string>
@@ -27,7 +27,10 @@
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</array>
-		<dictionary class="NSMutableDictionary" key="IBDocument.Metadata"/>
+		<object class="NSMutableDictionary" key="IBDocument.Metadata">
+			<string key="NS.key.0">PluginDependencyRecalculationVersion</string>
+			<integer value="1" key="NS.object.0"/>
+		</object>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="1054585999">
 			<object class="NSCustomObject" id="32902724">
 				<string key="NSClassName">TUArchiveTaskView</string>
@@ -185,11 +188,10 @@
 					</object>
 					<object class="NSButton" id="199407840">
 						<reference key="NSNextResponder" ref="437931465"/>
-						<int key="NSvFlags">265</int>
+						<int key="NSvFlags">289</int>
 						<string key="NSFrame">{{350, 2}, {85, 28}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="621678466">
 							<int key="NSCellFlags">67239424</int>
@@ -212,7 +214,7 @@
 					</object>
 					<object class="NSButton" id="694902194">
 						<reference key="NSNextResponder" ref="437931465"/>
-						<int key="NSvFlags">265</int>
+						<int key="NSvFlags">289</int>
 						<string key="NSFrame">{{272, 2}, {80, 28}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
 						<reference key="NSWindow"/>
@@ -267,7 +269,7 @@
 					</object>
 					<object class="NSButton" id="341879413">
 						<reference key="NSNextResponder" ref="437931465"/>
-						<int key="NSvFlags">268</int>
+						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{17, 8}, {88, 18}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
 						<reference key="NSWindow"/>
@@ -376,6 +378,14 @@
 						<reference key="destination" ref="812442030"/>
 					</object>
 					<int key="connectionID">66</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">passwordpopuplabel</string>
+						<reference key="source" ref="32902724"/>
+						<reference key="destination" ref="540483123"/>
+					</object>
+					<int key="connectionID">69</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -572,7 +582,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">68</int>
+			<int key="maxID">69</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -668,6 +678,7 @@
 						<string key="passwordicon">NSImageView</string>
 						<string key="passwordmessagefield">NSTextField</string>
 						<string key="passwordpopup">TUEncodingPopUp</string>
+						<string key="passwordpopuplabel">NSTextField</string>
 						<string key="passwordview">NSView</string>
 						<string key="progressicon">NSImageView</string>
 						<string key="progressindicator">NSProgressIndicator</string>
@@ -753,6 +764,10 @@
 							<string key="name">passwordpopup</string>
 							<string key="candidateClassName">TUEncodingPopUp</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="passwordpopuplabel">
+							<string key="name">passwordpopuplabel</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="passwordview">
 							<string key="name">passwordview</string>
 							<string key="candidateClassName">NSView</string>
@@ -819,11 +834,15 @@
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
 		</object>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
+			<real value="1050" key="NS.object.0"/>
+		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NSMenuCheckmark">{9, 8}</string>
-			<string key="NSMenuMixedState">{7, 2}</string>
+			<string key="NSMenuCheckmark">{11, 11}</string>
+			<string key="NSMenuMixedState">{10, 3}</string>
 			<string key="NSSwitch">{15, 15}</string>
 			<string key="error">{32, 32}</string>
 		</dictionary>

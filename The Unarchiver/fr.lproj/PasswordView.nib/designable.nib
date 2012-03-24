@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">11D50d</string>
+		<string key="IBDocument.SystemVersion">11D50b</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
 		<string key="IBDocument.AppKitVersion">1138.32</string>
 		<string key="IBDocument.HIToolboxVersion">568.00</string>
@@ -102,28 +102,29 @@
 							<string key="NSKeyEquivalent"/>
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
-							<nil key="NSMenuItem"/>
+							<object class="NSMenuItem" key="NSMenuItem" id="1019318790">
+								<reference key="NSMenu" ref="598236231"/>
+								<string key="NSTitle">Encodage par défaut (recommandé)</string>
+								<string key="NSKeyEquiv"/>
+								<int key="NSKeyEquivModMask">1048576</int>
+								<int key="NSMnemonicLoc">2147483647</int>
+								<int key="NSState">1</int>
+								<object class="NSCustomResource" key="NSOnImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">NSMenuCheckmark</string>
+								</object>
+								<object class="NSCustomResource" key="NSMixedImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">NSMenuMixedState</string>
+								</object>
+								<string key="NSAction">_popUpItemAction:</string>
+								<reference key="NSTarget" ref="731483382"/>
+							</object>
 							<bool key="NSMenuItemRespectAlignment">YES</bool>
 							<object class="NSMenu" key="NSMenu" id="598236231">
 								<string key="NSTitle">OtherViews</string>
 								<array class="NSMutableArray" key="NSMenuItems">
-									<object class="NSMenuItem" id="1019318790">
-										<reference key="NSMenu" ref="598236231"/>
-										<string key="NSTitle">Encodage par défaut (recommandé)</string>
-										<string key="NSKeyEquiv"/>
-										<int key="NSKeyEquivModMask">1048576</int>
-										<int key="NSMnemonicLoc">2147483647</int>
-										<object class="NSCustomResource" key="NSOnImage">
-											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">NSMenuCheckmark</string>
-										</object>
-										<object class="NSCustomResource" key="NSMixedImage">
-											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">NSMenuMixedState</string>
-										</object>
-										<string key="NSAction">_popUpItemAction:</string>
-										<reference key="NSTarget" ref="731483382"/>
-									</object>
+									<reference ref="1019318790"/>
 								</array>
 								<object class="NSFont" key="NSMenuFont">
 									<string key="NSName">LucidaGrande</string>
@@ -188,7 +189,7 @@
 					</object>
 					<object class="NSButton" id="199407840">
 						<reference key="NSNextResponder" ref="437931465"/>
-						<int key="NSvFlags">265</int>
+						<int key="NSvFlags">289</int>
 						<string key="NSFrame">{{350, 2}, {85, 28}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
 						<reference key="NSWindow"/>
@@ -210,7 +211,7 @@
 					</object>
 					<object class="NSButton" id="694902194">
 						<reference key="NSNextResponder" ref="437931465"/>
-						<int key="NSvFlags">265</int>
+						<int key="NSvFlags">289</int>
 						<string key="NSFrame">{{272, 2}, {80, 28}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
 						<reference key="NSWindow"/>
@@ -265,7 +266,7 @@
 					</object>
 					<object class="NSButton" id="341879413">
 						<reference key="NSNextResponder" ref="437931465"/>
-						<int key="NSvFlags">268</int>
+						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{17, 8}, {85, 18}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
 						<reference key="NSWindow"/>
@@ -374,6 +375,14 @@
 						<reference key="destination" ref="812442030"/>
 					</object>
 					<int key="connectionID">66</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">passwordpopuplabel</string>
+						<reference key="source" ref="32902724"/>
+						<reference key="destination" ref="540483123"/>
+					</object>
+					<int key="connectionID">69</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -570,7 +579,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">68</int>
+			<int key="maxID">69</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -666,6 +675,7 @@
 						<string key="passwordicon">NSImageView</string>
 						<string key="passwordmessagefield">NSTextField</string>
 						<string key="passwordpopup">TUEncodingPopUp</string>
+						<string key="passwordpopuplabel">NSTextField</string>
 						<string key="passwordview">NSView</string>
 						<string key="progressicon">NSImageView</string>
 						<string key="progressindicator">NSProgressIndicator</string>
@@ -751,6 +761,10 @@
 							<string key="name">passwordpopup</string>
 							<string key="candidateClassName">TUEncodingPopUp</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="passwordpopuplabel">
+							<string key="name">passwordpopuplabel</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="passwordview">
 							<string key="name">passwordview</string>
 							<string key="candidateClassName">NSView</string>
@@ -816,6 +830,10 @@
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
+		</object>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
+			<real value="1050" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>

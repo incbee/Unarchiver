@@ -44,6 +44,7 @@
 	IBOutlet NSTextField *passwordmessagefield;
 	IBOutlet NSTextField *passwordfield;
 	IBOutlet NSImageView *passwordicon;
+	IBOutlet NSTextField *passwordpopuplabel;
 	IBOutlet TUEncodingPopUp *passwordpopup;
 	IBOutlet NSButton *passwordapplyallcheck;
 
