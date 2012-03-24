@@ -149,8 +149,6 @@
 /* Begin PBXFileReference section */
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1B09AC7C151E27B900356B93 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = "/Users/dag/Code/The Unarchiver/UniversalDetector/sv.lproj/InfoPlist.strings"; sourceTree = "<absolute>"; };
-		1B09AC7F151E27BF00356B93 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "/Users/dag/Code/The Unarchiver/UniversalDetector/fr.lproj/InfoPlist.strings"; sourceTree = "<absolute>"; };
 		1B0DDC730A2CDD2D0009B697 /* UniversalDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalDetector.h; sourceTree = "<group>"; };
 		1B0DDC740A2CDD2E0009B697 /* UniversalDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniversalDetector.m; sourceTree = "<group>"; };
 		1B0DDCAB0A2D0AD10009B697 /* DetectorTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DetectorTest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -665,8 +663,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				089C1667FE841158C02AAC07 /* English */,
-				1B09AC7C151E27B900356B93 /* sv */,
-				1B09AC7F151E27BF00356B93 /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
