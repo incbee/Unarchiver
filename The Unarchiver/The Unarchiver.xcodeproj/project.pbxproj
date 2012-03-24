@@ -207,6 +207,24 @@
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		1B09AC73151E27B900356B93 /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/sv.lproj/NotWritableView.nib"; sourceTree = "<absolute>"; };
+		1B09AC74151E27B900356B93 /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/sv.lproj/EncodingView.nib"; sourceTree = "<absolute>"; };
+		1B09AC75151E27B900356B93 /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/sv.lproj/MainMenu.nib"; sourceTree = "<absolute>"; };
+		1B09AC76151E27B900356B93 /* sv */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = sv; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/sv.lproj/ServicesMenu.strings"; sourceTree = "<absolute>"; };
+		1B09AC77151E27B900356B93 /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/sv.lproj/PasswordView.nib"; sourceTree = "<absolute>"; };
+		1B09AC78151E27B900356B93 /* sv */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = sv; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/sv.lproj/InfoPlist.strings"; sourceTree = "<absolute>"; };
+		1B09AC79151E27B900356B93 /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/sv.lproj/ErrorView.nib"; sourceTree = "<absolute>"; };
+		1B09AC7A151E27B900356B93 /* sv */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = sv; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/sv.lproj/OpenErrorView.nib"; sourceTree = "<absolute>"; };
+		1B09AC7B151E27B900356B93 /* sv */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = sv; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/sv.lproj/Localizable.strings"; sourceTree = "<absolute>"; };
+		1B09AC80151E27BF00356B93 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/fr.lproj/NotWritableView.nib"; sourceTree = "<absolute>"; };
+		1B09AC81151E27BF00356B93 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/fr.lproj/EncodingView.nib"; sourceTree = "<absolute>"; };
+		1B09AC82151E27BF00356B93 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/fr.lproj/MainMenu.nib"; sourceTree = "<absolute>"; };
+		1B09AC83151E27BF00356B93 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/fr.lproj/ServicesMenu.strings"; sourceTree = "<absolute>"; };
+		1B09AC84151E27BF00356B93 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/fr.lproj/PasswordView.nib"; sourceTree = "<absolute>"; };
+		1B09AC85151E27BF00356B93 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/fr.lproj/InfoPlist.strings"; sourceTree = "<absolute>"; };
+		1B09AC86151E27BF00356B93 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/fr.lproj/ErrorView.nib"; sourceTree = "<absolute>"; };
+		1B09AC87151E27BF00356B93 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/fr.lproj/OpenErrorView.nib"; sourceTree = "<absolute>"; };
+		1B09AC88151E27BF00356B93 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/fr.lproj/Localizable.strings"; sourceTree = "<absolute>"; };
 		1B0DE4C80A37A1620009B697 /* TUController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUController.h; sourceTree = "<group>"; };
 		1B0DE4C90A37A1620009B697 /* TUController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUController.m; sourceTree = "<group>"; };
 		1B1B99EF0B07C8D200EC8324 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
@@ -757,6 +775,8 @@
 				1B1D487A0AFCCF2E009AA7EB /* Japanese */,
 				1BFB11400B17632A0088CDB4 /* ru */,
 				1B23DF68118CA32800620319 /* Italian */,
+				1B09AC78151E27B900356B93 /* sv */,
+				1B09AC85151E27BF00356B93 /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -769,6 +789,8 @@
 				1B1D48670AFCCEA3009AA7EB /* Japanese */,
 				1BFB11440B1763420088CDB4 /* ru */,
 				1B23DF6B118CA34100620319 /* Italian */,
+				1B09AC7B151E27B900356B93 /* sv */,
+				1B09AC88151E27BF00356B93 /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -781,6 +803,8 @@
 				1B1D486D0AFCCEBA009AA7EB /* Japanese */,
 				1BFB114D0B1763B60088CDB4 /* ru */,
 				1B23DF77118CA38600620319 /* Italian */,
+				1B09AC79151E27B900356B93 /* sv */,
+				1B09AC86151E27BF00356B93 /* fr */,
 			);
 			name = ErrorView.nib;
 			sourceTree = "<group>";
@@ -793,6 +817,8 @@
 				1B1D48700AFCCEC3009AA7EB /* Japanese */,
 				1BFB11510B1763C50088CDB4 /* ru */,
 				1B23DF7A118CA39100620319 /* Italian */,
+				1B09AC7A151E27B900356B93 /* sv */,
+				1B09AC87151E27BF00356B93 /* fr */,
 			);
 			name = OpenErrorView.nib;
 			sourceTree = "<group>";
@@ -805,6 +831,8 @@
 				1B1D48730AFCCECC009AA7EB /* Japanese */,
 				1BFB11550B17668C0088CDB4 /* ru */,
 				1B23DF7D118CA39B00620319 /* Italian */,
+				1B09AC77151E27B900356B93 /* sv */,
+				1B09AC84151E27BF00356B93 /* fr */,
 			);
 			name = PasswordView.nib;
 			sourceTree = "<group>";
@@ -817,6 +845,8 @@
 				1B1D48760AFCCED5009AA7EB /* Japanese */,
 				1BFB11590B1766960088CDB4 /* ru */,
 				1B23DF80118CA3A800620319 /* Italian */,
+				1B09AC74151E27B900356B93 /* sv */,
+				1B09AC81151E27BF00356B93 /* fr */,
 			);
 			name = EncodingView.nib;
 			sourceTree = "<group>";
@@ -829,6 +859,8 @@
 				1B782D23106ACC2C00EBF3E8 /* Japanese */,
 				1B782D26106ACC3800EBF3E8 /* ru */,
 				1B23DF6E118CA35000620319 /* Italian */,
+				1B09AC76151E27B900356B93 /* sv */,
+				1B09AC83151E27BF00356B93 /* fr */,
 			);
 			name = ServicesMenu.strings;
 			sourceTree = "<group>";
@@ -841,6 +873,8 @@
 				1BA4E2B310224086001AB3CA /* Japanese */,
 				1BA4E2B51022408D001AB3CA /* ru */,
 				1B23DF74118CA37A00620319 /* Italian */,
+				1B09AC73151E27B900356B93 /* sv */,
+				1B09AC80151E27BF00356B93 /* fr */,
 			);
 			name = NotWritableView.nib;
 			sourceTree = "<group>";
@@ -853,6 +887,8 @@
 				1B1D486A0AFCCEAF009AA7EB /* Japanese */,
 				1BFB11480B17639A0088CDB4 /* ru */,
 				1B23DF71118CA35E00620319 /* Italian */,
+				1B09AC75151E27B900356B93 /* sv */,
+				1B09AC82151E27BF00356B93 /* fr */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
