@@ -19,3 +19,4 @@ glob:.DS_Store
 glob:*.xcuserdatad
 glob:*.exe
 glob:*.framework
+glob:*.app
