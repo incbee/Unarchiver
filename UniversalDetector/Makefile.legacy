@@ -10,7 +10,8 @@ AR = ar
 
 GCC_OPTS = 	-O2 \
 		-Wno-import \
-		-Wno-multichar
+		-Wno-multichar \
+		-mmacosx-version-min=10.3.9
 
 OBJC_OPTS =	-std=gnu99
 
@@ -20,9 +21,9 @@ CXX_OPTS =
 
 AUTODEPENDENCY_CFLAGS=-MMD -MF$(@:.o=.d) -MT$@
 
-ALL_OBJCFLAGS = $(OBJC_OPTS) $(GCC_OPTS) $(OBJCFLAGS) $(AUTODEPENDENCY_CFLAGS)
-ALL_CFLAGS = $(C_OPTS) $(GCC_OPTS) $(CFLAGS) $(AUTODEPENDENCY_CFLAGS)
-ALL_CXXFLAGS = $(CXX_OPTS) $(GCC_OPTS) $(CXXFLAGS) $(AUTODEPENDENCY_CFLAGS)
+ALL_OBJCFLAGS = $(OBJC_OPTS) $(GCC_OPTS) $(OBJCFLAGS)
+ALL_CFLAGS = $(C_OPTS) $(GCC_OPTS) $(CFLAGS)
+ALL_CXXFLAGS = $(CXX_OPTS) $(GCC_OPTS) $(CXXFLAGS)
 
 # Options for linking
 
@@ -31,11 +32,9 @@ LIBS =	-framework Foundation \
 	-lstdc++ \
 	-lm
 
-ALL_LDFLAGS =	$(LDFLAGS)
-
-FRAMEWORK_LDFLAGS =	-dynamiclib \
-			-install_name @executable_path/../Frameworks \
-			$(LDFLAGS)
+ALL_LDFLAGS =	-arch i386 -arch ppc \
+		-mmacosx-version-min=10.3.9 \
+		$(LDFLAGS)
 
 # Paths
 
@@ -53,6 +52,12 @@ FRAMEWORK_NAME = UniversalDetector
 FRAMEWORK_FILES = $(FRAMEWORK_NAME).framework
 
 FRAMEWORK_HEADER_FILES = UniversalDetector.h
+
+FRAMEWORK_LDFLAGS =	-arch i386 -arch ppc \
+			-mmacosx-version-min=10.3.9 \
+			-dynamiclib \
+			-install_name @executable_path/../Frameworks/$(FRAMEWORK_NAME).framework/$(FRAMEWORK_NAME) \
+			$(LDFLAGS)
 
 # Compilation rules
 
@@ -103,14 +108,20 @@ clean:
 
 $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(ALL_CFLAGS) $(AUTODEPENDENCY_CFLAGS) -c $< -o $@
+	$(CC) -arch i386 $(ALL_CFLAGS) $(AUTODEPENDENCY_CFLAGS) -c $< -o $@.i386
+	$(CC) -arch ppc $(ALL_CFLAGS) -c $< -o $@.ppc
+	lipo -create $@.i386 $@.ppc -output $@
 
 $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.m
 	@mkdir -p $(dir $@)
-	$(OBJCC) $(ALL_OBJCFLAGS) $(AUTODEPENDENCY_CFLAGS) -c $< -o $@
+	$(OBJCC) -arch i386 $(ALL_OBJCFLAGS) $(AUTODEPENDENCY_CFLAGS) -c $< -o $@.i386
+	$(OBJCC) -arch ppc $(ALL_OBJCFLAGS) -c $< -o $@.ppc
+	lipo -create $@.i386 $@.ppc -output $@
 
 $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) $(ALL_CXXFLAGS) $(AUTODEPENDENCY_CFLAGS) -c $< -o $@
+	$(CXX) -arch i386 $(ALL_CXXFLAGS) $(AUTODEPENDENCY_CFLAGS) -c $< -o $@.i386
+	$(CXX) -arch ppc $(ALL_CXXFLAGS) -c $< -o $@.ppc
+	lipo -create $@.i386 $@.ppc -output $@
 
 -include $(OBJS:.o=.d)
