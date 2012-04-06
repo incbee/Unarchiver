@@ -1,4 +1,4 @@
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #import "UniversalDetector.h"
 
 int main(int argc,char **argv)

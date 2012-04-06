@@ -35,6 +35,19 @@ ALL_OBJCFLAGS = $(OBJC_OPTS) $(GCC_OPTS) $(GNUSTEP_OPTS) $(OBJCFLAGS) $(AUTODEPE
 ALL_CFLAGS = $(C_OPTS) $(GCC_OPTS) $(CFLAGS) $(AUTODEPENDENCY_CFLAGS)
 ALL_CXXFLAGS = $(CXX_OPTS) $(GCC_OPTS) $(CXXFLAGS) $(AUTODEPENDENCY_CFLAGS)
 
+# Options for linking
+
+LIBS =  -Wl,--no-whole-archive \
+	-lgnustep-base \
+	-lobjc \
+	-lstdc++ \
+	-lm
+
+ALL_LDFLAGS =	-Wl,--whole-archive \
+		-fexceptions \
+		-fgnu-runtime \
+		$(LDFLAGS)
+
 # Paths
 
 SOURCE_DIR = .

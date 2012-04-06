@@ -4,11 +4,11 @@ glob:XADTest?
 glob:unar
 glob:lsar
 glob:DetectorTest
-glob:WinZipJPEG/RawDecoder
-glob:WinZipJPEG/Test
-glob:WinZipJPEG/MakeTest
-glob:PPMd/Fuzzer$
-glob:PPMd/SimpleDecompressor$
+glob:RawDecoder
+glob:Test
+glob:MakeTest
+glob:Fuzzer
+glob:SimpleDecompressor
 glob:tests
 glob:*.o
 glob:*.a
