@@ -140,6 +140,7 @@ $(APP_NAME).app/Contents/Info.plist: Info.plist
 	cat "$^" |\
 	perl -pe 's/\$$\{EXECUTABLE_NAME\}/$(subst \,,$(APP_NAME))/sg' |\
 	perl -pe 's/\$$\{PRODUCT_NAME\}/$(subst \,,$(APP_NAME))/sg' |\
+	perl -pe 's!<string>10.6.0</string>!<string>10.3.9</string>!sg' |\
 	cat >"$@"
 
 $(APP_NAME).app/Contents/Frameworks/XADMaster.framework: ../XADMaster/XADMaster.framework
