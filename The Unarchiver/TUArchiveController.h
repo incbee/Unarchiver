@@ -16,6 +16,10 @@
 	SEL finishselector;
 
 	BOOL cancelled,ignoreall;
+
+	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
+	BOOL isapp;
+	#endif
 }
 
 +(void)clearGlobalPassword;
