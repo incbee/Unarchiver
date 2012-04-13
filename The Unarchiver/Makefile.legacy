@@ -76,11 +76,16 @@ APP_FILES = $(APP_NAME).app
 
 RESOURCE_FILES =	de.lproj \
 			en.lproj \
+			es.lproj \
 			fr.lproj \
 			it.lproj \
 			ja.lproj \
+			lv.lproj \
+			nb.lproj \
+			pl.lproj \
 			ru.lproj \
 			sv.lproj \
+			tr.lproj \
 			ProgressView.nib \
 			WaitView.nib \
 			close_hover.png \
