@@ -519,7 +519,7 @@ userData:(NSString *)data error:(NSString **)error
 
 -(IBAction)openHomePage:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://wakaba.c3.cx/s/apps/unarchiver"]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://unarchiver.c3.cx/"]];
 }
 
 @end
