@@ -177,8 +177,8 @@
 						<reference key="NSNextKeyView" ref="30167685"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="154611357">
-							<int key="NSCellFlags">67239424</int>
-							<int key="NSCellFlags2">272629760</int>
+							<int key="NSCellFlags">67239488</int>
+							<int key="NSCellFlags2">272631808</int>
 							<string key="NSContents">Sie benötigen ein Kennwort, um dieses Archiv zu öffnen.</string>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="715035584"/>
@@ -419,9 +419,9 @@
 							<reference ref="199407840"/>
 							<reference ref="694902194"/>
 							<reference ref="30167685"/>
-							<reference ref="341879413"/>
 							<reference ref="812442030"/>
 							<reference ref="540483123"/>
+							<reference ref="341879413"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">View</string>
@@ -829,10 +829,6 @@
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
-		</object>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<real value="1050" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
