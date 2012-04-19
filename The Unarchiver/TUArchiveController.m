@@ -42,6 +42,7 @@ NSStringEncoding globalpasswordencoding=0;
 
 		cancelled=NO;
 		ignoreall=NO;
+		haderrors=NO;
 	}
 	return self;
 }
@@ -176,6 +177,10 @@ NSStringEncoding globalpasswordencoding=0;
 			[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
 			return;
 		}
+		else
+		{
+			haderrors=YES;
+		}
 	}
 
 	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
@@ -267,11 +272,11 @@ NSStringEncoding globalpasswordencoding=0;
 		[XADSimpleUnarchiver _removeItemAtPath:tmpdest];
 	}
 
-	// Remove temporary directory from crash recovery list
+	// Remove temporary directory from crash recovery list.
 	[self forgetTempDirectory:tmpdest];
 
-	// Delete archive if requested
-	if(deletearchivepref)
+	// Delete archive if requested, but only if no errors were encountered.
+	if(deletearchivepref && !haderrors)
 	{
 		NSString *directory=[archivename stringByDeletingLastPathComponent];
 		NSArray *allpaths=[[unarchiver outerArchiveParser] allFilenames];
@@ -289,7 +294,7 @@ NSStringEncoding globalpasswordencoding=0;
 		//[self playSound:@"/System/Library/Components/CoreAudio.component/Contents/Resources/SystemSounds/dock/drag to trash.aif"];
 	}
 
-	// Open folder if requested
+	// Open folder if requested.
 	if(openfolderpref)
 	{
 		if(newpath)
@@ -494,6 +499,8 @@ fileProgress:(double)fileprogress totalProgress:(double)totalprogress
 				[self localizedDescriptionOfError:error]]
 			ignoreAll:&ignoreall];
 		}
+
+		haderrors=YES;
 	}
 }
 

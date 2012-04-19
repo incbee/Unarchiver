@@ -15,7 +15,7 @@
 	id finishtarget;
 	SEL finishselector;
 
-	BOOL cancelled,ignoreall;
+	BOOL cancelled,ignoreall,haderrors;
 }
 
 +(void)clearGlobalPassword;
