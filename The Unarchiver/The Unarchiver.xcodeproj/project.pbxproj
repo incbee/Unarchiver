@@ -215,6 +215,15 @@
 		1B2116FA0A4CA50F005ED2AF /* TUTaskListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUTaskListView.h; sourceTree = "<group>"; };
 		1B2116FB0A4CA510005ED2AF /* TUTaskListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUTaskListView.m; sourceTree = "<group>"; };
 		1B2117AC0A4E10D3005ED2AF /* WaitView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = WaitView.nib; sourceTree = "<group>"; };
+		1B25A0B5153FA0EE001817D8 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/pt-PT.lproj/ServicesMenu.strings"; sourceTree = "<absolute>"; };
+		1B25A0B6153FA0EE001817D8 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = "pt-PT"; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/pt-PT.lproj/EncodingView.nib"; sourceTree = "<absolute>"; };
+		1B25A0B7153FA0EE001817D8 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = "pt-PT"; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/pt-PT.lproj/ErrorView.nib"; sourceTree = "<absolute>"; };
+		1B25A0B8153FA0EE001817D8 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = "pt-PT"; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/pt-PT.lproj/MainMenu.nib"; sourceTree = "<absolute>"; };
+		1B25A0B9153FA0EE001817D8 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = "pt-PT"; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/pt-PT.lproj/OpenErrorView.nib"; sourceTree = "<absolute>"; };
+		1B25A0BA153FA0EE001817D8 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/pt-PT.lproj/InfoPlist.strings"; sourceTree = "<absolute>"; };
+		1B25A0BB153FA0EE001817D8 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = "pt-PT"; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/pt-PT.lproj/PasswordView.nib"; sourceTree = "<absolute>"; };
+		1B25A0BC153FA0EE001817D8 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/pt-PT.lproj/Localizable.strings"; sourceTree = "<absolute>"; };
+		1B25A0BD153FA0EE001817D8 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = "pt-PT"; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/pt-PT.lproj/NotWritableView.nib"; sourceTree = "<absolute>"; };
 		1B2AD8380A5C4BD200FAEA01 /* 7z.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = 7z.icns; sourceTree = "<group>"; };
 		1B2AD8390A5C4BD200FAEA01 /* ace.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ace.icns; sourceTree = "<group>"; };
 		1B2AD83A0A5C4BD200FAEA01 /* adf.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = adf.icns; sourceTree = "<group>"; };
@@ -817,6 +826,7 @@
 				1BBC50F0153887F0002A1615 /* es */,
 				1BBC50F915388802002A1615 /* tr */,
 				1BBC510215388816002A1615 /* lv */,
+				1B25A0BA153FA0EE001817D8 /* pt-PT */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -835,6 +845,7 @@
 				1BBC50F1153887F0002A1615 /* es */,
 				1BBC50FA15388802002A1615 /* tr */,
 				1BBC510315388816002A1615 /* lv */,
+				1B25A0BC153FA0EE001817D8 /* pt-PT */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -853,6 +864,7 @@
 				1BBC50EC153887F0002A1615 /* es */,
 				1BBC50F515388802002A1615 /* tr */,
 				1BBC50FE15388816002A1615 /* lv */,
+				1B25A0B7153FA0EE001817D8 /* pt-PT */,
 			);
 			name = ErrorView.nib;
 			sourceTree = "<group>";
@@ -871,6 +883,7 @@
 				1BBC50EA153887F0002A1615 /* es */,
 				1BBC50F315388802002A1615 /* tr */,
 				1BBC50FC15388816002A1615 /* lv */,
+				1B25A0B9153FA0EE001817D8 /* pt-PT */,
 			);
 			name = OpenErrorView.nib;
 			sourceTree = "<group>";
@@ -889,6 +902,7 @@
 				1BBC50EF153887F0002A1615 /* es */,
 				1BBC50F815388802002A1615 /* tr */,
 				1BBC510115388816002A1615 /* lv */,
+				1B25A0BB153FA0EE001817D8 /* pt-PT */,
 			);
 			name = PasswordView.nib;
 			sourceTree = "<group>";
@@ -907,6 +921,7 @@
 				1BBC50ED153887F0002A1615 /* es */,
 				1BBC50F615388802002A1615 /* tr */,
 				1BBC50FF15388816002A1615 /* lv */,
+				1B25A0B6153FA0EE001817D8 /* pt-PT */,
 			);
 			name = EncodingView.nib;
 			sourceTree = "<group>";
@@ -925,6 +940,7 @@
 				1BBC50EB153887F0002A1615 /* es */,
 				1BBC50F415388802002A1615 /* tr */,
 				1BBC50FD15388816002A1615 /* lv */,
+				1B25A0B5153FA0EE001817D8 /* pt-PT */,
 			);
 			name = ServicesMenu.strings;
 			sourceTree = "<group>";
@@ -943,6 +959,7 @@
 				1BBC50EE153887F0002A1615 /* es */,
 				1BBC50F715388802002A1615 /* tr */,
 				1BBC510015388816002A1615 /* lv */,
+				1B25A0BD153FA0EE001817D8 /* pt-PT */,
 			);
 			name = NotWritableView.nib;
 			sourceTree = "<group>";
@@ -961,6 +978,7 @@
 				1BBC50E9153887F0002A1615 /* es */,
 				1BBC50F215388802002A1615 /* tr */,
 				1BBC50FB15388816002A1615 /* lv */,
+				1B25A0B8153FA0EE001817D8 /* pt-PT */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
