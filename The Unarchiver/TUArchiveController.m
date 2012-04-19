@@ -9,7 +9,6 @@
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
 static void OpenFolderWithAppleScriptBecauseTheSandboxIsTerrible(NSString *path);
-BOOL IsQuarantineDisabled();
 #endif
 
 static NSString *globalpassword=nil;
@@ -127,8 +126,6 @@ NSStringEncoding globalpasswordencoding=0;
 	NSString *tmpdir=[NSString stringWithFormat:@".TheUnarchiverTemp%d",tmpcounter++];
 	tmpdest=[[destination stringByAppendingPathComponent:tmpdir] retain];
 
-	[self rememberTempDirectory:tmpdest];
-
 	[NSThread detachNewThreadSelector:@selector(extractThreadEntry) toTarget:self withObject:nil];
 }
 
@@ -162,25 +159,6 @@ NSStringEncoding globalpasswordencoding=0;
 	[unarchiver setCopiesArchiveModificationTimeToSoloItems:copydatepref && changefilespref];
 	[unarchiver setResetsDateForSoloItems:!copydatepref && changefilespref];
 
-	switch(foldermode)
-	{
-		case 1: // Enclose multiple items.
-		default:
-			[unarchiver setDestination:tmpdest];
-			[unarchiver setRemovesEnclosingDirectoryForSoloItems:YES];
-		break;
-
-		case 2: // Always enclose.
-			[unarchiver setDestination:tmpdest];
-			[unarchiver setRemovesEnclosingDirectoryForSoloItems:NO];
-		break;
-
-		case 3: // Never enclose.
-			[unarchiver setDestination:destination];
-			[unarchiver setEnclosingDirectoryName:nil];
-		break;
-	}
-
 	XADError error=[unarchiver parse];
 	if(error==XADBreakError)
 	{
@@ -200,6 +178,48 @@ NSStringEncoding globalpasswordencoding=0;
 		}
 	}
 
+	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
+	// Due to the OS X sandbox being buggy, apps and scripts will be broken
+	// unless extracted to the Downloads folder. For archives smaller than
+	// 100 MB, change the temp folder to reside inside the Downloads folder.
+	off_t size=[unarchiver predictedTotalSizeIgnoringUnknownFiles:YES];
+	if(size<1024*1024*100)
+	{
+		// Find Downloads folder.
+		NSArray *array=NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory,NSUserDomainMask,YES);
+		if(array && [array count]>0)
+		{
+			NSString *downloads=[array objectAtIndex:0];
+			NSString *tmpfolder=[tmpdest lastPathComponent];
+			NSString *newtmpdest=[downloads stringByAppendingPathComponent:tmpfolder];
+
+			[tmpdest release];
+			tmpdest=[newtmpdest retain];
+		}
+	}
+	#endif
+
+	switch(foldermode)
+	{
+		case 1: // Enclose multiple items.
+		default:
+			[unarchiver setDestination:tmpdest];
+			[unarchiver setRemovesEnclosingDirectoryForSoloItems:YES];
+			[self rememberTempDirectory:tmpdest];
+		break;
+
+		case 2: // Always enclose.
+			[unarchiver setDestination:tmpdest];
+			[unarchiver setRemovesEnclosingDirectoryForSoloItems:NO];
+			[self rememberTempDirectory:tmpdest];
+		break;
+
+		case 3: // Never enclose.
+			[unarchiver setDestination:destination];
+			[unarchiver setEnclosingDirectoryName:nil];
+		break;
+	}
+
 	error=[unarchiver unarchive];
 	if(error)
 	{
@@ -212,19 +232,6 @@ NSStringEncoding globalpasswordencoding=0;
 		[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
 		return;
 	}
-
-	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
-	if(isapp)
-	if(![[NSUserDefaults standardUserDefaults] boolForKey:@"warnedAboutQuarantine"])
-	if(IsQuarantineDisabled())
-	{
-		[view displayOpenError:[NSString stringWithFormat:
-			NSLocalizedString(@"It seems quarantine has been disabled on this computer. This will trigger an OS X bug that causes applications extracted with The Unarchiver to not launch. It is recommended you re-enable quarantine.",@"")
-		]];
-
-		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"warnedAboutQuarantine"];
-	}
-	#endif
 
 	[self performSelectorOnMainThread:@selector(extractFinished) withObject:nil waitUntilDone:NO];
 }
@@ -440,9 +447,6 @@ NSStringEncoding globalpasswordencoding=0;
 	if(!encoding) encoding=[name encoding];
 
 	NSString *namestring=[name stringWithEncoding:encoding];
-	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
-	if([namestring rangeOfString:@".app/"].length!=NSNotFound) isapp=YES;
-	#endif
 
 	if(name) [view setName:namestring];
 	else [view setName:@""];
@@ -533,22 +537,5 @@ static void OpenFolderWithAppleScriptBecauseTheSandboxIsTerrible(NSString *path)
 
 	NSArray *apps=[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.finder"];
 	[[apps objectAtIndex:0] activateWithOptions:0];
-}
-
-BOOL IsQuarantineDisabled()
-{
-	NSString *home=NSHomeDirectory();
-	NSRange range=[home rangeOfString:@"Library/Containers/"];
-	if(range.location!=NSNotFound) home=[home substringToIndex:range.location];
-
-	NSString *file=[home stringByAppendingPathComponent:@"Library/Preferences/com.apple.LaunchServices.plist"];
-
-	NSDictionary *dict=[NSDictionary dictionaryWithContentsOfFile:file];
-	if(!dict) return NO;
-
-	NSNumber *num=[dict objectForKey:@"LSQuarantine"];
-	if(!num) return NO;
-
-	return ![num boolValue];
 }
 #endif
