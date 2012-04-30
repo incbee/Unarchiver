@@ -195,11 +195,14 @@ NSStringEncoding globalpasswordencoding=0;
 		if(array && [array count]>0)
 		{
 			NSString *downloads=[array objectAtIndex:0];
-			NSString *tmpfolder=[tmpdest lastPathComponent];
-			NSString *newtmpdest=[downloads stringByAppendingPathComponent:tmpfolder];
+			if(![tmpdest hasPrefix:downloads])
+			{
+				NSString *tmpfolder=@"The Unarchiver"; // App Store requires this name.
+				NSString *newtmpdest=[downloads stringByAppendingPathComponent:tmpfolder];
 
-			[tmpdest release];
-			tmpdest=[newtmpdest retain];
+				[tmpdest release];
+				tmpdest=[newtmpdest retain];
+			}
 		}
 	}
 	#endif
