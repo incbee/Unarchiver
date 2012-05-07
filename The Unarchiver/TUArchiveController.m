@@ -183,30 +183,6 @@ NSStringEncoding globalpasswordencoding=0;
 		}
 	}
 
-	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
-	// Due to the OS X sandbox being buggy, apps and scripts will be broken
-	// unless extracted to the Downloads folder. For archives smaller than
-	// 100 MB, change the temp folder to reside inside the Downloads folder.
-	off_t size=[unarchiver predictedTotalSizeIgnoringUnknownFiles:YES];
-	if(size<1024*1024*100)
-	{
-		// Find Downloads folder.
-		NSArray *array=NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory,NSUserDomainMask,YES);
-		if(array && [array count]>0)
-		{
-			NSString *downloads=[array objectAtIndex:0];
-			if(![tmpdest hasPrefix:downloads])
-			{
-				NSString *tmpfolder=@"The Unarchiver"; // App Store requires this name.
-				NSString *newtmpdest=[downloads stringByAppendingPathComponent:tmpfolder];
-
-				[tmpdest release];
-				tmpdest=[newtmpdest retain];
-			}
-		}
-	}
-	#endif
-
 	switch(foldermode)
 	{
 		case 1: // Enclose multiple items.

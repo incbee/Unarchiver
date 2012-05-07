@@ -18,5 +18,7 @@
 		<string>/Volumes/</string>
 		<string>/private/</string>
 	</array>
+	<key>com.apple.security.temporary-exception.sbpl</key>
+	<string>(allow qtn-download (subpath "/"))</string>
 </dict>
 </plist>
