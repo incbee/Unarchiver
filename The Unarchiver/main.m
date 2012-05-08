@@ -19,12 +19,11 @@ int main(int argc,const char **argv)
 		@"0",@"filenameEncoding",
 		@"0",@"deleteExtractedArchive",
 		@"0",@"openExtractedFolder",
-		@"1",@"extractionDestination",
+		@"4",@"extractionDestination",
 		@"1",@"createFolder",
 		@"1",@"folderModifiedDate",
 		@"0",@"changeDateOfFiles",
 		desktop,@"extractionDestinationPath",
-		@"0",@"warnedAboutQuarantine",
 	nil]];
 
 	[pool release];

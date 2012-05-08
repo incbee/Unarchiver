@@ -11,6 +11,7 @@
 #define CurrentFolderDestination 1
 #define DesktopDestination 2
 #define SelectedDestination 3
+#define UnintializedDestination 4
 
 static BOOL IsPathWritable(NSString *path);
 
@@ -95,6 +96,25 @@ static BOOL IsPathWritable(NSString *path);
 {
 	[NSApp setServicesProvider:self];
 	[self performSelector:@selector(delayedAfterLaunch) withObject:nil afterDelay:0.3];
+
+	if([[NSUserDefaults standardUserDefaults] integerForKey:@"extractionDestination"]==UnintializedDestination)
+	{
+		NSAlert *panel=[NSAlert alertWithMessageText:
+		@"Where should The Unarchiver extract archives?"
+		defaultButton:@"Extract to the same folder"
+		alternateButton:@"Ask every time"
+		otherButton:nil
+		informativeTextWithFormat:
+		@"Would you like The Unarchiver to extract archives to the same folder as the "
+		@"archive file, or would you prefer to be asked for a destination folder for "
+		@"every individual archive?"];
+
+		NSInteger res=[panel runModal];
+		if(res==NSOKButton) [[NSUserDefaults standardUserDefaults]
+		setInteger:CurrentFolderDestination forKey:@"extractionDestination"];
+		else [[NSUserDefaults standardUserDefaults]
+		setInteger:SelectedDestination forKey:@"extractionDestination"];
+	}
 }
 
 -(void)delayedAfterLaunch
