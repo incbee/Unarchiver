@@ -97,24 +97,35 @@ static BOOL IsPathWritable(NSString *path);
 	[NSApp setServicesProvider:self];
 	[self performSelector:@selector(delayedAfterLaunch) withObject:nil afterDelay:0.3];
 
+	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
 	if([[NSUserDefaults standardUserDefaults] integerForKey:@"extractionDestination"]==UnintializedDestination)
 	{
-		NSAlert *panel=[NSAlert alertWithMessageText:
-		@"Where should The Unarchiver extract archives?"
-		defaultButton:@"Extract to the same folder"
-		alternateButton:@"Ask every time"
-		otherButton:nil
-		informativeTextWithFormat:
-		@"Would you like The Unarchiver to extract archives to the same folder as the "
-		@"archive file, or would you prefer to be asked for a destination folder for "
-		@"every individual archive?"];
+		NSArray *array=[[NSBundle mainBundle] preferredLocalizations];
+		if(array && [array count] && [[array objectAtIndex:0] isEqual:@"en"])
+		{
+			NSAlert *panel=[NSAlert alertWithMessageText:
+			@"Where should The Unarchiver extract archives?"
+			defaultButton:@"Extract to the same folder"
+			alternateButton:@"Ask every time"
+			otherButton:nil
+			informativeTextWithFormat:
+			@"Would you like The Unarchiver to extract archives to the same folder as the "
+			@"archive file, or would you prefer to be asked for a destination folder for "
+			@"every individual archive?"];
 
-		NSInteger res=[panel runModal];
-		if(res==NSOKButton) [[NSUserDefaults standardUserDefaults]
-		setInteger:CurrentFolderDestination forKey:@"extractionDestination"];
-		else [[NSUserDefaults standardUserDefaults]
-		setInteger:SelectedDestination forKey:@"extractionDestination"];
+			NSInteger res=[panel runModal];
+			if(res==NSOKButton) [[NSUserDefaults standardUserDefaults]
+			setInteger:CurrentFolderDestination forKey:@"extractionDestination"];
+			else [[NSUserDefaults standardUserDefaults]
+			setInteger:SelectedDestination forKey:@"extractionDestination"];
+		}
+		else
+		{
+			[[NSUserDefaults standardUserDefaults]
+			setInteger:CurrentFolderDestination forKey:@"extractionDestination"];
+		}
 	}
+	#endif
 }
 
 -(void)delayedAfterLaunch
