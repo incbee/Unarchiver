@@ -180,7 +180,7 @@
 	[handlers addObjectsFromArray:[(id)LSCopyAllRoleHandlersForContentType((CFStringRef)type,kLSRolesEditor) autorelease]];
 
 	NSString *ext=[(id)UTTypeCopyPreferredTagWithClass((CFStringRef)type,kUTTagClassFilenameExtension) autorelease];
-	NSString *filename=[NSString stringWithFormat:@"/tmp/CSFileTypeList%04x.%@",rand()&0xffff,ext];
+	NSString *filename=[NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"CSFileTypeList%04x.%@",rand()&0xffff,ext]];
 
 	[[NSFileManager defaultManager] createFileAtPath:filename contents:nil attributes:nil];
 	NSArray *apps=[(NSArray *)LSCopyApplicationURLsForURL((CFURLRef)[NSURL fileURLWithPath:filename],kLSRolesAll) autorelease];
