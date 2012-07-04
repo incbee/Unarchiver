@@ -119,7 +119,7 @@
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="267141903">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">Informazioni su The Unarchiver</string>
+									<string key="NSTitle">Om The Unarchiver</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1019969751"/>
@@ -138,7 +138,7 @@
 								</object>
 								<object class="NSMenuItem" id="72714293">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">Preferenze…</string>
+									<string key="NSTitle">Valg…</string>
 									<string key="NSKeyEquiv">,</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -158,7 +158,7 @@
 								</object>
 								<object class="NSMenuItem" id="932653323">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">Servizi</string>
+									<string key="NSTitle">Tjenester</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -166,7 +166,7 @@
 									<reference key="NSMixedImage" ref="16787521"/>
 									<string key="NSAction">submenuAction:</string>
 									<object class="NSMenu" key="NSSubmenu" id="887072279">
-										<string key="NSTitle">Servizi</string>
+										<string key="NSTitle">Tjenester</string>
 										<object class="NSMutableArray" key="NSMenuItems">
 											<bool key="EncodedWithXMLCoder">YES</bool>
 										</object>
@@ -186,7 +186,7 @@
 								</object>
 								<object class="NSMenuItem" id="368435532">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">Nascondi The Unarchiver</string>
+									<string key="NSTitle">Skjul The Unarchiver</string>
 									<string key="NSKeyEquiv">h</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -195,7 +195,7 @@
 								</object>
 								<object class="NSMenuItem" id="383692676">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">Nascondi altre</string>
+									<string key="NSTitle">Skjul andre</string>
 									<string key="NSKeyEquiv">h</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -204,7 +204,7 @@
 								</object>
 								<object class="NSMenuItem" id="1062493266">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">Mostra tutte</string>
+									<string key="NSTitle">Vis alle</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -224,7 +224,7 @@
 								</object>
 								<object class="NSMenuItem" id="216002892">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">Esci da The Unarchiver</string>
+									<string key="NSTitle">Avslutt The Unarchiver</string>
 									<string key="NSKeyEquiv">q</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -237,7 +237,7 @@
 					</object>
 					<object class="NSMenuItem" id="988509512">
 						<reference key="NSMenu" ref="20280400"/>
-						<string key="NSTitle">Archivio</string>
+						<string key="NSTitle">Arkiv</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -245,12 +245,12 @@
 						<reference key="NSMixedImage" ref="16787521"/>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="41316345">
-							<string key="NSTitle">Archivio</string>
+							<string key="NSTitle">Arkiv</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="1000894212">
 									<reference key="NSMenu" ref="41316345"/>
-									<string key="NSTitle">Estrai nella cartella corrente...</string>
+									<string key="NSTitle">Pakk ut til gjeldende mappe...</string>
 									<string key="NSKeyEquiv">o</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -259,7 +259,7 @@
 								</object>
 								<object class="NSMenuItem" id="626578054">
 									<reference key="NSMenu" ref="41316345"/>
-									<string key="NSTitle">Estrai sulla Scrivania...</string>
+									<string key="NSTitle">Pakk ut til skrivebordet...</string>
 									<string key="NSKeyEquiv">o</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -268,7 +268,7 @@
 								</object>
 								<object class="NSMenuItem" id="392399459">
 									<reference key="NSMenu" ref="41316345"/>
-									<string key="NSTitle">Estrai in...</string>
+									<string key="NSTitle">Pakk ut til...</string>
 									<string key="NSKeyEquiv">O</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -287,7 +287,7 @@
 								</object>
 								<object class="NSMenuItem" id="308255322">
 									<reference key="NSMenu" ref="41316345"/>
-									<string key="NSTitle">Chiudi</string>
+									<string key="NSTitle">Lukk vindu</string>
 									<string key="NSKeyEquiv">w</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -299,7 +299,7 @@
 					</object>
 					<object class="NSMenuItem" id="459646857">
 						<reference key="NSMenu" ref="20280400"/>
-						<string key="NSTitle">Modifica</string>
+						<string key="NSTitle">Rediger</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -307,12 +307,12 @@
 						<reference key="NSMixedImage" ref="16787521"/>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="834340127">
-							<string key="NSTitle">Modifica</string>
+							<string key="NSTitle">Rediger</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="278407627">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Annulla</string>
+									<string key="NSTitle">Angre</string>
 									<string key="NSKeyEquiv">z</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -321,7 +321,7 @@
 								</object>
 								<object class="NSMenuItem" id="543555901">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Ripristina</string>
+									<string key="NSTitle">Gjenta</string>
 									<string key="NSKeyEquiv">Z</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -341,7 +341,7 @@
 								</object>
 								<object class="NSMenuItem" id="521786577">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Taglia</string>
+									<string key="NSTitle">Klipp ut</string>
 									<string key="NSKeyEquiv">x</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -350,7 +350,7 @@
 								</object>
 								<object class="NSMenuItem" id="745766956">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Copia</string>
+									<string key="NSTitle">Kopier</string>
 									<string key="NSKeyEquiv">c</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -359,7 +359,7 @@
 								</object>
 								<object class="NSMenuItem" id="106672059">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Incolla</string>
+									<string key="NSTitle">Lim inn</string>
 									<string key="NSKeyEquiv">v</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -368,7 +368,7 @@
 								</object>
 								<object class="NSMenuItem" id="893223992">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Elimina</string>
+									<string key="NSTitle">Slett</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -377,7 +377,7 @@
 								</object>
 								<object class="NSMenuItem" id="102774695">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Seleziona tutto</string>
+									<string key="NSTitle">Marker alt</string>
 									<string key="NSKeyEquiv">a</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -389,7 +389,7 @@
 					</object>
 					<object class="NSMenuItem" id="821590794">
 						<reference key="NSMenu" ref="20280400"/>
-						<string key="NSTitle">Finestra</string>
+						<string key="NSTitle">Window</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -397,12 +397,14 @@
 						<reference key="NSMixedImage" ref="16787521"/>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="897689867">
-							<string key="NSTitle">Finestra</string>
+							<object class="NSMutableString" key="NSTitle">
+								<characters key="NS.bytes">Window</characters>
+							</object>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="292321166">
 									<reference key="NSMenu" ref="897689867"/>
-									<string key="NSTitle">Contrai</string>
+									<string key="NSTitle">Minimer</string>
 									<string key="NSKeyEquiv">m</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -411,7 +413,7 @@
 								</object>
 								<object class="NSMenuItem" id="817076364">
 									<reference key="NSMenu" ref="897689867"/>
-									<string key="NSTitle">Ridimensiona</string>
+									<string key="NSTitle">Zoom</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -431,7 +433,7 @@
 								</object>
 								<object class="NSMenuItem" id="850227901">
 									<reference key="NSMenu" ref="897689867"/>
-									<string key="NSTitle">Porta tutto in primo piano</string>
+									<string key="NSTitle">Legg alle øverst</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -444,7 +446,7 @@
 					</object>
 					<object class="NSMenuItem" id="40168137">
 						<reference key="NSMenu" ref="20280400"/>
-						<string key="NSTitle">Aiuto</string>
+						<string key="NSTitle">Hjelp</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -452,12 +454,12 @@
 						<reference key="NSMixedImage" ref="16787521"/>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="772415393">
-							<string key="NSTitle">Aiuto</string>
+							<string key="NSTitle">Hjelp</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="136793453">
 									<reference key="NSMenu" ref="772415393"/>
-									<string key="NSTitle">Supporta...</string>
+									<string key="NSTitle">Supportforum...</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1019969751"/>
@@ -465,7 +467,7 @@
 								</object>
 								<object class="NSMenuItem" id="424835802">
 									<reference key="NSMenu" ref="772415393"/>
-									<string key="NSTitle">Segnala un bug...</string>
+									<string key="NSTitle">Reporter feil...</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1019969751"/>
@@ -473,7 +475,7 @@
 								</object>
 								<object class="NSMenuItem" id="982128411">
 									<reference key="NSMenu" ref="772415393"/>
-									<string key="NSTitle">Home Page...</string>
+									<string key="NSTitle">Hjemmeside...</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1019969751"/>
@@ -493,7 +495,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{351, 374}, {496, 382}}</string>
 				<int key="NSWTFlags">1886912512</int>
-				<string key="NSWindowTitle">Preferenze</string>
+				<string key="NSWindowTitle">Valg</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
@@ -511,7 +513,6 @@
 							<string key="NSFrame">{{13, 21}, {470, 355}}</string>
 							<reference key="NSSuperview" ref="344799856"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="416291026"/>
 							<object class="NSMutableArray" key="NSTabViewItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSTabViewItem" id="429192335">
@@ -539,7 +540,7 @@
 																<string key="NSFrameSize">{377, 223}</string>
 																<reference key="NSSuperview" ref="705239607"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="135721354"/>
+																<reference key="NSNextKeyView" ref="366934169"/>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTableHeaderView" key="NSHeaderView" id="433502039">
 																	<reference key="NSNextResponder" ref="737039185"/>
@@ -547,10 +548,10 @@
 																	<string key="NSFrameSize">{377, 17}</string>
 																	<reference key="NSSuperview" ref="737039185"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="827582900"/>
+																	<reference key="NSNextKeyView" ref="705239607"/>
 																	<reference key="NSTableView" ref="591475378"/>
 																</object>
-																<object class="_NSCornerView" key="NSCornerView" id="827582900">
+																<object class="_NSCornerView" key="NSCornerView" id="129636112">
 																	<reference key="NSNextResponder" ref="366064615"/>
 																	<int key="NSvFlags">256</int>
 																	<string key="NSFrame">{{378, 0}, {16, 17}}</string>
@@ -622,7 +623,7 @@
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
 																			<int key="NSCellFlags">75628096</int>
 																			<int key="NSCellFlags2">2048</int>
-																			<string key="NSContents">Formato file</string>
+																			<string key="NSContents">Filformat</string>
 																			<reference key="NSSupport" ref="26"/>
 																			<reference key="NSBackgroundColor" ref="623478770"/>
 																			<reference key="NSTextColor" ref="1038524122"/>
@@ -664,7 +665,7 @@
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
 																			<int key="NSCellFlags">75628096</int>
 																			<int key="NSCellFlags2">2048</int>
-																			<string key="NSContents">Estensione</string>
+																			<string key="NSContents">Filendelse (extension)</string>
 																			<reference key="NSSupport" ref="26"/>
 																			<object class="NSColor" key="NSBackgroundColor">
 																				<int key="NSColorSpace">6</int>
@@ -760,24 +761,24 @@
 														<reference key="NSBGColor" ref="646890407"/>
 														<int key="NScvFlags">4</int>
 													</object>
-													<reference ref="827582900"/>
+													<reference ref="129636112"/>
 												</object>
 												<string key="NSFrame">{{20, 43}, {394, 241}}</string>
 												<reference key="NSSuperview" ref="416291026"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="366934169"/>
+												<reference key="NSNextKeyView" ref="705239607"/>
 												<int key="NSsFlags">133138</int>
 												<reference key="NSVScroller" ref="135721354"/>
 												<reference key="NSHScroller" ref="366934169"/>
 												<reference key="NSContentView" ref="705239607"/>
 												<reference key="NSHeaderClipView" ref="737039185"/>
-												<reference key="NSCornerView" ref="827582900"/>
+												<reference key="NSCornerView" ref="129636112"/>
 												<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 											</object>
 											<object class="NSButton" id="349910824">
 												<reference key="NSNextResponder" ref="416291026"/>
 												<int key="NSvFlags">292</int>
-												<string key="NSFrame">{{19, 15}, {94, 21}}</string>
+												<string key="NSFrame">{{20, 15}, {83, 21}}</string>
 												<reference key="NSSuperview" ref="416291026"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="34156296"/>
@@ -785,7 +786,7 @@
 												<object class="NSButtonCell" key="NSCell" id="286382900">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">134348800</int>
-													<string key="NSContents">Seleziona tutto</string>
+													<string key="NSContents">Merk alle</string>
 													<reference key="NSSupport" ref="26"/>
 													<reference key="NSControlView" ref="349910824"/>
 													<int key="NSButtonFlags">-2038284033</int>
@@ -806,7 +807,7 @@
 											<object class="NSButton" id="34156296">
 												<reference key="NSNextResponder" ref="416291026"/>
 												<int key="NSvFlags">292</int>
-												<string key="NSFrame">{{121, 15}, {108, 21}}</string>
+												<string key="NSFrame">{{111, 15}, {83, 21}}</string>
 												<reference key="NSSuperview" ref="416291026"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="358252493"/>
@@ -814,7 +815,7 @@
 												<object class="NSButtonCell" key="NSCell" id="325766795">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">134348800</int>
-													<string key="NSContents">Deseleziona tutto</string>
+													<string key="NSContents">Fjern merking</string>
 													<reference key="NSSupport" ref="26"/>
 													<reference key="NSControlView" ref="34156296"/>
 													<int key="NSButtonFlags">-2038284033</int>
@@ -839,7 +840,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="923188610">
 													<int key="NSCellFlags">67239488</int>
 													<int key="NSCellFlags2">272631808</int>
-													<string key="NSContents">Apri i seguenti tipi di archivio con The Unarchiver:</string>
+													<string key="NSContents">Åpne disse arkivformatene med The Unarchiver:</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="370190224"/>
 													<object class="NSColor" key="NSBackgroundColor" id="925600687">
@@ -857,7 +858,7 @@
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="370190224"/>
 									</object>
-									<string key="NSLabel">Formati Archivio</string>
+									<string key="NSLabel">Arkivformater</string>
 									<reference key="NSColor" ref="925600687"/>
 									<reference key="NSTabView" ref="358252493"/>
 								</object>
@@ -877,7 +878,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="770171652">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">272629760</int>
-													<string key="NSContents">Dopo aver estratto con successo un archivio:</string>
+													<string key="NSContents">Etter vellykket utpakking av en arkivfil:</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="312572866"/>
 													<reference key="NSBackgroundColor" ref="925600687"/>
@@ -894,7 +895,7 @@
 												<object class="NSButtonCell" key="NSCell" id="634021117">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Apri la cartella estratta</string>
+													<string key="NSContents">Åpne den utpakkede mappen</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="686196991"/>
 													<int key="NSButtonFlags">1211912703</int>
@@ -912,12 +913,12 @@
 												<int key="NSvFlags">266</int>
 												<string key="NSFrame">{{29, 14}, {408, 18}}</string>
 												<reference key="NSSuperview" ref="386976745"/>
-												<reference key="NSNextKeyView" ref="358252493"/>
+												<reference key="NSNextKeyView"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="850339000">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Sposta l'archivio nel Cestino</string>
+													<string key="NSContents">Flytt arkivfilen til papirkurven</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="520582628"/>
 													<int key="NSButtonFlags">1211912703</int>
@@ -940,7 +941,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="88827288">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">272629760</int>
-													<string key="NSContents">Estrai gli archivi in:</string>
+													<string key="NSContents">Pakk ut arkiv til:</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="555721646"/>
 													<reference key="NSBackgroundColor" ref="925600687"/>
@@ -1073,7 +1074,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="314997433">
 													<int key="NSCellFlags">68288064</int>
 													<int key="NSCellFlags2">272630784</int>
-													<string key="NSContents">Crea una nuova cartella per i file estratti:</string>
+													<string key="NSContents">Lag en ny mappe for utpakkede filer:</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="600168017"/>
 													<reference key="NSBackgroundColor" ref="925600687"/>
@@ -1094,7 +1095,7 @@
 													<object class="NSButtonCell" id="152433639">
 														<int key="NSCellFlags">-2080244224</int>
 														<int key="NSCellFlags2">0</int>
-														<string key="NSContents">Mai</string>
+														<string key="NSContents">Aldri</string>
 														<reference key="NSSupport" ref="170887875"/>
 														<reference key="NSControlView" ref="439518814"/>
 														<int key="NSTag">3</int>
@@ -1111,7 +1112,7 @@
 													<object class="NSButtonCell" id="49678163">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">0</int>
-														<string key="NSContents">Solo se c'è più di un elemento top-level</string>
+														<string key="NSContents">Bare hvis det er mer enn ett toppnivåokjekt</string>
 														<reference key="NSSupport" ref="170887875"/>
 														<reference key="NSControlView" ref="439518814"/>
 														<int key="NSTag">1</int>
@@ -1220,7 +1221,7 @@ QXBwbGUgQ29tcHV0ZXIsIEluYy4sIDIwMDUAAAAAA</bytes>
 													<object class="NSButtonCell" id="911349582">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">0</int>
-														<string key="NSContents">Sempre</string>
+														<string key="NSContents">Alltid</string>
 														<reference key="NSSupport" ref="170887875"/>
 														<reference key="NSControlView" ref="439518814"/>
 														<int key="NSTag">2</int>
@@ -1295,14 +1296,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 											<object class="NSTextField" id="795354361">
 												<reference key="NSNextResponder" ref="386976745"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{14, 151}, {330, 17}}</string>
+												<string key="NSFrame">{{14, 151}, {317, 17}}</string>
 												<reference key="NSSuperview" ref="386976745"/>
 												<reference key="NSNextKeyView" ref="138094900"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="998159212">
 													<int key="NSCellFlags">68288064</int>
 													<int key="NSCellFlags2">272630784</int>
-													<string key="NSContents">Imposta come data di modifica della cartella creata:</string>
+													<string key="NSContents">Sett sist endret dato for den nye mappen til:</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="795354361"/>
 													<reference key="NSBackgroundColor" ref="925600687"/>
@@ -1323,7 +1324,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 													<object class="NSButtonCell" id="811978352">
 														<int key="NSCellFlags">-2080244224</int>
 														<int key="NSCellFlags2">0</int>
-														<string key="NSContents">La data e l'ora corrente</string>
+														<string key="NSContents">Gjeldende tid og dato</string>
 														<reference key="NSSupport" ref="170887875"/>
 														<reference key="NSControlView" ref="138094900"/>
 														<int key="NSTag">1</int>
@@ -1338,7 +1339,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 													<object class="NSButtonCell" id="1038186675">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">0</int>
-														<string key="NSContents">La data di modifica del file archivio</string>
+														<string key="NSContents">Sist endret dato for arkivfilen</string>
 														<reference key="NSSupport" ref="170887875"/>
 														<reference key="NSControlView" ref="138094900"/>
 														<int key="NSTag">2</int>
@@ -1506,14 +1507,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 											<object class="NSButton" id="554806457">
 												<reference key="NSNextResponder" ref="386976745"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{29, 81}, {425, 18}}</string>
+												<string key="NSFrame">{{29, 81}, {370, 18}}</string>
 												<reference key="NSSuperview" ref="386976745"/>
 												<reference key="NSNextKeyView" ref="312572866"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="384062246">
 													<int key="NSCellFlags">-2080244224</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Imposta anche la data di modifica dei singoli elementi top-level</string>
+													<string key="NSContents">Sett sist endret dato også for et enkelt toppnivåobjekt</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="554806457"/>
 													<int key="NSButtonFlags">1211912703</int>
@@ -1530,7 +1531,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<string key="NSFrame">{{10, 33}, {450, 309}}</string>
 										<reference key="NSNextKeyView" ref="555721646"/>
 									</object>
-									<string key="NSLabel">Estrazione</string>
+									<string key="NSLabel">Utpakking</string>
 									<reference key="NSColor" ref="925600687"/>
 									<reference key="NSTabView" ref="358252493"/>
 								</object>
@@ -1612,7 +1613,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																<object class="NSTextFieldCell" key="NSCell" id="1030051452">
 																	<int key="NSCellFlags">67239424</int>
 																	<int key="NSCellFlags2">71303168</int>
-																	<string key="NSContents">Codifica nome file:</string>
+																	<string key="NSContents">Tegnsett:</string>
 																	<reference key="NSSupport" ref="170887875"/>
 																	<reference key="NSControlView" ref="922311104"/>
 																	<reference key="NSBackgroundColor" ref="925600687"/>
@@ -1674,7 +1675,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																<object class="NSTextFieldCell" key="NSCell" id="33319146">
 																	<int key="NSCellFlags">67239424</int>
 																	<int key="NSCellFlags2">71303168</int>
-																	<string key="NSContents">Soglia:</string>
+																	<string key="NSContents">Grenseverdi:</string>
 																	<reference key="NSSupport" ref="170887875"/>
 																	<reference key="NSControlView" ref="235544027"/>
 																	<reference key="NSBackgroundColor" ref="925600687"/>
@@ -1708,7 +1709,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																<object class="NSTextFieldCell" key="NSCell" id="536160448">
 																	<int key="NSCellFlags">67239424</int>
 																	<int key="NSCellFlags2">272629760</int>
-																	<string key="NSContents">fedeltà</string>
+																	<string key="NSContents">sikker</string>
 																	<reference key="NSSupport" ref="170887875"/>
 																	<reference key="NSControlView" ref="982353529"/>
 																	<reference key="NSBackgroundColor" ref="925600687"/>
@@ -1725,7 +1726,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																<object class="NSTextFieldCell" key="NSCell" id="388736291">
 																	<int key="NSCellFlags">67239424</int>
 																	<int key="NSCellFlags2">272629760</int>
-																	<string key="NSContents">(Un livello di fedeltà più basso di questo induce il programma a chiedere per la codifica invece di usare quella autorilevata.)</string>
+																	<string key="NSContents">(Hvis prgrammet er mindre sikker enn denne grenseverdien vil det spørre bruker om hva som er rett tegnsettkoding.)</string>
 																	<object class="NSFont" key="NSSupport">
 																		<string key="NSName">LucidaGrande</string>
 																		<double key="NSSize">9</double>
@@ -1749,7 +1750,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 												<object class="NSTextFieldCell" key="NSTitleCell">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Rilevazione automatica della codifica per i nomi dei file</string>
+													<string key="NSContents">Automatisk tegnsettdeteksjon</string>
 													<reference key="NSSupport" ref="26"/>
 													<reference key="NSBackgroundColor" ref="345932596"/>
 													<object class="NSColor" key="NSTextColor">
@@ -1767,7 +1768,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<string key="NSFrame">{{10, 33}, {450, 309}}</string>
 										<reference key="NSNextKeyView" ref="171736568"/>
 									</object>
-									<string key="NSLabel">Avanzate</string>
+									<string key="NSLabel">Avansert</string>
 									<reference key="NSColor" ref="925600687"/>
 									<reference key="NSTabView" ref="358252493"/>
 								</object>
@@ -1782,14 +1783,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 								<reference ref="416291026"/>
 							</object>
 						</object>
-						<object class="NSButton" id="956517455">
+						<object class="NSButton" id="891040820">
 							<reference key="NSNextResponder" ref="344799856"/>
 							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{155, 7}, {321, 17}}</string>
 							<reference key="NSSuperview" ref="344799856"/>
 							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
-							<object class="NSButtonCell" key="NSCell" id="218400850">
+							<object class="NSButtonCell" key="NSCell" id="1004094685">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134348800</int>
 								<string key="NSContents">Support The Unarchiver! Make a donation on the home page!</string>
@@ -1798,7 +1799,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<double key="NSSize">10</double>
 									<int key="NSfFlags">16</int>
 								</object>
-								<reference key="NSControlView" ref="956517455"/>
+								<reference key="NSControlView" ref="891040820"/>
 								<int key="NSButtonFlags">-2038152961</int>
 								<int key="NSButtonFlags2">36</int>
 								<string key="NSAlternateContents"/>
@@ -2102,7 +2103,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="IBActionConnection" key="connection">
 						<string key="label">openHomePage:</string>
 						<reference key="source" ref="224147011"/>
-						<reference key="destination" ref="956517455"/>
+						<reference key="destination" ref="891040820"/>
 					</object>
 					<int key="connectionID">479</int>
 				</object>
@@ -2613,7 +2614,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="358252493"/>
-							<reference ref="956517455"/>
+							<reference ref="891040820"/>
 						</object>
 						<reference key="parent" ref="187633214"/>
 					</object>
@@ -2644,8 +2645,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="366064615"/>
 							<reference ref="349910824"/>
-							<reference ref="370190224"/>
 							<reference ref="34156296"/>
+							<reference ref="370190224"/>
 						</object>
 						<reference key="parent" ref="429192335"/>
 					</object>
@@ -3223,17 +3224,17 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">477</int>
-						<reference key="object" ref="956517455"/>
+						<reference key="object" ref="891040820"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="218400850"/>
+							<reference ref="1004094685"/>
 						</object>
 						<reference key="parent" ref="344799856"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">478</int>
-						<reference key="object" ref="218400850"/>
-						<reference key="parent" ref="956517455"/>
+						<reference key="object" ref="1004094685"/>
+						<reference key="parent" ref="891040820"/>
 					</object>
 				</object>
 			</object>
@@ -3414,11 +3415,11 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{84, 361}, {458, 292}}</string>
+					<string>{{81, 542}, {458, 292}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{196, 81}, {496, 382}}</string>
+					<string>{{135, 437}, {496, 371}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
