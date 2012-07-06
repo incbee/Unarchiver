@@ -75,7 +75,7 @@
 	while((dict=[enumerator nextObject]))
 	{
 		NSArray *types=[dict objectForKey:@"LSItemContentTypes"];
-		if(types)
+		if(types && [types count])
 		{
 			NSString *description=[dict objectForKey:@"CFBundleTypeName"];
 			NSString *extensions=[[dict objectForKey:@"CFBundleTypeExtensions"] componentsJoinedByString:@", "];

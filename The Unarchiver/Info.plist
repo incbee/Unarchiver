@@ -439,6 +439,22 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>as</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>AppleSingle File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.apple.applesingle-archive</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>gz</string>
 				<string>gzip</string>
 			</array>
@@ -1643,6 +1659,30 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>swf</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive</string>
+			<key>CFBundleTypeName</key>
+			<string>SWF File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>pdf</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive</string>
+			<key>CFBundleTypeName</key>
+			<string>Portable Document Format (PDF)</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>*</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -1677,12 +1717,12 @@
 	<string>3.2</string>
 	<key>CFBundleSignature</key>
 	<string>TUnA</string>
-	<key>CFBundleURLTypes</key>
-	<array/>
 	<key>CFBundleVersion</key>
 	<string>3.2</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.6.0</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -2920,7 +2960,5 @@
 			</dict>
 		</dict>
 	</array>
-	<key>LSMinimumSystemVersion</key>
-	<string>10.6.0</string>
 </dict>
 </plist>
