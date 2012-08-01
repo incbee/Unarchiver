@@ -24,6 +24,7 @@
 -(void)dealloc;
 
 -(BOOL)isCancelled;
+-(NSString *)destination;
 -(NSString *)filename;
 -(NSArray *)allFilenames;
 -(BOOL)caresAboutPasswordEncoding;

@@ -19,7 +19,7 @@ int main(int argc,const char **argv)
 		@"0",@"filenameEncoding",
 		@"0",@"deleteExtractedArchive",
 		@"0",@"openExtractedFolder",
-		#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
+		#ifndef IsLegacyVersion
 		@"4",@"extractionDestination",
 		#else
 		@"1",@"extractionDestination",

@@ -7,10 +7,6 @@
 
 
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
-static void OpenFolderWithAppleScriptBecauseTheSandboxIsTerrible(NSString *path);
-#endif
-
 static NSString *globalpassword=nil;
 NSStringEncoding globalpasswordencoding=0;
 
@@ -61,6 +57,8 @@ NSStringEncoding globalpasswordencoding=0;
 
 
 -(BOOL)isCancelled { return cancelled; }
+
+-(NSString *)destination { return destination; }
 
 -(NSString *)filename
 {
@@ -282,11 +280,7 @@ NSStringEncoding globalpasswordencoding=0;
 			[[NSFileManager defaultManager] fileExistsAtPath:newpath isDirectory:&isdir];
 			if(isdir&&![[NSWorkspace sharedWorkspace] isFilePackageAtPath:newpath])
 			{
-				#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
-				OpenFolderWithAppleScriptBecauseTheSandboxIsTerrible(newpath);
-				#else
 				[[NSWorkspace sharedWorkspace] openFile:newpath];
-				#endif
 			}
 			else
 			{
@@ -305,7 +299,7 @@ NSStringEncoding globalpasswordencoding=0;
 
 -(void)extractFailed
 {
-	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
+	#ifndef LegacyVersion
 	[[NSFileManager defaultManager] removeItemAtPath:tmpdest error:NULL];
 	#else
 	[[NSFileManager defaultManager] removeFileAtPath:tmpdest handler:nil];
@@ -490,38 +484,3 @@ suggestedPath:(NSString *)unique;*/
 
 @end
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
-static void OpenFolderWithAppleScriptBecauseTheSandboxIsTerrible(NSString *path)
-{
-	FSRef ref;
-	bzero(&ref,sizeof(ref));
-	if(FSPathMakeRef((UInt8 *)[path fileSystemRepresentation],&ref,NULL)!=noErr) return;
-
-	static const OSType signature='MACS';
-	AppleEvent event={typeNull,nil};
-	AEBuildError builderror;
-
-	AEDesc filedesc;
-	AEInitializeDesc(&filedesc);
-	if(AECoercePtr(typeFSRef,&ref,sizeof(ref),typeAlias,&filedesc)!=noErr) return;
-
-	if(AEBuildAppleEvent(
-	kCoreEventClass,kAEOpenDocuments,
-	typeApplSignature,&signature,sizeof(OSType),
-	kAutoGenerateReturnID,kAnyTransactionID,
-	&event,&builderror,
-	"'----':(@)",&filedesc)!=noErr) return;
-
-	AEDisposeDesc(&filedesc);
-
-    AppleEvent reply={typeNull,nil};
-
- 	AESendMessage(&event,&reply,kAENoReply,kAEDefaultTimeout);
-
-	AEDisposeDesc(&reply);
-	AEDisposeDesc(&event);
-
-	NSArray *apps=[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.finder"];
-	[[apps objectAtIndex:0] activateWithOptions:0];
-}
-#endif

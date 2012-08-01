@@ -29,6 +29,10 @@ static BOOL IsPathWritable(NSString *path);
 		selecteddestination=nil;
 		opened=NO;
 
+		#ifndef IsLegacyVersion
+		urlcache=[TUURLCache new];
+		#endif
+
 		[setuptasks setFinishAction:@selector(setupQueueEmpty:) target:self];
 		[extracttasks setFinishAction:@selector(extractQueueEmpty:) target:self];
 	}
@@ -41,6 +45,11 @@ static BOOL IsPathWritable(NSString *path);
 	[extracttasks release];
 	[archivecontrollers release];
 	[selecteddestination release];
+
+	#ifndef IsLegacyVersion
+	[urlcache release];
+	#endif
+
 	[super dealloc];
 }
 
@@ -74,8 +83,10 @@ static BOOL IsPathWritable(NSString *path);
 	NSString *tmpdir;
 	while((tmpdir=[enumerator nextObject]))
 	{
-		#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
+		#ifndef IsLegacyVersion
+		[urlcache obtainAccessToPath:tmpdir];
 		[fm removeItemAtPath:tmpdir error:nil];
+		[urlcache relinquishAccessToPath:tmpdir];
 		#else
 		[fm removeFileAtPath:tmpdir handler:nil];
 		#endif
@@ -97,7 +108,7 @@ static BOOL IsPathWritable(NSString *path);
 	[NSApp setServicesProvider:self];
 	[self performSelector:@selector(delayedAfterLaunch) withObject:nil afterDelay:0.3];
 
-	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
+	#ifndef IsLegacyVersion
 	if([[NSUserDefaults standardUserDefaults] integerForKey:@"extractionDestination"]==UnintializedDestination)
 	{
 		NSArray *array=[[NSBundle mainBundle] preferredLocalizations];
@@ -256,7 +267,7 @@ static BOOL IsPathWritable(NSString *path);
 		//[panel setTitle:NSLocalizedString(@"Extract Archive",@"Panel title when choosing an unarchiving destination for an archive")];
 		[panel setPrompt:NSLocalizedString(@"Extract",@"Panel OK button title when choosing an unarchiving destination for an archive")];
 
-		#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
+		#ifndef IsLegacyVersion
 		[panel beginSheetModalForWindow:mainwindow completionHandler:^(NSInteger result) {
 			[self archiveDestinationPanelDidEnd:panel returnCode:result contextInfo:archive];
 		}];
@@ -265,23 +276,37 @@ static BOOL IsPathWritable(NSString *path);
 		modalDelegate:self didEndSelector:@selector(archiveDestinationPanelDidEnd:returnCode:contextInfo:)
 		contextInfo:archive];
 		#endif
+
+		return;
 	}
-	else if(!IsPathWritable(destination))
+
+
+	if(!IsPathWritable(destination))
 	{
-		// Can not write to the given destination. Show an error.
+		#ifndef IsLegacyVersion
+		// Can not write to the given destination. See if we have cached a sandboxed URL for
+		// this directory, otherwise show an error.
+		[urlcache obtainAccessToPath:destination];
+		if(!IsPathWritable(destination))
+		{
+			[[archive taskView] displayNotWritableErrorWithResponseAction:@selector(archiveTaskView:notWritableResponse:) target:self];
+			return;
+		}
+		#else
+		// Can still not write to the given destination. Show an error.
 		[[archive taskView] displayNotWritableErrorWithResponseAction:@selector(archiveTaskView:notWritableResponse:) target:self];
+		return;
+		#endif
 	}
-	else
-	{
-		// Go ahead and start an extraction task.
-		[[archive taskView] setCancelAction:@selector(archiveTaskViewCancelledBeforeExtract:) target:self];
 
-		[archive setDestination:destination];
+	// Go ahead and start an extraction task.
+	[[archive taskView] setCancelAction:@selector(archiveTaskViewCancelledBeforeExtract:) target:self];
 
-		[[extracttasks taskWithTarget:self] startExtractionForArchiveController:archive];
+	[archive setDestination:destination];
 
-		[setuptasks finishCurrentTask];
-	}
+	[[extracttasks taskWithTarget:self] startExtractionForArchiveController:archive];
+
+	[setuptasks finishCurrentTask];
 }
 
 -(void)archiveDestinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)info
@@ -292,8 +317,10 @@ static BOOL IsPathWritable(NSString *path);
 	{
 		[selecteddestination release];
 
-		#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
-		selecteddestination=[[[panel URL] path] retain];
+		#ifndef IsLegacyVersion
+		NSURL *url=[[panel URL];
+		[urlcache cacheURL:url];
+		selecteddestination=[[url path] retain];
 		#else
 		selecteddestination=[[panel directory] retain];
 		#endif
@@ -370,6 +397,10 @@ static BOOL IsPathWritable(NSString *path);
 	[mainlist removeTaskView:[archive taskView]];
 	[archivecontrollers removeObjectIdenticalTo:archive];
 	[extracttasks finishCurrentTask];
+
+	#ifndef IsLegacyVersion
+	[urlcache relinquishAccessToPath:[archive destination]];
+	#endif
 }
 
 -(void)extractQueueEmpty:(TUTaskQueue *)queue
@@ -422,7 +453,7 @@ static BOOL IsPathWritable(NSString *path);
 		[panel setCanChooseFiles:NO];
 		[panel setPrompt:NSLocalizedString(@"Select",@"Panel OK button title when choosing a default unarchiving destination")];
 
-		#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
+		#ifndef IsLegacyVersion
 		[panel setDirectoryURL:[NSURL fileURLWithPath:oldpath]];
 		[panel setAllowedFileTypes:nil];
 		[panel beginSheetModalForWindow:prefswindow completionHandler:^(NSInteger result) {
@@ -441,8 +472,10 @@ static BOOL IsPathWritable(NSString *path);
 {
 	if(res==NSOKButton)
 	{
-		#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
-		NSString *directory=[[panel URL] path];
+		#ifndef IsLegacyVersion
+		NSURL *url=[panel URL];
+		[urlcache cacheURL:url];
+		NSString *directory=[url path];
 		#else
 		NSString *directory=[panel directory];
 		#endif
@@ -519,7 +552,7 @@ userData:(NSString *)data error:(NSString **)error
 
 	if(res==NSOKButton)
 	{
-		#if MAC_OS_X_VERSION_MIN_REQUIRED>=1060
+		#ifndef IsLegacyVersion
 		[self newArchivesForURLs:[panel URLs] destination:desttype];
 		#else
 		[self newArchivesForFiles:[panel filenames] destination:desttype];
@@ -607,3 +640,4 @@ static BOOL IsPathWritable(NSString *path)
 	lstat([filename fileSystemRepresentation],&st);
 	return [NSNumber numberWithUnsignedLong:st.st_dev];
 }*/
+
