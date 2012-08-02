@@ -19,10 +19,10 @@ int main(int argc,const char **argv)
 		@"0",@"filenameEncoding",
 		@"0",@"deleteExtractedArchive",
 		@"0",@"openExtractedFolder",
-		#ifndef IsLegacyVersion
-		@"4",@"extractionDestination",
-		#else
+		#ifdef IsLegacyVersion
 		@"1",@"extractionDestination",
+		#else
+		@"4",@"extractionDestination",
 		#endif
 		@"1",@"createFolder",
 		@"1",@"folderModifiedDate",

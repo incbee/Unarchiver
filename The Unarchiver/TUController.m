@@ -83,12 +83,12 @@ static BOOL IsPathWritable(NSString *path);
 	NSString *tmpdir;
 	while((tmpdir=[enumerator nextObject]))
 	{
-		#ifndef IsLegacyVersion
+		#ifdef IsLegacyVersion
+		[fm removeFileAtPath:tmpdir handler:nil];
+		#else
 		[urlcache obtainAccessToPath:tmpdir];
 		[fm removeItemAtPath:tmpdir error:nil];
 		[urlcache relinquishAccessToPath:tmpdir];
-		#else
-		[fm removeFileAtPath:tmpdir handler:nil];
 		#endif
 	}
 
@@ -267,14 +267,14 @@ static BOOL IsPathWritable(NSString *path);
 		//[panel setTitle:NSLocalizedString(@"Extract Archive",@"Panel title when choosing an unarchiving destination for an archive")];
 		[panel setPrompt:NSLocalizedString(@"Extract",@"Panel OK button title when choosing an unarchiving destination for an archive")];
 
-		#ifndef IsLegacyVersion
-		[panel beginSheetModalForWindow:mainwindow completionHandler:^(NSInteger result) {
-			[self archiveDestinationPanelDidEnd:panel returnCode:result contextInfo:archive];
-		}];
-		#else
+		#ifdef IsLegacyVersion
 		[panel beginSheetForDirectory:nil file:nil modalForWindow:mainwindow
 		modalDelegate:self didEndSelector:@selector(archiveDestinationPanelDidEnd:returnCode:contextInfo:)
 		contextInfo:archive];
+		#else
+		[panel beginSheetModalForWindow:mainwindow completionHandler:^(NSInteger result) {
+			[self archiveDestinationPanelDidEnd:panel returnCode:result contextInfo:archive];
+		}];
 		#endif
 
 		return;
@@ -283,19 +283,19 @@ static BOOL IsPathWritable(NSString *path);
 
 	if(!IsPathWritable(destination))
 	{
-		#ifndef IsLegacyVersion
-		// Can not write to the given destination. See if we have cached a sandboxed URL for
-		// this directory, otherwise show an error.
+		#ifdef IsLegacyVersion
+		// Can not write to the given destination. Show an error.
+		[[archive taskView] displayNotWritableErrorWithResponseAction:@selector(archiveTaskView:notWritableResponse:) target:self];
+		return;
+		#else
+		// Can not write to the given destination. See if we have cached
+		// a sandboxed URL for this directory, otherwise show an error.
 		[urlcache obtainAccessToPath:destination];
 		if(!IsPathWritable(destination))
 		{
 			[[archive taskView] displayNotWritableErrorWithResponseAction:@selector(archiveTaskView:notWritableResponse:) target:self];
 			return;
 		}
-		#else
-		// Can still not write to the given destination. Show an error.
-		[[archive taskView] displayNotWritableErrorWithResponseAction:@selector(archiveTaskView:notWritableResponse:) target:self];
-		return;
 		#endif
 	}
 
@@ -317,12 +317,12 @@ static BOOL IsPathWritable(NSString *path);
 	{
 		[selecteddestination release];
 
-		#ifndef IsLegacyVersion
-		NSURL *url=[[panel URL];
+		#ifdef IsLegacyVersion
+		selecteddestination=[[panel directory] retain];
+		#else
+		NSURL *url=[panel URL];
 		[urlcache cacheURL:url];
 		selecteddestination=[[url path] retain];
-		#else
-		selecteddestination=[[panel directory] retain];
 		#endif
 
 		[self tryDestination:selecteddestination forArchiveController:archive];
@@ -453,17 +453,17 @@ static BOOL IsPathWritable(NSString *path);
 		[panel setCanChooseFiles:NO];
 		[panel setPrompt:NSLocalizedString(@"Select",@"Panel OK button title when choosing a default unarchiving destination")];
 
-		#ifndef IsLegacyVersion
+		#ifdef IsLegacyVersion
+		[panel beginSheetForDirectory:oldpath file:@"" types:nil
+		modalForWindow:prefswindow modalDelegate:self
+		didEndSelector:@selector(destinationPanelDidEnd:returnCode:contextInfo:)
+		contextInfo:nil];
+		#else
 		[panel setDirectoryURL:[NSURL fileURLWithPath:oldpath]];
 		[panel setAllowedFileTypes:nil];
 		[panel beginSheetModalForWindow:prefswindow completionHandler:^(NSInteger result) {
 			[self destinationPanelDidEnd:panel returnCode:result contextInfo:nil];
 		}];
-		#else
-		[panel beginSheetForDirectory:oldpath file:@"" types:nil
-		modalForWindow:prefswindow modalDelegate:self
-		didEndSelector:@selector(destinationPanelDidEnd:returnCode:contextInfo:)
-		contextInfo:nil];
 		#endif
 	}
 }
@@ -472,12 +472,12 @@ static BOOL IsPathWritable(NSString *path);
 {
 	if(res==NSOKButton)
 	{
-		#ifndef IsLegacyVersion
+		#ifdef IsLegacyVersion
+		NSString *directory=[panel directory];
+		#else
 		NSURL *url=[panel URL];
 		[urlcache cacheURL:url];
 		NSString *directory=[url path];
-		#else
-		NSString *directory=[panel directory];
 		#endif
 
 		[[NSUserDefaults standardUserDefaults] setObject:directory forKey:@"extractionDestinationPath"];
@@ -552,10 +552,10 @@ userData:(NSString *)data error:(NSString **)error
 
 	if(res==NSOKButton)
 	{
-		#ifndef IsLegacyVersion
-		[self newArchivesForURLs:[panel URLs] destination:desttype];
-		#else
+		#ifdef IsLegacyVersion
 		[self newArchivesForFiles:[panel filenames] destination:desttype];
+		#else
+		[self newArchivesForURLs:[panel URLs] destination:desttype];
 		#endif
 	}
 }

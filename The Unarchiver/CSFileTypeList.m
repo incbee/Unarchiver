@@ -185,10 +185,10 @@
 	[[NSFileManager defaultManager] createFileAtPath:filename contents:nil attributes:nil];
 	NSArray *apps=[(NSArray *)LSCopyApplicationURLsForURL((CFURLRef)[NSURL fileURLWithPath:filename],kLSRolesAll) autorelease];
 
-	#ifndef IsLegacyVersion
-	[[NSFileManager defaultManager] removeItemAtPath:filename error:NULL];
-	#else
+	#ifdef IsLegacyVersion
 	[[NSFileManager defaultManager] removeFileAtPath:filename handler:nil];
+	#else
+	[[NSFileManager defaultManager] removeItemAtPath:filename error:NULL];
 	#endif
 
 	NSEnumerator *enumerator=[apps objectEnumerator];

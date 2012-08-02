@@ -8,17 +8,9 @@
 	<true/>
 	<key>com.apple.security.files.user-selected.read-write</key>
 	<true/>
-	<key>com.apple.security.temporary-exception.apple-events</key>
-	<array>
-		<string>com.apple.finder</string>
-	</array>
-	<key>com.apple.security.temporary-exception.files.absolute-path.read-write</key>
-	<array>
-		<string>/Users/</string>
-		<string>/Volumes/</string>
-		<string>/private/</string>
-	</array>
-	<key>com.apple.security.temporary-exception.sbpl</key>
-	<string>(allow qtn-download (subpath "/"))</string>
+	<key>com.apple.security.temporary-exception.sbpl:before:10.8</key>
+	<string>(allow qtn-download (subpath &quot;/&quot;))</string>
+	<key>com.apple.security.files.bookmarks.app-scope</key>
+	<true/>
 </dict>
 </plist>

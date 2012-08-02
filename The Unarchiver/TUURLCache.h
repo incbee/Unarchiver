@@ -2,6 +2,8 @@
 
 @interface TUURLCache:NSObject
 {
+	NSMutableDictionary *bookmarks;
+	NSMutableDictionary *openpaths;
 }
 
 -(id)init;
@@ -10,7 +12,7 @@
 -(void)cacheURL:(NSURL *)url;
 
 -(BOOL)obtainAccessToPath:(NSString *)path;
--(void)releaseAccessToPath:(NSString *)path;
+-(void)relinquishAccessToPath:(NSString *)path;
 
 @end
 

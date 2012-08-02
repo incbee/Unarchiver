@@ -38,6 +38,7 @@
 		1B2AD86B0A5C4BD200FAEA01 /* tar.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B2AD8500A5C4BD200FAEA01 /* tar.icns */; };
 		1B2AD86C0A5C4BD200FAEA01 /* z.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B2AD8510A5C4BD200FAEA01 /* z.icns */; };
 		1B2AD86D0A5C4BD200FAEA01 /* zip.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B2AD8520A5C4BD200FAEA01 /* zip.icns */; };
+		1B4B4B9315C9C7F70024B6D7 /* TUURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B4B9215C9BE5C0024B6D7 /* TUURLCache.m */; };
 		1B6FA20B0A58A1D800066489 /* CSFileTypeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */; };
 		1B782D21106ACC1700EBF3E8 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B782D20106ACC1700EBF3E8 /* ServicesMenu.strings */; };
 		1B81DBD20FF98BF9005C5B23 /* NotWritableView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1B81DBD00FF98BF9005C5B23 /* NotWritableView.nib */; };
@@ -244,6 +245,8 @@
 		1B2AD8500A5C4BD200FAEA01 /* tar.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = tar.icns; sourceTree = "<group>"; };
 		1B2AD8510A5C4BD200FAEA01 /* z.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = z.icns; sourceTree = "<group>"; };
 		1B2AD8520A5C4BD200FAEA01 /* zip.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = zip.icns; sourceTree = "<group>"; };
+		1B4B4B9115C9BE5C0024B6D7 /* TUURLCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TUURLCache.h; sourceTree = "<group>"; };
+		1B4B4B9215C9BE5C0024B6D7 /* TUURLCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TUURLCache.m; sourceTree = "<group>"; };
 		1B4C2EFA15A25E2D00990BF1 /* nb */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = nb; path = nb.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
 		1B4C2EFB15A25E2D00990BF1 /* nb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1B4C2EFC15A25E2D00990BF1 /* nb */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = nb; path = nb.lproj/EncodingView.nib; sourceTree = "<group>"; };
@@ -411,6 +414,8 @@
 				1B932D690A560AC900F7DE66 /* TUCancelButton.m */,
 				1BED5DB30A600D6E00CA31C2 /* TUEncodingPopUp.h */,
 				1BED5DB40A600D6E00CA31C2 /* TUEncodingPopUp.m */,
+				1B4B4B9115C9BE5C0024B6D7 /* TUURLCache.h */,
+				1B4B4B9215C9BE5C0024B6D7 /* TUURLCache.m */,
 				1B6FA2090A58A1D800066489 /* CSFileTypeList.h */,
 				1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */,
 			);
@@ -807,6 +812,7 @@
 				1BED5DB50A600D6E00CA31C2 /* TUEncodingPopUp.m in Sources */,
 				1B81DDA710003BBB005C5B23 /* TUArchiveTaskView.m in Sources */,
 				1B81DDCE10012A2D005C5B23 /* TUTaskQueue.m in Sources */,
+				1B4B4B9315C9C7F70024B6D7 /* TUURLCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
