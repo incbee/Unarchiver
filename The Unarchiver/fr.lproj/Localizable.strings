@@ -46,6 +46,21 @@
 /* Status text when asking for a password */
 "You need to supply a password to open the archive \"%@\"." = "Vous devez fournir un mot de passe pour ouvrir l'archive \"%@\".";
 
+/* Title for nagging alert on first startup */
+"Where should The Unarchiver extract archives?" = "Où The Unarchiver doit-il extraire les archives ?";
+
+/* Content of nagging alert on first startup */
+"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "Souhaitez-vous que The Unarchiver extraie les archives dans le même dossier que celui de l'archive, ou préférez-vous choisir un dossier de destination pour chaque archive ?";
+
+/* Button to ask every time in nagging alert on first startup */
+"Ask every time" = "Demander tout le temps";
+
+/* Button to extract to the same folder in nagging alert on first startup */
+"Extract to the same folder" = "Extraire dans le même dossier";
+
+/* Informative text in the file panel shown when trying to gain sandbox access */
+"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver ne peut pas écrire dans ce dossier, le système de bac à sable de Mac OS X pouvant en bloquer l'accès. Afin d'autoriser The Unarchiver à écrire dans ce dossier, cliquez simplement sur \"Extraire\". Cette permission sera mémorisée et The Unarchiver ne vous la demandera plus.";
+
 /* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
 
 /* Common errors */
