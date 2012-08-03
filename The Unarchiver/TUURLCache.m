@@ -19,7 +19,7 @@
 
 -(void)dealloc
 {
-	// TODO: close openpaths?
+	for(NSURL *url in openpaths.allValues) [url stopAccessingSecurityScopedResource];
 
 	[bookmarks release];
 	[openpaths release];
