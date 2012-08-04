@@ -68,6 +68,34 @@
 		1B2F166B0EE8895C0000DAFF /* nsSBCharSetProber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16360EE8895C0000DAFF /* nsSBCharSetProber.cpp */; };
 		1B2F16790EE889B60000DAFF /* nsUniversalDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F161D0EE8895C0000DAFF /* nsUniversalDetector.cpp */; };
 		1B2F16B70EE890CF0000DAFF /* WrappedUniversalDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16B60EE890CF0000DAFF /* WrappedUniversalDetector.cpp */; };
+		1B467B0615CD9B1F001AB1DD /* UniversalDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B0DDC740A2CDD2E0009B697 /* UniversalDetector.m */; };
+		1B467B0715CD9B1F001AB1DD /* CharDistribution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16180EE8895C0000DAFF /* CharDistribution.cpp */; };
+		1B467B0815CD9B1F001AB1DD /* JpCntx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F161E0EE8895C0000DAFF /* JpCntx.cpp */; };
+		1B467B0915CD9B1F001AB1DD /* LangBulgarianModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F161C0EE8895C0000DAFF /* LangBulgarianModel.cpp */; };
+		1B467B0A15CD9B1F001AB1DD /* LangCyrillicModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16060EE8895C0000DAFF /* LangCyrillicModel.cpp */; };
+		1B467B0B15CD9B1F001AB1DD /* LangGreekModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16280EE8895C0000DAFF /* LangGreekModel.cpp */; };
+		1B467B0C15CD9B1F001AB1DD /* LangHebrewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16140EE8895C0000DAFF /* LangHebrewModel.cpp */; };
+		1B467B0D15CD9B1F001AB1DD /* LangHungarianModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16030EE8895C0000DAFF /* LangHungarianModel.cpp */; };
+		1B467B0E15CD9B1F001AB1DD /* LangThaiModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F160B0EE8895C0000DAFF /* LangThaiModel.cpp */; };
+		1B467B0F15CD9B1F001AB1DD /* nsBig5Prober.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F160E0EE8895C0000DAFF /* nsBig5Prober.cpp */; };
+		1B467B1015CD9B1F001AB1DD /* nsCharSetProber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16200EE8895C0000DAFF /* nsCharSetProber.cpp */; };
+		1B467B1115CD9B1F001AB1DD /* nsEscCharsetProber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16110EE8895C0000DAFF /* nsEscCharsetProber.cpp */; };
+		1B467B1215CD9B1F001AB1DD /* nsEscSM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F161A0EE8895C0000DAFF /* nsEscSM.cpp */; };
+		1B467B1315CD9B1F001AB1DD /* nsEUCJPProber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16210EE8895C0000DAFF /* nsEUCJPProber.cpp */; };
+		1B467B1415CD9B1F001AB1DD /* nsEUCKRProber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16080EE8895C0000DAFF /* nsEUCKRProber.cpp */; };
+		1B467B1515CD9B1F001AB1DD /* nsEUCTWProber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16120EE8895C0000DAFF /* nsEUCTWProber.cpp */; };
+		1B467B1615CD9B1F001AB1DD /* nsGB2312Prober.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16150EE8895C0000DAFF /* nsGB2312Prober.cpp */; };
+		1B467B1715CD9B1F001AB1DD /* nsHebrewProber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16100EE8895C0000DAFF /* nsHebrewProber.cpp */; };
+		1B467B1815CD9B1F001AB1DD /* nsLatin1Prober.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F160D0EE8895C0000DAFF /* nsLatin1Prober.cpp */; };
+		1B467B1915CD9B1F001AB1DD /* nsMBCSGroupProber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F162E0EE8895C0000DAFF /* nsMBCSGroupProber.cpp */; };
+		1B467B1A15CD9B1F001AB1DD /* nsMBCSSM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F162F0EE8895C0000DAFF /* nsMBCSSM.cpp */; };
+		1B467B1B15CD9B1F001AB1DD /* nsSBCharSetProber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16360EE8895C0000DAFF /* nsSBCharSetProber.cpp */; };
+		1B467B1C15CD9B1F001AB1DD /* nsSBCSGroupProber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F162A0EE8895C0000DAFF /* nsSBCSGroupProber.cpp */; };
+		1B467B1D15CD9B1F001AB1DD /* nsSJISProber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F162D0EE8895C0000DAFF /* nsSJISProber.cpp */; };
+		1B467B1E15CD9B1F001AB1DD /* nsUniversalDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F161D0EE8895C0000DAFF /* nsUniversalDetector.cpp */; };
+		1B467B1F15CD9B1F001AB1DD /* nsUTF8Prober.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16160EE8895C0000DAFF /* nsUTF8Prober.cpp */; };
+		1B467B2015CD9B1F001AB1DD /* WrappedUniversalDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F16B60EE890CF0000DAFF /* WrappedUniversalDetector.cpp */; };
+		1B467B2115CD9B1F001AB1DD /* kludge.c in Sources */ = {isa = PBXBuildFile; fileRef = 1B23E22811922A7700620319 /* kludge.c */; };
 		1B75B87E134E5AC000510EA5 /* WrappedUniversalDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B2F16B80EE890E10000DAFF /* WrappedUniversalDetector.h */; };
 		1B75B87F134E5AC100510EA5 /* prtypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B23E22211922A7700620319 /* prtypes.h */; };
 		1B75B880134E5AC100510EA5 /* protypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B23E22311922A7700620319 /* protypes.h */; };
@@ -210,6 +238,7 @@
 		1B2F16370EE8895C0000DAFF /* nsUTF8Prober.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nsUTF8Prober.h; sourceTree = "<group>"; };
 		1B2F16B60EE890CF0000DAFF /* WrappedUniversalDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WrappedUniversalDetector.cpp; sourceTree = "<group>"; };
 		1B2F16B80EE890E10000DAFF /* WrappedUniversalDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrappedUniversalDetector.h; sourceTree = "<group>"; };
+		1B467B2615CD9B1F001AB1DD /* libUniversalDetector.ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUniversalDetector.ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B91CBE011D821A70081E40A /* libUniversalDetector.win.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUniversalDetector.win.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* UniversalDetector.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UniversalDetector.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,6 +255,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		1B23E0851190F29400620319 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1B467B2215CD9B1F001AB1DD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -250,6 +286,7 @@
 				1B23E0871190F29400620319 /* libUniversalDetector.a */,
 				1B91CBE011D821A70081E40A /* libUniversalDetector.win.a */,
 				1B0DDCAB0A2D0AD10009B697 /* DetectorTest */,
+				1B467B2615CD9B1F001AB1DD /* libUniversalDetector.ios.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -454,6 +491,22 @@
 			productReference = 1B23E0871190F29400620319 /* libUniversalDetector.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		1B467B0415CD9B1F001AB1DD /* libUniversalDetector.ios.a */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1B467B2315CD9B1F001AB1DD /* Build configuration list for PBXNativeTarget "libUniversalDetector.ios.a" */;
+			buildPhases = (
+				1B467B0515CD9B1F001AB1DD /* Sources */,
+				1B467B2215CD9B1F001AB1DD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libUniversalDetector.ios.a;
+			productName = libUniversalDetector;
+			productReference = 1B467B2615CD9B1F001AB1DD /* libUniversalDetector.ios.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		1B91CBB711D821A70081E40A /* libUniversalDetector.win.a */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1B91CBDD11D821A70081E40A /* Build configuration list for PBXNativeTarget "libUniversalDetector.win.a" */;
@@ -515,6 +568,7 @@
 				8DC2EF4F0486A6940098B216 /* UniversalDetector */,
 				1B23E0861190F29400620319 /* libUniversalDetector.a */,
 				1B91CBB711D821A70081E40A /* libUniversalDetector.win.a */,
+				1B467B0415CD9B1F001AB1DD /* libUniversalDetector.ios.a */,
 				1B0DDCAA0A2D0AD10009B697 /* DetectorTest */,
 			);
 		};
@@ -571,6 +625,41 @@
 				1B23E0AC1190F2DD00620319 /* nsUTF8Prober.cpp in Sources */,
 				1B23E1BB1190F98A00620319 /* WrappedUniversalDetector.cpp in Sources */,
 				1B23E23611922A7700620319 /* kludge.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1B467B0515CD9B1F001AB1DD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B467B0615CD9B1F001AB1DD /* UniversalDetector.m in Sources */,
+				1B467B0715CD9B1F001AB1DD /* CharDistribution.cpp in Sources */,
+				1B467B0815CD9B1F001AB1DD /* JpCntx.cpp in Sources */,
+				1B467B0915CD9B1F001AB1DD /* LangBulgarianModel.cpp in Sources */,
+				1B467B0A15CD9B1F001AB1DD /* LangCyrillicModel.cpp in Sources */,
+				1B467B0B15CD9B1F001AB1DD /* LangGreekModel.cpp in Sources */,
+				1B467B0C15CD9B1F001AB1DD /* LangHebrewModel.cpp in Sources */,
+				1B467B0D15CD9B1F001AB1DD /* LangHungarianModel.cpp in Sources */,
+				1B467B0E15CD9B1F001AB1DD /* LangThaiModel.cpp in Sources */,
+				1B467B0F15CD9B1F001AB1DD /* nsBig5Prober.cpp in Sources */,
+				1B467B1015CD9B1F001AB1DD /* nsCharSetProber.cpp in Sources */,
+				1B467B1115CD9B1F001AB1DD /* nsEscCharsetProber.cpp in Sources */,
+				1B467B1215CD9B1F001AB1DD /* nsEscSM.cpp in Sources */,
+				1B467B1315CD9B1F001AB1DD /* nsEUCJPProber.cpp in Sources */,
+				1B467B1415CD9B1F001AB1DD /* nsEUCKRProber.cpp in Sources */,
+				1B467B1515CD9B1F001AB1DD /* nsEUCTWProber.cpp in Sources */,
+				1B467B1615CD9B1F001AB1DD /* nsGB2312Prober.cpp in Sources */,
+				1B467B1715CD9B1F001AB1DD /* nsHebrewProber.cpp in Sources */,
+				1B467B1815CD9B1F001AB1DD /* nsLatin1Prober.cpp in Sources */,
+				1B467B1915CD9B1F001AB1DD /* nsMBCSGroupProber.cpp in Sources */,
+				1B467B1A15CD9B1F001AB1DD /* nsMBCSSM.cpp in Sources */,
+				1B467B1B15CD9B1F001AB1DD /* nsSBCharSetProber.cpp in Sources */,
+				1B467B1C15CD9B1F001AB1DD /* nsSBCSGroupProber.cpp in Sources */,
+				1B467B1D15CD9B1F001AB1DD /* nsSJISProber.cpp in Sources */,
+				1B467B1E15CD9B1F001AB1DD /* nsUniversalDetector.cpp in Sources */,
+				1B467B1F15CD9B1F001AB1DD /* nsUTF8Prober.cpp in Sources */,
+				1B467B2015CD9B1F001AB1DD /* WrappedUniversalDetector.cpp in Sources */,
+				1B467B2115CD9B1F001AB1DD /* kludge.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -698,6 +787,47 @@
 				PRODUCT_NAME = UniversalDetector;
 			};
 			name = Debug;
+		};
+		1B467B2415CD9B1F001AB1DD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PRODUCT_NAME = UniversalDetector.ios;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		1B467B2515CD9B1F001AB1DD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = UniversalDetector.ios;
+				SDKROOT = iphoneos;
+				ZERO_LINK = NO;
+			};
+			name = Release;
 		};
 		1B54130813296EE3002AF4B8 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -876,6 +1006,15 @@
 			buildConfigurations = (
 				1B23E0881190F29600620319 /* Debug */,
 				1B54130A13296EE3002AF4B8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1B467B2315CD9B1F001AB1DD /* Build configuration list for PBXNativeTarget "libUniversalDetector.ios.a" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B467B2415CD9B1F001AB1DD /* Debug */,
+				1B467B2515CD9B1F001AB1DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
