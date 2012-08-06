@@ -1,5 +1,5 @@
 ﻿/* Status text for queued multi-part archives */
-"%@ (+%d more)" = "%1$@ (+%2$d more)";
+"%@ (+%d more)" = "%1$@ (+%2$d أخرى)";
 
 /* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
 "Could not extract the file \"%@\" from the archive \"%@\": %@" = "فشل استخراج الملف \"%1$@\" من الأرشيف \"%2$@\": %3$@";
@@ -45,6 +45,16 @@
 
 /* Status text when asking for a password */
 "You need to supply a password to open the archive \"%@\"." = "يجب توفير كلمة المرور لفتح الأرشيف \"%@\".";
+
+"Where should The Unarchiver extract archives?" = "إلى أين سيستخرج The Unarchiver محتوى الأرشيف؟";
+
+"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "هل تود استخراج ملفات الأرشيف إلى نفس المجلد الحاوي لها، أم أنك تفضل تحديد مكان المجلد الهدف لكل أرشيف على حدة";
+
+"Ask every time" = "السؤال في كل مرة";
+
+"Extract to the same folder" = "استخراج الأرشيف إلى نفس المجلد الحاوي له";
+
+"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "لم يتمكن The Unarchiver من الكتابة في هذا المجلد. قد تحجب تقنية ساند بوكس في نظام التشغيل ماك الوصول للمجلد. انقر على \"استخراج\" لتطلب من ساند بوكس السماح لـ The Unarchiver بالكتابة فيه. وسيتم حفظ هذا الإذن ولن يحتاج The Unarchiver إلى طلبه مجددًا";
 
 /* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
 
