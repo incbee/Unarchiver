@@ -75,6 +75,7 @@
 -(NSString *)displayPasswordInputWithApplyToAllPointer:(BOOL *)applyall encodingPointer:(NSStringEncoding *)encoding;
 
 -(void)setupWaitView;
+-(void)updateWaitView;
 -(void)setupProgressViewInPreparingMode;
 -(void)setupNotWritableView;
 -(void)setupErrorView:(NSString *)error;

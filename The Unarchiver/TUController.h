@@ -57,10 +57,13 @@
 -(void)newArchiveForFile:(NSString *)filename destination:(int)desttype;
 -(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview;
 
--(void)setupExtractionForArchiveController:(TUArchiveController *)archive to:(NSString *)destination;
--(void)tryDestination:(NSString *)destination forArchiveController:(TUArchiveController *)archive fromFilePanel:(BOOL)fromfilepanel;
+-(void)setupExtractionForArchiveController:(TUArchiveController *)archive;
 -(void)archiveDestinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)info;
 -(void)archiveTaskView:(TUArchiveTaskView *)taskview notWritableResponse:(int)response;
+-(void)prepareArchiveController:(TUArchiveController *)archive;
+-(void)finishSetupForArchiveController:(TUArchiveController *)archive;
+-(void)cancelSetupForArchiveController:(TUArchiveController *)archive;
+-(void)setupQueueEmpty:(TUTaskQueue *)queue;
 -(void)archiveTaskViewCancelledBeforeExtract:(TUArchiveTaskView *)taskview;
 
 -(void)startExtractionForArchiveController:(TUArchiveController *)archive;
