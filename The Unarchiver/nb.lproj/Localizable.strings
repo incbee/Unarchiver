@@ -46,6 +46,21 @@
 /* Status text when asking for a password */
 "You need to supply a password to open the archive \"%@\"." = "Du må angi passordet for å kunne åpne arkivfilen \"%@\".";
 
+/* Title for nagging alert on first startup */
+"Where should The Unarchiver extract archives?" = "Hvor vil du at The Unarchiver skal pakke ut arkivfiler?";
+
+/* Content of nagging alert on first startup */
+"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "Vil du at The Unarchiver skal pakke ut arkivfiler til samme mappe som arkivfilen er lagret i, eller foretrekker du å bli spurt om en målkatalog for hver arkivfil?";
+
+/* Button to ask every time in nagging alert on first startup */
+"Ask every time" = "Spør hver gang";
+
+/* Button to extract to the same folder in nagging alert on first startup */
+"Extract to the same folder" = "Pakk ut til samme mappe";
+
+/* Informative text in the file panel shown when trying to gain sandbox access */
+"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver kan ikke skrive til denne mappen. Det kan være Mac OS X sandkassen som blokkerer tilgang til den. For å gi tillatelse for The Unarchiver til å skrive til mappen, klikk på \"Pakk ut\". Denne tillatelsen vil bli husket slik at The Unarchiver ikke trenger å be om den igjen.";
+
 /* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
 
 /* Common errors */

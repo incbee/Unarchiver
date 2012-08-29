@@ -58,8 +58,7 @@
 /* Button to extract to the same folder in nagging alert on first startup */
 "Extract to the same folder" = "Extraer en la carpeta original";
 
-/* Informative text in the file panel shown when trying to gain
-sandbox access */
+/* Informative text in the file panel shown when trying to gain sandbox access */
 "The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver no puede escribir en esta carpeta. El sandbox de Mac OS X puede estar bloqueando el acceso. Para que el sandbox permita a  The Unarchiver escribir en esta carpeta, sencillamente haz click en \"Extraer\".Este permiso será recordado y The Unarchiver no necesitará preguntarte de nuevo.";
 
 /* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */

@@ -61,6 +61,12 @@
 /* Informative text in the file panel shown when trying to gain sandbox access */
 "The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver ne peut pas écrire dans ce dossier, le système de bac à sable de Mac OS X pouvant en bloquer l'accès. Afin d'autoriser The Unarchiver à écrire dans ce dossier, cliquez simplement sur \"Extraire\". Cette permission sera mémorisée et The Unarchiver ne vous la demandera plus.";
 
+/* Informative text in the file panel shown when trying to gain sandbox access for multi-part archives */
+"The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver a besoin de rechercher les autres parties de cette archive, mais le système de bac à sable de Mac OS X bloque l'accès au dossier. Afin d'autoriser The Unarchiver à rechercher dans ce dossier, cliquez simplement sur \"Rechercher\". Cette permission sera mémorisée et The Unarchiver ne vous la demandera plus.";
+
+/* Panel OK button title when searching for more archive parts */
+"Search" = "Rechercher";
+
 /* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
 
 /* Common errors */

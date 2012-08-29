@@ -1,9 +1,6 @@
 ﻿/* Status text for queued multi-part archives */
 "%@ (+%d more)" = "%1$@ (+%2$d more)";
 
-/* Button to ask every time in nagging alert on first startup */
-"Ask every time" = "Ask every time";
-
 /* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
 "Could not extract the file \"%@\" from the archive \"%@\": %@" = "Could not extract the file \"%1$@\" from the archive \"%2$@\": %3$@";
 
@@ -22,9 +19,6 @@
 /* Panel title when choosing an unarchiving destination for an archive */
 "Extract Archive" = "Extract Archive";
 
-/* Button to extract to the same folder in nagging alert on first startup */
-"Extract to the same folder" = "Extract to the same folder";
-
 /* Status text while extracting an archive */
 "Extracting \"%@\"" = "Extracting \"%@\"";
 
@@ -40,9 +34,6 @@
 /* Error message for files not extractable by The Unarchiver */
 "The contents of the file \"%@\" can not be extracted with this program." = "The contents of the file \"%@\" can not be extracted with this program.";
 
-/* Informative text in the file panel shown when trying to gain sandbox access */
-"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again.";
-
 /* Error message when encountering an error while extracting entries */
 "There was a problem while extracting the contents of the file \"%@\": %@" = "There was a problem while extracting the contents of the file \"%1$@\": %2$@";
 
@@ -52,14 +43,23 @@
 /* Panel OK button title when choosing archives to extract */
 "Unarchive" = "Unarchive";
 
+/* Status text when asking for a password */
+"You need to supply a password to open the archive \"%@\"." = "You need to supply a password to open the archive \"%@\".";
+
 /* Title for nagging alert on first startup */
 "Where should The Unarchiver extract archives?" = "Where should The Unarchiver extract archives?";
 
 /* Content of nagging alert on first startup */
 "Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?";
 
-/* Status text when asking for a password */
-"You need to supply a password to open the archive \"%@\"." = "You need to supply a password to open the archive \"%@\".";
+/* Button to ask every time in nagging alert on first startup */
+"Ask every time" = "Ask every time";
+
+/* Button to extract to the same folder in nagging alert on first startup */
+"Extract to the same folder" = "Extract to the same folder";
+
+/* Informative text in the file panel shown when trying to gain sandbox access */
+"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again.";
 
 /* Informative text in the file panel shown when trying to gain sandbox access for multi-part archives */
 "The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again.";
