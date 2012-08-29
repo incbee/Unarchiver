@@ -46,6 +46,23 @@
 /* Status text when asking for a password */
 "You need to supply a password to open the archive \"%@\"." = "Lai atvērtu arhīvu “%@”, nepieciešams norādīt paroli.";
 
+/* Title for nagging alert on first startup */
+"Where should The Unarchiver extract archives?" = "Kurā mapē The Unarchiver vajadzētu atpakot arhīvus?";
+
+/* Content of nagging alert on first startup */
+"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "Vai tu gribētu, lai The Unarchiver atpakotu arhīvus turpat, kur atrodas arhīva fails vai arī tu vēlies norādīt atpakošanas mapi katram arhīvam atsevišķi?";
+
+/* Button to ask every time in nagging alert on first startup */
+"Ask every time" = "Jautāt katru reizi";
+
+/* Button to extract to the same folder in nagging alert on first startup */
+"Extract to the same folder" = "Atpakot turpat, kur atrodas arhīvs";
+
+/* Informative text in the file panel shown when trying to gain sandbox access */
+"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver nevar ierakstīt datus norādītajā mapē. Iespējams, Mac OS X Sandbox drošības mehānisms bloķē ierakstīšanu. Lai pieprasītu Sandbox atļauju ierakstīt šajā mapē, vienkārši spied \"Atpakot\". Dotā atļauja tiks saglabāta un The Unarchiver vairs nevajadzēs to pieprasīt atkārtoti.";
+
+/* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
+
 /* Common errors */
 "Attempted to read more data than was available" = "Arhīvs ir nepilnīgs";
 "Opening file failed" = "Datni nav iespējams atvērt";

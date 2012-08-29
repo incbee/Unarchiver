@@ -11,6 +11,7 @@ static NSString *globalpassword=nil;
 NSStringEncoding globalpasswordencoding=0;
 
 
+
 @implementation TUArchiveController
 
 +(void)clearGlobalPassword
@@ -25,7 +26,7 @@ NSStringEncoding globalpasswordencoding=0;
 	if((self=[super init]))
 	{
 		view=[taskview retain];
-		unarchiver=[[XADSimpleUnarchiver simpleUnarchiverForPath:filename error:NULL] retain];
+		unarchiver=nil;
 
 		archivename=[filename retain];
 		destination=nil;
@@ -58,7 +59,15 @@ NSStringEncoding globalpasswordencoding=0;
 
 -(BOOL)isCancelled { return cancelled; }
 
+-(void)setIsCancelled:(BOOL)iscancelled { cancelled=iscancelled; }
+
 -(NSString *)destination { return destination; }
+
+-(void)setDestination:(NSString *)newdestination
+{
+	[destination autorelease];
+	destination=[newdestination retain];
+}
 
 -(NSString *)filename
 {
@@ -66,7 +75,17 @@ NSStringEncoding globalpasswordencoding=0;
 	else return [[unarchiver outerArchiveParser] filename];
 }
 
--(NSArray *)allFilenames { return [[unarchiver outerArchiveParser] allFilenames]; }
+-(NSArray *)allFilenames
+{
+	if(!unarchiver) return nil;
+	return [[unarchiver outerArchiveParser] allFilenames];
+}
+
+-(BOOL)volumeScanningFailed
+{
+	NSNumber *failed=[[[unarchiver archiveParser] properties] objectForKey:XADVolumeScanningFailedKey];
+	return failed && [failed boolValue];
+}
 
 -(BOOL)caresAboutPasswordEncoding { return [[unarchiver archiveParser] caresAboutPasswordEncoding]; }
 
@@ -75,13 +94,7 @@ NSStringEncoding globalpasswordencoding=0;
 
 
 
--(void)setIsCancelled:(BOOL)iscancelled { cancelled=iscancelled; }
 
--(void)setDestination:(NSString *)newdestination
-{
-	[destination autorelease];
-	destination=[newdestination retain];
-}
 
 
 
@@ -110,6 +123,12 @@ NSStringEncoding globalpasswordencoding=0;
 
 
 
+
+-(void)prepare
+{
+	[unarchiver release];
+	unarchiver=[[XADSimpleUnarchiver simpleUnarchiverForPath:archivename error:NULL] retain];
+}
 
 -(void)runWithFinishAction:(SEL)selector target:(id)target
 {

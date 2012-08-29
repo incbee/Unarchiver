@@ -24,19 +24,20 @@
 -(void)dealloc;
 
 -(BOOL)isCancelled;
+-(void)setIsCancelled:(BOOL)iscancelled;
 -(NSString *)destination;
+-(void)setDestination:(NSString *)destination;
 -(NSString *)filename;
 -(NSArray *)allFilenames;
+-(BOOL)volumeScanningFailed;
 -(BOOL)caresAboutPasswordEncoding;
 -(TUArchiveTaskView *)taskView;
-
--(void)setIsCancelled:(BOOL)iscancelled;
--(void)setDestination:(NSString *)destination;
 
 -(NSString *)currentArchiveName;
 -(NSString *)localizedDescriptionOfError:(XADError)error;
 -(NSString *)stringForXADPath:(XADPath *)path;
 
+-(void)prepare;
 -(void)runWithFinishAction:(SEL)selector target:(id)target;
 
 -(void)extractThreadEntry;

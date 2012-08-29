@@ -153,24 +153,29 @@
 		[nib instantiateNibWithOwner:self topLevelObjects:nil];
 	}
 
-	NSString *filename=[[archive filename] lastPathComponent];
-	int count=[[archive allFilenames] count];
-	if(count>1)
-	{
-		[waitfield setStringValue:[NSString stringWithFormat:
-		NSLocalizedString(@"%@ (+%d more)",@"Status text for queued multi-part archives"),
-		filename,count-1]];
-	}
-	else
-	{
-		[waitfield setStringValue:filename];
-	}
+	[self updateWaitView];
 
 	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:[archive filename]];
 	[icon setSize:[waiticon frame].size];
 	[waiticon setImage:icon];
 
 	[self setDisplayedView:waitview];
+}
+
+-(void)updateWaitView
+{
+	NSString *filename=[[archive filename] lastPathComponent];
+	NSArray *allfilenames=[archive allFilenames];
+	if(allfilenames && [allfilenames count]>1)
+	{
+		[waitfield setStringValue:[NSString stringWithFormat:
+		NSLocalizedString(@"%@ (+%d more)",@"Status text for queued multi-part archives"),
+		filename,[allfilenames count]-1]];
+	}
+	else
+	{
+		[waitfield setStringValue:filename];
+	}
 }
 
 -(void)setupProgressViewInPreparingMode
