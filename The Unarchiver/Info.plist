@@ -311,6 +311,10 @@
 			</array>
 			<key>CFBundleTypeName</key>
 			<string>LhA Archive</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>LHA </string>
+			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
@@ -370,6 +374,8 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.allume.stuffit-archive</string>
+				<string>com.stuffit.archive.sit</string>
+				<string>com.stuffit.archive.sitx</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -848,10 +854,6 @@
 			</array>
 			<key>CFBundleTypeName</key>
 			<string>ACE Archive</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>LHA </string>
-			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
@@ -2446,10 +2448,6 @@
 			<string>com.winace.ace-archive</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
-				<key>com.apple.ostype</key>
-				<array>
-					<string>LHA </string>
-				</array>
 				<key>public.filename-extension</key>
 				<array>
 					<string>ace</string>
@@ -2623,6 +2621,10 @@
 			<string>cx.c3.lha-archive</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>LHA </string>
+				</array>
 				<key>public.filename-extension</key>
 				<array>
 					<string>lha</string>
