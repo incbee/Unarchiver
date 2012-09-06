@@ -3,7 +3,7 @@
 OBJCC = gcc
 CC = gcc
 CXX = g++
-LD = gcc
+LD = $(CXX)
 AR = ar
 
 # Options for compilation
@@ -40,7 +40,6 @@ ALL_CXXFLAGS = $(CXX_OPTS) $(GCC_OPTS) $(CXXFLAGS)
 LIBS =  -Wl,--no-whole-archive \
 	-lgnustep-base \
 	-lobjc \
-	-lstdc++ \
 	-lm
 
 ALL_LDFLAGS =	-Wl,--whole-archive \
