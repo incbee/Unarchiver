@@ -17,7 +17,8 @@ GCC_OPTS =	-O2 \
 		-F../UniversalDetector \
 		-Wno-import \
 		-Wno-multichar \
-		-mmacosx-version-min=10.3.9
+		-mmacosx-version-min=10.3.9 \
+		-DIsLegacyVersion
 
 OBJC_OPTS =	-std=gnu99 \
 		$(SDK)
@@ -92,8 +93,8 @@ RESOURCE_FILES =	de.lproj \
 			pl.lproj \
 			pt-PT.lproj \
 			ru.lproj \
-			sv.lproj \
 			tr.lproj \
+			ar.lproj \
 			ProgressView.nib \
 			WaitView.nib \
 			close_hover.png \
