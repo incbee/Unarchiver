@@ -173,6 +173,10 @@ $(APP_NAME).app/Contents/Resources/%: icons/%
 	@mkdir -p "$(subst _,$(empty) $(empty),$(dir $(subst $(empty) $(empty),_,$@)))"
 	cp -R "$^" "$@"
 
+$(APP_NAME).app/Contents/Resources/unarchiver.icns: icons/unarchiver-old.icns
+	@mkdir -p "$(subst _,$(empty) $(empty),$(dir $(subst $(empty) $(empty),_,$@)))"
+	cp -R "$^" "$@"
+
 ../XADMaster/XADMaster.framework:
 	make -C ../XADMaster -f Makefile.legacy
 
