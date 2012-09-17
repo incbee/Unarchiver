@@ -63,6 +63,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1B1A9CC916078F5800AA6DDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D664F4B103776C900A679EF /* UniversalDetector.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1B467B2615CD9B1F001AB1DD;
+			remoteInfo = libUniversalDetector.ios.a;
+		};
+		1B1A9CCC16078F5800AA6DDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1B467B0115CD9A73001AB1DD;
+			remoteInfo = libXADMaster.ios.a;
+		};
 		1B23DDC71185EBC300620319 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */;
@@ -479,16 +493,17 @@
 			isa = PBXGroup;
 			children = (
 				1B95B40B1010D537009FA09E /* XADMaster.framework */,
+				1B34ABB611CEB9F700396C26 /* libXADMaster.a */,
+				1B433CF511E8036D00DA1EFB /* libXADMaster.win.a */,
+				1B1A9CCD16078F5800AA6DDE /* libXADMaster.ios.a */,
 				1B95B40D1010D537009FA09E /* XADTest */,
 				1B95B40F1010D537009FA09E /* XADTest2 */,
 				1B95B4111010D537009FA09E /* XADTest3 */,
 				1BA4E2A91022405A001AB3CA /* XADTest4 */,
 				1B54134713296F8C002AF4B8 /* XADTest5 */,
 				1B31CB9613C6423800ED119E /* XADTest6 */,
-				1B34ABB611CEB9F700396C26 /* libXADMaster.a */,
 				1B23DDC81185EBC300620319 /* unar */,
 				1B433CF311E8036D00DA1EFB /* lsar */,
-				1B433CF511E8036D00DA1EFB /* libXADMaster.win.a */,
 				1B433CF711E8036D00DA1EFB /* unar.exe */,
 				1B433CF911E8036D00DA1EFB /* lsar.exe */,
 			);
@@ -552,6 +567,7 @@
 				3D664F51103776C900A679EF /* UniversalDetector.framework */,
 				1B23E08F1190F2B500620319 /* libUniversalDetector.a */,
 				1B433CE711E8036D00DA1EFB /* libUniversalDetector.win.a */,
+				1B1A9CCA16078F5800AA6DDE /* libUniversalDetector.ios.a */,
 				3D664F53103776C900A679EF /* DetectorTest */,
 			);
 			name = Products;
@@ -586,7 +602,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "The Unarchiver" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -630,6 +646,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		1B1A9CCA16078F5800AA6DDE /* libUniversalDetector.ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libUniversalDetector.ios.a;
+			remoteRef = 1B1A9CC916078F5800AA6DDE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1B1A9CCD16078F5800AA6DDE /* libXADMaster.ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libXADMaster.ios.a;
+			remoteRef = 1B1A9CCC16078F5800AA6DDE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		1B23DDC81185EBC300620319 /* unar */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
@@ -1027,6 +1057,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "The Unarchiver.entitlements";
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -1051,6 +1082,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "The Unarchiver.entitlements";
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",

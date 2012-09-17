@@ -96,7 +96,7 @@ static BOOL SanityCheckString(NSString *string);
 			if(!SanityCheckString(decoded)) continue;
 
 			NSMutableAttributedString *attrstr=[[[NSMutableAttributedString alloc]
-			initWithString:[NSString stringWithFormat:@"%@\t%C %@",encodingname,0x27a4,decoded]
+			initWithString:[NSString stringWithFormat:@"%@\t%C %@",encodingname,(unichar)0x27a4,decoded]
 			attributes:normalattrs] autorelease];
 
 			[attrstr setAttributes:smallattrs range:NSMakeRange([encodingname length],[decoded length]+3)];
