@@ -552,9 +552,11 @@ static BOOL IsPathWritable(NSString *path);
 	[archivecontrollers removeObjectIdenticalTo:archive];
 	[extracttasks finishCurrentTask];
 
-	#ifndef IsLegacyVersion
-	[urlcache relinquishAccessToPath:[archive destination]];
-	#endif
+	// Don't bother relinquishing access. Docs says to do it,
+	// but this only causes problems.
+//	#ifndef IsLegacyVersion
+//	[urlcache relinquishAccessToPath:[archive destination]];
+//	#endif
 }
 
 -(void)extractQueueEmpty:(TUTaskQueue *)queue
