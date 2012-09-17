@@ -17,10 +17,6 @@ struct ResourceOutputArguments
 @interface XADPlatform (Private)
 
 +(void)setComment:(NSString *)comment forPath:(NSString *)path;
-+(BOOL)readCatalogInfoForFilename:(NSString *)filename infoBitmap:(FSCatalogInfoBitmap)bitmap
-toCatalogInfo:(FSCatalogInfo *)info;
-+(BOOL)writeCatalogInfoForFilename:(NSString *)filename infoBitmap:(FSCatalogInfoBitmap)bitmap
-fromCatalogInfo:(FSCatalogInfo *)info;
 
 @end
 
@@ -276,37 +272,26 @@ preservePermissions:(BOOL)preservepermissions
 
 +(BOOL)copyDateFromPath:(NSString *)src toPath:(NSString *)dest
 {
-	FSCatalogInfo info;
+	struct stat st;
+	const char *csrc=[src fileSystemRepresentation];
+	if(stat(csrc,&st)!=0) return NO;
 
-	if(![self readCatalogInfoForFilename:src infoBitmap:kFSCatInfoContentMod toCatalogInfo:&info]) return NO;
-	return [self writeCatalogInfoForFilename:dest infoBitmap:kFSCatInfoContentMod fromCatalogInfo:&info];
+	struct timeval times[2]={
+		{st.st_atimespec.tv_sec,st.st_atimespec.tv_nsec/1000},
+		{st.st_mtimespec.tv_sec,st.st_mtimespec.tv_nsec/1000},
+	};
+
+	const char *cdest=[dest fileSystemRepresentation];
+	if(utimes(cdest,times)!=0) return NO;
+
+	return YES;
 }
 
 +(BOOL)resetDateAtPath:(NSString *)path
 {
-	FSCatalogInfo info;
+	const char *cpath=[path fileSystemRepresentation];
+	if(utimes(cpath,NULL)!=0) return NO;
 
-	UCConvertCFAbsoluteTimeToUTCDateTime(CFAbsoluteTimeGetCurrent(),&info.contentModDate);
-	return [self writeCatalogInfoForFilename:path infoBitmap:kFSCatInfoContentMod fromCatalogInfo:&info];
-}
-
-+(BOOL)readCatalogInfoForFilename:(NSString *)filename infoBitmap:(FSCatalogInfoBitmap)bitmap
-toCatalogInfo:(FSCatalogInfo *)info
-{
-	FSRef ref;
-	if(FSPathMakeRefWithOptions((const UInt8 *)[filename fileSystemRepresentation],
-	kFSPathMakeRefDoNotFollowLeafSymlink,&ref,NULL)!=noErr) return NO;
-	if(FSGetCatalogInfo(&ref,bitmap,info,NULL,NULL,NULL)!=noErr) return NO;
-	return YES;
-}
-
-+(BOOL)writeCatalogInfoForFilename:(NSString *)filename infoBitmap:(FSCatalogInfoBitmap)bitmap
-fromCatalogInfo:(FSCatalogInfo *)info
-{
-	FSRef ref;
-	if(FSPathMakeRefWithOptions((const UInt8 *)[filename fileSystemRepresentation],
-	kFSPathMakeRefDoNotFollowLeafSymlink,&ref,NULL)!=noErr) return NO;
-	if(FSSetCatalogInfo(&ref,bitmap,info)!=noErr) return NO;
 	return YES;
 }
 

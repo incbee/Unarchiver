@@ -1,5 +1,6 @@
 #import "XADISO9660Parser.h"
 #import "XADPaddedBlockHandle.h"
+#import "NSDateXAD.h"
 
 @implementation XADISO9660Parser
 
@@ -348,7 +349,7 @@ length:(uint32_t)length
 			NSMutableString *str=[NSMutableString stringWithCapacity:namelength/2];
 			for(int i=0;i+2<=namelength;i+=2)
 			{
-				int c=CSUInt16BE(&name[i]);
+				unichar c=CSUInt16BE(&name[i]);
 				[str appendFormat:@"%C",c];
 			}
 
@@ -750,7 +751,7 @@ length:(uint32_t)length
 		tz=[NSTimeZone timeZoneForSecondsFromGMT:offset*15*60];
 	}
 
-	return [NSCalendarDate dateWithYear:year month:month day:day
+	return [NSDate XADDateWithYear:year month:month day:day
 	hour:hour minute:minute second:second timeZone:tz];
 }
 
@@ -770,7 +771,7 @@ length:(uint32_t)length
 		tz=[NSTimeZone timeZoneForSecondsFromGMT:offset*15*60];
 	}
 
-	return [NSCalendarDate dateWithYear:year month:month day:day
+	return [NSDate XADDateWithYear:year month:month day:day
 	hour:hour minute:minute second:second timeZone:tz];
 }
 
