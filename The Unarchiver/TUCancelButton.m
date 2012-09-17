@@ -13,6 +13,7 @@
 		[self setImage:normal];
 		[self setAlternateImage:press];
 		[self setShowsBorderOnlyWhileMouseInside:YES];
+		[[self cell] setHighlightsBy:NSContentsCellMask];
 	}
 	return self;
 }
