@@ -2,27 +2,27 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">11D50b</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
-		<string key="IBDocument.AppKitVersion">1138.32</string>
-		<string key="IBDocument.HIToolboxVersion">568.00</string>
+		<string key="IBDocument.SystemVersion">11G63</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
+		<string key="IBDocument.AppKitVersion">1138.51</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">1938</string>
+			<string key="NS.object.0">2843</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
-			<string>NSPopUpButton</string>
 			<string>NSButton</string>
-			<string>NSMenu</string>
-			<string>NSTextFieldCell</string>
 			<string>NSButtonCell</string>
-			<string>NSImageView</string>
-			<string>NSMenuItem</string>
-			<string>NSImageCell</string>
-			<string>NSCustomView</string>
 			<string>NSCustomObject</string>
+			<string>NSCustomView</string>
+			<string>NSImageCell</string>
+			<string>NSImageView</string>
+			<string>NSMenu</string>
+			<string>NSMenuItem</string>
+			<string>NSPopUpButton</string>
 			<string>NSPopUpButtonCell</string>
 			<string>NSTextField</string>
+			<string>NSTextFieldCell</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -50,6 +50,7 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{59, 35}, {83, 14}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="812442030"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="438602838">
@@ -85,8 +86,9 @@
 					<object class="NSPopUpButton" id="812442030">
 						<reference key="NSNextResponder" ref="437931465"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{172, 30}, {261, 22}}</string>
+						<string key="NSFrame">{{144, 30}, {289, 22}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="341879413"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="731483382">
@@ -149,10 +151,11 @@
 						</set>
 						<string key="NSFrame">{{11, 63}, {32, 32}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="715035584"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSImageCell" key="NSCell" id="28617409">
-							<int key="NSCellFlags">130560</int>
+							<int key="NSCellFlags">134348288</int>
 							<int key="NSCellFlags2">33554432</int>
 							<object class="NSCustomResource" key="NSContents">
 								<string key="NSClassName">NSImage</string>
@@ -170,6 +173,7 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{59, 83}, {374, 17}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="30167685"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="154611357">
@@ -187,7 +191,7 @@
 						<int key="NSvFlags">289</int>
 						<string key="NSFrame">{{350, 2}, {85, 28}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
-						<reference key="NSNextKeyView"/>
+						<reference key="NSWindow"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="621678466">
 							<int key="NSCellFlags">67239424</int>
@@ -209,6 +213,7 @@
 						<int key="NSvFlags">289</int>
 						<string key="NSFrame">{{272, 2}, {80, 28}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="199407840"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="580214111">
@@ -231,6 +236,7 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{62, 59}, {368, 19}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="540483123"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="235386372">
@@ -262,6 +268,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{17, 8}, {97, 18}}</string>
 						<reference key="NSSuperview" ref="437931465"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="694902194"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="909939749">
@@ -288,6 +295,7 @@
 				</array>
 				<string key="NSFrameSize">{450, 106}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="248771556"/>
 				<string key="NSClassName">NSView</string>
 				<string key="NSExtension">NSResponder</string>
@@ -572,16 +580,255 @@
 			<nil key="sourceID"/>
 			<int key="maxID">69</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">TUArchiveTaskView</string>
+					<string key="superclassName">TUMultiTaskView</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="cancelExtraction:">id</string>
+						<string key="cancelWait:">id</string>
+						<string key="continueAfterEncoding:">id</string>
+						<string key="continueAfterError:">id</string>
+						<string key="continueAfterPassword:">id</string>
+						<string key="extractElsewhereAfterNotWritable:">id</string>
+						<string key="extractToDesktopAfterNotWritable:">id</string>
+						<string key="okAfterOpenError:">id</string>
+						<string key="selectEncoding:">id</string>
+						<string key="stopAfterEncoding:">id</string>
+						<string key="stopAfterError:">id</string>
+						<string key="stopAfterNotWritable:">id</string>
+						<string key="stopAfterPassword:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="cancelExtraction:">
+							<string key="name">cancelExtraction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cancelWait:">
+							<string key="name">cancelWait:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="continueAfterEncoding:">
+							<string key="name">continueAfterEncoding:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="continueAfterError:">
+							<string key="name">continueAfterError:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="continueAfterPassword:">
+							<string key="name">continueAfterPassword:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="extractElsewhereAfterNotWritable:">
+							<string key="name">extractElsewhereAfterNotWritable:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="extractToDesktopAfterNotWritable:">
+							<string key="name">extractToDesktopAfterNotWritable:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="okAfterOpenError:">
+							<string key="name">okAfterOpenError:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="selectEncoding:">
+							<string key="name">selectEncoding:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stopAfterEncoding:">
+							<string key="name">stopAfterEncoding:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stopAfterError:">
+							<string key="name">stopAfterError:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stopAfterNotWritable:">
+							<string key="name">stopAfterNotWritable:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stopAfterPassword:">
+							<string key="name">stopAfterPassword:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="actionfield">NSTextField</string>
+						<string key="encodingfield">NSTextField</string>
+						<string key="encodingicon">NSImageView</string>
+						<string key="encodingpopup">TUEncodingPopUp</string>
+						<string key="encodingview">NSView</string>
+						<string key="errorapplyallcheck">NSButton</string>
+						<string key="errorfield">NSTextField</string>
+						<string key="erroricon">NSImageView</string>
+						<string key="errorview">NSView</string>
+						<string key="namefield">NSTextField</string>
+						<string key="notwritableview">NSView</string>
+						<string key="openerrorfield">NSTextField</string>
+						<string key="openerroricon">NSImageView</string>
+						<string key="openerrorview">NSView</string>
+						<string key="passwordapplyallcheck">NSButton</string>
+						<string key="passwordfield">NSTextField</string>
+						<string key="passwordicon">NSImageView</string>
+						<string key="passwordmessagefield">NSTextField</string>
+						<string key="passwordpopup">TUEncodingPopUp</string>
+						<string key="passwordpopuplabel">NSTextField</string>
+						<string key="passwordview">NSView</string>
+						<string key="progressicon">NSImageView</string>
+						<string key="progressindicator">NSProgressIndicator</string>
+						<string key="progressview">NSView</string>
+						<string key="waitfield">NSTextField</string>
+						<string key="waiticon">NSImageView</string>
+						<string key="waitview">NSView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="actionfield">
+							<string key="name">actionfield</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="encodingfield">
+							<string key="name">encodingfield</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="encodingicon">
+							<string key="name">encodingicon</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="encodingpopup">
+							<string key="name">encodingpopup</string>
+							<string key="candidateClassName">TUEncodingPopUp</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="encodingview">
+							<string key="name">encodingview</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="errorapplyallcheck">
+							<string key="name">errorapplyallcheck</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="errorfield">
+							<string key="name">errorfield</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="erroricon">
+							<string key="name">erroricon</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="errorview">
+							<string key="name">errorview</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="namefield">
+							<string key="name">namefield</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="notwritableview">
+							<string key="name">notwritableview</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="openerrorfield">
+							<string key="name">openerrorfield</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="openerroricon">
+							<string key="name">openerroricon</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="openerrorview">
+							<string key="name">openerrorview</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="passwordapplyallcheck">
+							<string key="name">passwordapplyallcheck</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="passwordfield">
+							<string key="name">passwordfield</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="passwordicon">
+							<string key="name">passwordicon</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="passwordmessagefield">
+							<string key="name">passwordmessagefield</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="passwordpopup">
+							<string key="name">passwordpopup</string>
+							<string key="candidateClassName">TUEncodingPopUp</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="passwordpopuplabel">
+							<string key="name">passwordpopuplabel</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="passwordview">
+							<string key="name">passwordview</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="progressicon">
+							<string key="name">progressicon</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="progressindicator">
+							<string key="name">progressindicator</string>
+							<string key="candidateClassName">NSProgressIndicator</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="progressview">
+							<string key="name">progressview</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="waitfield">
+							<string key="name">waitfield</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="waiticon">
+							<string key="name">waiticon</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="waitview">
+							<string key="name">waitview</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TUArchiveTaskView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TUEncodingPopUp</string>
+					<string key="superclassName">NSPopUpButton</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TUEncodingPopUp.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TUMultiTaskView</string>
+					<string key="superclassName">TUTaskView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TUMultiTaskView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TUTaskView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TUTaskView.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
-		</object>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<real value="1050" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
