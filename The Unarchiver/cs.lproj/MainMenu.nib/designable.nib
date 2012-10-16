@@ -2,40 +2,40 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1040</int>
-		<string key="IBDocument.SystemVersion">11D50b</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
-		<string key="IBDocument.AppKitVersion">1138.32</string>
-		<string key="IBDocument.HIToolboxVersion">568.00</string>
+		<string key="IBDocument.SystemVersion">11G63</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
+		<string key="IBDocument.AppKitVersion">1138.51</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2182</string>
+			<string key="NS.object.0">2843</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<string>NSMatrix</string>
-			<string>NSScroller</string>
-			<string>NSMenu</string>
-			<string>NSTableHeaderView</string>
-			<string>NSButton</string>
-			<string>NSStepper</string>
-			<string>NSCustomObject</string>
-			<string>NSTableView</string>
-			<string>NSCustomView</string>
-			<string>NSTextField</string>
-			<string>NSWindowTemplate</string>
-			<string>NSTextFieldCell</string>
-			<string>NSStepperCell</string>
-			<string>NSButtonCell</string>
-			<string>NSTableColumn</string>
 			<string>NSBox</string>
-			<string>NSView</string>
+			<string>NSButton</string>
+			<string>NSButtonCell</string>
+			<string>NSCustomObject</string>
+			<string>NSCustomView</string>
+			<string>NSMatrix</string>
+			<string>NSMenu</string>
+			<string>NSMenuItem</string>
+			<string>NSPopUpButton</string>
 			<string>NSPopUpButtonCell</string>
 			<string>NSScrollView</string>
-			<string>NSUserDefaultsController</string>
-			<string>NSTabViewItem</string>
-			<string>NSPopUpButton</string>
-			<string>NSMenuItem</string>
+			<string>NSScroller</string>
+			<string>NSStepper</string>
+			<string>NSStepperCell</string>
 			<string>NSTabView</string>
+			<string>NSTabViewItem</string>
+			<string>NSTableColumn</string>
+			<string>NSTableHeaderView</string>
+			<string>NSTableView</string>
+			<string>NSTextField</string>
+			<string>NSTextFieldCell</string>
+			<string>NSUserDefaultsController</string>
+			<string>NSView</string>
+			<string>NSWindowTemplate</string>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -119,7 +119,7 @@
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="267141903">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">About The Unarchiver</string>
+									<string key="NSTitle">O aplikaci The Unarchiver</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1019969751"/>
@@ -138,7 +138,7 @@
 								</object>
 								<object class="NSMenuItem" id="72714293">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">Preferences…</string>
+									<string key="NSTitle">Nastavení…</string>
 									<string key="NSKeyEquiv">,</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -158,7 +158,7 @@
 								</object>
 								<object class="NSMenuItem" id="932653323">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">Services</string>
+									<string key="NSTitle">Služby</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -166,9 +166,7 @@
 									<reference key="NSMixedImage" ref="16787521"/>
 									<string key="NSAction">submenuAction:</string>
 									<object class="NSMenu" key="NSSubmenu" id="887072279">
-										<object class="NSMutableString" key="NSTitle">
-											<characters key="NS.bytes">Services</characters>
-										</object>
+										<string key="NSTitle">Služby</string>
 										<object class="NSMutableArray" key="NSMenuItems">
 											<bool key="EncodedWithXMLCoder">YES</bool>
 										</object>
@@ -188,7 +186,7 @@
 								</object>
 								<object class="NSMenuItem" id="368435532">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">Hide The Unarchiver</string>
+									<string key="NSTitle">Skrýt The Unarchiver</string>
 									<string key="NSKeyEquiv">h</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -197,7 +195,7 @@
 								</object>
 								<object class="NSMenuItem" id="383692676">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">Hide Others</string>
+									<string key="NSTitle">Skrýt ostatní</string>
 									<string key="NSKeyEquiv">h</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -206,7 +204,7 @@
 								</object>
 								<object class="NSMenuItem" id="1062493266">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">Show All</string>
+									<string key="NSTitle">Zobrazit vše</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -226,7 +224,7 @@
 								</object>
 								<object class="NSMenuItem" id="216002892">
 									<reference key="NSMenu" ref="237102225"/>
-									<string key="NSTitle">Quit The Unarchiver</string>
+									<string key="NSTitle">Ukončit The Unarchiver</string>
 									<string key="NSKeyEquiv">q</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -239,7 +237,7 @@
 					</object>
 					<object class="NSMenuItem" id="988509512">
 						<reference key="NSMenu" ref="20280400"/>
-						<string key="NSTitle">File</string>
+						<string key="NSTitle">Soubor</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -247,14 +245,12 @@
 						<reference key="NSMixedImage" ref="16787521"/>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="41316345">
-							<object class="NSMutableString" key="NSTitle">
-								<characters key="NS.bytes">File</characters>
-							</object>
+							<string key="NSTitle">Soubor</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="1000894212">
 									<reference key="NSMenu" ref="41316345"/>
-									<string key="NSTitle">Unarchive To Current Folder...</string>
+									<string key="NSTitle">Rozbalit do aktuální složky...</string>
 									<string key="NSKeyEquiv">o</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -263,7 +259,7 @@
 								</object>
 								<object class="NSMenuItem" id="626578054">
 									<reference key="NSMenu" ref="41316345"/>
-									<string key="NSTitle">Unarchive To Desktop...</string>
+									<string key="NSTitle">Rozbalit na plochu...</string>
 									<string key="NSKeyEquiv">o</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -272,7 +268,7 @@
 								</object>
 								<object class="NSMenuItem" id="392399459">
 									<reference key="NSMenu" ref="41316345"/>
-									<string key="NSTitle">Unarchive To...</string>
+									<string key="NSTitle">Rozbalit do...</string>
 									<string key="NSKeyEquiv">O</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -291,7 +287,7 @@
 								</object>
 								<object class="NSMenuItem" id="308255322">
 									<reference key="NSMenu" ref="41316345"/>
-									<string key="NSTitle">Close Window</string>
+									<string key="NSTitle">Zavřít okno</string>
 									<string key="NSKeyEquiv">w</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -303,7 +299,7 @@
 					</object>
 					<object class="NSMenuItem" id="459646857">
 						<reference key="NSMenu" ref="20280400"/>
-						<string key="NSTitle">Edit</string>
+						<string key="NSTitle">Úpravy</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -311,14 +307,12 @@
 						<reference key="NSMixedImage" ref="16787521"/>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="834340127">
-							<object class="NSMutableString" key="NSTitle">
-								<characters key="NS.bytes">Edit</characters>
-							</object>
+							<string key="NSTitle">Úpravy</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="278407627">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Undo</string>
+									<string key="NSTitle">Zpět</string>
 									<string key="NSKeyEquiv">z</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -327,7 +321,7 @@
 								</object>
 								<object class="NSMenuItem" id="543555901">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Redo</string>
+									<string key="NSTitle">Opakovat</string>
 									<string key="NSKeyEquiv">Z</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -347,7 +341,7 @@
 								</object>
 								<object class="NSMenuItem" id="521786577">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Cut</string>
+									<string key="NSTitle">Vyjmout</string>
 									<string key="NSKeyEquiv">x</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -356,7 +350,7 @@
 								</object>
 								<object class="NSMenuItem" id="745766956">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Copy</string>
+									<string key="NSTitle">Kopírovat</string>
 									<string key="NSKeyEquiv">c</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -365,7 +359,7 @@
 								</object>
 								<object class="NSMenuItem" id="106672059">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Paste</string>
+									<string key="NSTitle">Vložit</string>
 									<string key="NSKeyEquiv">v</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -374,7 +368,7 @@
 								</object>
 								<object class="NSMenuItem" id="893223992">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Delete</string>
+									<string key="NSTitle">Smazat</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -383,7 +377,7 @@
 								</object>
 								<object class="NSMenuItem" id="102774695">
 									<reference key="NSMenu" ref="834340127"/>
-									<string key="NSTitle">Select All</string>
+									<string key="NSTitle">Vybrat vše</string>
 									<string key="NSKeyEquiv">a</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -395,7 +389,7 @@
 					</object>
 					<object class="NSMenuItem" id="821590794">
 						<reference key="NSMenu" ref="20280400"/>
-						<string key="NSTitle">Window</string>
+						<string key="NSTitle">Okno</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -403,14 +397,12 @@
 						<reference key="NSMixedImage" ref="16787521"/>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="897689867">
-							<object class="NSMutableString" key="NSTitle">
-								<characters key="NS.bytes">Window</characters>
-							</object>
+							<string key="NSTitle">Okno</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="292321166">
 									<reference key="NSMenu" ref="897689867"/>
-									<string key="NSTitle">Minimize</string>
+									<string key="NSTitle">Minimalizovat</string>
 									<string key="NSKeyEquiv">m</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -419,7 +411,7 @@
 								</object>
 								<object class="NSMenuItem" id="817076364">
 									<reference key="NSMenu" ref="897689867"/>
-									<string key="NSTitle">Zoom</string>
+									<string key="NSTitle">Přiblížit</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -439,7 +431,7 @@
 								</object>
 								<object class="NSMenuItem" id="850227901">
 									<reference key="NSMenu" ref="897689867"/>
-									<string key="NSTitle">Bring All to Front</string>
+									<string key="NSTitle">Přenést vše do popředí</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -452,7 +444,7 @@
 					</object>
 					<object class="NSMenuItem" id="40168137">
 						<reference key="NSMenu" ref="20280400"/>
-						<string key="NSTitle">Help</string>
+						<string key="NSTitle">Nápověda</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -460,12 +452,12 @@
 						<reference key="NSMixedImage" ref="16787521"/>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="772415393">
-							<string key="NSTitle">Help</string>
+							<string key="NSTitle">Nápověda</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="136793453">
 									<reference key="NSMenu" ref="772415393"/>
-									<string key="NSTitle">Support Board...</string>
+									<string key="NSTitle">Diskusní fórum...</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1019969751"/>
@@ -473,7 +465,7 @@
 								</object>
 								<object class="NSMenuItem" id="424835802">
 									<reference key="NSMenu" ref="772415393"/>
-									<string key="NSTitle">Report a Bug...</string>
+									<string key="NSTitle">Nahlásit chybu...</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1019969751"/>
@@ -481,7 +473,7 @@
 								</object>
 								<object class="NSMenuItem" id="982128411">
 									<reference key="NSMenu" ref="772415393"/>
-									<string key="NSTitle">Home Page...</string>
+									<string key="NSTitle">Domovská stránka...</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1019969751"/>
@@ -555,10 +547,10 @@
 																	<string key="NSFrameSize">{377, 17}</string>
 																	<reference key="NSSuperview" ref="737039185"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="827582900"/>
+																	<reference key="NSNextKeyView" ref="705239607"/>
 																	<reference key="NSTableView" ref="591475378"/>
 																</object>
-																<object class="_NSCornerView" key="NSCornerView" id="827582900">
+																<object class="_NSCornerView" key="NSCornerView" id="618637723">
 																	<reference key="NSNextResponder" ref="366064615"/>
 																	<int key="NSvFlags">256</int>
 																	<string key="NSFrame">{{378, 0}, {16, 17}}</string>
@@ -768,7 +760,7 @@
 														<reference key="NSBGColor" ref="646890407"/>
 														<int key="NScvFlags">4</int>
 													</object>
-													<reference ref="827582900"/>
+													<reference ref="618637723"/>
 												</object>
 												<string key="NSFrame">{{20, 43}, {394, 241}}</string>
 												<reference key="NSSuperview" ref="416291026"/>
@@ -779,7 +771,7 @@
 												<reference key="NSHScroller" ref="366934169"/>
 												<reference key="NSContentView" ref="705239607"/>
 												<reference key="NSHeaderClipView" ref="737039185"/>
-												<reference key="NSCornerView" ref="827582900"/>
+												<reference key="NSCornerView" ref="618637723"/>
 												<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 											</object>
 											<object class="NSButton" id="349910824">
@@ -793,7 +785,7 @@
 												<object class="NSButtonCell" key="NSCell" id="286382900">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">134348800</int>
-													<string key="NSContents">Select all</string>
+													<string key="NSContents">Vybrat vše</string>
 													<reference key="NSSupport" ref="26"/>
 													<reference key="NSControlView" ref="349910824"/>
 													<int key="NSButtonFlags">-2038284033</int>
@@ -822,7 +814,7 @@
 												<object class="NSButtonCell" key="NSCell" id="325766795">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">134348800</int>
-													<string key="NSContents">Deselect all</string>
+													<string key="NSContents">Zrušit vše</string>
 													<reference key="NSSupport" ref="26"/>
 													<reference key="NSControlView" ref="34156296"/>
 													<int key="NSButtonFlags">-2038284033</int>
@@ -847,7 +839,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="923188610">
 													<int key="NSCellFlags">67239488</int>
 													<int key="NSCellFlags2">272631808</int>
-													<string key="NSContents">Open these archives types with The Unarchiver:</string>
+													<string key="NSContents">Otevírat tyto druhy archivů pomocí The Unarchiver:</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="370190224"/>
 													<object class="NSColor" key="NSBackgroundColor" id="925600687">
@@ -865,7 +857,7 @@
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="370190224"/>
 									</object>
-									<string key="NSLabel">Archive Formats</string>
+									<string key="NSLabel">Formáty</string>
 									<reference key="NSColor" ref="925600687"/>
 									<reference key="NSTabView" ref="358252493"/>
 								</object>
@@ -885,7 +877,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="770171652">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">272629760</int>
-													<string key="NSContents">After successfully extracting an archive:</string>
+													<string key="NSContents">Po úspěšném rozbalení archívu:</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="312572866"/>
 													<reference key="NSBackgroundColor" ref="925600687"/>
@@ -902,7 +894,7 @@
 												<object class="NSButtonCell" key="NSCell" id="634021117">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Open the extracted folder</string>
+													<string key="NSContents">Otevřít složku s rozbaleným obsahem</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="686196991"/>
 													<int key="NSButtonFlags">1211912703</int>
@@ -920,11 +912,12 @@
 												<int key="NSvFlags">266</int>
 												<string key="NSFrame">{{29, 14}, {408, 18}}</string>
 												<reference key="NSSuperview" ref="386976745"/>
+												<reference key="NSNextKeyView" ref="358252493"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="850339000">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Move the archive to the trash</string>
+													<string key="NSContents">Přesunout archív do koše</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="520582628"/>
 													<int key="NSButtonFlags">1211912703</int>
@@ -940,14 +933,14 @@
 											<object class="NSTextField" id="555721646">
 												<reference key="NSNextResponder" ref="386976745"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{14, 281}, {125, 17}}</string>
+												<string key="NSFrame">{{14, 281}, {80, 17}}</string>
 												<reference key="NSSuperview" ref="386976745"/>
 												<reference key="NSNextKeyView" ref="369495930"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="88827288">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">272629760</int>
-													<string key="NSContents">Extract archives to:</string>
+													<string key="NSContents">Rozbalit do:</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="555721646"/>
 													<reference key="NSBackgroundColor" ref="925600687"/>
@@ -1073,14 +1066,14 @@
 											<object class="NSTextField" id="600168017">
 												<reference key="NSNextResponder" ref="386976745"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{14, 242}, {272, 17}}</string>
+												<string key="NSFrame">{{14, 242}, {293, 17}}</string>
 												<reference key="NSSuperview" ref="386976745"/>
 												<reference key="NSNextKeyView" ref="439518814"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="314997433">
 													<int key="NSCellFlags">68288064</int>
 													<int key="NSCellFlags2">272630784</int>
-													<string key="NSContents">Create a new folder for the extracted files:</string>
+													<string key="NSContents">Vytvořit novou složku pro rozbalené soubory:</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="600168017"/>
 													<reference key="NSBackgroundColor" ref="925600687"/>
@@ -1101,7 +1094,7 @@
 													<object class="NSButtonCell" id="152433639">
 														<int key="NSCellFlags">-2080244224</int>
 														<int key="NSCellFlags2">0</int>
-														<string key="NSContents">Never</string>
+														<string key="NSContents">Nikdy</string>
 														<reference key="NSSupport" ref="170887875"/>
 														<reference key="NSControlView" ref="439518814"/>
 														<int key="NSTag">3</int>
@@ -1118,7 +1111,7 @@
 													<object class="NSButtonCell" id="49678163">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">0</int>
-														<string key="NSContents">Only if there is more than one top-level item</string>
+														<string key="NSContents">Pouze obsahuje-li více než jednu složku na nejvyšší úrovni</string>
 														<reference key="NSSupport" ref="170887875"/>
 														<reference key="NSControlView" ref="439518814"/>
 														<int key="NSTag">1</int>
@@ -1227,7 +1220,7 @@ QXBwbGUgQ29tcHV0ZXIsIEluYy4sIDIwMDUAAAAAA</bytes>
 													<object class="NSButtonCell" id="911349582">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">0</int>
-														<string key="NSContents">Always</string>
+														<string key="NSContents">Vždy</string>
 														<reference key="NSSupport" ref="170887875"/>
 														<reference key="NSControlView" ref="439518814"/>
 														<int key="NSTag">2</int>
@@ -1302,14 +1295,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 											<object class="NSTextField" id="795354361">
 												<reference key="NSNextResponder" ref="386976745"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{14, 151}, {317, 17}}</string>
+												<string key="NSFrame">{{14, 151}, {297, 17}}</string>
 												<reference key="NSSuperview" ref="386976745"/>
 												<reference key="NSNextKeyView" ref="138094900"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="998159212">
 													<int key="NSCellFlags">68288064</int>
 													<int key="NSCellFlags2">272630784</int>
-													<string key="NSContents">Set the modification date of the created folder to:</string>
+													<string key="NSContents">Nastavit datum změny na vytvořené složce na:</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="795354361"/>
 													<reference key="NSBackgroundColor" ref="925600687"/>
@@ -1330,7 +1323,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 													<object class="NSButtonCell" id="811978352">
 														<int key="NSCellFlags">-2080244224</int>
 														<int key="NSCellFlags2">0</int>
-														<string key="NSContents">The current time and date</string>
+														<string key="NSContents">Aktuální datum a čas</string>
 														<reference key="NSSupport" ref="170887875"/>
 														<reference key="NSControlView" ref="138094900"/>
 														<int key="NSTag">1</int>
@@ -1345,7 +1338,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 													<object class="NSButtonCell" id="1038186675">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">0</int>
-														<string key="NSContents">The modification date of the archive file</string>
+														<string key="NSContents">Datum změny archívu</string>
 														<reference key="NSSupport" ref="170887875"/>
 														<reference key="NSControlView" ref="138094900"/>
 														<int key="NSTag">2</int>
@@ -1513,14 +1506,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 											<object class="NSButton" id="554806457">
 												<reference key="NSNextResponder" ref="386976745"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{29, 81}, {370, 18}}</string>
+												<string key="NSFrame">{{29, 81}, {384, 18}}</string>
 												<reference key="NSSuperview" ref="386976745"/>
 												<reference key="NSNextKeyView" ref="312572866"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="384062246">
 													<int key="NSCellFlags">-2080244224</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Also set the modification date of single top-level items</string>
+													<string key="NSContents">Nastavit též datum změny pro položky na nejvyšší úrovni</string>
 													<reference key="NSSupport" ref="170887875"/>
 													<reference key="NSControlView" ref="554806457"/>
 													<int key="NSButtonFlags">1211912703</int>
@@ -1537,7 +1530,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<string key="NSFrame">{{10, 33}, {450, 309}}</string>
 										<reference key="NSNextKeyView" ref="555721646"/>
 									</object>
-									<string key="NSLabel">Extraction</string>
+									<string key="NSLabel">Rozbalování</string>
 									<reference key="NSColor" ref="925600687"/>
 									<reference key="NSTabView" ref="358252493"/>
 								</object>
@@ -1612,14 +1605,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 															<object class="NSTextField" id="922311104">
 																<reference key="NSNextResponder" ref="202212055"/>
 																<int key="NSvFlags">268</int>
-																<string key="NSFrame">{{13, 82}, {127, 17}}</string>
+																<string key="NSFrame">{{31, 82}, {109, 17}}</string>
 																<reference key="NSSuperview" ref="202212055"/>
 																<reference key="NSNextKeyView" ref="790450297"/>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTextFieldCell" key="NSCell" id="1030051452">
 																	<int key="NSCellFlags">67239424</int>
 																	<int key="NSCellFlags2">71303168</int>
-																	<string key="NSContents">Filename encoding:</string>
+																	<string key="NSContents">Kódování názvu:</string>
 																	<reference key="NSSupport" ref="170887875"/>
 																	<reference key="NSControlView" ref="922311104"/>
 																	<reference key="NSBackgroundColor" ref="925600687"/>
@@ -1681,7 +1674,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																<object class="NSTextFieldCell" key="NSCell" id="33319146">
 																	<int key="NSCellFlags">67239424</int>
 																	<int key="NSCellFlags2">71303168</int>
-																	<string key="NSContents">Threshold:</string>
+																	<string key="NSContents">Volnost:</string>
 																	<reference key="NSSupport" ref="170887875"/>
 																	<reference key="NSControlView" ref="235544027"/>
 																	<reference key="NSBackgroundColor" ref="925600687"/>
@@ -1708,14 +1701,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 															<object class="NSTextField" id="982353529">
 																<reference key="NSNextResponder" ref="202212055"/>
 																<int key="NSvFlags">268</int>
-																<string key="NSFrame">{{228, 45}, {73, 17}}</string>
+																<string key="NSFrame">{{228, 45}, {44, 17}}</string>
 																<reference key="NSSuperview" ref="202212055"/>
 																<reference key="NSNextKeyView" ref="446465817"/>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTextFieldCell" key="NSCell" id="536160448">
 																	<int key="NSCellFlags">67239424</int>
 																	<int key="NSCellFlags2">272629760</int>
-																	<string key="NSContents">confidence</string>
+																	<string key="NSContents">jistota</string>
 																	<reference key="NSSupport" ref="170887875"/>
 																	<reference key="NSControlView" ref="982353529"/>
 																	<reference key="NSBackgroundColor" ref="925600687"/>
@@ -1727,11 +1720,12 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																<int key="NSvFlags">266</int>
 																<string key="NSFrame">{{142, 15}, {275, 22}}</string>
 																<reference key="NSSuperview" ref="202212055"/>
+																<reference key="NSNextKeyView" ref="358252493"/>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTextFieldCell" key="NSCell" id="388736291">
 																	<int key="NSCellFlags">67239424</int>
 																	<int key="NSCellFlags2">272629760</int>
-																	<string key="NSContents">(A confidence level lower than this causes the program to ask for an encoding instead of using the autodetected one.)</string>
+																	<string key="NSContents">(Jistota nižší než tato hodnota má za následek, že se program zeptá na kódování místo použití detekovaného.)</string>
 																	<object class="NSFont" key="NSSupport">
 																		<string key="NSName">LucidaGrande</string>
 																		<double key="NSSize">9</double>
@@ -1755,7 +1749,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 												<object class="NSTextFieldCell" key="NSTitleCell">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Filename encoding autodetection</string>
+													<string key="NSContents">Autodetekce kódování názvu souboru</string>
 													<reference key="NSSupport" ref="26"/>
 													<reference key="NSBackgroundColor" ref="345932596"/>
 													<object class="NSColor" key="NSTextColor">
@@ -1773,7 +1767,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<string key="NSFrame">{{10, 33}, {450, 309}}</string>
 										<reference key="NSNextKeyView" ref="171736568"/>
 									</object>
-									<string key="NSLabel">Advanced</string>
+									<string key="NSLabel">Pokročilé</string>
 									<reference key="NSColor" ref="925600687"/>
 									<reference key="NSTabView" ref="358252493"/>
 								</object>
@@ -1798,7 +1792,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<object class="NSButtonCell" key="NSCell" id="815035814">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134348800</int>
-								<string key="NSContents">Support The Unarchiver! Make a donation on the home page!</string>
+								<string key="NSContents">Podpořte The Unarchiver! Darujte libovolnou částku přes web!</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">10</double>
@@ -2787,14 +2781,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="312572866"/>
 							<reference ref="686196991"/>
-							<reference ref="520582628"/>
 							<reference ref="555721646"/>
 							<reference ref="369495930"/>
 							<reference ref="600168017"/>
 							<reference ref="439518814"/>
 							<reference ref="795354361"/>
-							<reference ref="138094900"/>
 							<reference ref="554806457"/>
+							<reference ref="138094900"/>
+							<reference ref="520582628"/>
 						</object>
 						<reference key="parent" ref="867161448"/>
 					</object>
