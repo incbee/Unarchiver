@@ -3,6 +3,7 @@
 #import "TUTaskListView.h"
 #import "TUEncodingPopUp.h"
 #import <XADMaster/XADRegex.h>
+#import <XADMaster/XADPlatform.h>
 
 
 
@@ -264,8 +265,8 @@ NSStringEncoding globalpasswordencoding=0;
 		newpath=[XADSimpleUnarchiver _findUniquePathForOriginalPath:newpath];
 
 		// Move files into place
-		[XADSimpleUnarchiver _moveItemAtPath:path toPath:newpath];
-		[XADSimpleUnarchiver _removeItemAtPath:tmpdest];
+		[XADPlatform moveItemAtPath:path toPath:newpath];
+		[XADPlatform removeItemAtPath:tmpdest];
 	}
 
 	// Remove temporary directory from crash recovery list.
