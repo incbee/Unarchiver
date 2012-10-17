@@ -96,6 +96,10 @@ userData:(NSString *)data error:(NSString **)error;
 -(IBAction)openBugReport:(id)sender;
 -(IBAction)openHomePage:(id)sender;
 
+-(TUTaskQueue *)extractTasks;
+-(TUTaskQueue *)setupTasks;
+
+
 /*-(void)lockFileSystem:(NSString *)filename;
 -(BOOL)tryFileSystemLock:(NSString *)filename;
 -(void)unlockFileSystem:(NSString *)filename;

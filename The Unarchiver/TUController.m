@@ -743,6 +743,16 @@ userData:(NSString *)data error:(NSString **)error
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://unarchiver.c3.cx/"]];
 }
 
+-(TUTaskQueue *)extractTasks
+{
+	return extracttasks;
+}
+
+-(TUTaskQueue *)setupTasks
+{
+	return setuptasks;
+}
+
 @end
 
 
