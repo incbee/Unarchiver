@@ -743,6 +743,7 @@ userData:(NSString *)data error:(NSString **)error
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://unarchiver.c3.cx/"]];
 }
 
+//AppleScript stuff
 -(TUTaskQueue *)extractTasks
 {
 	return extracttasks;
@@ -751,6 +752,17 @@ userData:(NSString *)data error:(NSString **)error
 -(TUTaskQueue *)setupTasks
 {
 	return setuptasks;
+}
+
+-(BOOL)application:(NSApplication *)sender delegateHandlesKey:(NSString *)key
+{
+	if ([key isEqualToString:@"extractTasks"]) {
+		return YES;
+	}
+	if ([key isEqualToString:@"setupTasks"]) {
+		return YES;
+	}
+	return NO;
 }
 
 @end

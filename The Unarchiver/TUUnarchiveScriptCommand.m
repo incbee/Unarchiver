@@ -165,7 +165,7 @@ enum extracionDestination {
 	//transform string to URLs
 	NSMutableArray *URLarray =[NSMutableArray array];
 	for (int i=0; i<[files count]; i++) {
-		NSURL *newURL = [NSURL URLWithString:[files objectAtIndex:i]];
+		NSURL *newURL = [NSURL fileURLWithPath:[files objectAtIndex:i]];
 		[URLarray addObject:newURL];
 	}
 	[appController newArchivesForURLs:URLarray destination:destinationIntValue];
