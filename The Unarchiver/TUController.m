@@ -754,6 +754,11 @@ userData:(NSString *)data error:(NSString **)error
 	return setuptasks;
 }
 
+-(NSMutableArray *)archivecontrollers
+{
+	return archivecontrollers;
+}
+
 -(BOOL)application:(NSApplication *)sender delegateHandlesKey:(NSString *)key
 {
 	if ([key isEqualToString:@"extractTasks"]) {

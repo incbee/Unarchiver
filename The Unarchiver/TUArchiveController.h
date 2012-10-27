@@ -49,4 +49,6 @@
 
 -(void)archiveTaskViewCancelled:(TUArchiveTaskView *)taskview;
 
+-(TUArchiveTaskView *)view;
+
 @end

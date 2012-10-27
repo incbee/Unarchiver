@@ -179,6 +179,19 @@
 			 TODO: There is a bug, so it can't be implemented
 			 </parameter-->
 		</command>
+		<enumeration name="Task to cancel" code="TUtC" inline="20"
+			description="">
+			<enumerator name="All tasks" code="TaAl" description="All the extractions, including the user extractions.">
+				<synonym name="All"/>
+			</enumerator>
+			<enumerator hidden="yes" name="Current task" code="TaCT" description="TODO: not implemented"/>
+		</enumeration>
+		<command name="cancel" code="TUSCcaEx" description="Cancel a extraction task (currently only all tasks)">
+			<cocoa class="TUCancelExtractionScriptCommand"/>
+			<direct-parameter description="What to cancell, currently only all">
+				<type type="Task to cancel"/>
+			</direct-parameter>
+		</command>
 		<class name="Task Queue" code="TUtq" description="Manages the tasks for setting and doing the unarchiving" hidden="no">
 			<cocoa class="TUTaskQueue"/>
 			<property name="empty" code="TQiE" type="boolean" access="r"/>
@@ -187,8 +200,8 @@
 		</class>
 		<class name="application" code="capp" description="The application's top-level scripting object.">
 			<cocoa class="NSApplication"/>
-			<property name="extract Tasks" code="TQeT" type="Task Queue" access="r" description="The unarchiving task running"/>
-			<property name="setupTasks" code="TQsT" type="Task Queue" access="r" description="The setup tasks running"/>
+			<property name="extract Tasks" code="TQeT" type="Task Queue" access="r" description="The unarchiving tasks running"/>
+			<property name="setup Tasks" code="TQsT" type="Task Queue" access="r" description="The setup tasks running"/>
 		</class>
 	</suite>
 	
