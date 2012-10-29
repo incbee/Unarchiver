@@ -319,11 +319,7 @@ NSStringEncoding globalpasswordencoding=0;
 
 -(void)extractFailed
 {
-	#ifndef LegacyVersion
-	[[NSFileManager defaultManager] removeItemAtPath:tmpdest error:NULL];
-	#else
-	[[NSFileManager defaultManager] removeFileAtPath:tmpdest handler:nil];
-	#endif
+	[XADPlatform removeItemAtPath:tmpdest];
 
 	[self forgetTempDirectory:tmpdest];
 
