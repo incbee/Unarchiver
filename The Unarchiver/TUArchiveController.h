@@ -1,13 +1,14 @@
 #import <XADMaster/XADSimpleUnarchiver.h>
 
 #import "TUArchiveTaskView.h"
-
+#import "TUDockTileView.h"
 
 @class TUController,TUEncodingPopUp;
 
 @interface TUArchiveController:NSObject
 {
 	TUArchiveTaskView *view;
+	TUDockTileView *docktile;
 	XADSimpleUnarchiver *unarchiver;
 	NSString *archivename,*destination,*tmpdest;
 	NSStringEncoding selected_encoding;
@@ -32,6 +33,7 @@
 -(BOOL)volumeScanningFailed;
 -(BOOL)caresAboutPasswordEncoding;
 -(TUArchiveTaskView *)taskView;
+-(void)setDockTileView:(TUDockTileView *)tileview;
 
 -(NSString *)currentArchiveName;
 -(NSString *)localizedDescriptionOfError:(XADError)error;

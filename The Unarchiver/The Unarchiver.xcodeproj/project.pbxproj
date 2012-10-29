@@ -64,6 +64,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		DBE800E416275114005847F9 /* TUDockTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE800E316275114005847F9 /* TUDockTileView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -411,6 +412,8 @@
 		56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XADMaster.xcodeproj; path = ../XADMaster/XADMaster.xcodeproj; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* The Unarchiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Unarchiver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBE800E216275114005847F9 /* TUDockTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUDockTileView.h; sourceTree = "<group>"; };
+		DBE800E316275114005847F9 /* TUDockTileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUDockTileView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -445,6 +448,8 @@
 				1B932D690A560AC900F7DE66 /* TUCancelButton.m */,
 				1BED5DB30A600D6E00CA31C2 /* TUEncodingPopUp.h */,
 				1BED5DB40A600D6E00CA31C2 /* TUEncodingPopUp.m */,
+				DBE800E216275114005847F9 /* TUDockTileView.h */,
+				DBE800E316275114005847F9 /* TUDockTileView.m */,
 				1B4B4B9115C9BE5C0024B6D7 /* TUURLCache.h */,
 				1B4B4B9215C9BE5C0024B6D7 /* TUURLCache.m */,
 				1B6FA2090A58A1D800066489 /* CSFileTypeList.h */,
@@ -869,6 +874,7 @@
 				1B81DDA710003BBB005C5B23 /* TUArchiveTaskView.m in Sources */,
 				1B81DDCE10012A2D005C5B23 /* TUTaskQueue.m in Sources */,
 				1B4B4B9315C9C7F70024B6D7 /* TUURLCache.m in Sources */,
+				DBE800E416275114005847F9 /* TUDockTileView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

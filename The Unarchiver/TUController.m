@@ -3,6 +3,7 @@
 #import "TUTaskListView.h"
 #import "TUEncodingPopUp.h"
 #import "XADMaster/XADPlatform.h"
+#import "TUDockTileView.h"
 
 #import <unistd.h>
 #import <sys/stat.h>
@@ -28,6 +29,9 @@ static BOOL IsPathWritable(NSString *path);
 		extracttasks=[TUTaskQueue new];
 		archivecontrollers=[NSMutableArray new];
 		selecteddestination=nil;
+
+		docktile=[[TUDockTileView alloc] init];
+
 		opened=NO;
 
 		#ifndef IsLegacyVersion
@@ -46,6 +50,9 @@ static BOOL IsPathWritable(NSString *path);
 	[extracttasks release];
 	[archivecontrollers release];
 	[selecteddestination release];
+
+	[[NSApp dockTile] setContentView:nil];
+	[docktile release];
 
 	#ifndef IsLegacyVersion
 	[urlcache release];
@@ -70,6 +77,8 @@ static BOOL IsPathWritable(NSString *path);
 	else [encodingpopup selectItemAtIndex:[encodingpopup numberOfItems]-1];
 
 	[self changeCreateFolder:nil];
+
+	[[NSApp dockTile] setContentView:docktile];
 
 	[self cleanupOrphanedTempDirectories];
 }
@@ -225,8 +234,10 @@ static BOOL IsPathWritable(NSString *path);
 	TUArchiveController *archive=[[[TUArchiveController alloc]
 	initWithFilename:filename taskView:taskview] autorelease];
 	[archive setDestination:destination];
+	[archive setDockTileView:docktile];
 
 	[archivecontrollers addObject:archive];
+	[docktile setCount:[archivecontrollers count]];
 
 	[taskview setCancelAction:@selector(archiveTaskViewCancelledBeforeSetup:) target:self];
 	[taskview setArchiveController:archive];
@@ -254,6 +265,7 @@ static BOOL IsPathWritable(NSString *path);
 	{
  		[archivecontrollers removeObjectIdenticalTo:archive];
 		[setuptasks finishCurrentTask];
+		[docktile setCount:[archivecontrollers count]];
 		return;
 	}
 
@@ -513,6 +525,7 @@ static BOOL IsPathWritable(NSString *path);
 	[mainlist removeTaskView:[archive taskView]];
 	[archivecontrollers removeObjectIdenticalTo:archive];
 	[setuptasks finishCurrentTask];
+	[docktile setCount:[archivecontrollers count]];
 }
 
 -(void)setupQueueEmpty:(TUTaskQueue *)queue
@@ -538,6 +551,7 @@ static BOOL IsPathWritable(NSString *path);
 	{
 		[archivecontrollers removeObjectIdenticalTo:archive];
 		[extracttasks finishCurrentTask];
+		[docktile setCount:[archivecontrollers count]];
 		return;
 	}
 
@@ -551,6 +565,7 @@ static BOOL IsPathWritable(NSString *path);
 	[mainlist removeTaskView:[archive taskView]];
 	[archivecontrollers removeObjectIdenticalTo:archive];
 	[extracttasks finishCurrentTask];
+	[docktile setCount:[archivecontrollers count]];
 
 	// Don't bother relinquishing access. Docs says to do it,
 	// but this only causes problems.

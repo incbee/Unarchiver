@@ -72,9 +72,11 @@
 		[progressindicator setDoubleValue:0];
 		[progressindicator setMaxValue:1];
 		[progressindicator setIndeterminate:NO];
+		// TODO: Update dock
 	}
 
 	[progressindicator setDoubleValue:[fraction doubleValue]];
+	// TODO: Update dock
 }
 
 

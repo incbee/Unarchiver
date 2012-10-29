@@ -92,6 +92,8 @@ NSStringEncoding globalpasswordencoding=0;
 
 -(TUArchiveTaskView *)taskView { return view; }
 
+-(void)setDockTileView:(TUDockTileView *)tileview { docktile=tileview; }
+
 
 
 
@@ -313,6 +315,7 @@ NSStringEncoding globalpasswordencoding=0;
 		}
 	}
 
+	[docktile hideProgress];
 	[finishtarget performSelector:finishselector withObject:self];
 	[self release];
 }
@@ -323,6 +326,7 @@ NSStringEncoding globalpasswordencoding=0;
 
 	[self forgetTempDirectory:tmpdest];
 
+	[docktile hideProgress];
 	[finishtarget performSelector:finishselector withObject:self];
 	[self release];
 }
@@ -451,7 +455,9 @@ extractionProgressForEntryWithDictionary:(NSDictionary *)dict
 fileProgress:(off_t)fileprogress of:(off_t)filesize
 totalProgress:(off_t)totalprogress of:(off_t)totalsize
 {
-	[view setProgress:(double)totalprogress/(double)totalsize];
+	double progress=(double)totalprogress/(double)totalsize;
+	[view setProgress:progress];
+	[docktile setProgress:progress];
 }
 
 -(void)simpleUnarchiver:(XADSimpleUnarchiver *)sender
@@ -459,6 +465,7 @@ estimatedExtractionProgressForEntryWithDictionary:(NSDictionary *)dict
 fileProgress:(double)fileprogress totalProgress:(double)totalprogress
 {
 	[view setProgress:totalprogress];
+	[docktile setProgress:totalprogress];
 }
 
 -(void)simpleUnarchiver:(XADSimpleUnarchiver *)sender didExtractEntryWithDictionary:(NSDictionary *)dict to:(NSString *)path error:(XADError)error;

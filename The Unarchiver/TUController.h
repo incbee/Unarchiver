@@ -6,6 +6,7 @@
 #import "TUArchiveTaskView.h"
 #import "TUTaskListView.h"
 #import "TUEncodingPopUp.h"
+#import "TUDockTileView.h"
 
 #ifndef IsLegacyVersion
 #import "TUURLCache.h"
@@ -15,6 +16,8 @@
 {
 	TUTaskQueue *setuptasks,*extracttasks;
 	NSMutableArray *archivecontrollers;
+
+	TUDockTileView *docktile;
 
 	NSString *selecteddestination;
 
@@ -100,6 +103,5 @@ userData:(NSString *)data error:(NSString **)error;
 -(BOOL)tryFileSystemLock:(NSString *)filename;
 -(void)unlockFileSystem:(NSString *)filename;
 -(NSNumber *)_fileSystemNumber:(NSString *)filename;*/
-
 
 @end
