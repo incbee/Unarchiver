@@ -30,7 +30,8 @@ static BOOL IsPathWritable(NSString *path);
 		archivecontrollers=[NSMutableArray new];
 		selecteddestination=nil;
 
-		docktile=[[TUDockTileView alloc] init];
+		if([NSApp respondsToSelector:@selector(dockTile)]) docktile=[[TUDockTileView alloc] init];
+		else docktile=nil;
 
 		opened=NO;
 
@@ -51,8 +52,11 @@ static BOOL IsPathWritable(NSString *path);
 	[archivecontrollers release];
 	[selecteddestination release];
 
-	[[NSApp dockTile] setContentView:nil];
-	[docktile release];
+	if(docktile)
+	{
+		[[NSApp dockTile] setContentView:nil];
+		[docktile release];
+	}
 
 	#ifndef IsLegacyVersion
 	[urlcache release];
@@ -78,7 +82,7 @@ static BOOL IsPathWritable(NSString *path);
 
 	[self changeCreateFolder:nil];
 
-	[[NSApp dockTile] setContentView:docktile];
+	if(docktile) [[NSApp dockTile] setContentView:docktile];
 
 	[self cleanupOrphanedTempDirectories];
 }

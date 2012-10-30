@@ -302,9 +302,9 @@
 		1B932E830A5730DD00F7DE66 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
 		1B9767BA0A6D79CA00A8E8DA /* amiga.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = amiga.icns; sourceTree = "<group>"; };
 		1B9767BB0A6D79CA00A8E8DA /* unarchiver.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = unarchiver.icns; sourceTree = "<group>"; };
-		1BA23D47162DE896000D8174 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1BA23D48162DE896000D8174 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
-		1BA23D49162DE896000D8174 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1BA23D47162DE896000D8174 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BA23D48162DE896000D8174 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1BA23D49162DE896000D8174 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
 		1BA23D4A162DE896000D8174 /* cs */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = cs; path = cs.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		1BA23D4B162DE896000D8174 /* cs */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = cs; path = cs.lproj/NotWritableView.nib; sourceTree = "<group>"; };
 		1BA23D4C162DE896000D8174 /* cs */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = cs; path = cs.lproj/ErrorView.nib; sourceTree = "<group>"; };
