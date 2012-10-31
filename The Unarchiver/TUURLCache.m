@@ -74,7 +74,7 @@
 			bookmarkDataIsStale:&isstale error:NULL];
 
 			[url startAccessingSecurityScopedResource];
-			[openpaths setObject:url forKey:path];
+			if(url) [openpaths setObject:url forKey:path];
 
 			return YES;
 		}

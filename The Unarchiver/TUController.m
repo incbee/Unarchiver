@@ -3,6 +3,7 @@
 #import "TUTaskListView.h"
 #import "TUEncodingPopUp.h"
 #import "XADMaster/XADPlatform.h"
+#import "TUDockTileView.h"
 
 #import <unistd.h>
 #import <sys/stat.h>
@@ -28,6 +29,10 @@ static BOOL IsPathWritable(NSString *path);
 		extracttasks=[TUTaskQueue new];
 		archivecontrollers=[NSMutableArray new];
 		selecteddestination=nil;
+
+		if([NSApp respondsToSelector:@selector(dockTile)]) docktile=[[TUDockTileView alloc] init];
+		else docktile=nil;
+
 		opened=NO;
 
 		#ifndef IsLegacyVersion
@@ -46,6 +51,12 @@ static BOOL IsPathWritable(NSString *path);
 	[extracttasks release];
 	[archivecontrollers release];
 	[selecteddestination release];
+
+	if(docktile)
+	{
+		[[NSApp dockTile] setContentView:nil];
+		[docktile release];
+	}
 
 	#ifndef IsLegacyVersion
 	[urlcache release];
@@ -70,6 +81,8 @@ static BOOL IsPathWritable(NSString *path);
 	else [encodingpopup selectItemAtIndex:[encodingpopup numberOfItems]-1];
 
 	[self changeCreateFolder:nil];
+
+	if(docktile) [[NSApp dockTile] setContentView:docktile];
 
 	[self cleanupOrphanedTempDirectories];
 }
@@ -192,52 +205,66 @@ static BOOL IsPathWritable(NSString *path);
 -(void)newArchiveForFile:(NSString *)filename destination:(int)desttype
 {
 	// Check if this file is already included in any of the currently queued archives.
-	NSEnumerator *enumerator=[archivecontrollers objectEnumerator];
-	TUArchiveController *currarchive;
-	while((currarchive=[enumerator nextObject]))
-	{
-		if([currarchive isCancelled]) continue;
-		NSArray *filenames=[currarchive allFilenames];
-		if([filenames containsObject:filename]) return;
-	}
+	if([self archiveControllerForFilename:filename]) return;
 
-	// Pick a destination.
-	NSString *destination;
+	TUArchiveController *archive=[[[TUArchiveController alloc] initWithFilename:filename] autorelease];
+	[archive setDestination:[self destinationForFilename:filename type:desttype]];
+	[self addArchiveController:archive];
+}
+
+-(NSString *)destinationForFilename:(NSString *)filename type:(int)desttype
+{
 	switch(desttype)
 	{
 		default:
 		case CurrentFolderDestination:
-			destination=[filename stringByDeletingLastPathComponent];
-		break;
+			return [filename stringByDeletingLastPathComponent];
 
 		case DesktopDestination:
-			destination=[[NSUserDefaults standardUserDefaults] stringForKey:@"extractionDestinationPath"];
-		break;
+			return [[NSUserDefaults standardUserDefaults] stringForKey:@"extractionDestinationPath"];
 
 		case SelectedDestination:
-			destination=nil;
-		break;
+			return nil;
 	}
+}
 
+-(void)addArchiveController:(TUArchiveController *)archive
+{
 	// Create status view and archive controller.
 	TUArchiveTaskView *taskview=[[TUArchiveTaskView new] autorelease];
-
-	TUArchiveController *archive=[[[TUArchiveController alloc]
-	initWithFilename:filename taskView:taskview] autorelease];
-	[archive setDestination:destination];
-
-	[archivecontrollers addObject:archive];
 
 	[taskview setCancelAction:@selector(archiveTaskViewCancelledBeforeSetup:) target:self];
 	[taskview setArchiveController:archive];
 	[taskview setupWaitView];
 	[mainlist addTaskView:taskview];
 
+	[archive setTaskView:taskview];
+	[archive setDockTileView:docktile];
+
+	[archivecontrollers addObject:archive];
+	[docktile setCount:[archivecontrollers count]];
+
 	[NSApp activateIgnoringOtherApps:YES];
 	[mainwindow makeKeyAndOrderFront:nil];
 
 	[[setuptasks taskWithTarget:self] setupExtractionForArchiveController:archive];
 }
+
+-(TUArchiveController *)archiveControllerForFilename:(NSString *)filename
+{
+	NSEnumerator *enumerator=[archivecontrollers objectEnumerator];
+	TUArchiveController *archive;
+	while((archive=[enumerator nextObject]))
+	{
+		if([archive isCancelled]) continue;
+		NSArray *filenames=[archive allFilenames];
+		if([filenames containsObject:filename]) return archive;
+	}
+	return nil;
+}
+
+
+
 
 -(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview
 {
@@ -254,6 +281,7 @@ static BOOL IsPathWritable(NSString *path);
 	{
  		[archivecontrollers removeObjectIdenticalTo:archive];
 		[setuptasks finishCurrentTask];
+		[docktile setCount:[archivecontrollers count]];
 		return;
 	}
 
@@ -513,6 +541,7 @@ static BOOL IsPathWritable(NSString *path);
 	[mainlist removeTaskView:[archive taskView]];
 	[archivecontrollers removeObjectIdenticalTo:archive];
 	[setuptasks finishCurrentTask];
+	[docktile setCount:[archivecontrollers count]];
 }
 
 -(void)setupQueueEmpty:(TUTaskQueue *)queue
@@ -538,6 +567,7 @@ static BOOL IsPathWritable(NSString *path);
 	{
 		[archivecontrollers removeObjectIdenticalTo:archive];
 		[extracttasks finishCurrentTask];
+		[docktile setCount:[archivecontrollers count]];
 		return;
 	}
 
@@ -551,6 +581,7 @@ static BOOL IsPathWritable(NSString *path);
 	[mainlist removeTaskView:[archive taskView]];
 	[archivecontrollers removeObjectIdenticalTo:archive];
 	[extracttasks finishCurrentTask];
+	[docktile setCount:[archivecontrollers count]];
 
 	// Don't bother relinquishing access. Docs says to do it,
 	// but this only causes problems.

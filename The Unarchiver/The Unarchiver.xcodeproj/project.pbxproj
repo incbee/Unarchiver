@@ -67,6 +67,7 @@
 		DB8E2931163C11D900888FBF /* TUCancelExtractionScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8E2930163C11D900888FBF /* TUCancelExtractionScriptCommand.m */; };
 		DBDABE4816298EB300BAFD4F /* TheUnarchiverSuite.sdef in Resources */ = {isa = PBXBuildFile; fileRef = DBDABE4516298EB300BAFD4F /* TheUnarchiverSuite.sdef */; };
 		DBDABE4916298EB300BAFD4F /* TUUnarchiveScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDABE4716298EB300BAFD4F /* TUUnarchiveScriptCommand.m */; };
+		DBE800E416275114005847F9 /* TUDockTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE800E316275114005847F9 /* TUDockTileView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -304,9 +305,9 @@
 		1B932E830A5730DD00F7DE66 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
 		1B9767BA0A6D79CA00A8E8DA /* amiga.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = amiga.icns; sourceTree = "<group>"; };
 		1B9767BB0A6D79CA00A8E8DA /* unarchiver.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = unarchiver.icns; sourceTree = "<group>"; };
-		1BA23D47162DE896000D8174 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1BA23D48162DE896000D8174 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
-		1BA23D49162DE896000D8174 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1BA23D47162DE896000D8174 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BA23D48162DE896000D8174 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1BA23D49162DE896000D8174 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
 		1BA23D4A162DE896000D8174 /* cs */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = cs; path = cs.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		1BA23D4B162DE896000D8174 /* cs */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = cs; path = cs.lproj/NotWritableView.nib; sourceTree = "<group>"; };
 		1BA23D4C162DE896000D8174 /* cs */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = cs; path = cs.lproj/ErrorView.nib; sourceTree = "<group>"; };
@@ -419,6 +420,8 @@
 		DBDABE4516298EB300BAFD4F /* TheUnarchiverSuite.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TheUnarchiverSuite.sdef; sourceTree = "<group>"; };
 		DBDABE4616298EB300BAFD4F /* TUUnarchiveScriptCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUUnarchiveScriptCommand.h; sourceTree = "<group>"; };
 		DBDABE4716298EB300BAFD4F /* TUUnarchiveScriptCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUUnarchiveScriptCommand.m; sourceTree = "<group>"; };
+		DBE800E216275114005847F9 /* TUDockTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUDockTileView.h; sourceTree = "<group>"; };
+		DBE800E316275114005847F9 /* TUDockTileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUDockTileView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -453,6 +456,8 @@
 				1B932D690A560AC900F7DE66 /* TUCancelButton.m */,
 				1BED5DB30A600D6E00CA31C2 /* TUEncodingPopUp.h */,
 				1BED5DB40A600D6E00CA31C2 /* TUEncodingPopUp.m */,
+				DBE800E216275114005847F9 /* TUDockTileView.h */,
+				DBE800E316275114005847F9 /* TUDockTileView.m */,
 				1B4B4B9115C9BE5C0024B6D7 /* TUURLCache.h */,
 				1B4B4B9215C9BE5C0024B6D7 /* TUURLCache.m */,
 				1B6FA2090A58A1D800066489 /* CSFileTypeList.h */,
@@ -891,6 +896,7 @@
 				1B81DDA710003BBB005C5B23 /* TUArchiveTaskView.m in Sources */,
 				1B81DDCE10012A2D005C5B23 /* TUTaskQueue.m in Sources */,
 				1B4B4B9315C9C7F70024B6D7 /* TUURLCache.m in Sources */,
+				DBE800E416275114005847F9 /* TUDockTileView.m in Sources */,
 				DBDABE4916298EB300BAFD4F /* TUUnarchiveScriptCommand.m in Sources */,
 				DB8E2931163C11D900888FBF /* TUCancelExtractionScriptCommand.m in Sources */,
 			);
@@ -1129,6 +1135,7 @@
 				IBC_STRIP_NIBS = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "The Unarchiver";
 				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -1154,6 +1161,7 @@
 				IBC_STRIP_NIBS = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "The Unarchiver";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
