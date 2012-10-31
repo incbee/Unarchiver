@@ -17,7 +17,7 @@
 	NSConditionLock *pauselock;
 	int uiresponse;
 
-	XADString *namestring;
+	id<XADString> namestring;
 
 	IBOutlet NSView *waitview;
 	IBOutlet NSTextField *waitfield;

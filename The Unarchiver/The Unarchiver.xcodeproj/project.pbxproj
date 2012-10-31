@@ -1111,6 +1111,7 @@
 				IBC_STRIP_NIBS = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "The Unarchiver";
 				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -1136,6 +1137,7 @@
 				IBC_STRIP_NIBS = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "The Unarchiver";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
