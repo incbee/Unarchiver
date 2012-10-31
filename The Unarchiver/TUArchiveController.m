@@ -22,11 +22,12 @@ NSStringEncoding globalpasswordencoding=0;
 	globalpasswordencoding=0;
 }
 
--(id)initWithFilename:(NSString *)filename taskView:(TUArchiveTaskView *)taskview
+-(id)initWithFilename:(NSString *)filename
 {
 	if((self=[super init]))
 	{
-		view=[taskview retain];
+		view=nil;
+		docktile=nil;
 		unarchiver=nil;
 
 		archivename=[filename retain];
@@ -38,6 +39,9 @@ NSStringEncoding globalpasswordencoding=0;
 		finishtarget=nil;
 		finishselector=NULL;
 
+		foldermodeoverride=copydateoverride=changefilesoverride=-1;
+		deletearchiveoverride=openextractedoverride=-1;
+
 		cancelled=NO;
 		ignoreall=NO;
 		haderrors=NO;
@@ -48,6 +52,7 @@ NSStringEncoding globalpasswordencoding=0;
 -(void)dealloc
 {
 	[view release];
+	[docktile release];
 	[unarchiver release];
 	[archivename release];
 	[destination release];
@@ -58,9 +63,21 @@ NSStringEncoding globalpasswordencoding=0;
 
 
 
--(BOOL)isCancelled { return cancelled; }
+-(TUArchiveTaskView *)taskView { return view; }
 
--(void)setIsCancelled:(BOOL)iscancelled { cancelled=iscancelled; }
+-(void)setTaskView:(TUArchiveTaskView *)taskview
+{
+	[view autorelease];
+	view=[taskview retain];
+}
+
+-(TUDockTileView *)dockTileView { return docktile; }
+
+-(void)setDockTileView:(TUDockTileView *)tileview
+{
+	[tileview autorelease];
+	docktile=[tileview retain];
+}
 
 -(NSString *)destination { return destination; }
 
@@ -69,6 +86,55 @@ NSStringEncoding globalpasswordencoding=0;
 	[destination autorelease];
 	destination=[newdestination retain];
 }
+
+-(int)folderCreationMode
+{
+	if(foldermodeoverride) return foldermodeoverride;
+	else return [[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"];
+}
+
+-(void)setFolderCreationMode:(int)mode { foldermodeoverride=mode; }
+
+-(BOOL)copyArchiveDateToExtractedFolder
+{
+	if(copydateoverride>=0) return copydateoverride!=0;
+	else return [[NSUserDefaults standardUserDefaults] integerForKey:@"folderModifiedDate"]==2;
+}
+
+-(void)setCopyArchiveDateToExtractedFolder:(BOOL)copydate { copydateoverride=copydate; }
+
+-(BOOL)changeDateOfExtractedSingleItems
+{
+	if(changefilesoverride>=0) return changefilesoverride!=0;
+	else return [[NSUserDefaults standardUserDefaults] boolForKey:@"changeDateOfFiles"];
+}
+
+-(void)setChangeDateOfExtractedSingleItems:(BOOL)changefiles { changefilesoverride=changefiles; }
+
+-(BOOL)deleteArchive
+{
+	if(deletearchiveoverride>=0) return deletearchiveoverride!=0;
+	else return [[NSUserDefaults standardUserDefaults] boolForKey:@"deleteExtractedArchive"];
+}
+
+-(void)setDeleteArchive:(BOOL)delete { deletearchiveoverride=delete; }
+
+-(BOOL)openExtractedItem
+{
+	if(openextractedoverride>=0) return openextractedoverride!=0;
+	else return [[NSUserDefaults standardUserDefaults] boolForKey:@"openExtractedFolder"];
+}
+
+-(void)setOpenExctractedItem:(BOOL)open { openextractedoverride=open; }
+
+-(BOOL)isCancelled { return cancelled; }
+
+-(void)setIsCancelled:(BOOL)iscancelled { cancelled=iscancelled; }
+
+
+
+
+
 
 -(NSString *)filename
 {
@@ -89,15 +155,6 @@ NSStringEncoding globalpasswordencoding=0;
 }
 
 -(BOOL)caresAboutPasswordEncoding { return [[unarchiver archiveParser] caresAboutPasswordEncoding]; }
-
--(TUArchiveTaskView *)taskView { return view; }
-
--(void)setDockTileView:(TUDockTileView *)tileview { docktile=tileview; }
-
-
-
-
-
 
 
 
@@ -169,9 +226,9 @@ NSStringEncoding globalpasswordencoding=0;
 		return;
 	}
 
-	int foldermode=[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"];
-	BOOL copydatepref=[[NSUserDefaults standardUserDefaults] integerForKey:@"folderModifiedDate"]==2;
-	BOOL changefilespref=[[NSUserDefaults standardUserDefaults] boolForKey:@"changeDateOfFiles"];
+	int foldermode=[self folderCreationMode];
+	BOOL copydatepref=[self copyArchiveDateToExtractedFolder];
+	BOOL changefilespref=[self changeDateOfExtractedSingleItems];
 
 	[unarchiver setDelegate:self];
 	[unarchiver setPropagatesRelevantMetadata:YES];
@@ -242,8 +299,8 @@ NSStringEncoding globalpasswordencoding=0;
 
 -(void)extractFinished
 {
-	BOOL deletearchivepref=[[NSUserDefaults standardUserDefaults] boolForKey:@"deleteExtractedArchive"];
-	BOOL openfolderpref=[[NSUserDefaults standardUserDefaults] boolForKey:@"openExtractedFolder"];
+	BOOL deletearchivepref=[self deleteArchive];
+	BOOL openfolderpref=[self openExtractedItem];
 
 	BOOL soloitem=[unarchiver wasSoloItem];
 
