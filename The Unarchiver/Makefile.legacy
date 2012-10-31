@@ -58,13 +58,14 @@ BUILD_DIR = Build
 
 OBJC_FILES =	CSFileTypeList.m \
 		main.m \
-		TUCancelButton.m \
-		TUTaskListView.m \
 		TUArchiveController.m \
-		TUController.m \
-		TUTaskQueue.m \
 		TUArchiveTaskView.m \
-		TUEncodingPopUp.m
+		TUCancelButton.m \
+		TUController.m \
+		TUDockTileView.m \
+		TUEncodingPopUp.m \
+		TUTaskListView.m \
+		TUTaskQueue.m
 
 C_FILES =
 
