@@ -62,18 +62,19 @@ enum extracionDestination {
 	extractionDestinationDesktopDestination = 2, //selected by user at pref panel, maybe other than ~/Desktop
 	extractionDestinationSelectedDestination = 3,
 	extractionDestinationUnintializedDestination = 4,
+	extractionDestinationCustomPath=10,
 	};
 
 @implementation TUUnarchiveScriptCommand
-
-@synthesize openFolders, deleteOriginals, creatingFolder, extractDestination, waitUntilFinished;
 
 #pragma mark Overriding methods:
 -(id)initWithCommandDescription:(NSScriptCommandDescription *)commandDef
 {
 	self=[super initWithCommandDescription:commandDef];
-	self.extractDestination = [[NSUserDefaults standardUserDefaults] stringForKey:UDKdestinationPath];
-	appController = [NSApplication sharedApplication].delegate;
+	if (self) {
+		extractDestination = [[NSUserDefaults standardUserDefaults] stringForKey:UDKdestinationPath];
+		appController = [[NSApplication sharedApplication] delegate];
+	}
 	return self;
 }
 
@@ -81,7 +82,7 @@ enum extracionDestination {
 {
 	/*
 	 The commands will be something like:
-	 unarchive listOfArchiver(orPaths?) [to destination] [deleting yes] [opening yes]
+	 unarchive listOfArchives(orPaths?) [to destination] [deleting yes] [opening yes]
 	 */
 #ifdef DEBUG
 	NSLog(@"Running default implementation of command \"unarchive\"");
@@ -93,13 +94,14 @@ enum extracionDestination {
 
 	//We check that all the files exists
 	NSFileManager *fileManager=[NSFileManager defaultManager];
-	for (NSString *file in files) {
+	NSEnumerator *enumerator=[files objectEnumerator];
+	NSString *file;
+	while((file=[enumerator nextObject])) {
 		if (![fileManager fileExistsAtPath:file])
 		{
 			return [self errorFileDontExist:file];
 		}
 	}
-	
 	//Check and evaluate the parameter "destination"
 	id destination=[evaluatedArgs objectForKey:PKdestination];
 	int destinationIntValue;
@@ -107,8 +109,8 @@ enum extracionDestination {
 	{
 		if ([destination isKindOfClass:[NSString class]] && [fileManager fileExistsAtPath:destination])
 		{
-			self.extractDestination = destination;
-			destinationIntValue = extractionDestinationDesktopDestination;
+			extractDestination = destination;
+			destinationIntValue = extractionDestinationCustomPath;
 		}
 		else
 		{
@@ -116,8 +118,8 @@ enum extracionDestination {
 			switch (destinationLongValue)
 			{
 				case destinationFolderDesktop:
-					destinationIntValue = extractionDestinationDesktopDestination;
-					self.extractDestination = [@"~/Desktop" stringByExpandingTildeInPath];
+					destinationIntValue = extractionDestinationCustomPath;
+					extractDestination = [@"~/Desktop" stringByExpandingTildeInPath];
 					break;
 				case destinationFolderOriginal:
 					destinationIntValue = extractionDestinationCurrentFolderDestination;
@@ -135,48 +137,44 @@ enum extracionDestination {
 			}
 		}
 	}
+	else {
+		destinationIntValue = [[NSUserDefaults standardUserDefaults] integerForKey:UDKdestination];
+	}
+	desttype=destinationIntValue;
 	
 	//Get the rest of optional parameters
-	self.deleteOriginals = [self evalBooleanParameterForKey:PKdeleting];
-	self.openFolders = [self evalBooleanParameterForKey:PKopening];
-	self.waitUntilFinished =[self evalBooleanParameterForKey:PKwaitUntilFinished];
+	deleteOriginals = [self evalBooleanParameterForKey:PKdeleting];
+	openFolders = [self evalBooleanParameterForKey:PKopening];
+	waitUntilFinished =[self evalBooleanParameterForKey:PKwaitUntilFinished];
 	
 	unsigned long creatingFolderValue  = [[evaluatedArgs objectForKey:PKcreatingFolder] unsignedLongValue];
 	switch (creatingFolderValue) {
 		case creatingFolderNever:
-			self.creatingFolder = creatingFolderUDNever;
+			creatingFolder = creatingFolderUDNever;
 			break;
 		case creatingFolderOnly:
-			self.creatingFolder = creatingFolderUDOnly;
+			creatingFolder = creatingFolderUDOnly;
 			break;
 		case creatingFolderAlways:
-			self.creatingFolder = creatingFolderUDAlways;
+			creatingFolder = creatingFolderUDAlways;
 			break;
 		default:
-			self.creatingFolder = [[NSUserDefaults standardUserDefaults] integerForKey:UDKcreateFolderMode];
+			creatingFolder = [[NSUserDefaults standardUserDefaults] integerForKey:UDKcreateFolderMode];
 			break;
 	}
 	
-
-	[self saveDefaults];[self modifyDefaults];
-	
-	
-#ifdef UseURLs
-	//transform string to URLs
-	NSMutableArray *URLarray =[NSMutableArray array];
-	for (int i=0; i<[files count]; i++) {
-		NSURL *newURL = [NSURL fileURLWithPath:[files objectAtIndex:i]];
-		[URLarray addObject:newURL];
+	enumerator=[files objectEnumerator];
+	NSString *filename;
+	while((filename=[enumerator nextObject])) {
+		[self unarchiveFile:filename];
 	}
-	[appController newArchivesForURLs:URLarray destination:destinationIntValue];
-#else
-	[appController newArchivesForFiles:files destination:destinationIntValue];
-#endif
 	
-	restoringTimer=[[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0.5] interval:0.5 target:self selector:@selector(restoreDefaults) userInfo:nil repeats:YES];
-	NSRunLoop *mainLoop =[NSRunLoop currentRunLoop];
-	[mainLoop addTimer:restoringTimer forMode:NSDefaultRunLoopMode];
-	if (self.waitUntilFinished) [self suspendExecution];
+	if (waitUntilFinished) {
+		restoringTimer=[[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0.5] interval:0.5 target:self selector:@selector(quitIfPossible) userInfo:nil repeats:YES];
+		NSRunLoop *mainLoop =[NSRunLoop currentRunLoop];
+		[mainLoop addTimer:restoringTimer forMode:NSDefaultRunLoopMode];
+		[self suspendExecution];
+	}
 	return nil;
 }
 
@@ -207,61 +205,40 @@ enum extracionDestination {
 	NSString *errorMessage = [NSString stringWithFormat:@"The file %@ doesn't exist.",file];
 	[self setScriptErrorString:errorMessage];
 	return nil;
-
-	return nil;
 }
 
-// TODO: Don't modify the user defaults
--(void)saveDefaults
+-(void)quitIfPossible
 {
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	NSNumber *oldDelete =[NSNumber numberWithBool: [userDefaults boolForKey: UDKdelete]];
-	NSNumber *oldOpen = [NSNumber numberWithBool: [userDefaults boolForKey:UDKopen]];
-	NSNumber *oldCreate =[NSNumber numberWithBool: [userDefaults integerForKey:UDKcreateFolderMode]];
-	NSString *oldDestinationPath = [userDefaults stringForKey:UDKdestinationPath];
-	
-	oldDefaults = [NSDictionary dictionaryWithObjectsAndKeys:oldDelete,UDKdelete,oldOpen,UDKopen,oldDestinationPath,UDKdestinationPath,oldCreate,UDKcreateFolderMode, nil];
-	[oldDefaults retain];
-	
-	while (! [userDefaults synchronize]) {}
-}
-
--(void)modifyDefaults
-{
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	[userDefaults setBool:self.deleteOriginals forKey:UDKdelete];
-	[userDefaults setBool:self.openFolders forKey:UDKopen];
-	[userDefaults setObject:self.extractDestination forKey:UDKdestinationPath];
-	[userDefaults setInteger:self.creatingFolder forKey:UDKcreateFolderMode];
-	while (! [userDefaults synchronize]) {}
-}
-
--(void)restoreDefaults
-{
-	TUTaskQueue *extractTasks = [appController extractTasks];
-	TUTaskQueue *setupTasks = [appController setupTasks];
-	if ([extractTasks isRunning] || [setupTasks isRunning]) {
+	if ([appController hasRunningExtractions]) {
 		return;
 	}
+	[self resumeExecutionWithResult:nil];
+}
+
+-(void)unarchiveFile:(NSString *)fileName
+{
+	if([appController archiveControllerForFilename:fileName]) return;
+	TUArchiveController *archiveController=[[[TUArchiveController alloc] initWithFilename:fileName] autorelease];
+	NSString *destination;
+	switch (desttype) {
+		case extractionDestinationCurrentFolderDestination:
+		case extractionDestinationDesktopDestination:
+			destination =[appController destinationForFilename:fileName type:desttype];
+			break;
+		case extractionDestinationCustomPath:
+			destination=extractDestination;
+			break;
+		default:
+			break;
+	}
+	[archiveController setDestination:destination];
+	[archiveController setDeleteArchive:deleteOriginals];
+	[archiveController setFolderCreationMode:creatingFolder];
+	[archiveController setOpenExctractedItem:openFolders];
 	
-#ifdef DEBUG
-	NSLog(@"Restoring DEFAULTS");
-#endif
-	
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	BOOL oldDelete = [[oldDefaults objectForKey:UDKdelete] boolValue];
-	BOOL oldOpen = [[oldDefaults objectForKey:UDKopen] boolValue];
-	NSInteger oldCreate = [[oldDefaults objectForKey:UDKcreateFolderMode] integerValue];
-	
-	NSString *oldDestinationPath = [oldDefaults objectForKey:UDKdestinationPath];
-	if (self.deleteOriginals != oldDelete) [userDefaults setBool: oldDelete forKey:UDKdelete];
-	if (self.openFolders != oldOpen) [userDefaults setBool:oldOpen forKey:UDKopen];
-	if (self.creatingFolder != oldCreate) [userDefaults setInteger:oldCreate forKey:UDKcreateFolderMode];
-	if (! [self.extractDestination isEqualToString:oldDestinationPath]) [userDefaults setObject:oldDestinationPath forKey:UDKdestinationPath];
-	[restoringTimer invalidate];
-	
-	while (! [userDefaults synchronize]) {}
-	if (self.waitUntilFinished) [self resumeExecutionWithResult:nil];
+	if (archiveController) {
+		[appController addArchiveController:archiveController];
+	}
 }
 
 @end

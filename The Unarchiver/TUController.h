@@ -106,6 +106,7 @@ userData:(NSString *)data error:(NSString **)error;
 -(TUTaskQueue *)extractTasks;
 -(TUTaskQueue *)setupTasks;
 -(NSMutableArray *)archivecontrollers;
+-(BOOL)hasRunningExtractions;
 
 /*-(void)lockFileSystem:(NSString *)filename;
 -(BOOL)tryFileSystemLock:(NSString *)filename;

@@ -792,13 +792,13 @@ userData:(NSString *)data error:(NSString **)error
 
 -(BOOL)application:(NSApplication *)sender delegateHandlesKey:(NSString *)key
 {
-	if ([key isEqualToString:@"extractTasks"]) {
-		return YES;
-	}
-	if ([key isEqualToString:@"setupTasks"]) {
-		return YES;
-	}
+	if ([key isEqualToString:@"hasRunningExtractions"]) return YES;
 	return NO;
+}
+
+-(BOOL)hasRunningExtractions
+{
+	return [archivecontrollers count]!=0;
 }
 
 @end

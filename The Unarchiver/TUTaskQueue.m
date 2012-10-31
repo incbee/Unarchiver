@@ -101,21 +101,6 @@
 	[invocation release];
 }
 
-//AppleScript stuff
--(NSScriptObjectSpecifier *)objectSpecifier
-{
-	NSString *specifierKey=nil;
-	if (finishselector==@selector(extractQueueEmpty:)) {
-		specifierKey=@"extractTasks";
-	}
-	else if (finishselector==@selector(setupQueueEmpty:)) {
-		specifierKey=@"setupTasks";
-	}
-	NSScriptClassDescription *containerClassDesc = (NSScriptClassDescription *)
-    [NSScriptClassDescription classDescriptionForClass:[NSApp class]];
-	return [[[NSPropertySpecifier alloc] initWithContainerClassDescription:containerClassDesc containerSpecifier:nil key:specifierKey] autorelease] ;
-}
-
 @end
 
 

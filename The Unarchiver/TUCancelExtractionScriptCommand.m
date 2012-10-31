@@ -9,7 +9,9 @@ enum taskSelection {
 -(id)initWithCommandDescription:(NSScriptCommandDescription *)commandDef
 {
 	self=[super initWithCommandDescription:commandDef];
-	appController=[NSApplication sharedApplication].delegate;
+	if (self) {
+		appController=[[NSApplication sharedApplication] delegate];
+	}
 	return self;
 }
 
@@ -21,6 +23,8 @@ enum taskSelection {
 			[self cancellAllExtractions];
 			break;
 		default:
+			[self setScriptErrorNumber:1];
+			[self setScriptErrorString:@"Not implemented"];
 			break;
 	}
 	return nil;
@@ -34,7 +38,9 @@ enum taskSelection {
 
 -(void)cancellAllExtractions
 {
-	for (TUArchiveController *currentArchiveController in [appController archivecontrollers]) {
+	NSEnumerator *enumerator=[[appController archivecontrollers] objectEnumerator];
+	TUArchiveController *currentArchiveController;
+	while((currentArchiveController=[enumerator nextObject])) {
 		[self cancelArchive:currentArchiveController];
 	}
 }

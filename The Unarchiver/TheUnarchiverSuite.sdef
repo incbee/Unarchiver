@@ -137,7 +137,7 @@
 		<enumeration name="File Destination" code="TUFD" inline="2"
 			description="Where to unarchive">
 			<enumerator name="Original" code="Orig" description="The same folder as the archive"/>
-			<enumerator name="Ask User" code="AskU" description="Ask the user"/>
+			<enumerator name="Ask User" code="AskU" hidden="yes" description="Ask the user"/>
 			<enumerator name="Desktop" code="Desk" description="The user desktop"/>
 			<enumerator name="User Default" code="UDef" description="The folder selected by the user on the preferences panel"/>
 		</enumeration>
@@ -192,16 +192,11 @@
 				<type type="Task to cancel"/>
 			</direct-parameter>
 		</command>
-		<class name="Task Queue" code="TUtq" description="Manages the tasks for setting and doing the unarchiving" hidden="no">
-			<cocoa class="TUTaskQueue"/>
-			<property name="empty" code="TQiE" type="boolean" access="r"/>
-			<property name="stalled" code="TQiS" type="boolean" access="r"/>
-			<property name="running" code="TQiR" type="boolean" access="r"/>
-		</class>
 		<class name="application" code="capp" description="The application's top-level scripting object.">
 			<cocoa class="NSApplication"/>
-			<property name="extract Tasks" code="TQeT" type="Task Queue" access="r" description="The unarchiving tasks running"/>
-			<property name="setup Tasks" code="TQsT" type="Task Queue" access="r" description="The setup tasks running"/>
+			<property name="isRunningExtractions" code="TUiR" type="boolean" access="r">
+				<cocoa key="hasRunningExtractions"/>
+			</property>
 		</class>
 	</suite>
 	

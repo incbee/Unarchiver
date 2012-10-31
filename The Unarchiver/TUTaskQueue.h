@@ -26,8 +26,6 @@
 
 -(void)restart;
 
--(NSScriptObjectSpecifier *)objectSpecifier;
-
 @end
 
 @interface TUTaskTrampoline:NSProxy
