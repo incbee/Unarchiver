@@ -75,7 +75,7 @@ NSStringEncoding globalpasswordencoding=0;
 
 -(void)setDockTileView:(TUDockTileView *)tileview
 {
-	[tileview autorelease];
+	[docktile autorelease];
 	docktile=[tileview retain];
 }
 
