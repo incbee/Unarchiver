@@ -189,6 +189,10 @@ clean:
 	make -C ../XADMaster -f Makefile.legacy clean
 	make -C ../UniversalDetector -f Makefile.legacy clean
 
+.PHONY: ../XADMaster/XADMaster.framework \
+../UniversalDetector/UniversalDetector.framework \
+clean
+
 # Suffix rules
 
 .SUFFIXES: .o .c .m .cpp
