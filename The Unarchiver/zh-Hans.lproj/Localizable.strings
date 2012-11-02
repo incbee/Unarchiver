@@ -1,0 +1,104 @@
+﻿/* Status text for queued multi-part archives */
+"%@ (+%d more)" = "%1$@ (+%2$d 更多)";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the file \"%@\" from the archive \"%@\": %@" = "不能从归档 \"%2$@\" 中解压文件 \"%1$@\": %3$@";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@" = "不能从归档 \"%2$@\" 中为文件 \"%1$@\" 解压资源列表 :\n%3$@";
+
+/* Option in the password encoding pop-up to use the default encoding */
+"Default encoding" = "默认编码";
+
+/* Option in the encoding pop-up to detect the encoding automatically */
+"Detect automatically" = "自动检测";
+
+/* Panel OK button title when choosing an unarchiving destination for an archive */
+"Extract" = "解压";
+
+/* Panel title when choosing an unarchiving destination for an archive */
+"Extract Archive" = "解压归档";
+
+/* Status text while extracting an archive */
+"Extracting \"%@\"" = "正在解压 \"%@\"";
+
+/* Status text when preparing to extract an archive */
+"Preparing to extract \"%@\"" = "正在准备解压 \"%@\"";
+
+/* Panel OK button title when choosing a default unarchiving destination */
+"Select" = "选择";
+
+/* Panel title when choosing archives to extract */
+"Select files to unarchive" = "选择文件以解压";
+
+/* Error message for files not extractable by The Unarchiver */
+"The contents of the file \"%@\" can not be extracted with this program." = "文件的内容 \"%@\" 不能用这个程序解压.";
+
+/* Error message when encountering an error while extracting entries */
+"There was a problem while extracting the contents of the file \"%@\": %@" = "解压文件内容 \"%1$@\" 的过程中有一个错误: %2$@";
+
+/* Error message when encountering an error while parsing an archive */
+"There was a problem while reading the contents of the file \"%@\": %@" = "读取文件内容 \"%1$@\" 的过程中有一个错误: %2$@";
+
+/* Panel OK button title when choosing archives to extract */
+"Unarchive" = "解压";
+
+/* Status text when asking for a password */
+"You need to supply a password to open the archive \"%@\"." = "你需要提供密码来打开此归档 \"%@\".";
+
+/* Title for nagging alert on first startup */
+"Where should The Unarchiver extract archives?" = "需要 The Unarchiver 把文件解压到?";
+
+/* Content of nagging alert on first startup */
+"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "你希望把文件解压到归档的相同文件夹还是询问每个单独的归档的目的文件夹?";
+
+/* Button to ask every time in nagging alert on first startup */
+"Ask every time" = "每次都询问";
+
+/* Button to extract to the same folder in nagging alert on first startup */
+"Extract to the same folder" = "解压到相同文件夹";
+
+/* Informative text in the file panel shown when trying to gain sandbox access */
+"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver 不能写入到此文件夹. Mac OS X 沙盒可能阻止访问权限. 要让沙盒允许 The Unarchiver 写入到此文件夹, 只需点按 \"解压\". 本权限会被记住并且 The Unarchiver 不需再次询问.";
+
+/* Informative text in the file panel shown when trying to gain sandbox access for multi-part archives */
+"The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver 需要搜索本归档的更多部分, 但是 Mac OS X 沙盒阻止访问文件夹. 要让沙盒允许 The Unarchiver 搜索文件夹, 只需点按 \"搜索\".本权限会被记住并且 The Unarchiver 不需再次询问.";
+
+/* Panel OK button title when searching for more archive parts */
+"Search" = "搜索";
+
+/* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
+
+/* Common errors */
+"Attempted to read more data than was available" = "归档文件不完整";
+"Opening file failed" = "文件不能被打开";
+"Missing or wrong password" = "提供的密码不正确";
+"Wrong checksum" = "归档文件已被破坏";
+"Could not create directory" = "不能创建文件夹";
+
+/* Uncommon or unused errors */
+"Unknown error" = "未知错误";
+"Failed to write to file" = "写入文件失败";
+"Function called with illegal parameters" = "功能被非法参数叫停";
+"Not enough memory available" = "没有足够内存可用";
+"Data is corrupted" = "数据已被破坏";
+"File is not fully supported" = "文件不被完全支持";
+"Required resource missing" = "所需资源丢失";
+"Error on decrunching" = "粉碎文件错误";
+"Unknown file type" = "未知文件类型";
+"File, disk has been skipped" = "文件, 磁盘已被跳过";
+"User cancelled extraction" = "用户叫停解压";
+"File already exists" = "文件已经存在";
+"Verify failed (disk hook)" = "验证失败(磁盘挂起)";
+"Wrong drive geometry" = "错误磁盘 geometry";
+"Unknown data format" = "未知数据格式";
+"Source contains no files" = "资源不包含文件";
+"Unknown filesystem" = "未知文件系统";
+"Name of file exists as directory" = "目录与文件名相同";
+"Buffer was too short" = "缓存过短 ";
+"Text encoding was defective" = "文本解码缺陷e";
+"Could not create symlink" = "不能创建符号链接";
+
+
+
+

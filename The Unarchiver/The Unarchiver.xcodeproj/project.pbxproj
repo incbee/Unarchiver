@@ -302,6 +302,15 @@
 		1B932E830A5730DD00F7DE66 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
 		1B9767BA0A6D79CA00A8E8DA /* amiga.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = amiga.icns; sourceTree = "<group>"; };
 		1B9767BB0A6D79CA00A8E8DA /* unarchiver.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = unarchiver.icns; sourceTree = "<group>"; };
+		1BA155AC164469BB00BFF440 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		1BA155AD164469BB00BFF440 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		1BA155AE164469BB00BFF440 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ServicesMenu.strings"; sourceTree = "<group>"; };
+		1BA155AF164469BB00BFF440 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.nib"; sourceTree = "<group>"; };
+		1BA155B0164469BB00BFF440 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = "zh-Hans"; path = "zh-Hans.lproj/NotWritableView.nib"; sourceTree = "<group>"; };
+		1BA155B1164469BB00BFF440 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = "zh-Hans"; path = "zh-Hans.lproj/ErrorView.nib"; sourceTree = "<group>"; };
+		1BA155B2164469BB00BFF440 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = "zh-Hans"; path = "zh-Hans.lproj/OpenErrorView.nib"; sourceTree = "<group>"; };
+		1BA155B3164469BB00BFF440 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = "zh-Hans"; path = "zh-Hans.lproj/PasswordView.nib"; sourceTree = "<group>"; };
+		1BA155B4164469BB00BFF440 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = "zh-Hans"; path = "zh-Hans.lproj/EncodingView.nib"; sourceTree = "<group>"; };
 		1BA23D47162DE896000D8174 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1BA23D48162DE896000D8174 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1BA23D49162DE896000D8174 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
@@ -652,6 +661,7 @@
 				da,
 				Italian,
 				cs,
+				"zh-Hans",
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* The Unarchiver */;
 			projectDirPath = "";
@@ -906,6 +916,7 @@
 				1B4C2F0115A25E2D00990BF1 /* nb */,
 				1B4C2F2B15A25E4E00990BF1 /* ar */,
 				1BA23D47162DE896000D8174 /* cs */,
+				1BA155AC164469BB00BFF440 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -927,6 +938,7 @@
 				1B4C2EFB15A25E2D00990BF1 /* nb */,
 				1B4C2F2715A25E4E00990BF1 /* ar */,
 				1BA23D48162DE896000D8174 /* cs */,
+				1BA155AD164469BB00BFF440 /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -948,6 +960,7 @@
 				1B4C2EFF15A25E2D00990BF1 /* nb */,
 				1B4C2F2A15A25E4E00990BF1 /* ar */,
 				1BA23D4C162DE896000D8174 /* cs */,
+				1BA155B1164469BB00BFF440 /* zh-Hans */,
 			);
 			name = ErrorView.nib;
 			sourceTree = "<group>";
@@ -969,6 +982,7 @@
 				1B4C2EFA15A25E2D00990BF1 /* nb */,
 				1B4C2F2615A25E4E00990BF1 /* ar */,
 				1BA23D4D162DE896000D8174 /* cs */,
+				1BA155B2164469BB00BFF440 /* zh-Hans */,
 			);
 			name = OpenErrorView.nib;
 			sourceTree = "<group>";
@@ -990,6 +1004,7 @@
 				1B4C2F0215A25E2D00990BF1 /* nb */,
 				1B4C2F2415A25E4E00990BF1 /* ar */,
 				1BA23D4E162DE897000D8174 /* cs */,
+				1BA155B3164469BB00BFF440 /* zh-Hans */,
 			);
 			name = PasswordView.nib;
 			sourceTree = "<group>";
@@ -1011,6 +1026,7 @@
 				1B4C2EFC15A25E2D00990BF1 /* nb */,
 				1B4C2F2815A25E4E00990BF1 /* ar */,
 				1BA23D4F162DE897000D8174 /* cs */,
+				1BA155B4164469BB00BFF440 /* zh-Hans */,
 			);
 			name = EncodingView.nib;
 			sourceTree = "<group>";
@@ -1032,6 +1048,7 @@
 				1B4C2F0015A25E2D00990BF1 /* nb */,
 				1B4C2F2515A25E4E00990BF1 /* ar */,
 				1BA23D49162DE896000D8174 /* cs */,
+				1BA155AE164469BB00BFF440 /* zh-Hans */,
 			);
 			name = ServicesMenu.strings;
 			sourceTree = "<group>";
@@ -1053,6 +1070,7 @@
 				1B4C2EFE15A25E2D00990BF1 /* nb */,
 				1B4C2F2315A25E4E00990BF1 /* ar */,
 				1BA23D4B162DE896000D8174 /* cs */,
+				1BA155B0164469BB00BFF440 /* zh-Hans */,
 			);
 			name = NotWritableView.nib;
 			sourceTree = "<group>";
@@ -1074,6 +1092,7 @@
 				1B4C2EFD15A25E2D00990BF1 /* nb */,
 				1B4C2F2915A25E4E00990BF1 /* ar */,
 				1BA23D4A162DE896000D8174 /* cs */,
+				1BA155AF164469BB00BFF440 /* zh-Hans */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
