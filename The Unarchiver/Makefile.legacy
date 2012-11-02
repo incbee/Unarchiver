@@ -95,6 +95,7 @@ RESOURCE_FILES =	de.lproj \
 			ru.lproj \
 			tr.lproj \
 			ar.lproj \
+			zh-Hans.lproj \
 			ProgressView.nib \
 			WaitView.nib \
 			close_hover.png \
