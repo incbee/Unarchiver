@@ -115,6 +115,11 @@ static BOOL IsPathWritable(NSString *path);
 
 -(NSWindow *)window { return mainwindow; }
 
+-(BOOL)hasRunningExtractions
+{
+	return [archivecontrollers count]!=0;
+}
+
 
 
 -(void)applicationDidFinishLaunching:(NSNotification *)notification
@@ -772,6 +777,12 @@ userData:(NSString *)data error:(NSString **)error
 -(IBAction)openHomePage:(id)sender
 {
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://unarchiver.c3.cx/"]];
+}
+
+-(BOOL)application:(NSApplication *)sender delegateHandlesKey:(NSString *)key
+{
+	if ([key isEqualToString:@"hasRunningExtractions"]) return YES;
+	return NO;
 }
 
 @end

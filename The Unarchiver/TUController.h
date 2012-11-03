@@ -50,6 +50,7 @@
 -(void)cleanupOrphanedTempDirectories;
 
 -(NSWindow *)window;
+-(BOOL)hasRunningExtractions;
 
 -(void)applicationDidFinishLaunching:(NSNotification *)notification;
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app;
