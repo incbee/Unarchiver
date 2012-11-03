@@ -552,7 +552,7 @@
 																	<reference key="NSNextKeyView" ref="705239607"/>
 																	<reference key="NSTableView" ref="591475378"/>
 																</object>
-																<object class="_NSCornerView" key="NSCornerView" id="789415095">
+																<object class="_NSCornerView" key="NSCornerView" id="255845072">
 																	<reference key="NSNextResponder" ref="366064615"/>
 																	<int key="NSvFlags">256</int>
 																	<string key="NSFrame">{{397, 0}, {16, 17}}</string>
@@ -764,7 +764,7 @@
 														<reference key="NSBGColor" ref="646890407"/>
 														<int key="NScvFlags">4</int>
 													</object>
-													<reference ref="789415095"/>
+													<reference ref="255845072"/>
 												</object>
 												<string key="NSFrame">{{20, 43}, {413, 241}}</string>
 												<reference key="NSSuperview" ref="416291026"/>
@@ -775,7 +775,7 @@
 												<reference key="NSHScroller" ref="366934169"/>
 												<reference key="NSContentView" ref="705239607"/>
 												<reference key="NSHeaderClipView" ref="737039185"/>
-												<reference key="NSCornerView" ref="789415095"/>
+												<reference key="NSCornerView" ref="255845072"/>
 												<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 												<double key="NSMinMagnification">0.25</double>
 												<double key="NSMaxMagnification">4</double>
@@ -972,7 +972,7 @@
 											<object class="NSPopUpButton" id="369495930">
 												<reference key="NSNextResponder" ref="386976745"/>
 												<int key="NSvFlags">266</int>
-												<string key="NSFrame">{{141, 275}, {295, 26}}</string>
+												<string key="NSFrame">{{90, 275}, {346, 26}}</string>
 												<reference key="NSSuperview" ref="386976745"/>
 												<reference key="NSNextKeyView" ref="600168017"/>
 												<bool key="NSEnabled">YES</bool>
@@ -1119,7 +1119,7 @@
 													<object class="NSButtonCell" id="152433639">
 														<int key="NSCellFlags">-2080374784</int>
 														<int key="NSCellFlags2">0</int>
-														<string key="NSContents">用不</string>
+														<string key="NSContents">永不</string>
 														<reference key="NSSupport" ref="170887875"/>
 														<reference key="NSControlView" ref="439518814"/>
 														<int key="NSTag">3</int>
@@ -1642,7 +1642,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																<object class="NSTextFieldCell" key="NSCell" id="1030051452">
 																	<int key="NSCellFlags">67108864</int>
 																	<int key="NSCellFlags2">71303168</int>
-																	<string key="NSContents">文件名解码:</string>
+																	<string key="NSContents">文件名编码:</string>
 																	<reference key="NSSupport" ref="913272732"/>
 																	<reference key="NSControlView" ref="922311104"/>
 																	<reference key="NSBackgroundColor" ref="925600687"/>
@@ -1754,14 +1754,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 															<object class="NSTextField" id="446465817">
 																<reference key="NSNextResponder" ref="202212055"/>
 																<int key="NSvFlags">266</int>
-																<string key="NSFrame">{{142, 26}, {256, 11}}</string>
+																<string key="NSFrame">{{142, 26}, {238, 11}}</string>
 																<reference key="NSSuperview" ref="202212055"/>
 																<reference key="NSNextKeyView" ref="358252493"/>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTextFieldCell" key="NSCell" id="388736291">
 																	<int key="NSCellFlags">67108864</int>
 																	<int key="NSCellFlags2">272629760</int>
-																	<string key="NSContents">(低于这个等级的信心会引起程序询问解码来替代使用自动探测.)</string>
+																	<string key="NSContents">(低于这个等级的信心会使程序询问编码而不使用自动探测.)</string>
 																	<object class="NSFont" key="NSSupport">
 																		<string key="NSName">LucidaGrande</string>
 																		<double key="NSSize">9</double>
@@ -1786,7 +1786,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 												<object class="NSTextFieldCell" key="NSTitleCell">
 													<int key="NSCellFlags">67108864</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">文件名解码自动探测</string>
+													<string key="NSContents">文件名编码自动探测</string>
 													<reference key="NSSupport" ref="126320674"/>
 													<reference key="NSBackgroundColor" ref="345932596"/>
 													<object class="NSColor" key="NSTextColor">
@@ -1822,7 +1822,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<object class="NSButton" id="536006419">
 							<reference key="NSNextResponder" ref="344799856"/>
 							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{155, 7}, {321, 17}}</string>
+							<string key="NSFrame">{{309, 6}, {167, 17}}</string>
 							<reference key="NSSuperview" ref="344799856"/>
 							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
@@ -2650,8 +2650,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="object" ref="344799856"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="536006419"/>
 							<reference ref="358252493"/>
+							<reference ref="536006419"/>
 						</object>
 						<reference key="parent" ref="187633214"/>
 					</object>

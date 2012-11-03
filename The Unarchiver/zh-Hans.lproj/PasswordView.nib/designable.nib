@@ -56,7 +56,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="438602838">
 							<int key="NSCellFlags">68157504</int>
 							<int key="NSCellFlags2">272761856</int>
-							<string key="NSContents">密码解码:</string>
+							<string key="NSContents">密码编码:</string>
 							<object class="NSFont" key="NSSupport" id="836596707">
 								<string key="NSName">STHeitiSC-Light</string>
 								<double key="NSSize">11</double>
@@ -109,7 +109,7 @@
 							<int key="NSPeriodicInterval">75</int>
 							<object class="NSMenuItem" key="NSMenuItem" id="1019318790">
 								<reference key="NSMenu" ref="598236231"/>
-								<string key="NSTitle">默认解码 (推荐)</string>
+								<string key="NSTitle">默认编码 (推荐)</string>
 								<string key="NSKeyEquiv"/>
 								<int key="NSKeyEquivModMask">1048576</int>
 								<int key="NSMnemonicLoc">2147483647</int>
@@ -137,6 +137,7 @@
 									<int key="NSfFlags">1044</int>
 								</object>
 							</object>
+							<int key="NSSelectedIndex">-1</int>
 							<int key="NSPreferredEdge">1</int>
 							<bool key="NSUsesItemFromMenu">YES</bool>
 							<bool key="NSAltersState">YES</bool>
@@ -186,7 +187,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="154611357">
 							<int key="NSCellFlags">67108928</int>
 							<int key="NSCellFlags2">272631808</int>
-							<string key="NSContents">需要秘密</string>
+							<string key="NSContents">需要密码</string>
 							<reference key="NSSupport" ref="836596707"/>
 							<reference key="NSControlView" ref="715035584"/>
 							<reference key="NSBackgroundColor" ref="1019866247"/>

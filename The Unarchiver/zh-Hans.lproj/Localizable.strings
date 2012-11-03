@@ -1,4 +1,4 @@
-﻿/* Status text for queued multi-part archives */
+/* Status text for queued multi-part archives */
 "%@ (+%d more)" = "%1$@ (+%2$d 更多)";
 
 /* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
@@ -32,25 +32,25 @@
 "Select files to unarchive" = "选择文件以解压";
 
 /* Error message for files not extractable by The Unarchiver */
-"The contents of the file \"%@\" can not be extracted with this program." = "文件的内容 \"%@\" 不能用这个程序解压.";
+"The contents of the file \"%@\" can not be extracted with this program." = "文件的内容 \"%@\" 不能被这个程序解压.";
 
 /* Error message when encountering an error while extracting entries */
-"There was a problem while extracting the contents of the file \"%@\": %@" = "解压文件内容 \"%1$@\" 的过程中有一个错误: %2$@";
+"There was a problem while extracting the contents of the file \"%@\": %@" = "解压文件内容 \"%1$@\" 的过程中有一个问题: %2$@";
 
 /* Error message when encountering an error while parsing an archive */
-"There was a problem while reading the contents of the file \"%@\": %@" = "读取文件内容 \"%1$@\" 的过程中有一个错误: %2$@";
+"There was a problem while reading the contents of the file \"%@\": %@" = "读取文件内容 \"%1$@\" 的过程中有一个问题: %2$@";
 
 /* Panel OK button title when choosing archives to extract */
 "Unarchive" = "解压";
 
 /* Status text when asking for a password */
-"You need to supply a password to open the archive \"%@\"." = "你需要提供密码来打开此归档 \"%@\".";
+"You need to supply a password to open the archive \"%@\"." = "你需要提供一个密码来打开此归档 \"%@\".";
 
 /* Title for nagging alert on first startup */
 "Where should The Unarchiver extract archives?" = "需要 The Unarchiver 把文件解压到?";
 
 /* Content of nagging alert on first startup */
-"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "你希望把文件解压到归档的相同文件夹还是询问每个单独的归档的目的文件夹?";
+"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "你喜欢 The Unarchiver 把文件解压到和归档的相同文件夹还是偏好于询问每个单独的归档的目的文件夹?";
 
 /* Button to ask every time in nagging alert on first startup */
 "Ask every time" = "每次都询问";
@@ -59,10 +59,10 @@
 "Extract to the same folder" = "解压到相同文件夹";
 
 /* Informative text in the file panel shown when trying to gain sandbox access */
-"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver 不能写入到此文件夹. Mac OS X 沙盒可能阻止访问权限. 要让沙盒允许 The Unarchiver 写入到此文件夹, 只需点按 \"解压\". 本权限会被记住并且 The Unarchiver 不需再次询问.";
+"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver 不能写入到此文件夹. Mac OS X 沙盒可能正在阻止访问的权限. 要让沙盒允许 The Unarchiver 写入到此文件夹, 只需点按 \"解压\". 本许可会被记住并且 The Unarchiver 不需再次询问.";
 
 /* Informative text in the file panel shown when trying to gain sandbox access for multi-part archives */
-"The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver 需要搜索本归档的更多部分, 但是 Mac OS X 沙盒阻止访问文件夹. 要让沙盒允许 The Unarchiver 搜索文件夹, 只需点按 \"搜索\".本权限会被记住并且 The Unarchiver 不需再次询问.";
+"The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver 需要搜索此归档的更多部分, 但是 Mac OS X 沙盒正在阻止文件夹的访问权限. 要让沙盒允许 The Unarchiver 搜索文件夹, 只需点按 \"搜索\".本许可会被记住并且 The Unarchiver 不需再次询问.";
 
 /* Panel OK button title when searching for more archive parts */
 "Search" = "搜索";
@@ -79,7 +79,7 @@
 /* Uncommon or unused errors */
 "Unknown error" = "未知错误";
 "Failed to write to file" = "写入文件失败";
-"Function called with illegal parameters" = "功能被非法参数叫停";
+"Function called with illegal parameters" = "功能因为非法参数被叫停";
 "Not enough memory available" = "没有足够内存可用";
 "Data is corrupted" = "数据已被破坏";
 "File is not fully supported" = "文件不被完全支持";
@@ -87,16 +87,16 @@
 "Error on decrunching" = "粉碎文件错误";
 "Unknown file type" = "未知文件类型";
 "File, disk has been skipped" = "文件, 磁盘已被跳过";
-"User cancelled extraction" = "用户叫停解压";
+"User cancelled extraction" = "解压被用户叫停";
 "File already exists" = "文件已经存在";
 "Verify failed (disk hook)" = "验证失败(磁盘挂起)";
-"Wrong drive geometry" = "错误磁盘 geometry";
+"Wrong drive geometry" = "错误磁盘几何";
 "Unknown data format" = "未知数据格式";
 "Source contains no files" = "资源不包含文件";
 "Unknown filesystem" = "未知文件系统";
-"Name of file exists as directory" = "目录与文件名相同";
+"Name of file exists as directory" = "文件名以目录形式存在";
 "Buffer was too short" = "缓存过短 ";
-"Text encoding was defective" = "文本解码缺陷e";
+"Text encoding was defective" = "文本编码缺陷";
 "Could not create symlink" = "不能创建符号链接";
 
 
