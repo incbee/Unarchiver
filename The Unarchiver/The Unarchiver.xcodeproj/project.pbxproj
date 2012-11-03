@@ -64,6 +64,9 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		DB8E2931163C11D900888FBF /* TUCancelExtractionScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8E2930163C11D900888FBF /* TUCancelExtractionScriptCommand.m */; };
+		DBDABE4816298EB300BAFD4F /* TheUnarchiverSuite.sdef in Resources */ = {isa = PBXBuildFile; fileRef = DBDABE4516298EB300BAFD4F /* TheUnarchiverSuite.sdef */; };
+		DBDABE4916298EB300BAFD4F /* TUUnarchiveScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDABE4716298EB300BAFD4F /* TUUnarchiveScriptCommand.m */; };
 		DBE800E416275114005847F9 /* TUDockTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE800E316275114005847F9 /* TUDockTileView.m */; };
 /* End PBXBuildFile section */
 
@@ -421,6 +424,11 @@
 		56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XADMaster.xcodeproj; path = ../XADMaster/XADMaster.xcodeproj; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* The Unarchiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Unarchiver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB8E292F163C11D900888FBF /* TUCancelExtractionScriptCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUCancelExtractionScriptCommand.h; sourceTree = "<group>"; };
+		DB8E2930163C11D900888FBF /* TUCancelExtractionScriptCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUCancelExtractionScriptCommand.m; sourceTree = "<group>"; };
+		DBDABE4516298EB300BAFD4F /* TheUnarchiverSuite.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TheUnarchiverSuite.sdef; sourceTree = "<group>"; };
+		DBDABE4616298EB300BAFD4F /* TUUnarchiveScriptCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUUnarchiveScriptCommand.h; sourceTree = "<group>"; };
+		DBDABE4716298EB300BAFD4F /* TUUnarchiveScriptCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUUnarchiveScriptCommand.m; sourceTree = "<group>"; };
 		DBE800E216275114005847F9 /* TUDockTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUDockTileView.h; sourceTree = "<group>"; };
 		DBE800E316275114005847F9 /* TUDockTileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUDockTileView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -547,6 +555,7 @@
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
+				DBDABE4A16298EBF00BAFD4F /* Automation Support */,
 				1BBEFA6214F5A65800790E4B /* The Unarchiver.entitlements */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -606,6 +615,18 @@
 				3D664F53103776C900A679EF /* DetectorTest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		DBDABE4A16298EBF00BAFD4F /* Automation Support */ = {
+			isa = PBXGroup;
+			children = (
+				DBDABE4516298EB300BAFD4F /* TheUnarchiverSuite.sdef */,
+				DBDABE4616298EB300BAFD4F /* TUUnarchiveScriptCommand.h */,
+				DBDABE4716298EB300BAFD4F /* TUUnarchiveScriptCommand.m */,
+				DB8E292F163C11D900888FBF /* TUCancelExtractionScriptCommand.h */,
+				DB8E2930163C11D900888FBF /* TUCancelExtractionScriptCommand.m */,
+			);
+			name = "Automation Support";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -864,6 +885,7 @@
 				1B1A9CFE1607BDBE00AA6DDE /* close_normal@2x.png in Resources */,
 				1B1A9CFF1607BDBE00AA6DDE /* close_press.png in Resources */,
 				1B1A9D001607BDBE00AA6DDE /* close_press@2x.png in Resources */,
+				DBDABE4816298EB300BAFD4F /* TheUnarchiverSuite.sdef in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -885,6 +907,8 @@
 				1B81DDCE10012A2D005C5B23 /* TUTaskQueue.m in Sources */,
 				1B4B4B9315C9C7F70024B6D7 /* TUURLCache.m in Sources */,
 				DBE800E416275114005847F9 /* TUDockTileView.m in Sources */,
+				DBDABE4916298EB300BAFD4F /* TUUnarchiveScriptCommand.m in Sources */,
+				DB8E2931163C11D900888FBF /* TUCancelExtractionScriptCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

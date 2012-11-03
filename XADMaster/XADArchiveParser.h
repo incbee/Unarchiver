@@ -5,6 +5,7 @@
 #import "XADRegex.h"
 #import "CSHandle.h"
 #import "XADSkipHandle.h"
+#import "XADResourceFork.h"
 #import "Checksums.h"
 
 extern NSString *XADFileNameKey;
@@ -73,6 +74,7 @@ extern NSString *XADDiskLabelKey;
 {
 	CSHandle *sourcehandle;
 	XADSkipHandle *skiphandle;
+	XADResourceFork *resourcefork;
 
 	id delegate;
 	NSString *password;
@@ -95,29 +97,43 @@ extern NSString *XADDiskLabelKey;
 
 +(void)initialize;
 +(Class)archiveParserClassForHandle:(CSHandle *)handle firstBytes:(NSData *)header
-name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props;
+resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props;
 +(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle name:(NSString *)name;
 +(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle name:(NSString *)name error:(XADError *)errorptr;
++(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle resourceFork:(XADResourceFork *)fork name:(NSString *)name;
++(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle resourceFork:(XADResourceFork *)fork name:(NSString *)name error:(XADError *)errorptr;
 +(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle firstBytes:(NSData *)header name:(NSString *)name;
 +(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle firstBytes:(NSData *)header name:(NSString *)name error:(XADError *)errorptr;
++(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle firstBytes:(NSData *)header resourceFork:(XADResourceFork *)fork name:(NSString *)name;
++(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle firstBytes:(NSData *)header resourceFork:(XADResourceFork *)fork name:(NSString *)name error:(XADError *)errorptr;
 +(XADArchiveParser *)archiveParserForPath:(NSString *)filename;
 +(XADArchiveParser *)archiveParserForPath:(NSString *)filename error:(XADError *)errorptr;
 +(XADArchiveParser *)archiveParserForEntryWithDictionary:(NSDictionary *)entry archiveParser:(XADArchiveParser *)parser wantChecksum:(BOOL)checksum;
 +(XADArchiveParser *)archiveParserForEntryWithDictionary:(NSDictionary *)entry archiveParser:(XADArchiveParser *)parser wantChecksum:(BOOL)checksum error:(XADError *)errorptr;
++(XADArchiveParser *)archiveParserForEntryWithDictionary:(NSDictionary *)entry resourceForkDictionary:(NSDictionary *)forkentry archiveParser:(XADArchiveParser *)parser wantChecksum:(BOOL)checksum;
++(XADArchiveParser *)archiveParserForEntryWithDictionary:(NSDictionary *)entry resourceForkDictionary:(NSDictionary *)forkentry archiveParser:(XADArchiveParser *)parser wantChecksum:(BOOL)checksum error:(XADError *)errorptr;
  
--(id)initWithHandle:(CSHandle *)handle name:(NSString *)name;
+-(id)init;
 -(void)dealloc;
 
--(NSDictionary *)properties;
+-(CSHandle *)handle;
+-(void)setHandle:(CSHandle *)newhandle;
+-(XADResourceFork *)resourceFork;
+-(void)setResourceFork:(XADResourceFork *)newfork;
 -(NSString *)name;
+-(void)setName:(NSString *)newname;
 -(NSString *)filename;
+-(void)setFilename:(NSString *)filename;
 -(NSArray *)allFilenames;
--(NSString *)currentFilename;
--(BOOL)isEncrypted;
+-(void)setAllFilenames:(NSArray *)newnames;
 
 -(id)delegate;
 -(void)setDelegate:(id)newdelegate;
 
+-(NSDictionary *)properties;
+-(NSString *)currentFilename;
+
+-(BOOL)isEncrypted;
 -(NSString *)password;
 -(BOOL)hasPassword;
 -(void)setPassword:(NSString *)newpassword;
@@ -150,7 +166,6 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext;
 
 -(BOOL)shouldKeepParsing;
 
--(CSHandle *)handle;
 -(CSHandle *)handleAtDataOffsetForDictionary:(NSDictionary *)dict;
 -(XADSkipHandle *)skipHandle;
 -(CSHandle *)zeroLengthHandleWithChecksum:(BOOL)checksum;
@@ -198,6 +213,8 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext;
 name:(NSString *)name;
 +(BOOL)recognizeFileWithHandle:(CSHandle *)handle firstBytes:(NSData *)data
 name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props;
++(BOOL)recognizeFileWithHandle:(CSHandle *)handle firstBytes:(NSData *)data
+resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props;
 +(NSArray *)volumesForHandle:(CSHandle *)handle firstBytes:(NSData *)data
 name:(NSString *)name;
 

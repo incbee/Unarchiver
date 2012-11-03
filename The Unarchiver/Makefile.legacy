@@ -58,13 +58,14 @@ BUILD_DIR = Build
 
 OBJC_FILES =	CSFileTypeList.m \
 		main.m \
-		TUCancelButton.m \
-		TUTaskListView.m \
 		TUArchiveController.m \
-		TUController.m \
-		TUTaskQueue.m \
 		TUArchiveTaskView.m \
-		TUEncodingPopUp.m
+		TUCancelButton.m \
+		TUController.m \
+		TUDockTileView.m \
+		TUEncodingPopUp.m \
+		TUTaskListView.m \
+		TUTaskQueue.m
 
 C_FILES =
 
@@ -188,6 +189,10 @@ clean:
 	rm -rf $(BUILD_DIR) $(APP_FILES)
 	make -C ../XADMaster -f Makefile.legacy clean
 	make -C ../UniversalDetector -f Makefile.legacy clean
+
+.PHONY: ../XADMaster/XADMaster.framework \
+../UniversalDetector/UniversalDetector.framework \
+clean
 
 # Suffix rules
 
