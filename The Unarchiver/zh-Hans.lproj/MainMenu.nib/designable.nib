@@ -80,6 +80,7 @@
 							<string key="NSFrameSize">{458, 292}</string>
 							<reference key="NSSuperview" ref="972178764"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSClassName">TUTaskListView</string>
 							<string key="NSExtension">NSView</string>
 						</object>
@@ -493,7 +494,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{351, 374}, {496, 382}}</string>
 				<int key="NSWTFlags">1886912512</int>
-				<string key="NSWindowTitle">Preferences</string>
+				<string key="NSWindowTitle">偏好设置</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
@@ -549,10 +550,10 @@
 																	<string key="NSFrameSize">{396, 17}</string>
 																	<reference key="NSSuperview" ref="737039185"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="705239607"/>
+																	<reference key="NSNextKeyView" ref="288706803"/>
 																	<reference key="NSTableView" ref="591475378"/>
 																</object>
-																<object class="_NSCornerView" key="NSCornerView" id="255845072">
+																<object class="_NSCornerView" key="NSCornerView" id="288706803">
 																	<reference key="NSNextResponder" ref="366064615"/>
 																	<int key="NSvFlags">256</int>
 																	<string key="NSFrame">{{397, 0}, {16, 17}}</string>
@@ -764,7 +765,7 @@
 														<reference key="NSBGColor" ref="646890407"/>
 														<int key="NScvFlags">4</int>
 													</object>
-													<reference ref="255845072"/>
+													<reference ref="288706803"/>
 												</object>
 												<string key="NSFrame">{{20, 43}, {413, 241}}</string>
 												<reference key="NSSuperview" ref="416291026"/>
@@ -775,7 +776,7 @@
 												<reference key="NSHScroller" ref="366934169"/>
 												<reference key="NSContentView" ref="705239607"/>
 												<reference key="NSHeaderClipView" ref="737039185"/>
-												<reference key="NSCornerView" ref="255845072"/>
+												<reference key="NSCornerView" ref="288706803"/>
 												<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 												<double key="NSMinMagnification">0.25</double>
 												<double key="NSMaxMagnification">4</double>
@@ -821,7 +822,7 @@
 												<string key="NSFrame">{{111, 15}, {83, 21}}</string>
 												<reference key="NSSuperview" ref="416291026"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="358252493"/>
+												<reference key="NSNextKeyView" ref="536006419"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="325766795">
 													<int key="NSCellFlags">67108864</int>
@@ -1825,6 +1826,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string key="NSFrame">{{309, 6}, {167, 17}}</string>
 							<reference key="NSSuperview" ref="344799856"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="267729652">
 								<int key="NSCellFlags">-2080374784</int>
