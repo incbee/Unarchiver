@@ -371,6 +371,10 @@ NSStringEncoding globalpasswordencoding=0;
 			[[NSWorkspace sharedWorkspace] openFile:destination];
 		}
 	}
+	else if([newpath matchedByPattern:@"/Library/Mail Downloads/[^/]+$"])
+	{
+		[[NSWorkspace sharedWorkspace] selectFile:newpath inFileViewerRootedAtPath:@""];
+	}
 
 	[docktile hideProgress];
 	[finishtarget performSelector:finishselector withObject:self];
