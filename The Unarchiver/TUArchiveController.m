@@ -89,7 +89,7 @@ NSStringEncoding globalpasswordencoding=0;
 
 -(int)folderCreationMode
 {
-	if(foldermodeoverride) return foldermodeoverride;
+	if(foldermodeoverride>=0) return foldermodeoverride;
 	else return [[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"];
 }
 
