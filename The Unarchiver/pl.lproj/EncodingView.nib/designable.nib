@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11D50b</string>
+		<string key="IBDocument.SystemVersion">11G63b</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
-		<string key="IBDocument.AppKitVersion">1138.32</string>
-		<string key="IBDocument.HIToolboxVersion">568.00</string>
+		<string key="IBDocument.AppKitVersion">1138.51</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">2182</string>
@@ -62,6 +62,7 @@
 						<string key="NSFrame">{{11, 58}, {32, 32}}</string>
 						<reference key="NSSuperview" ref="811048734"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="1024705758"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSImageCell" key="NSCell" id="563166728">
 							<int key="NSCellFlags">130560</int>
@@ -79,6 +80,7 @@
 						<string key="NSFrame">{{59, 81}, {369, 14}}</string>
 						<reference key="NSSuperview" ref="811048734"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="195788838"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="891771935">
 							<int key="NSCellFlags">67239488</int>
@@ -138,6 +140,7 @@
 						<string key="NSFrame">{{267, 2}, {80, 28}}</string>
 						<reference key="NSSuperview" ref="811048734"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="95638066"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="143898841">
 							<int key="NSCellFlags">67239424</int>
@@ -160,6 +163,7 @@
 						<string key="NSFrame">{{169, 48}, {259, 26}}</string>
 						<reference key="NSSuperview" ref="811048734"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="469520083"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="966183229">
 							<int key="NSCellFlags">-2076049856</int>
@@ -223,6 +227,7 @@
 						<string key="NSFrame">{{59, 51}, {108, 17}}</string>
 						<reference key="NSSuperview" ref="811048734"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="412948854"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="247367907">
 							<int key="NSCellFlags">67239424</int>
@@ -240,6 +245,7 @@
 						<string key="NSFrame">{{59, 27}, {108, 17}}</string>
 						<reference key="NSSuperview" ref="811048734"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="229675126"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="945266102">
 							<int key="NSCellFlags">67239424</int>
@@ -257,6 +263,7 @@
 						<string key="NSFrame">{{169, 30}, {259, 14}}</string>
 						<reference key="NSSuperview" ref="811048734"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="892855891"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="1023551722">
 							<int key="NSCellFlags">67239488</int>
@@ -272,6 +279,7 @@
 				<string key="NSFrameSize">{440, 101}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView" ref="184203450"/>
 				<string key="NSClassName">NSView</string>
 				<string key="NSExtension">NSResponder</string>
 			</object>
@@ -369,9 +377,9 @@
 							<reference ref="95638066"/>
 							<reference ref="892855891"/>
 							<reference ref="412948854"/>
-							<reference ref="195788838"/>
 							<reference ref="469520083"/>
 							<reference ref="229675126"/>
+							<reference ref="195788838"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -517,6 +525,7 @@
 				<string key="67.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="68.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="69.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="70.CustomClassName">TUEncodingPopUp</string>
 				<string key="70.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="71.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

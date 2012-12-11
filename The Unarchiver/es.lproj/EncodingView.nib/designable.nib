@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">11D50b</string>
+		<string key="IBDocument.SystemVersion">11G63b</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
-		<string key="IBDocument.AppKitVersion">1138.32</string>
-		<string key="IBDocument.HIToolboxVersion">568.00</string>
+		<string key="IBDocument.AppKitVersion">1138.51</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">2182</string>
@@ -115,7 +115,6 @@
 						<string key="NSFrame">{{402, 2}, {85, 28}}</string>
 						<reference key="NSSuperview" ref="1053465256"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="896899673">
 							<int key="NSCellFlags">67239424</int>
@@ -222,7 +221,7 @@
 					<object class="NSTextField" id="259579867">
 						<reference key="NSNextResponder" ref="1053465256"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{23, 40}, {201, 33}}</string>
+						<string key="NSFrame">{{23, 55}, {201, 15}}</string>
 						<reference key="NSSuperview" ref="1053465256"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="805342648"/>
@@ -630,6 +629,7 @@
 						<string key="passwordicon">NSImageView</string>
 						<string key="passwordmessagefield">NSTextField</string>
 						<string key="passwordpopup">TUEncodingPopUp</string>
+						<string key="passwordpopuplabel">NSTextField</string>
 						<string key="passwordview">NSView</string>
 						<string key="progressicon">NSImageView</string>
 						<string key="progressindicator">NSProgressIndicator</string>
@@ -714,6 +714,10 @@
 						<object class="IBToOneOutletInfo" key="passwordpopup">
 							<string key="name">passwordpopup</string>
 							<string key="candidateClassName">TUEncodingPopUp</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="passwordpopuplabel">
+							<string key="name">passwordpopuplabel</string>
+							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="passwordview">
 							<string key="name">passwordview</string>
