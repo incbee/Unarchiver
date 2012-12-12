@@ -5,6 +5,10 @@
 #import "XADMaster/XADPlatform.h"
 #import "TUDockTileView.h"
 
+#ifndef IsLegacyVersion
+#import "CSURLCache.h"
+#endif
+
 #import <unistd.h>
 #import <sys/stat.h>
 #import <Carbon/Carbon.h>
@@ -35,10 +39,6 @@ static BOOL IsPathWritable(NSString *path);
 
 		opened=NO;
 
-		#ifndef IsLegacyVersion
-		urlcache=[TUURLCache new];
-		#endif
-
 		[setuptasks setFinishAction:@selector(setupQueueEmpty:) target:self];
 		[extracttasks setFinishAction:@selector(extractQueueEmpty:) target:self];
 	}
@@ -57,10 +57,6 @@ static BOOL IsPathWritable(NSString *path);
 		[[NSApp dockTile] setContentView:nil];
 		[docktile release];
 	}
-
-	#ifndef IsLegacyVersion
-	[urlcache release];
-	#endif
 
 	[super dealloc];
 }
@@ -100,9 +96,10 @@ static BOOL IsPathWritable(NSString *path);
 		#ifdef IsLegacyVersion
 		[fm removeFileAtPath:tmpdir handler:nil];
 		#else
-		[urlcache obtainAccessToPath:tmpdir];
+		NSURL *url=[[CSURLCache defaultCache] securityScopedURLAllowingAccessToPath:tmpdir];
+		[url startAccessingSecurityScopedResource];
 		[fm removeItemAtPath:tmpdir error:nil];
-		[urlcache relinquishAccessToPath:tmpdir];
+		[url stopAccessingSecurityScopedResource];
 		#endif
 	}
 
@@ -348,7 +345,9 @@ static BOOL IsPathWritable(NSString *path);
 		// a sandboxed URL for this directory, otherwise either open a file
 		// panel to get sandbox access to the directory, or show an error
 		// if a file panel was already shown.
-		[urlcache obtainAccessToPath:destination];
+		NSURL *scopedurl=[[CSURLCache defaultCache] securityScopedURLAllowingAccessToPath:destination];
+		[archive useSecurityScopedURL:scopedurl];
+
 		if(!IsPathWritable(destination))
 		{
 			if(secondattempt)
@@ -412,7 +411,7 @@ static BOOL IsPathWritable(NSString *path);
 		selecteddestination=[[panel directory] retain];
 		#else
 		NSURL *url=[panel URL];
-		[urlcache cacheURL:url];
+		[[CSURLCache defaultCache] cacheSecurityScopedURL:url];
 		selecteddestination=[[url path] retain];
 		#endif
 
@@ -475,8 +474,11 @@ static BOOL IsPathWritable(NSString *path);
 		// We were denied access to the directory.
 		// First attempt to get access using the URL cache.
 		NSString *directory=[[archive filename] stringByDeletingLastPathComponent];
-		if([urlcache obtainAccessToPath:directory])
+
+		NSURL *scopedurl=[[CSURLCache defaultCache] securityScopedURLAllowingAccessToPath:directory];
+		if(scopedurl)
 		{
+			[archive useSecurityScopedURL:scopedurl];
 			[archive prepare];
 			[self finishSetupForArchiveController:archive];
 		}
@@ -515,7 +517,7 @@ static BOOL IsPathWritable(NSString *path);
 				if(result==NSFileHandlingPanelOKButton)
 				{
 					NSURL *url=[panel URL];
-					[urlcache cacheURL:url];
+					[[CSURLCache defaultCache] cacheSecurityScopedURL:url];
 					[archive prepare];
 					[self performSelector:@selector(finishSetupForArchiveController:) withObject:archive afterDelay:0];
 				}
@@ -587,12 +589,6 @@ static BOOL IsPathWritable(NSString *path);
 	[archivecontrollers removeObjectIdenticalTo:archive];
 	[extracttasks finishCurrentTask];
 	[docktile setCount:[archivecontrollers count]];
-
-	// Don't bother relinquishing access. Docs says to do it,
-	// but this only causes problems.
-//	#ifndef IsLegacyVersion
-//	[urlcache relinquishAccessToPath:[archive destination]];
-//	#endif
 }
 
 -(void)extractQueueEmpty:(TUTaskQueue *)queue
@@ -668,7 +664,7 @@ static BOOL IsPathWritable(NSString *path);
 		NSString *directory=[panel directory];
 		#else
 		NSURL *url=[panel URL];
-		[urlcache cacheURL:url];
+		[[CSURLCache defaultCache] cacheSecurityScopedURL:url];
 		NSString *directory=[url path];
 		#endif
 

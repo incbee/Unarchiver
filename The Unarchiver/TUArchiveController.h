@@ -21,6 +21,10 @@
 	int deletearchiveoverride,openextractedoverride;
 
 	BOOL cancelled,ignoreall,haderrors;
+
+	#ifndef IsLegacyVersion
+	NSURL *scopedurl;
+	#endif
 }
 
 +(void)clearGlobalPassword;
@@ -47,6 +51,10 @@
 
 -(BOOL)isCancelled;
 -(void)setIsCancelled:(BOOL)iscancelled;
+
+#ifndef IsLegacyVersion
+-(void)useSecurityScopedURL:(NSURL *)url;
+#endif
 
 -(NSString *)filename;
 -(NSArray *)allFilenames;

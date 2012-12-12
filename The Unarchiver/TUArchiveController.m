@@ -45,6 +45,10 @@ NSStringEncoding globalpasswordencoding=0;
 		cancelled=NO;
 		ignoreall=NO;
 		haderrors=NO;
+
+		#ifndef IsLegacyVersion
+		scopedurl=nil;
+		#endif
 	}
 	return self;
 }
@@ -57,6 +61,11 @@ NSStringEncoding globalpasswordencoding=0;
 	[archivename release];
 	[destination release];
 	[tmpdest release];
+
+	#ifndef IsLegacyVersion
+	[scopedurl stopAccessingSecurityScopedResource];
+	[scopedurl release];
+	#endif
 
 	[super dealloc];
 }
@@ -132,6 +141,17 @@ NSStringEncoding globalpasswordencoding=0;
 -(void)setIsCancelled:(BOOL)iscancelled { cancelled=iscancelled; }
 
 
+
+#ifndef IsLegacyVersion
+-(void)useSecurityScopedURL:(NSURL *)url
+{
+	[scopedurl stopAccessingSecurityScopedResource];
+	[scopedurl autorelease];
+
+	scopedurl=[url retain];
+	[scopedurl startAccessingSecurityScopedResource];
+}
+#endif
 
 
 

@@ -8,10 +8,6 @@
 #import "TUEncodingPopUp.h"
 #import "TUDockTileView.h"
 
-#ifndef IsLegacyVersion
-#import "TUURLCache.h"
-#endif
-
 @interface TUController:NSObject
 {
 	TUTaskQueue *setuptasks,*extracttasks;
@@ -22,10 +18,6 @@
 	NSString *selecteddestination;
 
 	BOOL opened;
-
-	#ifndef IsLegacyVersion
-	TUURLCache *urlcache;
-	#endif
 
 	IBOutlet NSWindow *mainwindow;
 	IBOutlet TUTaskListView *mainlist;
