@@ -70,10 +70,10 @@
 	[background setFill];
 	[backpath fill];
 
-	if(progress==0) return;
-
 	// TODO: Better path generation for small values.
 	NSRect progressrect=[self progressBarFrameForFraction:progress];
+	if(progressrect.size.width==0) return;
+
 	NSBezierPath *progresspath=[NSBezierPath bezierPathWithRoundedRect:progressrect xRadius:7 yRadius:7];
 	NSGradient *gradient=[[[NSGradient alloc] initWithColorsAndLocations:
 		[NSColor colorWithColorSpace:[NSColorSpace sRGBColorSpace] components:(CGFloat[4]){ 0.25,0.57,0.85,1 } count:4],(CGFloat)0,
