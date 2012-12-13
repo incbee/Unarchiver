@@ -171,6 +171,15 @@ static BOOL IsPathWritable(NSString *path);
 	return YES;
 }
 
+-(void)applicationWillTerminate:(NSNotification *)notification
+{
+	// Make double sure overlays and badges on the app icon are gone.
+	// Not sure if this is needed, but there have been problems with them getting
+	// stuck in LaunchPad.
+	[[NSApp dockTile] setContentView:nil];
+	[[NSApp dockTile] setBadgeLabel:nil];
+}
+
 -(BOOL)application:(NSApplication *)app openFile:(NSString *)filename
 {
 	opened=YES;
@@ -282,8 +291,8 @@ static BOOL IsPathWritable(NSString *path);
 	if([archive isCancelled])
 	{
  		[archivecontrollers removeObjectIdenticalTo:archive];
-		[setuptasks finishCurrentTask];
 		[docktile setCount:[archivecontrollers count]];
+		[setuptasks finishCurrentTask];
 		return;
 	}
 
@@ -545,10 +554,10 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)cancelSetupForArchiveController:(TUArchiveController *)archive
 {
-	[mainlist removeTaskView:[archive taskView]];
 	[archivecontrollers removeObjectIdenticalTo:archive];
-	[setuptasks finishCurrentTask];
 	[docktile setCount:[archivecontrollers count]];
+	[mainlist removeTaskView:[archive taskView]];
+	[setuptasks finishCurrentTask];
 }
 
 -(void)setupQueueEmpty:(TUTaskQueue *)queue
@@ -573,8 +582,8 @@ static BOOL IsPathWritable(NSString *path);
 	if([archive isCancelled])
 	{
 		[archivecontrollers removeObjectIdenticalTo:archive];
-		[extracttasks finishCurrentTask];
 		[docktile setCount:[archivecontrollers count]];
+		[extracttasks finishCurrentTask];
 		return;
 	}
 
@@ -585,10 +594,10 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)archiveControllerFinished:(TUArchiveController *)archive
 {
-	[mainlist removeTaskView:[archive taskView]];
 	[archivecontrollers removeObjectIdenticalTo:archive];
-	[extracttasks finishCurrentTask];
 	[docktile setCount:[archivecontrollers count]];
+	[mainlist removeTaskView:[archive taskView]];
+	[extracttasks finishCurrentTask];
 }
 
 -(void)extractQueueEmpty:(TUTaskQueue *)queue

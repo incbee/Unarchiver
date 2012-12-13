@@ -2,7 +2,7 @@
 
 @interface TUDockTileView : NSView
 {
-	double progress;
+	double progress,lastupdate,lastwidth;
 }
 
 -(id)initWithFrame:(NSRect)frame;
@@ -13,5 +13,8 @@
 -(void)hideProgress;
 
 -(void)drawRect:(NSRect)rect;
+
+-(NSRect)progressBarOuterFrame;
+-(NSRect)progressBarFrameForFraction:(double)fraction;
 
 @end
