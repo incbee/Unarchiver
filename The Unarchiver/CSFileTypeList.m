@@ -151,8 +151,11 @@
 	NSString *self_id=[[NSBundle mainBundle] bundleIdentifier];
 	NSString *oldhandler=[(id)LSCopyDefaultRoleHandlerForContentType((CFStringRef)type,kLSRolesViewer) autorelease];
 
-	if(oldhandler&&![oldhandler isEqual:self_id]) [[NSUserDefaults standardUserDefaults] setObject:oldhandler
-	forKey:[@"oldHandler." stringByAppendingString:type]];
+	if(oldhandler && ![oldhandler isEqual:self_id])
+	{
+		NSString *key=[@"oldHandler." stringByAppendingString:type];
+		[[NSUserDefaults standardUserDefaults] setObject:oldhandler forKey:key];
+	}
 
 	[self setHandler:self_id forType:type];
 }
@@ -160,9 +163,10 @@
 -(void)surrenderType:(NSString *)type
 {
 	NSString *self_id=[[NSBundle mainBundle] bundleIdentifier];
-	NSString *oldhandler=[[NSUserDefaults standardUserDefaults] stringForKey:[@"oldHandler." stringByAppendingString:type]];
+	NSString *key=[@"oldHandler." stringByAppendingString:type];
+	NSString *oldhandler=[[NSUserDefaults standardUserDefaults] stringForKey:key];
 
-	if(oldhandler&&![oldhandler isEqual:self_id]) [self setHandler:oldhandler forType:type];
+	if(oldhandler && ![oldhandler isEqual:self_id]) [self setHandler:oldhandler forType:type];
 	else [self removeHandlerForType:type];
 }
 
@@ -196,7 +200,9 @@
 	while((url=[enumerator nextObject]))
 	{
 		NSString *app=[url path];
-		[handlers addObject:[[NSBundle bundleWithPath:app] bundleIdentifier]];
+		NSBundle *bundle=[NSBundle bundleWithPath:app];
+		if(!bundle) continue;
+		[handlers addObject:[bundle bundleIdentifier]];
 	}
 
 	for(;;)
