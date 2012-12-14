@@ -327,11 +327,15 @@ static BOOL IsPathWritable(NSString *path);
 		//[panel setTitle:NSLocalizedString(@"Extract Archive",@"Panel title when choosing an unarchiving destination for an archive")];
 		[panel setPrompt:NSLocalizedString(@"Extract",@"Panel OK button title when choosing an unarchiving destination for an archive")];
 
+		NSString *rememberedpath=[[NSUserDefaults standardUserDefaults] stringForKey:@"lastDestination"];
+
 		#ifdef IsLegacyVersion
+		if(rememberedpath) [panel setDirectory:rememberedpath];
 		[panel beginSheetForDirectory:nil file:nil modalForWindow:mainwindow
 		modalDelegate:self didEndSelector:@selector(archiveDestinationPanelDidEnd:returnCode:contextInfo:)
 		contextInfo:archive];
 		#else
+		if(rememberedpath) [panel setDirectoryURL:[NSURL fileURLWithPath:rememberedpath]];
 		[panel beginSheetModalForWindow:mainwindow completionHandler:^(NSInteger result) {
 			[self archiveDestinationPanelDidEnd:panel returnCode:result contextInfo:archive];
 		}];
@@ -423,6 +427,8 @@ static BOOL IsPathWritable(NSString *path);
 		[[CSURLCache defaultCache] cacheSecurityScopedURL:url];
 		selecteddestination=[[url path] retain];
 		#endif
+
+		[[NSUserDefaults standardUserDefaults] setObject:selecteddestination forKey:@"lastDestination"];
 
 		[archive setDestination:selecteddestination];
 		[self performSelector:@selector(checkDestinationForArchiveControllerAgain:) withObject:archive afterDelay:0];
