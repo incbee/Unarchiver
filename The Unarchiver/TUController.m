@@ -373,7 +373,7 @@ static BOOL IsPathWritable(NSString *path);
 				@"The Unarchiver can not write to this folder. The Mac OS X "
 				@"sandbox may be blocking access to it. To ask the sandbox to "
 				@"allow The Unarchiver to write to this folder, simply click "
-				@"\"Extract\". This permission will be remembered and "
+				@"\"Extract\". This permission will be remembered for this folder, and "
 				@"The Unarchiver will not need to ask for it again.",
 				@"Informative text in the file panel shown when trying to gain sandbox access")];
 				[text setBezeled:NO];
@@ -503,7 +503,7 @@ static BOOL IsPathWritable(NSString *path);
 			@"but the Mac OS X sandbox is blocking access to the folder. "
 			@"To ask the sandbox to allow The Unarchiver to search in "
 			@"this folder, simply click \"Search\". This permission will be "
-			@"remembered and The Unarchiver will not need to ask for it again.",
+			@"remembered for this folder, and The Unarchiver will not need to ask for it again.",
 			@"Informative text in the file panel shown when trying to gain sandbox access for multi-part archives")];
 			[text setBezeled:NO];
 			[text setDrawsBackground:NO];
