@@ -2,14 +2,6 @@
 
 static BOOL HasPathPrefix(NSString *path,NSString *prefix);
 
-@interface CSURLCache ()
-{
-	NSMutableArray *providers;
-	NSMutableArray *cachedurls;
-	NSMutableArray *cachedbookmarks;
-}
-@end
-
 @implementation CSURLCache
 
 +(CSURLCache *)defaultCache

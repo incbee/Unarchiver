@@ -3,6 +3,11 @@
 @protocol CSURLCacheProvider;
 
 @interface CSURLCache:NSObject
+{
+	NSMutableArray *providers;
+	NSMutableArray *cachedurls;
+	NSMutableArray *cachedbookmarks;
+}
 
 +(CSURLCache *)defaultCache;
 
