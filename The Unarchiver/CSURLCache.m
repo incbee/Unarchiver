@@ -18,28 +18,11 @@ static BOOL HasPathPrefix(NSString *path,NSString *prefix);
 	if((self=[super init]))
 	{
 		providers=[NSMutableArray new];
-		cachedurls=[NSMutableArray new];
-		cachedbookmarks=[NSMutableArray new];
+		cachedurls=[NSMutableDictionary new];
+		cachedbookmarks=[NSMutableDictionary new];
 
-		id bookmarksobject=[NSUserDefaults.standardUserDefaults objectForKey:@"cachedBookmarks"];
-
-		NSArray *bookmarks=nil;
-		if([bookmarksobject isKindOfClass:[NSArray class]]) bookmarks=bookmarksobject;
-		else if([bookmarksobject isKindOfClass:[NSDictionary class]]) bookmarks=[bookmarksobject allValues];
-
-		for(NSData *bookmark in bookmarks)
-		{
-			BOOL isstale;
-			NSURL *url=[NSURL URLByResolvingBookmarkData:bookmark
-			options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil
-			bookmarkDataIsStale:&isstale error:NULL];
-
-			if(url && !isstale)
-			{
-				[cachedurls addObject:url];
-				[cachedbookmarks addObject:bookmark];
-			}
-		}
+		NSDictionary *storedbookmarks=[NSUserDefaults.standardUserDefaults dictionaryForKey:@"cachedBookmarks"];
+		if(storedbookmarks) [cachedbookmarks addEntriesFromDictionary:storedbookmarks];
 	}
 	return self;
 }
@@ -65,20 +48,8 @@ static BOOL HasPathPrefix(NSString *path,NSString *prefix);
 		return;
 	}
 
-	if([cachedurls containsObject:url]) return;
-
 	NSString *path=url.path;
-	NSMutableIndexSet *uselessindexes=[NSMutableIndexSet indexSet];
-
-	NSUInteger count=cachedurls.count;
-	for(NSUInteger i=0;i<count;i++)
-	{
-		NSURL *cachedurl=[cachedurls objectAtIndex:i];
-		if(HasPathPrefix(cachedurl.path,path)) [uselessindexes addIndex:i];
-	}
-
-	[cachedurls removeObjectsAtIndexes:uselessindexes];
-	[cachedbookmarks removeObjectsAtIndexes:uselessindexes];
+	if([cachedbookmarks objectForKey:path]) return;
 
 	NSData *bookmark=[url bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
 	includingResourceValuesForKeys:nil relativeToURL:nil error:NULL];
@@ -89,8 +60,17 @@ static BOOL HasPathPrefix(NSString *path,NSString *prefix);
 		return;
 	}
 
-	[cachedurls addObject:url];
-	[cachedbookmarks addObject:bookmark];
+	for(NSString *bookmarkpath in cachedbookmarks.allKeys)
+	{
+		if(HasPathPrefix(bookmarkpath,path))
+		{
+			[cachedbookmarks removeObjectForKey:bookmarkpath];
+			[cachedurls removeObjectForKey:bookmarkpath];
+		}
+	}
+
+	[cachedbookmarks setObject:bookmark forKey:path];
+	[cachedurls setObject:url forKey:path];
 
 	[NSUserDefaults.standardUserDefaults setObject:cachedbookmarks forKey:@"cachedBookmarks"];
 }
@@ -104,24 +84,36 @@ static BOOL HasPathPrefix(NSString *path,NSString *prefix);
 {
 	path=[path stringByResolvingSymlinksInPath];
 
-	NSURL *url=[self securityScopedURLAllowingAccessToPath:path fromURLs:cachedurls];
-	if(url) return url;
+	for(NSString *bookmarkpath in cachedbookmarks.allKeys)
+	{
+		if(HasPathPrefix(path,bookmarkpath))
+		{
+			NSURL *cachedurl=[cachedurls objectForKey:bookmarkpath];
+			if(cachedurl) return cachedurl;
+
+			NSData *bookmark=[cachedbookmarks objectForKey:bookmarkpath];
+
+			BOOL isstale;
+			NSURL *url=[NSURL URLByResolvingBookmarkData:bookmark
+			options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil
+			bookmarkDataIsStale:&isstale error:NULL];
+
+			if(url)
+			{
+				[cachedurls setObject:url forKey:bookmarkpath];
+				return url;
+			}
+		}
+	}
 
 	for(id <CSURLCacheProvider> provider in providers)
 	{
-		NSURL *url=[self securityScopedURLAllowingAccessToPath:path fromURLs:provider.securityScopedURLs];
-		if(url) return url;
+		for(NSURL *url in provider.securityScopedURLs)
+		{
+			if(HasPathPrefix(path,url.path)) return url;
+		}
 	}
 
-	return nil;
-}
-
--(NSURL *)securityScopedURLAllowingAccessToPath:(NSString *)path fromURLs:(NSArray *)urls
-{
-	for(NSURL *url in urls)
-	{
-		if(HasPathPrefix(path,url.path)) return url;
-	}
 	return nil;
 }
 

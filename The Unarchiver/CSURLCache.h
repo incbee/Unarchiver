@@ -5,8 +5,8 @@
 @interface CSURLCache:NSObject
 {
 	NSMutableArray *providers;
-	NSMutableArray *cachedurls;
-	NSMutableArray *cachedbookmarks;
+	NSMutableDictionary *cachedurls;
+	NSMutableDictionary *cachedbookmarks;
 }
 
 +(CSURLCache *)defaultCache;
