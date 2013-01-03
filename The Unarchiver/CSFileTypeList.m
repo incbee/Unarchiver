@@ -33,7 +33,7 @@
 
 -(IBAction)selectAll:(id)sender
 {
-	[datasource claimAllTypes];
+	[datasource claimAllTypesExceptAlternate];
 	[self reloadData];
 }
 
@@ -81,6 +81,9 @@
 			NSString *extensions=[[dict objectForKey:@"CFBundleTypeExtensions"] componentsJoinedByString:@", "];
 			NSString *type=[types objectAtIndex:0];
 
+			NSString *rank=[dict objectForKey:@"LSHandlerRank"];
+			NSNumber *alternate=[NSNumber numberWithBool:rank && [rank isEqual:@"Alternate"]];
+
 			// Zip UTI kludge
 			if(floor(NSAppKitVersionNumber)>=949&&[type isEqual:@"com.pkware.zip-archive"]&&[types count]>1)
 			type=[types objectAtIndex:1];
@@ -90,6 +93,7 @@
 				type,@"type",
 				description,@"description",
 				extensions,@"extensions",
+				alternate,@"alternate",
 			nil]];
 		}
 	}
@@ -111,7 +115,8 @@
 		NSString *self_id=[[NSBundle mainBundle] bundleIdentifier];
 		NSString *type=[[filetypes objectAtIndex:row] objectForKey:@"type"];
 		NSString *handler=[(id)LSCopyDefaultRoleHandlerForContentType((CFStringRef)type,kLSRolesViewer) autorelease];
-		return [NSNumber numberWithBool:[self_id isEqual:handler]];
+
+		return [NSNumber numberWithBool:[self_id caseInsensitiveCompare:handler]==0];
 	}
 	else
 	{
@@ -132,11 +137,15 @@
 	}
 }
 
--(void)claimAllTypes
+-(void)claimAllTypesExceptAlternate
 {
 	NSEnumerator *enumerator=[filetypes objectEnumerator];
 	NSDictionary *type;
-	while((type=[enumerator nextObject])) [self claimType:[type objectForKey:@"type"]];
+	while((type=[enumerator nextObject]))
+	{
+		if([[type objectForKey:@"alternate"] boolValue]) [self surrenderType:[type objectForKey:@"type"]];
+		else [self claimType:[type objectForKey:@"type"]];
+	}
 }
 
 -(void)surrenderAllTypes
@@ -151,7 +160,7 @@
 	NSString *self_id=[[NSBundle mainBundle] bundleIdentifier];
 	NSString *oldhandler=[(id)LSCopyDefaultRoleHandlerForContentType((CFStringRef)type,kLSRolesViewer) autorelease];
 
-	if(oldhandler && ![oldhandler isEqual:self_id])
+	if(oldhandler && [oldhandler caseInsensitiveCompare:self_id]!=0 && ![oldhandler isEqual:@"__dummy__"])
 	{
 		NSString *key=[@"oldHandler." stringByAppendingString:type];
 		[[NSUserDefaults standardUserDefaults] setObject:oldhandler forKey:key];
@@ -166,7 +175,7 @@
 	NSString *key=[@"oldHandler." stringByAppendingString:type];
 	NSString *oldhandler=[[NSUserDefaults standardUserDefaults] stringForKey:key];
 
-	if(oldhandler && ![oldhandler isEqual:self_id]) [self setHandler:oldhandler forType:type];
+	if(oldhandler && [oldhandler caseInsensitiveCompare:self_id]!=0) [self setHandler:oldhandler forType:type];
 	else [self removeHandlerForType:type];
 }
 
@@ -208,6 +217,7 @@
 	for(;;)
 	{
 		NSUInteger index=[handlers indexOfObject:self_id];
+		if(index==NSNotFound) index=[handlers indexOfObject:[self_id lowercaseString]];
 		if(index==NSNotFound) break;
 		[handlers removeObjectAtIndex:index];
 	}

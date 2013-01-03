@@ -41,7 +41,7 @@
 -(id)tableView:(NSTableView *)table objectValueForTableColumn:(NSTableColumn *)column row:(int)row;
 -(void)tableView:(NSTableView *)table setObjectValue:(id)object forTableColumn:(NSTableColumn *)column row:(int)row;
 
--(void)claimAllTypes;
+-(void)claimAllTypesExceptAlternate;
 -(void)surrenderAllTypes;
 -(void)claimType:(NSString *)type;
 -(void)surrenderType:(NSString *)type;
