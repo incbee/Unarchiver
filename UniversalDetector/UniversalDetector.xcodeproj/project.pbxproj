@@ -913,6 +913,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				LIBTOOL = "$(SRCROOT)/../XADMaster/Windows/bin/libtoolstub.pl";
 				MACH_O_TYPE = mh_object;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = UniversalDetector.win;
 				SDKROOT_i386 = "";
@@ -967,6 +968,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				LIBTOOL = "$(SRCROOT)/../XADMaster/Windows/bin/libtoolstub.pl";
 				MACH_O_TYPE = mh_object;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = UniversalDetector.win;
 				SDKROOT_i386 = "";
