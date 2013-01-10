@@ -343,6 +343,19 @@ static BOOL IsPathWritable(NSString *path);
 
 		return;
 	}
+	else
+	{
+		#ifndef IsLegacyVersion
+		// On the first attempt to access a given path, try to find a cached
+		// security-scoped URL for this path, and use it, even if we already have
+		// access. (This is to balance the number of starts and stops for the URL.)
+		if(!secondattempt)
+		{
+			NSURL *scopedurl=[[CSURLCache defaultCache] securityScopedURLAllowingAccessToPath:destination];
+			[archive useSecurityScopedURL:scopedurl];
+		}
+		#endif
+	}
 
 	if(!IsPathWritable(destination))
 	{
@@ -354,13 +367,9 @@ static BOOL IsPathWritable(NSString *path);
 
 		#else
 
-		// Can not write to the given destination. See if we have cached
-		// a sandboxed URL for this directory, otherwise either open a file
+		// Can not write to the given destination. Open a file
 		// panel to get sandbox access to the directory, or show an error
 		// if a file panel was already shown.
-		NSURL *scopedurl=[[CSURLCache defaultCache] securityScopedURLAllowingAccessToPath:destination];
-		[archive useSecurityScopedURL:scopedurl];
-
 		if(!IsPathWritable(destination))
 		{
 			if(secondattempt)
