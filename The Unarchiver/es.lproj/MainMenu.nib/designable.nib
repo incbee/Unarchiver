@@ -511,7 +511,6 @@
 							<string key="NSFrame">{{13, 21}, {551, 367}}</string>
 							<reference key="NSSuperview" ref="344799856"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="654729943"/>
 							<object class="NSMutableArray" key="NSTabViewItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSTabViewItem" id="429192335">
@@ -763,7 +762,6 @@
 												<reference key="NSHScroller" ref="366934169"/>
 												<reference key="NSContentView" ref="705239607"/>
 												<reference key="NSHeaderClipView" ref="737039185"/>
-												<reference key="NSCornerView" ref="1035644542"/>
 												<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 											</object>
 											<object class="NSButton" id="349910824">
@@ -1775,7 +1773,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<object class="NSButtonCell" key="NSCell" id="146582753">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134348800</int>
-								<string key="NSContents">Support The Unarchiver! Make a donation on the home page!</string>
+								<string key="NSContents">Apoya a The Unarchiver, ¡haz una donación en la página web!</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">10</double>
