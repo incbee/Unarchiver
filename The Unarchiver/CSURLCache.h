@@ -11,7 +11,7 @@
 
 +(CSURLCache *)defaultCache;
 
--(void)addURLProvider:(id <CSURLCacheProvider>)provider;
+-(void)addURLProvider:(NSObject <CSURLCacheProvider> *)provider;
 -(void)cacheSecurityScopedURL:(NSURL *)url;
 
 -(NSURL *)securityScopedURLAllowingAccessToURL:(NSURL *)url;
@@ -21,6 +21,7 @@
 
 @protocol CSURLCacheProvider
 
--(NSArray *)securityScopedURLs;
+-(NSArray *)availablePaths;
+-(NSURL *)securityScopedURLForPath:(NSString *)path;
 
 @end
