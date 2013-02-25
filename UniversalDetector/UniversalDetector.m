@@ -69,6 +69,7 @@
 
 	if(cstr!=lastcstring)
 	{
+		[charset release];
 		charset=[[NSString alloc] initWithUTF8String:cstr];
 		lastcstring=cstr;
 	}
