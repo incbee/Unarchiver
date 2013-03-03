@@ -33,7 +33,7 @@
 
 -(IBAction)selectAll:(id)sender
 {
-	[datasource claimAllTypesExceptAlternate];
+	[datasource claimAllTypes];
 	[self reloadData];
 }
 
@@ -160,7 +160,8 @@
 	NSString *self_id=[[NSBundle mainBundle] bundleIdentifier];
 	NSString *oldhandler=[(id)LSCopyDefaultRoleHandlerForContentType((CFStringRef)type,kLSRolesViewer) autorelease];
 
-	if(oldhandler && [oldhandler caseInsensitiveCompare:self_id]!=0 && ![oldhandler isEqual:@"__dummy__"])
+
+	if(oldhandler && ![oldhandler isEqual:self_id])
 	{
 		NSString *key=[@"oldHandler." stringByAppendingString:type];
 		[[NSUserDefaults standardUserDefaults] setObject:oldhandler forKey:key];
@@ -175,7 +176,8 @@
 	NSString *key=[@"oldHandler." stringByAppendingString:type];
 	NSString *oldhandler=[[NSUserDefaults standardUserDefaults] stringForKey:key];
 
-	if(oldhandler && [oldhandler caseInsensitiveCompare:self_id]!=0) [self setHandler:oldhandler forType:type];
+
+	if(oldhandler && ![oldhandler isEqual:self_id]) [self setHandler:oldhandler forType:type];
 	else [self removeHandlerForType:type];
 }
 
