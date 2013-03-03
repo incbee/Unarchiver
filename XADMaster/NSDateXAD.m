@@ -2,11 +2,37 @@
 
 #import <math.h>
 
+#define SecondsFrom2000To2001 31622400
 #define SecondsFrom1904To1970 2082844800
 #define SecondsFrom1601To1970 11644473600
 #define SecondsFrom1970ToLastDayOf1978 283910400
 
 @implementation NSDate (XAD)
+
++(NSDate *)XADDateWithYear:(int)year month:(int)month day:(int)day
+hour:(int)hour minute:(int)minute second:(int)second timeZone:(NSTimeZone *)timezone
+{
+	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1040
+	NSDateComponents *components=[[NSDateComponents new] autorelease];
+	[components setYear:year];
+	[components setMonth:month];
+	[components setDay:day];
+	[components setHour:hour];
+	[components setMinute:minute];
+	[components setSecond:second];
+	if(timezone) [components setTimeZone:timezone];
+
+	NSCalendar *gregorian=[[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+	return [gregorian dateFromComponents:components];
+	#else
+	return [NSCalendarDate dateWithYear:year month:month day:day hour:hour minute:minute second:second timeZone:nil];
+	#endif
+}
+
++(NSDate *)XADDateWithTimeIntervalSince2000:(NSTimeInterval)interval
+{
+	return [NSDate dateWithTimeIntervalSinceReferenceDate:interval-SecondsFrom2000To2001];
+}
 
 +(NSDate *)XADDateWithTimeIntervalSince1904:(NSTimeInterval)interval
 {
@@ -42,7 +68,7 @@
 	int day=(msdos>>16)&31;
 	int month=(msdos>>21)&15;
 	int year=1980+(msdos>>25);
-	return [NSCalendarDate dateWithYear:year month:month day:day hour:hour minute:minute second:second timeZone:tz];
+	return [self XADDateWithYear:year month:month day:day hour:hour minute:minute second:second timeZone:tz];
 }
 
 +(NSDate *)XADDateWithWindowsFileTime:(uint64_t)filetime
@@ -75,11 +101,19 @@
 	struct timeval tv={ (time_t)seconds, (suseconds_t)(fmod(seconds,1.0)*1000000) };
 	return tv;
 }
+
+-(struct timespec)timespecStruct;
+{
+	NSTimeInterval seconds=[self timeIntervalSince1970];
+	struct timespec ts={ (time_t)seconds, (long)(fmod(seconds,1.0)*1000000000) };
+	return ts;
+}
 #endif
 
 
 
 #ifdef __APPLE__
+#ifdef __UTCUTILS__
 -(UTCDateTime)UTCDateTime
 {
 	NSTimeInterval seconds=[self timeIntervalSince1970]+SecondsFrom1904To1970;
@@ -90,6 +124,7 @@
 	};
 	return utc;
 }
+#endif
 #endif
 
 

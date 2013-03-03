@@ -71,7 +71,13 @@ NSString *EscapeString(NSString *str)
 	NSString *name=EscapeString([[dict objectForKey:XADFileNameKey] string]);
 	printf("%s (",[name UTF8String]);
 
-	if(dir&&[dir boolValue]) printf("dir");
+	if(dir&&[dir boolValue])
+	{
+		printf("dir");
+
+		NSNumber *rsrc=[dict objectForKey:XADIsResourceForkKey];
+		if(rsrc&&[rsrc boolValue]) printf(", rsrc");
+	}
 	else if(link) printf("-> %s",[link UTF8String]);
 	else
 	{
@@ -120,6 +126,20 @@ NSString *EscapeString(NSString *str)
 
 @end
 
+NSString *FigureOutPassword(NSString *filename)
+{
+	const char *envpass=getenv("XADTestPassword");
+	if(envpass) return [NSString stringWithUTF8String:envpass];
+
+	NSArray *matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[pP][aA][rR][tT][0-9]+\\.[rR][aA][rR]$"];
+	if(matches) return [matches objectAtIndex:1];
+
+	matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[^.]+$"];
+	if(matches) return [matches objectAtIndex:1];
+
+	return nil;
+}
+
 int main(int argc,char **argv)
 {
 	for(int i=1;i<argc;i++)
@@ -133,8 +153,8 @@ int main(int argc,char **argv)
 
 		[parser setDelegate:[[[ArchiveTester alloc] initWithIndentLevel:2] autorelease]];
 
-		char *pass=getenv("XADTestPassword");
-		if(pass) [parser setPassword:[NSString stringWithUTF8String:pass]];
+		NSString *pass=FigureOutPassword(filename);
+		if(pass) [parser setPassword:pass];
 
 		@try {
 			[parser parse];

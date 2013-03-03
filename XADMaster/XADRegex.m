@@ -23,10 +23,10 @@ static BOOL IsRegexSpecialCharacter(unichar c)
 
 +(NSString *)patternForLiteralString:(NSString *)string
 {
-	int len=[string length];
+	long len=[string length];
 	NSMutableString *escaped=[NSMutableString stringWithCapacity:len];
 
-	for(int i=0;i<len;i++)
+	for(long i=0;i<len;i++)
 	{
 		unichar c=[string characterAtIndex:i];
 		if(IsRegexSpecialCharacter(c)) [escaped appendFormat:@"\\%C",c];
@@ -37,12 +37,12 @@ static BOOL IsRegexSpecialCharacter(unichar c)
 
 +(NSString *)patternForGlob:(NSString *)glob
 {
-	int len=[glob length];
+	long len=[glob length];
 	NSMutableString *pattern=[NSMutableString stringWithCapacity:len+2];
 
 	[pattern appendString:@"^"];
 
-	for(int i=0;i<len;i++)
+	for(long i=0;i<len;i++)
 	{
 		unichar c=[glob characterAtIndex:i];
 		if(c=='\\')
@@ -91,7 +91,7 @@ static BOOL IsRegexSpecialCharacter(unichar c)
 {
 	if((self=[super init]))
 	{
-		patternstring=[patternstring retain];
+		patternstring=[pattern retain];
 		currdata=nil;
 		matches=NULL;
 

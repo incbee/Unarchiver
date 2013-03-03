@@ -1,4 +1,5 @@
 #import <Cocoa/Cocoa.h>
+#import <XADMaster/XADString.h>
 
 @interface TUEncodingPopUp:NSPopUpButton
 {
@@ -9,7 +10,8 @@
 
 -(void)buildEncodingList;
 -(void)buildEncodingListWithAutoDetect;
--(void)buildEncodingListMatchingData:(NSData *)data;
+-(void)buildEncodingListWithDefaultEncoding;
+-(void)buildEncodingListMatchingXADString:(id <XADString>)string;
 
 +(NSArray *)encodings;
 +(float)maximumEncodingNameWidthWithAttributes:(NSDictionary *)attrs;

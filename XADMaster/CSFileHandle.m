@@ -127,6 +127,7 @@ NSString *CSFileErrorException=@"CSFileErrorException";
 -(void)seekToFileOffset:(off_t)offs
 {
 	if(multilock) { [multilock lock]; }
+	//if(offs>[self fileSize]) [self _raiseEOF];
 	if(fseeko(fh,offs,SEEK_SET)) [self _raiseError];
 	if(multilock) { pos=ftello(fh); [multilock unlock]; }
 }
@@ -148,7 +149,7 @@ NSString *CSFileErrorException=@"CSFileErrorException";
 {
 	if(num==0) return 0;
 	if(multilock) { [multilock lock]; fseeko(fh,pos,SEEK_SET); }
-	int n=fread(buffer,1,num,fh);
+	int n=(int)fread(buffer,1,num,fh);
 	if(n<=0&&!feof(fh)) [self _raiseError];
 	if(multilock) { pos=ftello(fh); [multilock unlock]; }
 	return n;

@@ -7,6 +7,9 @@
 
 @interface NSDate (XAD)
 
++(NSDate *)XADDateWithYear:(int)year month:(int)month day:(int)day
+hour:(int)hour minute:(int)minute second:(int)second timeZone:(NSTimeZone *)timezone;
++(NSDate *)XADDateWithTimeIntervalSince2000:(NSTimeInterval)interval;
 +(NSDate *)XADDateWithTimeIntervalSince1904:(NSTimeInterval)interval;
 +(NSDate *)XADDateWithTimeIntervalSince1601:(NSTimeInterval)interval;
 +(NSDate *)XADDateWithMSDOSDate:(uint16_t)date time:(uint16_t)time;
@@ -19,10 +22,13 @@
 
 #ifndef __MINGW32__
 -(struct timeval)timevalStruct;
+-(struct timespec)timespecStruct;
 #endif
 
 #ifdef __APPLE__
+#ifdef __UTCUTILS__
 -(UTCDateTime)UTCDateTime;
+#endif
 #endif
 
 #ifdef __MINGW32__

@@ -101,10 +101,23 @@
 			if(longnamelength && varlength>=2+longnamelength)
 			{
 				longnamedata=[fh readDataOfLength:longnamelength];
+
+				// Strip trailing nul byte, if it exists. Not sure if it is
+				// always present, so make this conditional.
+				const uint8_t *bytes=[longnamedata bytes];
+				if(bytes[longnamelength-1]==0)
+				longnamedata=[longnamedata subdataWithRange:NSMakeRange(0,longnamelength-1)];
 			}
+
 			if(dirlength && varlength>=2+longnamelength+dirlength)
 			{
 				dirdata=[fh readDataOfLength:dirlength];
+
+				// Strip trailing nul byte, if it exists. Not sure if it is
+				// always present, so make this conditional.
+				const uint8_t *bytes=[dirdata bytes];
+				if(bytes[dirlength-1]==0)
+				dirdata=[dirdata subdataWithRange:NSMakeRange(0,dirlength-1)];
 			}
 
 			if(longnamedata) [dict setObject:longnamedata forKey:@"ZooLongNameData"];
@@ -157,7 +170,7 @@
 					namedata=mutablenamedata;
 				}
 
-				path=[parent pathByAppendingPathComponent:[self XADStringWithData:namedata]];
+				path=[parent pathByAppendingXADStringComponent:[self XADStringWithData:namedata]];
 			}
 		}
 
@@ -171,6 +184,13 @@
 		{
 			[fh seekToFileOffset:commentoffset];
 			NSData *commentdata=[fh readDataOfLength:commentlength];
+
+			// Strip trailing nul byte, if it exists. Not sure if it is
+			// always present, so make this conditional.
+			const uint8_t *bytes=[commentdata bytes];
+			if(bytes[commentlength-1]==0)
+			commentdata=[commentdata subdataWithRange:NSMakeRange(0,commentlength-1)];
+
 			[dict setObject:[self XADStringWithData:commentdata] forKey:XADCommentKey];
 		}
 
@@ -200,7 +220,9 @@
 			handle=[[[XADLZHStaticHandle alloc] initWithHandle:handle length:length windowBits:13] autorelease];
 		break;
 
-		default: return nil;
+		default:
+			[self reportInterestingFileWithReason:@"Unsupported compression method %d",method];
+			return nil;
 	}
 
 	if(checksum) handle=[XADCRCHandle IBMCRC16HandleWithHandle:handle length:length correctCRC:crc conditioned:NO];

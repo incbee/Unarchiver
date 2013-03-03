@@ -1,0 +1,82 @@
+﻿/* Status text for queued multi-part archives */
+"%@ (+%d more)" = "%1$@ (+%2$d more)";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the file \"%@\" from the archive \"%@\": %@" = " \"%1$@\" dosyası, \"%2$@\" adlı arşivden çıkartılamıyor: %3$@";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@" = " \"%1$@\" dosyasının kaynak ayracı \"%2$@\" adlı arşivden çıkartlıamıyor:\n%3$@";
+
+/* Option in the password encoding pop-up to use the default encoding */
+"Default encoding" = "Varsayılan kodlama";
+
+/* Option in the encoding pop-up to detect the encoding automatically */
+"Detect automatically" = "Otomatik algılama";
+
+/* Panel OK button title when choosing an unarchiving destination for an archive */
+"Extract" = "Çıkart";
+
+/* Panel title when choosing an unarchiving destination for an archive */
+"Extract Archive" = "Arşivden Çıkart";
+
+/* Status text while extracting an archive */
+"Extracting \"%@\"" = "Çıkartılıyor \"%@\"";
+
+/* Status text when preparing to extract an archive */
+"Preparing to extract \"%@\"" = "\"%@\" çıkartmaya hazırlanıyor";
+
+/* Panel OK button title when choosing a default unarchiving destination */
+"Select" = "Seç";
+
+/* Panel title when choosing archives to extract */
+"Select files to unarchive" = "Arşivden çıkartılacak dosyaları işaretle";
+
+/* Error message for files not extractable by The Unarchiver */
+"The contents of the file \"%@\" can not be extracted with this program." = "\"%@\" arşivinin içeriği bu program ile çıkartılamıyor.";
+
+/* Error message when encountering an error while extracting entries */
+"There was a problem while extracting the contents of the file \"%@\": %@" = "\"%1$@\" arşivininin içeriği çıkartılırken bir sorun çıktı: %2$@";
+
+/* Error message when encountering an error while parsing an archive */
+"There was a problem while reading the contents of the file \"%@\": %@" = "\"%1$@\" arşivininin içeriği okunurken bir sorun çıktı: %2$@";
+
+/* Panel OK button title when choosing archives to extract */
+"Unarchive" = "Çıkart";
+
+/* Status text when asking for a password */
+"You need to supply a password to open the archive \"%@\"." = "\"%@\" adlı arşivi açabilmeniz için arşivin şifresini girmeniz gerekiyor.";
+
+/* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
+
+/* Common errors */
+"Attempted to read more data than was available" = "Arşiv dosyası tamamlanmamış";
+"Opening file failed" = "Dosya açılamıyor";
+"Missing or wrong password" = "Girmiş olduğunuz şifre yanlış";
+"Wrong checksum" = "Arşiv dosyası bozulmul";
+"Could not create directory" = "Klasör oluşturulamıyor";
+
+/* Uncommon or unused errors */
+"Unknown error" = "Bilinmeyen hata";
+"Failed to write to file" = "Dosya yazımı başarısız";
+"Function called with illegal parameters" = "İşlem, hatalı parametre ile çağrıldı";
+"Not enough memory available" = "Yeterli hafıza yok";
+"Data is corrupted" = "Veri bozuldu";
+"File is not fully supported" = "Dosya tam desteklenmiyor";
+"Required resource missing" = "Gereken kaynak eksik";
+"Error on decrunching" = "Sıkıştırılan dosya eski haline getirirken hata oluştu";
+"Unknown file type" = "Bilinmeyeb dosya türü";
+"File, disk has been skipped" = "Dosya, disk atlandı";
+"User cancelled extraction" = "Kullanıcı çıkartma işlemini durdurdu";
+"File already exists" = "Bu dosya zaten var";
+"Verify failed (disk hook)" = "Doğrulama başarısız (disk hook)";
+"Wrong drive geometry" = "Yanlış sürücü geometrisi";
+"Unknown data format" = "Bilinmeyen veri biçimi";
+"Source contains no files" = "Kaynak herhangi bir dosya içermiyor";
+"Unknown filesystem" = "Bilinmeyen dosya sistemi";
+"Name of file exists as directory" = "Dosyanın ismi dizin olarak geçiyor";
+"Buffer was too short" = "Ara bellek çok kısaydı";
+"Text encoding was defective" = "Metin kodlaması kusurluydu";
+"Could not create symlink" = "symlink oluşturulamıyor";
+
+
+

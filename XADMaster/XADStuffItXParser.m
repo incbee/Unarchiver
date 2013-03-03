@@ -17,21 +17,23 @@
 typedef struct StuffItXElement
 {
 	int something,type;
-	int64_t attribs[9];
-	int64_t alglist[4];
+	int64_t attribs[10];
+	int64_t alglist[6];
+	int64_t alglist3_extra;
 	off_t dataoffset,actualsize;
 	uint32_t datacrc;
 } StuffItXElement;
 
 static void ReadElement(CSHandle *fh,StuffItXElement *element);
 static void ScanElementData(CSHandle *fh,StuffItXElement *element);
-static CSHandle *HandleForElement(CSHandle *fh,StuffItXElement *element,BOOL wantchecksum);
+static CSHandle *HandleForElement(XADStuffItXParser *self,StuffItXElement *element,BOOL wantchecksum);
 static void DumpElement(StuffItXElement *element);
 
 static void ReadElement(CSHandle *fh,StuffItXElement *element)
 {
-	for(int i=0;i<9;i++) element->attribs[i]=-1;
-	for(int i=0;i<4;i++) element->alglist[i]=-1;
+	for(int i=0;i<10;i++) element->attribs[i]=-1;
+	for(int i=0;i<6;i++) element->alglist[i]=-1;
+	element->alglist3_extra=-1;
 
 	element->something=[fh readBitsLE:1];
 	element->type=ReadSitxP2(fh);
@@ -41,7 +43,7 @@ static void ReadElement(CSHandle *fh,StuffItXElement *element)
 		int type=ReadSitxP2(fh);
 		if(type==0) break;
 		uint64_t value=ReadSitxP2(fh);
-		if(type<=9) element->attribs[type-1]=value;
+		if(type<=10) element->attribs[type-1]=value;
 		else NSLog(@"attrib type too big: %d",type);
 	}
 
@@ -50,9 +52,9 @@ static void ReadElement(CSHandle *fh,StuffItXElement *element)
 		int type=ReadSitxP2(fh);
 		if(type==0) break;
 		uint64_t value=ReadSitxP2(fh);
-		if(type<=4) element->alglist[type-1]=value;
+		if(type<=6) element->alglist[type-1]=value;
 		else NSLog(@"alglist type too big: %d",type);
-		if(type==4) NSLog(@"4 extra: %qu",ReadSitxP2(fh));
+		if(type==4) element->alglist3_extra=ReadSitxP2(fh);
 	}
 
 	element->dataoffset=[fh offsetInFile];
@@ -92,11 +94,16 @@ static void ScanElementData(CSHandle *fh,StuffItXElement *element)
 
 
 
-static CSHandle *HandleForElement(CSHandle *fh,StuffItXElement *element,BOOL wantchecksum)
+static CSHandle *HandleForElement(XADStuffItXParser *self,StuffItXElement *element,BOOL wantchecksum)
 {
+	CSHandle *fh=[self handle];
+
 	int64_t compressionalgorithm=element->alglist[0];
 	int64_t checksumalgorithm=element->alglist[1];
 	int64_t preprocessalgorithm=element->alglist[2];
+	int64_t cryptoalgorithm=element->alglist[3];
+
+	if(cryptoalgorithm>=0) [XADException raiseNotSupportedException];
 
 	[fh seekToFileOffset:element->dataoffset];
 	[fh flushReadBits];
@@ -162,7 +169,7 @@ static CSHandle *HandleForElement(CSHandle *fh,StuffItXElement *element,BOOL wan
 		break;
 
 		default:
-			NSLog(@"File uses SITX compression method %qd\n",compressionalgorithm);
+			[self reportInterestingFileWithReason:@"Unsupported compression method %qd",compressionalgorithm];
 			return nil;
 	}
 
@@ -201,7 +208,7 @@ static CSHandle *HandleForElement(CSHandle *fh,StuffItXElement *element,BOOL wan
 */
 
 		default:
-			NSLog(@"File uses SITX preprocessing method %qd\n",preprocessalgorithm);
+			[self reportInterestingFileWithReason:@"Unsupported preprocessing method %qd",preprocessalgorithm];
 			return nil;
 	}
 
@@ -239,8 +246,9 @@ static void DumpElement(StuffItXElement *element)
 
 	NSLog(@"(%d) %d: %@",element->something,element->type,name);
 
-	for(int i=0;i<9;i++) if(element->attribs[i]>=0) NSLog(@"       attrib %d: %qu",i,element->attribs[i]);
-	for(int i=0;i<4;i++) if(element->alglist[i]>=0) NSLog(@"       alglist %d: %qu",i,element->alglist[i]);
+	for(int i=0;i<10;i++) if(element->attribs[i]>=0) NSLog(@"       attrib %d: %qu",i,element->attribs[i]);
+	for(int i=0;i<6;i++) if(element->alglist[i]>=0) NSLog(@"       alglist %d: %qu",i,element->alglist[i]);
+	if(element->alglist3_extra>=0) NSLog(@"       alglist 3 extra: %qu",element->alglist3_extra);
 }
 
 
@@ -260,9 +268,9 @@ static void DumpElement(StuffItXElement *element)
 	&&bytes[5]=='I'&&bytes[6]=='t'&&(bytes[7]=='!'||bytes[7]=='?');
 }
 
--(id)initWithHandle:(CSHandle *)handle name:(NSString *)name
+-(id)init
 {
-	if((self=[super initWithHandle:handle name:name]))
+	if((self=[super init]))
 	{
 		repeatedentrydata=nil;
 		repeatedentries=nil;
@@ -283,7 +291,15 @@ static void DumpElement(StuffItXElement *element)
 
 	CSHandle *fh=[self handle];
 
-	[fh skipBytes:8];
+	[fh skipBytes:7];
+
+	uint8_t encodingmarker=[fh readUInt8];
+	if(encodingmarker=='?')
+	{
+		// The file has been encoded using a base-N encoder.
+		// TODO: Support these encodings.
+		[XADException raiseNotSupportedException];
+	}
 
 	NSMutableArray *entries=[NSMutableArray array];
 	NSMutableDictionary *entrydict=[NSMutableDictionary dictionary];
@@ -387,36 +403,45 @@ static void DumpElement(StuffItXElement *element)
 
 					if((id)fork==[NSNull null]) [XADException raiseIllegalDataException];
 
-					NSArray *entries=[fork objectForKey:@"Entries"];
 					NSNumber *lengthnum=[fork objectForKey:@"Length"];
-					NSNumber *offsnum=[NSNumber numberWithLongLong:offs];
 
-					off_t currcompsize=[lengthnum longLongValue]*compsize/uncompsize;
-					NSNumber *currcompsizenum=[NSNumber numberWithLongLong:currcompsize];
-
-					BOOL isfork=[[fork objectForKey:@"Type"] intValue]==1;
-
-					NSEnumerator *entryenumerator=[entries objectEnumerator];
-					NSNumber *entrynum;
-					while((entrynum=[entryenumerator nextObject]))
+					// Type 0 is a data fork, type 1 is a resource fork. There are
+					// furhter types, but these are not understood so ignore them.
+					// Type 3 seems to be a thumbnail?
+					int type=[[fork objectForKey:@"Type"] intValue];
+					if(type==0||type==1)
 					{
-						NSDictionary *entry=[entrydict objectForKey:entrynum];
-						NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithDictionary:entry];
+						BOOL isresfork=(type==1);
 
-						[dict setObject:elementval forKey:XADSolidObjectKey];
-						[dict setObject:offsnum forKey:XADSolidOffsetKey];
-						[dict setObject:lengthnum forKey:XADFileSizeKey];
-						[dict setObject:lengthnum forKey:XADSolidLengthKey];
-						[dict setObject:currcompsizenum forKey:XADCompressedSizeKey];
-						[dict setObject:compnamestr forKey:XADCompressionNameKey];
+						NSArray *entries=[fork objectForKey:@"Entries"];
+						NSNumber *offsnum=[NSNumber numberWithLongLong:offs];
 
-						if(isfork)
-						[dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsResourceForkKey];
+						off_t currcompsize=0;
+						if(uncompsize) currcompsize=[lengthnum longLongValue]*compsize/uncompsize;
+						NSNumber *currcompsizenum=[NSNumber numberWithLongLong:currcompsize];
 
-						if([entries count]>1)
-						[dict setObject:entries forKey:@"StuffItXRepeatedEntries"];
+						NSEnumerator *entryenumerator=[entries objectEnumerator];
+						NSNumber *entrynum;
+						while((entrynum=[entryenumerator nextObject]))
+						{
+							NSDictionary *entry=[entrydict objectForKey:entrynum];
+							NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithDictionary:entry];
 
-						[self addEntryWithDictionary:dict];
+							[dict setObject:elementval forKey:XADSolidObjectKey];
+							[dict setObject:offsnum forKey:XADSolidOffsetKey];
+							[dict setObject:lengthnum forKey:XADFileSizeKey];
+							[dict setObject:lengthnum forKey:XADSolidLengthKey];
+							[dict setObject:currcompsizenum forKey:XADCompressedSizeKey];
+							[dict setObject:compnamestr forKey:XADCompressionNameKey];
+
+							if(isresfork)
+							[dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsResourceForkKey];
+
+							if([entries count]>1)
+							[dict setObject:entries forKey:@"StuffItXRepeatedEntries"];
+
+							[self addEntryWithDictionary:dict];
+						}
 					}
 					offs+=[lengthnum longLongValue];
 				}
@@ -525,7 +550,7 @@ static void DumpElement(StuffItXElement *element)
 				element.actualsize=element.attribs[4];
 				off_t pos=[fh offsetInFile];
 
-				CSHandle *ch=HandleForElement(fh,&element,NO);
+				CSHandle *ch=HandleForElement(self,&element,NO);
 				if(!ch) [XADException raiseNotSupportedException];
 				[self parseCatalogWithHandle:ch entryArray:entries entryDictionary:entrydict];
 
@@ -602,7 +627,7 @@ static void DumpElement(StuffItXElement *element)
 					NSDictionary *parent=[dict objectForKey:[entry objectForKey:@"StuffItXParent"]];
 
 					if(parent) path=[[parent objectForKey:XADFileNameKey]
-					pathByAppendingPathComponent:[self XADStringWithData:filename]];
+					pathByAppendingXADStringComponent:[self XADStringWithData:filename]];
 					else path=[self XADPathWithData:filename separators:XADNoPathSeparator];
 
 					[entry setObject:path forKey:XADFileNameKey];
@@ -683,7 +708,7 @@ static void DumpElement(StuffItXElement *element)
 				break;
 
 				default:
-					NSLog(@"unknown tag");
+					NSLog(@"unknown tag %d",key);
 					[XADException raiseNotSupportedException];
 				break;
 			}
@@ -732,7 +757,7 @@ static void DumpElement(StuffItXElement *element)
 	StuffItXElement element;
 	[obj getValue:&element];
 
-	return HandleForElement([self handle],&element,checksum);
+	return HandleForElement(self,&element,checksum);
 }
 
 -(NSString *)formatName { return @"StuffIt X"; }

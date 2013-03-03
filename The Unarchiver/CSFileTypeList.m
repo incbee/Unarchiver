@@ -19,7 +19,8 @@
 	if((self=[super initWithFrame:frame]))
 	{
 		NSLog(@"Custom view mode in IB not supported yet");
-		[self setDataSource:[[CSFileTypeListSource alloc] init]];
+		datasource=[CSFileTypeListSource new];
+		[self setDataSource:datasource];
 	}
 	return self;
 }
@@ -32,13 +33,13 @@
 
 -(IBAction)selectAll:(id)sender
 {
-	[(CSFileTypeListSource *)[self dataSource] claimAllTypes];
+	[datasource claimAllTypes];
 	[self reloadData];
 }
 
 -(IBAction)deselectAll:(id)sender
 {
-	[(CSFileTypeListSource *)[self dataSource] surrenderAllTypes];
+	[datasource surrenderAllTypes];
 	[self reloadData];
 }
 
@@ -74,7 +75,7 @@
 	while((dict=[enumerator nextObject]))
 	{
 		NSArray *types=[dict objectForKey:@"LSItemContentTypes"];
-		if(types)
+		if(types && [types count])
 		{
 			NSString *description=[dict objectForKey:@"CFBundleTypeName"];
 			NSString *extensions=[[dict objectForKey:@"CFBundleTypeExtensions"] componentsJoinedByString:@", "];
@@ -96,7 +97,7 @@
 	return [NSArray arrayWithArray:array];
 }
 
--(int)numberOfRowsInTableView:(NSTableView *)table
+-(NSInteger)numberOfRowsInTableView:(NSTableView *)table
 {
 	return [filetypes count];
 }
@@ -150,8 +151,11 @@
 	NSString *self_id=[[NSBundle mainBundle] bundleIdentifier];
 	NSString *oldhandler=[(id)LSCopyDefaultRoleHandlerForContentType((CFStringRef)type,kLSRolesViewer) autorelease];
 
-	if(oldhandler&&![oldhandler isEqual:self_id]) [[NSUserDefaults standardUserDefaults] setObject:oldhandler
-	forKey:[@"oldHandler." stringByAppendingString:type]];
+	if(oldhandler && ![oldhandler isEqual:self_id])
+	{
+		NSString *key=[@"oldHandler." stringByAppendingString:type];
+		[[NSUserDefaults standardUserDefaults] setObject:oldhandler forKey:key];
+	}
 
 	[self setHandler:self_id forType:type];
 }
@@ -159,9 +163,10 @@
 -(void)surrenderType:(NSString *)type
 {
 	NSString *self_id=[[NSBundle mainBundle] bundleIdentifier];
-	NSString *oldhandler=[[NSUserDefaults standardUserDefaults] stringForKey:[@"oldHandler." stringByAppendingString:type]];
+	NSString *key=[@"oldHandler." stringByAppendingString:type];
+	NSString *oldhandler=[[NSUserDefaults standardUserDefaults] stringForKey:key];
 
-	if(oldhandler&&![oldhandler isEqual:self_id]) [self setHandler:oldhandler forType:type];
+	if(oldhandler && ![oldhandler isEqual:self_id]) [self setHandler:oldhandler forType:type];
 	else [self removeHandlerForType:type];
 }
 
@@ -179,15 +184,15 @@
 	[handlers addObjectsFromArray:[(id)LSCopyAllRoleHandlersForContentType((CFStringRef)type,kLSRolesEditor) autorelease]];
 
 	NSString *ext=[(id)UTTypeCopyPreferredTagWithClass((CFStringRef)type,kUTTagClassFilenameExtension) autorelease];
-	NSString *filename=[NSString stringWithFormat:@"/tmp/CSFileTypeList%04x.%@",rand()&0xffff,ext];
+	NSString *filename=[NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"CSFileTypeList%04x.%@",rand()&0xffff,ext]];
 
 	[[NSFileManager defaultManager] createFileAtPath:filename contents:nil attributes:nil];
 	NSArray *apps=[(NSArray *)LSCopyApplicationURLsForURL((CFURLRef)[NSURL fileURLWithPath:filename],kLSRolesAll) autorelease];
 
-	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
-	[[NSFileManager defaultManager] removeItemAtPath:filename error:NULL];
-	#else
+	#ifdef IsLegacyVersion
 	[[NSFileManager defaultManager] removeFileAtPath:filename handler:nil];
+	#else
+	[[NSFileManager defaultManager] removeItemAtPath:filename error:NULL];
 	#endif
 
 	NSEnumerator *enumerator=[apps objectEnumerator];
@@ -195,7 +200,9 @@
 	while((url=[enumerator nextObject]))
 	{
 		NSString *app=[url path];
-		[handlers addObject:[[NSBundle bundleWithPath:app] bundleIdentifier]];
+		NSBundle *bundle=[NSBundle bundleWithPath:app];
+		if(!bundle) continue;
+		[handlers addObject:[bundle bundleIdentifier]];
 	}
 
 	for(;;)

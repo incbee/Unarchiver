@@ -1,5 +1,5 @@
 #import "XADSkipHandle.h"
-#import "SystemSpecific.h"
+#import "Realloc.h"
 
 @implementation XADSkipHandle
 
@@ -124,7 +124,7 @@ static off_t ActualOffsetToSkip(XADSkipHandle *self,off_t pos)
 
 -(void)addSkipFrom:(off_t)start length:(off_t)length
 {
-	[self addSkipFrom:start length:start+length];
+	[self addSkipFrom:start to:start+length];
 }
 
 -(void)addSkipFrom:(off_t)start to:(off_t)end
@@ -134,7 +134,7 @@ static off_t ActualOffsetToSkip(XADSkipHandle *self,off_t pos)
 	// TODO: merge regions instead of bailing out
 	if(end>=ActualGapStart(self,index)) [NSException raise:NSInvalidArgumentException format:@"Attempted to add overlapping or neighbouring skips"];
 
-	regions=reallocf(regions,sizeof(XADSkipRegion)*(numregions+1));
+	regions=Realloc(regions,sizeof(XADSkipRegion)*(numregions+1));
 
 	for(int i=numregions-1;i>index;i++)
 	{

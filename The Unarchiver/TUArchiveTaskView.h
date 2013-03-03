@@ -3,9 +3,11 @@
 #import "TUTaskListView.h"
 #import "TUEncodingPopup.h"
 
+@class TUArchiveController;
+
 @interface TUArchiveTaskView:TUMultiTaskView
 {
-	NSString *archivename;
+	TUArchiveController *archive;
 
 	id canceltarget;
 	SEL cancelselector;
@@ -15,7 +17,7 @@
 	NSConditionLock *pauselock;
 	int uiresponse;
 
-	NSData *namedata;
+	id<XADString> namestring;
 
 	IBOutlet NSView *waitview;
 	IBOutlet NSTextField *waitfield;
@@ -39,8 +41,11 @@
 	IBOutlet NSImageView *openerroricon;
 
 	IBOutlet NSView *passwordview;
+	IBOutlet NSTextField *passwordmessagefield;
 	IBOutlet NSTextField *passwordfield;
 	IBOutlet NSImageView *passwordicon;
+	IBOutlet NSTextField *passwordpopuplabel;
+	IBOutlet TUEncodingPopUp *passwordpopup;
 	IBOutlet NSButton *passwordapplyallcheck;
 
 	IBOutlet NSView *encodingview;
@@ -49,8 +54,11 @@
 	IBOutlet NSImageView *encodingicon;
 }
 
--(id)initWithFilename:(NSString *)filename;
+-(id)init;
 -(void)dealloc;
+
+-(TUArchiveController *)archiveController;
+-(void)setArchiveController:(TUArchiveController *)archivecontroller;
 
 -(void)setCancelAction:(SEL)selector target:(id)target;
 
@@ -61,18 +69,19 @@
 
 
 -(void)displayNotWritableErrorWithResponseAction:(SEL)selector target:(id)target;
--(XADAction)displayError:(NSString *)error ignoreAll:(BOOL *)ignoreall;
+-(BOOL)displayError:(NSString *)error ignoreAll:(BOOL *)ignoreall;
 -(void)displayOpenError:(NSString *)error;
--(NSStringEncoding)displayEncodingSelectorForData:(NSData *)data encoding:(NSStringEncoding)encoding;
--(NSString *)displayPasswordInputWithApplyToAllPointer:(BOOL *)applyall;
+-(NSStringEncoding)displayEncodingSelectorForXADString:(id <XADString>)string;
+-(NSString *)displayPasswordInputWithApplyToAllPointer:(BOOL *)applyall encodingPointer:(NSStringEncoding *)encoding;
 
 -(void)setupWaitView;
+-(void)updateWaitView;
 -(void)setupProgressViewInPreparingMode;
 -(void)setupNotWritableView;
 -(void)setupErrorView:(NSString *)error;
 -(void)setupOpenErrorView:(NSString *)error;
 -(void)setupPasswordView;
--(void)setupEncodingViewWithEncoding:(NSNumber *)encodingnum;
+-(void)setupEncodingViewForXADString:(id <XADString>)string;
 
 -(void)getUserAttention;
 

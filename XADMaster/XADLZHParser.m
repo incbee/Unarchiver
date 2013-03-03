@@ -44,15 +44,16 @@
 
 	int guessedos=0;
 
-	while([self shouldKeepParsing])
+	while([self shouldKeepParsing] && ![fh atEndOfFile])
 	{
 		off_t start=[fh offsetInFile];
 
-		int firstword;
-		@try { firstword=[fh readInt16LE]; }
-		@catch(id e) { break; }
+		uint8_t b1=[fh readUInt8];
+		if(b1==0) break;
 
-		if((firstword&0xff)==0) break;
+		uint8_t b2=[fh readUInt8];
+
+		int firstword=b1|(b2<<8);
 
 		uint8_t method[5];
 		[fh readBytes:5 toBuffer:method];
@@ -105,6 +106,8 @@
 		}
 		else if(level==2)
 		{
+			[self reportInterestingFileWithReason:@"LZH level 2 file"];
+
 			headersize=firstword;
 
 			[dict setObject:[NSDate dateWithTimeIntervalSince1970:time] forKey:XADLastModificationDateKey];
@@ -123,6 +126,8 @@
 		}
 		else if(level==3)
 		{
+			[self reportInterestingFileWithReason:@"LZH level 3 file"];
+
 			if(firstword!=4) [XADException raiseNotSupportedException];
 
 			[dict setObject:[NSDate dateWithTimeIntervalSince1970:time] forKey:XADLastModificationDateKey];
@@ -213,7 +218,8 @@
 		if(directorydata)
 		{
 			path=[self XADPathWithData:directorydata separators:"\xff"];
-			if(filenamedata) path=[path pathByAppendingPathComponent:[self XADStringWithData:filenamedata]];
+			if(filenamedata&&[filenamedata length])
+			path=[path pathByAppendingXADStringComponent:[self XADStringWithData:filenamedata]];
 		}
 		else if(filenamedata) path=[self XADPathWithData:filenamedata separators:"\xff\\/"];
 
@@ -260,6 +266,7 @@
 
 		case 0x42:
 			// 64-bit file sizes
+			[self reportInterestingFileWithReason:@"64-bit file"];
 			[XADException raiseNotSupportedException];
 		break;
 
@@ -329,13 +336,13 @@
 	}
 	else if([method isEqual:@"-lh2-"])
 	{
-		off_t compsize=[[dict objectForKey:XADCompressedSizeKey] longLongValue];
-		handle=[[[XADLZH2Handle alloc] initWithHandle:handle inputLength:compsize outputLength:size] autorelease];
+		[self reportInterestingFileWithReason:@"-lh2- compression"];
+		handle=[[[XADLZH2Handle alloc] initWithHandle:handle length:size] autorelease];
 	}
 	else if([method isEqual:@"-lh3-"])
 	{
-		off_t compsize=[[dict objectForKey:XADCompressedSizeKey] longLongValue];
-		handle=[[[XADLZH3Handle alloc] initWithHandle:handle inputLength:compsize outputLength:size] autorelease];
+		[self reportInterestingFileWithReason:@"-lh3- compression"];
+		handle=[[[XADLZH3Handle alloc] initWithHandle:handle length:size] autorelease];
 	}
 	else if([method isEqual:@"-lh4-"])
 	{
@@ -371,11 +378,12 @@
 	}
 	else if([method isEqual:@"-pm2-"])
 	{
-		off_t compsize=[[dict objectForKey:XADCompressedSizeKey] longLongValue];
-		handle=[[[XADPMArc2Handle alloc] initWithHandle:handle inputLength:compsize outputLength:size] autorelease];
+		[self reportInterestingFileWithReason:@"-pm2- compression"];
+		handle=[[[XADPMArc2Handle alloc] initWithHandle:handle length:size] autorelease];
 	}
 	else // not supported
 	{
+		[self reportInterestingFileWithReason:@"Unsupported compression method %@",method];
 		return nil; 
 	}
 

@@ -108,7 +108,7 @@ name:(NSString *)name
 
 		if(method==0x1f || method==0x80)
 		{
-			if([parent depth]==0) break;
+			if([parent isEmpty]) break;
 			parent=[parent pathByDeletingLastPathComponent];
 			continue;
 		}
@@ -142,7 +142,7 @@ name:(NSString *)name
 		off_t dataoffset=[fh offsetInFile];
 
 		XADString *name=[self XADStringWithData:namedata];
-		XADPath *path=[parent pathByAppendingPathComponent:name];
+		XADPath *path=[parent pathByAppendingXADStringComponent:name];
 
 		if(method==0x1e || (method==0x82&&((loadaddress&0xffffff00)==0xfffddc00)))
 		{
@@ -223,6 +223,9 @@ name:(NSString *)name
 	switch(method&0x7f)
 	{
 		case 0x01: // Stored (untested)
+			[self reportInterestingFileWithReason:@"Untested older stored file"];
+		break;
+
 		case 0x02: // Stored
 		break;
 
@@ -289,6 +292,8 @@ name:(NSString *)name
 
 		case 0x7f: // Compressed (untested)
 		{
+			[self reportInterestingFileWithReason:@"Untested compression method 0x7f (compress)"];
+
 			int byte=[handle readUInt8];
 
 			handle=[[[XADCompressHandle alloc] initWithHandle:handle
@@ -296,7 +301,9 @@ name:(NSString *)name
 		}
 		break;
 
-		default: return nil;
+		default:
+			[self reportInterestingFileWithReason:@"Unsupported compression method %d",method];
+			return nil;
 	}
 
 	if(checksum) handle=[XADCRCHandle IBMCRC16HandleWithHandle:handle length:length correctCRC:crc conditioned:NO];

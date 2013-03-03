@@ -2,60 +2,90 @@
 #import "CSFileHandle.h"
 #import "CSMultiHandle.h"
 #import "CSMemoryHandle.h"
+#import "CSStreamHandle.h"
 #import "XADCRCHandle.h"
+#import "XADPlatform.h"
 
-#import "XADZipParser.h"
-#import "XADZipSFXParsers.h"
-#import "XADRARParser.h"
 #import "XAD7ZipParser.h"
-#import "XADPPMdParser.h"
-#import "XADStuffItParser.h"
-#import "XADStuffIt5Parser.h"
-#import "XADStuffItXParser.h"
-#import "XADCompactProParser.h"
-#import "XADDiskDoublerParser.h"
-#import "XADBinHexParser.h"
-#import "XADMacBinaryParser.h"
-#import "XADPackItParser.h"
-#import "XADNowCompressParser.h"
-#import "XADGzipParser.h"
-#import "XADBzip2Parser.h"
-#import "XADLZMAAloneParser.h"
-#import "XADXZParser.h"
-#import "XADCompressParser.h"
-#import "XADTarParser.h"
-#import "XADCpioParser.h"
-#import "XADXARParser.h"
-#import "XADRPMParser.h"
-#import "XADLZXParser.h"
-#import "XADPowerPackerParser.h"
-#import "XADLZHParser.h"
-#import "XADLZHSFXParsers.h"
-#import "XADARJParser.h"
+#import "XADALZipParser.h"
+#import "XADAppleSingleParser.h"
 #import "XADARCParser.h"
-#import "XADSqueezeParser.h"
-#import "XADLBRParser.h"
-#import "XADZooParser.h"
-#import "XADNSISParser.h"
+#import "XADARJParser.h"
+#import "XADArParser.h"
+#import "XADBinHexParser.h"
+#import "XADBzip2Parser.h"
 #import "XADCABParser.h"
 #import "XADCFBFParser.h"
-#import "XADALZipParser.h"
+#import "XADCompactProParser.h"
+#import "XADCompressParser.h"
+#import "XADCpioParser.h"
+#import "XADCrunchParser.h"
+#import "XADDiskDoublerParser.h"
+#import "XADGzipParser.h"
+#import "XADISO9660Parser.h"
+#import "XADLBRParser.h"
+#import "XADLibXADParser.h"
+#import "XADLZHParser.h"
+#import "XADLZHSFXParsers.h"
+#import "XADLZMAAloneParser.h"
+#import "XADLZXParser.h"
+#import "XADMacBinaryParser.h"
 #import "XADNDSParser.h"
+#import "XADNowCompressParser.h"
 #import "XADNSAParser.h"
+#import "XADNSISParser.h"
+#import "XADPackItParser.h"
+#import "XADPDFParser.h"
+#import "XADPowerPackerParser.h"
+#import "XADPPMdParser.h"
+#import "XADRARParser.h"
+#import "XADRPMParser.h"
 #import "XADSARParser.h"
 #import "XADSplitFileParser.h"
-#import "XADISO9660Parser.h"
-#import "XADLibXADParser.h"
+#import "XADSqueezeParser.h"
+#import "XADStuffItParser.h"
+#import "XADStuffIt5Parser.h"
+#import "XADStuffItSplitParser.h"
+#import "XADStuffItXParser.h"
+#import "XADSWFParser.h"
+#import "XADTarParser.h"
+#import "XADWARCParser.h"
+#import "XADXARParser.h"
+#import "XADXZParser.h"
+#import "XADZipParser.h"
+#import "XADZipSFXParsers.h"
+#import "XADZooParser.h"
 
 #include <dirent.h>
 
 NSString *XADFileNameKey=@"XADFileName";
+NSString *XADCommentKey=@"XADComment";
 NSString *XADFileSizeKey=@"XADFileSize";
 NSString *XADCompressedSizeKey=@"XADCompressedSize";
+NSString *XADCompressionNameKey=@"XADCompressionName";
+
+NSString *XADIsDirectoryKey=@"XADIsDirectory";
+NSString *XADIsResourceForkKey=@"XADIsResourceFork";
+NSString *XADIsArchiveKey=@"XADIsArchive";
+NSString *XADIsHiddenKey=@"XADIsHidden";
+NSString *XADIsLinkKey=@"XADIsLink";
+NSString *XADIsHardLinkKey=@"XADIsHardLink";
+NSString *XADLinkDestinationKey=@"XADLinkDestination";
+NSString *XADIsCharacterDeviceKey=@"XADIsCharacterDevice";
+NSString *XADIsBlockDeviceKey=@"XADIsBlockDevice";
+NSString *XADDeviceMajorKey=@"XADDeviceMajor";
+NSString *XADDeviceMinorKey=@"XADDeviceMinor";
+NSString *XADIsFIFOKey=@"XADIsFIFO";
+NSString *XADIsEncryptedKey=@"XADIsEncrypted";
+NSString *XADIsCorruptedKey=@"XADIsCorrupted";
+
 NSString *XADLastModificationDateKey=@"XADLastModificationDate";
 NSString *XADLastAccessDateKey=@"XADLastAccessDate";
 NSString *XADLastAttributeChangeDateKey=@"XADLastAttributeChangeDate";
+NSString *XADLastBackupDateKey=@"XADLastBackupDate";
 NSString *XADCreationDateKey=@"XADCreationDate";
+
+NSString *XADExtendedAttributesKey=@"XADExtendedAttributes";
 NSString *XADFileTypeKey=@"XADFileType";
 NSString *XADFileCreatorKey=@"XADFileCreator";
 NSString *XADFinderFlagsKey=@"XADFinderFlags";
@@ -69,30 +99,16 @@ NSString *XADDOSFileAttributesKey=@"XADDOSFileAttributes";
 NSString *XADWindowsFileAttributesKey=@"XADWindowsFileAttributes";
 NSString *XADAmigaProtectionBitsKey=@"XADAmigaProtectionBits";
 
-NSString *XADIsEncryptedKey=@"XADIsEncrypted";
-NSString *XADIsCorruptedKey=@"XADIsCorrupted";
-NSString *XADIsDirectoryKey=@"XADIsDirectory";
-NSString *XADIsResourceForkKey=@"XADIsResourceFork";
-NSString *XADIsArchiveKey=@"XADIsArchive";
-NSString *XADIsHiddenKey=@"XADIsHidden";
-NSString *XADIsLinkKey=@"XADIsLink";
-NSString *XADIsHardLinkKey=@"XADIsHardLink";
-NSString *XADLinkDestinationKey=@"XADLinkDestination";
-NSString *XADIsCharacterDeviceKey=@"XADIsCharacterDevice";
-NSString *XADIsBlockDeviceKey=@"XADIsBlockDevice";
-NSString *XADDeviceMajorKey=@"XADDeviceMajor";
-NSString *XADDeviceMinorKey=@"XADDeviceMinor";
-NSString *XADIsFIFOKey=@"XADIsFIFO";
-
-NSString *XADCommentKey=@"XADComment";
+NSString *XADIndexKey=@"XADIndex";
 NSString *XADDataOffsetKey=@"XADDataOffset";
 NSString *XADDataLengthKey=@"XADDataLength";
 NSString *XADSkipOffsetKey=@"XADSkipOffset";
 NSString *XADSkipLengthKey=@"XADSkipLength";
-NSString *XADCompressionNameKey=@"XADCompressionName";
 
 NSString *XADIsSolidKey=@"XADIsSolid";
+NSString *XADFirstSolidIndexKey=@"XADFirstSolidIndex";
 NSString *XADFirstSolidEntryKey=@"XADFirstSolidEntry";
+NSString *XADNextSolidIndexKey=@"XADNextSolidIndex";
 NSString *XADNextSolidEntryKey=@"XADNextSolidEntry";
 NSString *XADSolidObjectKey=@"XADSolidObject";
 NSString *XADSolidOffsetKey=@"XADSolidOffset";
@@ -100,6 +116,7 @@ NSString *XADSolidLengthKey=@"XADSolidLength";
 
 NSString *XADArchiveNameKey=@"XADArchiveName";
 NSString *XADVolumesKey=@"XADVolumes";
+NSString *XADVolumeScanningFailedKey=@"XADVolumeScanningFailed";
 NSString *XADDiskLabelKey=@"XADDiskLabel";
 
 
@@ -127,9 +144,11 @@ static int maxheader=0;
 		[XADStuffItParser class],
 		[XADStuffIt5Parser class],
 		[XADStuffIt5ExeParser class],
+		[XADStuffItSplitParser class],
 		[XADStuffItXParser class],
 		[XADBinHexParser class],
 		[XADMacBinaryParser class],
+		[XADAppleSingleParser class],
 		[XADDiskDoublerParser class],
 		[XADPackItParser class],
 		[XADNowCompressParser class],
@@ -140,6 +159,8 @@ static int maxheader=0;
 		[XADCompressParser class],
 		[XADRPMParser class],
 		[XADXZParser class],
+		[XADSWFParser class],
+		[XADPDFParser class],
 		[XADALZipParser class],
 		[XADCABParser class],
 		[XADCFBFParser class],
@@ -154,21 +175,26 @@ static int maxheader=0;
 		[XADNDSParser class],
 		[XADNSAParser class],
 		[XADSARParser class],
+		[XADArParser class],
+		[XADWARCParser class],
 
 		// Detectors that require lots of work
 		[XADWinZipSFXParser class],
 		[XADZipItSEAParser class],
 		[XADZipSFXParser class],
 		[XADEmbeddedRARParser class],
+		[XAD7ZipSFXParser class],
 		[XADNSISParser class],
 		[XADGzipSFXParser class],
 		[XADCompactProParser class],
 		[XADARJParser class],
+		[XADZipMultiPartParser class],
 
 		// Over-eager detectors
 		[XADARCParser class],
 		[XADARCSFXParser class],
 		[XADSqueezeParser class],
+		[XADCrunchParser class],
 		[XADLBRParser class],
 		[XADLZMAAloneParser class],
 		[XADCpioParser class],
@@ -189,7 +215,7 @@ static int maxheader=0;
 }
 
 +(Class)archiveParserClassForHandle:(CSHandle *)handle firstBytes:(NSData *)header
-name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
+resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 {
 	NSEnumerator *enumerator=[parserclasses objectEnumerator];
 	Class parserclass;
@@ -200,7 +226,7 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 
 		@try {
 			if([parserclass recognizeFileWithHandle:handle firstBytes:header
-			name:name propertiesToAdd:props])
+			resourceFork:fork name:name propertiesToAdd:props])
 			{
 				[handle seekToFileOffset:0];
 				return parserclass;
@@ -212,68 +238,125 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 
 +(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle name:(NSString *)name
 {
+	return [self archiveParserForHandle:handle resourceFork:nil name:name];
+}
+
++(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle name:(NSString *)name error:(XADError *)errorptr
+{
+	if(errorptr) *errorptr=XADNoError;
+	@try { return [self archiveParserForHandle:handle resourceFork:nil name:name]; }
+	@catch(id exception) { if(errorptr) *errorptr=[XADException parseException:exception]; }
+	return nil;
+}
+
++(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle resourceFork:(XADResourceFork *)fork name:(NSString *)name
+{
 	NSData *header=[handle readDataOfLengthAtMost:maxheader];
-	return [self archiveParserForHandle:handle firstBytes:header name:name];
+	return [self archiveParserForHandle:handle firstBytes:header resourceFork:fork name:name];
+}
+
++(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle resourceFork:(XADResourceFork *)fork name:(NSString *)name error:(XADError *)errorptr
+{
+	if(errorptr) *errorptr=XADNoError;
+	@try { return [self archiveParserForHandle:handle resourceFork:fork name:name]; }
+	@catch(id exception) { if(errorptr) *errorptr=[XADException parseException:exception]; }
+	return nil;
 }
 
 +(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle firstBytes:(NSData *)header name:(NSString *)name
 {
+	return [self archiveParserForHandle:handle firstBytes:header resourceFork:nil name:name];
+}
+
++(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle firstBytes:(NSData *)header name:(NSString *)name error:(XADError *)errorptr
+{
+	if(errorptr) *errorptr=XADNoError;
+	@try { return [self archiveParserForHandle:handle firstBytes:header resourceFork:nil name:name]; }
+	@catch(id exception) { if(errorptr) *errorptr=[XADException parseException:exception]; }
+	return nil;
+}
+
++(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle firstBytes:(NSData *)header resourceFork:(XADResourceFork *)fork name:(NSString *)name;
+{
 	NSMutableDictionary *props=[NSMutableDictionary dictionary];
 
-	Class parserclass=[self archiveParserClassForHandle:handle
-	firstBytes:header name:name propertiesToAdd:props];
+	Class parserclass=[self archiveParserClassForHandle:handle firstBytes:header
+	resourceFork:fork name:name propertiesToAdd:props];
 
-	XADArchiveParser *parser=[[[parserclass alloc] initWithHandle:handle
-	name:name] autorelease];
+	XADArchiveParser *parser=[[parserclass new] autorelease];
+	[parser setHandle:handle];
+	[parser setResourceFork:fork];
+	[parser setName:name];
 
 	[parser addPropertiesFromDictionary:props];
 
 	return parser;
 }
 
++(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle firstBytes:(NSData *)header resourceFork:(XADResourceFork *)fork name:(NSString *)name error:(XADError *)errorptr
+{
+	if(errorptr) *errorptr=XADNoError;
+	@try { return [self archiveParserForHandle:handle firstBytes:header resourceFork:fork name:name]; }
+	@catch(id exception) { if(errorptr) *errorptr=[XADException parseException:exception]; }
+	return nil;
+}
+
 +(XADArchiveParser *)archiveParserForPath:(NSString *)filename
 {
-	CSHandle *handle;
-
-	@try {
-		handle=[CSFileHandle fileHandleForReadingAtPath:filename];
-	} @catch(id e) { return nil; }
-
+	CSHandle *handle=[CSFileHandle fileHandleForReadingAtPath:filename];
 	NSData *header=[handle readDataOfLengthAtMost:maxheader];
+
+	CSHandle *forkhandle=[XADPlatform handleForReadingResourceForkAtPath:filename];
+	XADResourceFork *fork=[XADResourceFork resourceForkWithHandle:forkhandle error:NULL];
+
 	NSMutableDictionary *props=[NSMutableDictionary dictionary];
 
 	Class parserclass=[self archiveParserClassForHandle:handle
-	firstBytes:header name:filename propertiesToAdd:props];
+	firstBytes:header resourceFork:fork name:filename propertiesToAdd:props];
 	if(!parserclass) return nil;
 
 	// Attempt to create a multi-volume parser, if we can find the volumes.
 	@try
 	{
 		NSArray *volumes=[parserclass volumesForHandle:handle firstBytes:header name:filename];
-		if(volumes&&[volumes count]>1)
+		[handle seekToFileOffset:0];
+
+		if(volumes)
 		{
-			NSMutableArray *handles=[NSMutableArray array];
-			NSEnumerator *enumerator=[volumes objectEnumerator];
-			NSString *volume;
+			if([volumes count]>1)
+			{
+				NSMutableArray *handles=[NSMutableArray array];
+				NSEnumerator *enumerator=[volumes objectEnumerator];
+				NSString *volume;
 
-			while((volume=[enumerator nextObject]))
-			[handles addObject:[CSFileHandle fileHandleForReadingAtPath:volume]];
+				while((volume=[enumerator nextObject]))
+				[handles addObject:[CSFileHandle fileHandleForReadingAtPath:volume]];
 
-			CSMultiHandle *multihandle=[CSMultiHandle multiHandleWithHandleArray:handles];
+				CSMultiHandle *multihandle=[CSMultiHandle multiHandleWithHandleArray:handles];
 
-			XADArchiveParser *parser=[[[parserclass alloc] initWithHandle:multihandle
-			name:filename] autorelease];
+				XADArchiveParser *parser=[[parserclass new] autorelease];
+				[parser setHandle:multihandle];
+				[parser setResourceFork:fork];
+				[parser setAllFilenames:volumes];
+				[parser addPropertiesFromDictionary:props];
 
-			[props setObject:volumes forKey:XADVolumesKey];
-			[parser addPropertiesFromDictionary:props];
-
-			return parser;
+				return parser;
+			}
+			else if(volumes)
+			{
+				// An empty array means scanning failed. Set a flag to
+				// warn the caller, and fall through to single-file mode.
+				[props setObject:[NSNumber numberWithBool:YES] forKey:XADVolumeScanningFailedKey];
+			}
 		}
 	}
 	@catch(id e) { } // Fall through to a single file instead.
 
-	XADArchiveParser *parser=[[[parserclass alloc] initWithHandle:handle
-	name:filename] autorelease];
+	XADArchiveParser *parser=[[parserclass new] autorelease];
+	[parser setHandle:handle];
+	[parser setResourceFork:fork];
+	[parser setFilename:filename];
+	[parser addPropertiesFromDictionary:props];
 
 	[props setObject:[NSArray arrayWithObject:filename] forKey:XADVolumesKey];
 	[parser addPropertiesFromDictionary:props];
@@ -281,38 +364,97 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 	return parser;
 }
 
++(XADArchiveParser *)archiveParserForPath:(NSString *)filename error:(XADError *)errorptr
+{
+	if(errorptr) *errorptr=XADNoError;
+	@try { return [self archiveParserForPath:filename]; }
+	@catch(id exception) { if(errorptr) *errorptr=[XADException parseException:exception]; }
+	return nil;
+}
+
++(XADArchiveParser *)archiveParserForEntryWithDictionary:(NSDictionary *)entry archiveParser:(XADArchiveParser *)parser wantChecksum:(BOOL)checksum
+{
+	return [self archiveParserForEntryWithDictionary:entry resourceForkDictionary:nil archiveParser:parser wantChecksum:checksum];
+}
+
++(XADArchiveParser *)archiveParserForEntryWithDictionary:(NSDictionary *)entry archiveParser:(XADArchiveParser *)parser wantChecksum:(BOOL)checksum error:(XADError *)errorptr
+{
+	if(errorptr) *errorptr=XADNoError;
+	@try { return [self archiveParserForEntryWithDictionary:entry resourceForkDictionary:nil archiveParser:parser wantChecksum:checksum]; }
+	@catch(id exception) { if(errorptr) *errorptr=[XADException parseException:exception]; }
+	return nil;
+}
+
++(XADArchiveParser *)archiveParserForEntryWithDictionary:(NSDictionary *)entry resourceForkDictionary:(NSDictionary *)forkentry archiveParser:(XADArchiveParser *)parser wantChecksum:(BOOL)checksum
+{
+	XADResourceFork *fork=nil;
+	if(forkentry)
+	{
+		CSHandle *forkhandle=[parser handleForEntryWithDictionary:forkentry wantChecksum:checksum];
+		if(forkhandle)
+		{
+			fork=[XADResourceFork resourceForkWithHandle:forkhandle];
+			if(checksum && [forkhandle hasChecksum])
+			{
+				[forkhandle seekToEndOfFile];
+				if(![forkhandle isChecksumCorrect]) [XADException raiseChecksumException];
+			}
+		}
+	}
+
+	CSHandle *handle=[parser handleForEntryWithDictionary:entry wantChecksum:checksum];
+	if(!handle) [XADException raiseNotSupportedException];
+
+	NSString *filename=[[entry objectForKey:XADFileNameKey] string];
+	XADArchiveParser *subparser=[XADArchiveParser archiveParserForHandle:handle resourceFork:fork name:filename];
+	if(!subparser) return nil;
+
+	if([parser hasPassword]) [subparser setPassword:[parser password]];
+	if([[parser stringSource] hasFixedEncoding]) [subparser setEncodingName:[parser encodingName]];
+	if(parser->passwordencodingname) [subparser setPasswordEncodingName:parser->passwordencodingname];
+
+	return subparser;
+}
+
++(XADArchiveParser *)archiveParserForEntryWithDictionary:(NSDictionary *)entry resourceForkDictionary:(NSDictionary *)forkentry archiveParser:(XADArchiveParser *)parser wantChecksum:(BOOL)checksum error:(XADError *)errorptr
+{
+	if(errorptr) *errorptr=XADNoError;
+	@try { return [self archiveParserForEntryWithDictionary:entry resourceForkDictionary:forkentry archiveParser:parser wantChecksum:checksum]; }
+	@catch(id exception) { if(errorptr) *errorptr=[XADException parseException:exception]; }
+	return nil;
+}
 
 
 
 
 
-
--(id)initWithHandle:(CSHandle *)handle name:(NSString *)name
+-(id)init
 {
 	if((self=[super init]))
 	{
-		sourcehandle=[handle retain];
-
+		sourcehandle=nil;
 		skiphandle=nil;
+		resourcefork=nil;
 		delegate=nil;
 		password=nil;
+		passwordencodingname=nil;
+		caresaboutpasswordencoding=NO;
 
 		stringsource=[XADStringSource new];
 
-		properties=[[NSMutableDictionary alloc] initWithObjectsAndKeys:
-			[name lastPathComponent],XADArchiveNameKey,
-		nil];
+		properties=[NSMutableDictionary new];
 
 		currsolidobj=nil;
 		currsolidhandle=nil;
 
+		currindex=0;
+
 		parsersolidobj=nil;
 		firstsoliddict=prevsoliddict=nil;
 
+		forcesolid=NO;
+
 		shouldstop=NO;
-
-		autopool=nil;
-
 	}
 	return self;
 }
@@ -321,6 +463,8 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 {
 	[sourcehandle release];
 	[skiphandle release];
+	[password release];
+	[passwordencodingname release];
 	[stringsource release];
 	[properties release];
 	[currsolidobj release];
@@ -332,26 +476,78 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 
 
 
--(NSDictionary *)properties { return properties; }
+
+-(CSHandle *)handle { return sourcehandle; }
+
+-(void)setHandle:(CSHandle *)newhandle
+{
+	[sourcehandle autorelease];
+	sourcehandle=[newhandle retain];
+
+	// If the handle is a CSStreamHandle, it can not seek, so treat
+	// this like a solid archive (for instance, .tar.gz). Also, it will
+	// usually be wrapped in a CSSubHandle so unwrap it first.
+	CSHandle *testhandle=newhandle;
+	if([testhandle isKindOfClass:[CSSubHandle class]]) testhandle=[(CSSubHandle *)testhandle parentHandle];
+
+	if([testhandle isKindOfClass:[CSStreamHandle class]]) forcesolid=YES;
+	else forcesolid=NO;
+}
+
+-(XADResourceFork *)resourceFork { return resourcefork; }
+
+-(void)setResourceFork:(XADResourceFork *)newfork
+{
+	[resourcefork autorelease];
+	resourcefork=[newfork retain];
+}
 
 -(NSString *)name { return [properties objectForKey:XADArchiveNameKey]; }
 
+-(void)setName:(NSString *)newname
+{
+	[properties setObject:[newname lastPathComponent] forKey:XADArchiveNameKey];
+}
+
 -(NSString *)filename { return [[properties objectForKey:XADVolumesKey] objectAtIndex:0]; }
 
+-(void)setFilename:(NSString *)filename
+{
+	[properties setObject:[NSArray arrayWithObject:filename] forKey:XADVolumesKey];
+	[self setName:filename];
+}
+
 -(NSArray *)allFilenames { return [properties objectForKey:XADVolumesKey]; }
+
+-(void)setAllFilenames:(NSArray *)newnames
+{
+	[properties setObject:newnames forKey:XADVolumesKey];
+	[self setName:[newnames objectAtIndex:0]];
+}
+
+-(id)delegate { return delegate; }
+
+-(void)setDelegate:(id)newdelegate { delegate=newdelegate; }
+
+-(NSDictionary *)properties { return properties; }
+
+-(NSString *)currentFilename
+{
+	if([sourcehandle isKindOfClass:[XADMultiHandle class]])
+	{
+		return [[(XADMultiHandle *)sourcehandle currentHandle] name];
+	}
+	else
+	{
+		return [self filename];
+	}
+}
 
 -(BOOL)isEncrypted
 {
 	NSNumber *isencrypted=[properties objectForKey:XADIsEncryptedKey];
 	return isencrypted&&[isencrypted boolValue];
 }
-
-
-
-
--(id)delegate { return delegate; }
-
--(void)setDelegate:(id)newdelegate { delegate=newdelegate; }
 
 -(NSString *)password
 {
@@ -372,9 +568,52 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 {
 	[password autorelease];
 	password=[newpassword retain];
+
+	// Make sure to invalidate any remaining solid handles, as they will need to change
+	// for the new password.
+	[currsolidobj release];
+	currsolidobj=nil;
+	[currsolidhandle release];
+	currsolidhandle=nil;
+}
+
+-(NSString *)encodingName
+{
+	return [stringsource encodingName];
+}
+
+-(float)encodingConfidence
+{
+	return [stringsource confidence];
+}
+
+-(void)setEncodingName:(NSString *)encodingname
+{
+	[stringsource setFixedEncodingName:encodingname];
+}
+
+-(BOOL)caresAboutPasswordEncoding
+{
+	return caresaboutpasswordencoding;
+}
+
+-(NSString *)passwordEncodingName
+{
+	if(!passwordencodingname) return [self encodingName];
+	else return passwordencodingname;
+}
+
+-(void)setPasswordEncodingName:(NSString *)encodingname
+{
+	if(encodingname!=passwordencodingname)
+	{
+		[passwordencodingname release];
+		passwordencodingname=[encodingname retain];
+	}
 }
 
 -(XADStringSource *)stringSource { return stringsource; }
+
 
 
 
@@ -390,12 +629,52 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 	XADString *linkdest=[dict objectForKey:XADLinkDestinationKey];
 	if(linkdest) return linkdest;
 
-	// If not, return the contents of the data stream as the destination (for Zip files and the like).
+	// If not, read the contents of the data stream as the destination (for Zip files and the like).
 	CSHandle *handle=[self handleForEntryWithDictionary:dict wantChecksum:YES];
 	NSData *linkdata=[handle remainingFileContents];
-	if([handle hasChecksum]&&![handle isChecksumCorrect]) return nil; // TODO: do something else here?
+	if([handle hasChecksum]&&![handle isChecksumCorrect]) [XADException raiseChecksumException];
 
 	return [self XADStringWithData:linkdata];
+}
+
+-(XADString *)linkDestinationForDictionary:(NSDictionary *)dict error:(XADError *)errorptr
+{
+	if(errorptr) *errorptr=XADNoError;
+	@try { return [self linkDestinationForDictionary:dict]; }
+	@catch(id exception) { if(errorptr) *errorptr=[XADException parseException:exception]; }
+	return nil;
+}
+
+-(NSDictionary *)extendedAttributesForDictionary:(NSDictionary *)dict
+{
+	NSDictionary *originalattrs=[dict objectForKey:XADExtendedAttributesKey];
+
+	// If the extended attributes already have a finderinfo,
+	// just keep it and return them as such.
+	if(originalattrs&&[originalattrs objectForKey:@"com.apple.FinderInfo"])
+	return originalattrs;
+
+	// If we have or can build a finderinfo struct, add it.
+	NSData *finderinfo=[self finderInfoForDictionary:dict];
+	if(finderinfo)
+	{
+		if(originalattrs)
+		{
+			// If we have a set of extended attributes, extend it.
+			NSMutableDictionary *newattrs=[NSMutableDictionary dictionaryWithDictionary:originalattrs];
+			[newattrs setObject:finderinfo forKey:@"com.apple.FinderInfo"];
+			return newattrs;
+		}
+		else
+		{
+			// If we do not have any extended attributes, create a
+			// set that only contains a finderinfo.
+			return [NSDictionary dictionaryWithObject:finderinfo
+			forKey:@"com.apple.FinderInfo"];
+		}
+	}
+
+	return nil;
 }
 
 -(NSData *)finderInfoForDictionary:(NSDictionary *)dict
@@ -413,7 +692,7 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 	}
 	else
 	{
-		// If a FinderInfo struct doesn't exist, make one.
+		// If a FinderInfo struct doesn't exist, try to make one.
 
 		uint8_t finderinfo[32]={ 0x00 };
 
@@ -431,9 +710,33 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 		NSNumber *flagsnum=[dict objectForKey:XADFinderFlagsKey];
 		if(flagsnum) CSSetUInt16BE(&finderinfo[8],[flagsnum unsignedShortValue]);
 
+		// Check if any data was filled in at all. If not, return nil.
+		bool zero=true;
+		for(int i=0;zero && i<sizeof(finderinfo);i++) if(finderinfo[i]!=0) zero=false;
+		if(zero) return nil;
+
 		return [NSData dataWithBytes:finderinfo length:32];
 	}
 }
+
+-(BOOL)wasStopped { return shouldstop; }
+
+-(BOOL)hasChecksum { return [sourcehandle hasChecksum]; }
+
+-(BOOL)testChecksum
+{
+	if(![sourcehandle hasChecksum]) return YES;
+	[sourcehandle seekToEndOfFile];
+	return [sourcehandle isChecksumCorrect];
+}
+
+-(XADError)testChecksumWithoutExceptions
+{
+	@try { if(![self testChecksum]) return XADChecksumError; }
+	@catch(id exception) { return [XADException parseException:exception]; }
+	return XADNoError;
+}
+
 
 
 
@@ -458,21 +761,24 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext
 {
 	NSMutableArray *volumes=[NSMutableArray array];
 
-	NSString *dirname=[filename stringByDeletingLastPathComponent];
-	if(!dirname||[dirname length]==0) dirname=@".";
+	NSString *directory=[filename stringByDeletingLastPathComponent];
+	if([directory length]==0) directory=nil;
 
-	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
-	NSEnumerator *enumerator=[[[NSFileManager defaultManager] contentsOfDirectoryAtPath:dirname error:NULL] objectEnumerator];
-	#else
-	NSEnumerator *enumerator=[[[NSFileManager defaultManager] directoryContentsAtPath:dirname] objectEnumerator];
-	#endif
-	
-	if(!enumerator) return nil;
+	NSString *dirpath=directory;
+	if(!dirpath) dirpath=@".";
+
+	NSArray *dircontents=[XADPlatform contentsOfDirectoryAtPath:dirpath];
+	if(!dircontents) return [NSArray array];
+
+	NSEnumerator *enumerator=[dircontents objectEnumerator];
 
 	NSString *direntry;
 	while((direntry=[enumerator nextObject]))
 	{
-		NSString *filename=[dirname stringByAppendingPathComponent:direntry];
+		NSString *filename;
+		if(directory) filename=[directory stringByAppendingPathComponent:direntry];
+		else filename=direntry;
+
 		if([regex matchesString:filename]) [volumes addObject:filename];
 	}
 
@@ -493,8 +799,6 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext
 }
 
 
-
--(CSHandle *)handle { return sourcehandle; }
 
 -(CSHandle *)handleAtDataOffsetForDictionary:(NSDictionary *)dict
 {
@@ -551,6 +855,7 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext
 
 
 
+
 -(NSArray *)volumes
 {
 	if([sourcehandle respondsToSelector:@selector(handles)]) return [(id)sourcehandle handles];
@@ -579,48 +884,76 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext
 
 
 
+
 -(void)addEntryWithDictionary:(NSMutableDictionary *)dict
 {
-	[self addEntryWithDictionary:dict retainPosition:NO cyclePools:NO];
+	[self addEntryWithDictionary:dict retainPosition:NO];
 }
 
 -(void)addEntryWithDictionary:(NSMutableDictionary *)dict retainPosition:(BOOL)retainpos
 {
-	[self addEntryWithDictionary:dict retainPosition:retainpos cyclePools:NO];
-}
+	// If the caller has requested to stop parsing, discard entry.
+	if(![self shouldKeepParsing]) return;
 
--(void)addEntryWithDictionary:(NSMutableDictionary *)dict cyclePools:(BOOL)cyclepools
-{
-	[self addEntryWithDictionary:dict retainPosition:NO cyclePools:cyclepools];
-}
+	// Add index and increment.
+	[dict setObject:[NSNumber numberWithInt:currindex] forKey:XADIndexKey];
+	currindex++;
 
--(void)addEntryWithDictionary:(NSMutableDictionary *)dict retainPosition:(BOOL)retainpos cyclePools:(BOOL)cyclepools
-{
-	// If an encrypted file is added, set the global encryption flag
+	// If an encrypted file is added, set the global encryption flag.
 	NSNumber *enc=[dict objectForKey:XADIsEncryptedKey];
 	if(enc&&[enc boolValue]) [self setObject:[NSNumber numberWithBool:YES] forPropertyKey:XADIsEncryptedKey];
 
-	// Same for the corrupted flag
+	// Same for the corrupted flag.
 	NSNumber *cor=[dict objectForKey:XADIsCorruptedKey];
 	if(cor&&[cor boolValue]) [self setObject:[NSNumber numberWithBool:YES] forPropertyKey:XADIsCorruptedKey];
 
-	// LinkDestination implies IsLink
+	// LinkDestination implies IsLink.
 	XADString *linkdest=[dict objectForKey:XADLinkDestinationKey];
 	if(linkdest) [dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsLinkKey];
 
-	// Extract further flags from PosixPermissions, if possible
+	// Extract further flags from PosixPermissions, if possible.
 	NSNumber *perms=[dict objectForKey:XADPosixPermissionsKey];
 	if(perms)
 	switch([perms unsignedIntValue]&0xf000)
 	{
 		case 0x1000: [dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsFIFOKey]; break;
 		case 0x2000: [dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsCharacterDeviceKey]; break;
-		case 0x4000: [dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsDirectoryKey]; break;
+		// Do not automatically handles directories. Parsers need to do this, or else Ditto parsing will break.
+		//case 0x4000: [dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsDirectoryKey]; break;
 		case 0x6000: [dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsBlockDeviceKey]; break;
 		case 0xa000: [dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsLinkKey]; break;
 	}
 
-	// Extract type, creator and finderflags from finderinfo
+	// Set hidden flag if DOS or Windows file attributes are available and indicate it.
+	NSNumber *attrs=[dict objectForKey:XADDOSFileAttributesKey];
+	if(!attrs) attrs=[dict objectForKey:XADWindowsFileAttributesKey];
+	if(attrs)
+	{
+		if([attrs intValue]&0x02) [dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsHiddenKey];
+	}
+
+	// Extract finderinfo from extended attributes, if present.
+	// Overwrite whatever finderinfo was provided, on the assumption that
+	// the extended attributes are more authoritative.
+	NSData *extfinderinfo=[[dict objectForKey:XADExtendedAttributesKey]
+	objectForKey:@"com.apple.FinderInfo"];
+	if(extfinderinfo) [dict setObject:extfinderinfo forKey:XADFinderInfoKey];
+
+	// Extract Spotlight comment from extended attributes, if present,
+	// and if there is not already a comment.
+	NSData *extcomment=[[dict objectForKey:XADExtendedAttributesKey]
+	objectForKey:@"com.apple.metadata:kMDItemFinderComment"];
+	XADString *actualcomment=[dict objectForKey:XADCommentKey];
+	if(extcomment && !actualcomment)
+	{
+		id plist=[NSPropertyListSerialization propertyListFromData:extcomment
+		mutabilityOption:0 format:NULL errorDescription:NULL];
+
+		if(plist&&[plist isKindOfClass:[NSString class]])
+		[dict setObject:[self XADStringWithString:plist] forKey:XADCommentKey];
+	}
+
+	// Extract type, creator and finderflags from finderinfo.
 	NSData *finderinfo=[dict objectForKey:XADFinderInfoKey];
 	if(finderinfo&&[finderinfo length]>=10)
 	{
@@ -629,12 +962,19 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext
 
 		if(!isdir||![isdir boolValue])
 		{
-			[dict setObject:[NSNumber numberWithUnsignedInt:CSUInt32BE(bytes+0)] forKey:XADFileTypeKey];
-			[dict setObject:[NSNumber numberWithUnsignedInt:CSUInt32BE(bytes+4)] forKey:XADFileCreatorKey];
+			uint32_t filetype=CSUInt32BE(bytes+0);
+			uint32_t filecreator=CSUInt32BE(bytes+4);
+
+			if(filetype) [dict setObject:[NSNumber numberWithUnsignedInt:filetype] forKey:XADFileTypeKey];
+			if(filecreator) [dict setObject:[NSNumber numberWithUnsignedInt:filecreator] forKey:XADFileCreatorKey];
 		}
 
-		[dict setObject:[NSNumber numberWithInt:CSUInt16BE(bytes+8)] forKey:XADFinderFlagsKey];
+		int finderflags=CSUInt16BE(bytes+8);
+		if(finderflags) [dict setObject:[NSNumber numberWithInt:finderflags] forKey:XADFinderFlagsKey];
 	}
+
+	// If this is an embedded archive that can't seek, force a solid flag if one isn't already present.
+	if(forcesolid && ![dict objectForKey:XADSolidObjectKey]) [dict setObject:sourcehandle forKey:XADSolidObjectKey];
 
 	// Handle solidness - set FirstSolid, NextSolid and IsSolid depending on SolidObject.
 	id solidobj=[dict objectForKey:XADSolidObjectKey];
@@ -643,7 +983,9 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext
 		if(solidobj==parsersolidobj)
 		{
 			[dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsSolidKey];
+			[dict setObject:[firstsoliddict objectForKey:XADIndexKey] forKey:XADFirstSolidIndexKey];
 			[dict setObject:[NSValue valueWithNonretainedObject:firstsoliddict] forKey:XADFirstSolidEntryKey];
+			[prevsoliddict setObject:[dict objectForKey:XADIndexKey] forKey:XADNextSolidIndexKey];
 			[prevsoliddict setObject:[NSValue valueWithNonretainedObject:dict] forKey:XADNextSolidEntryKey];
 
 			[prevsoliddict release];
@@ -655,7 +997,8 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext
 
 			[firstsoliddict release];
 			[prevsoliddict release];
-			firstsoliddict=prevsoliddict=[[dict retain] retain];
+			firstsoliddict=[dict retain];
+			prevsoliddict=[dict retain];
 		}
 	}
 	else if(parsersolidobj)
@@ -667,9 +1010,11 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext
 		prevsoliddict=nil;
 	}
 
-	// If a solid file is added, set the global solid flag
+	// If a solid file is added, set the global solid flag.
 	NSNumber *solid=[dict objectForKey:XADIsSolidKey];
 	if(solid&&[solid boolValue]) [self setObject:[NSNumber numberWithBool:YES] forPropertyKey:XADIsSolidKey];
+
+
 
 	NSAutoreleasePool *delegatepool=[NSAutoreleasePool new];
 
@@ -682,111 +1027,110 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext
 	else [delegate archiveParser:self foundEntryWithDictionary:dict];
 
 	[delegatepool release];
-
-	if(cyclepools)
-	{
-		[autopool release];
-		autopool=[NSAutoreleasePool new];
-	}
 }
 
 
 
 -(XADString *)XADStringWithString:(NSString *)string
 {
-	return [[[XADString alloc] initWithString:string] autorelease];
+	return [XADString XADStringWithString:string];
 }
 
 -(XADString *)XADStringWithData:(NSData *)data
 {
-	return [[[XADString alloc] initWithData:data source:stringsource] autorelease];
+	return [XADString analyzedXADStringWithData:data source:stringsource];
 }
 
 -(XADString *)XADStringWithData:(NSData *)data encodingName:(NSString *)encoding
 {
-	return [[[XADString alloc] initWithData:data encodingName:encoding] autorelease];
+	return [XADString decodedXADStringWithData:data encodingName:encoding];
 }
 
 -(XADString *)XADStringWithBytes:(const void *)bytes length:(int)length
 {
 	NSData *data=[NSData dataWithBytes:bytes length:length];
-	return [[[XADString alloc] initWithData:data source:stringsource] autorelease];
+	return [XADString analyzedXADStringWithData:data source:stringsource];
 }
 
 -(XADString *)XADStringWithBytes:(const void *)bytes length:(int)length encodingName:(NSString *)encoding
 {
 	NSData *data=[NSData dataWithBytes:bytes length:length];
-	return [[[XADString alloc] initWithData:data encodingName:encoding] autorelease];
+	return [XADString decodedXADStringWithData:data encodingName:encoding];
 }
 
 -(XADString *)XADStringWithCString:(const char *)cstring
 {
 	NSData *data=[NSData dataWithBytes:cstring length:strlen(cstring)];
-	return [[[XADString alloc] initWithData:data source:stringsource] autorelease];
+	return [XADString analyzedXADStringWithData:data source:stringsource];
 }
 
 -(XADString *)XADStringWithCString:(const char *)cstring encodingName:(NSString *)encoding
 {
 	NSData *data=[NSData dataWithBytes:cstring length:strlen(cstring)];
-	return [[[XADString alloc] initWithData:data encodingName:encoding] autorelease];
+	return [XADString decodedXADStringWithData:data encodingName:encoding];
 }
 
 
 
 -(XADPath *)XADPath
 {
-	return [[XADPath new] autorelease];
+	return [XADPath emptyPath];
 }
 
 -(XADPath *)XADPathWithString:(NSString *)string
 {
-	return [[[XADPath alloc] initWithString:string] autorelease];
+	return [XADPath separatedPathWithString:string];
 }
 
 -(XADPath *)XADPathWithUnseparatedString:(NSString *)string
 {
-	return [[[XADPath alloc] initWithComponents:[NSArray arrayWithObject:[self XADStringWithString:string]]] autorelease];
+	return [XADPath pathWithString:string];
 }
 
 -(XADPath *)XADPathWithData:(NSData *)data separators:(const char *)separators
 {
-	return [[[XADPath alloc] initWithBytes:[data bytes] length:[data length]
-	separators:separators source:stringsource] autorelease];
+	return [XADPath analyzedPathWithData:data source:stringsource separators:separators];
 }
 
 -(XADPath *)XADPathWithData:(NSData *)data encodingName:(NSString *)encoding separators:(const char *)separators
 {
-	return [[[XADPath alloc] initWithBytes:[data bytes] length:[data length]
-	encodingName:encoding separators:separators] autorelease];
+	return [XADPath decodedPathWithData:data encodingName:encoding separators:separators];
 }
 
 -(XADPath *)XADPathWithBytes:(const void *)bytes length:(int)length separators:(const char *)separators
 {
-	return [[[XADPath alloc] initWithBytes:bytes length:length separators:separators source:stringsource] autorelease];
+	NSData *data=[NSData dataWithBytes:bytes length:length];
+	return [XADPath analyzedPathWithData:data source:stringsource separators:separators];
 }
 
 -(XADPath *)XADPathWithBytes:(const void *)bytes length:(int)length encodingName:(NSString *)encoding separators:(const char *)separators
 {
-	return [[[XADPath alloc] initWithBytes:bytes length:length encodingName:encoding separators:separators] autorelease];
+	NSData *data=[NSData dataWithBytes:bytes length:length];
+	return [XADPath decodedPathWithData:data encodingName:encoding separators:separators];
 }
 
 -(XADPath *)XADPathWithCString:(const char *)cstring separators:(const char *)separators
 {
-	return [[[XADPath alloc] initWithBytes:cstring length:strlen(cstring)
-	separators:separators source:stringsource] autorelease];
+	NSData *data=[NSData dataWithBytes:cstring length:strlen(cstring)];
+	return [XADPath analyzedPathWithData:data source:stringsource separators:separators];
 }
 
 -(XADPath *)XADPathWithCString:(const char *)cstring encodingName:(NSString *)encoding separators:(const char *)separators
 {
-	return [[[XADPath alloc] initWithBytes:cstring length:strlen(cstring)
-	encodingName:encoding separators:separators] autorelease];
+	NSData *data=[NSData dataWithBytes:cstring length:strlen(cstring)];
+	return [XADPath decodedPathWithData:data encodingName:encoding separators:separators];
 }
 
 
 
 -(NSData *)encodedPassword
 {
-	return [XADString dataForString:[self password] encodingName:[stringsource encodingName]];
+	caresaboutpasswordencoding=YES;
+
+	NSString *pass=[self password];
+	NSString *encodingname=[self passwordEncodingName];
+
+	return [XADString dataForString:pass encodingName:encodingname];
 }
 
 -(const char *)encodedCStringPassword
@@ -795,6 +1139,20 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext
 	[data increaseLengthBy:1];
 	return [data bytes];
 }
+
+
+
+-(void)reportInterestingFileWithReason:(NSString *)reason,...
+{
+	va_list args;
+	va_start(args,reason);
+	NSString *fullreason=[[[NSString alloc] initWithFormat:reason arguments:args] autorelease];
+	va_end(args);
+
+	[delegate archiveParser:self findsFileInterestingForReason:[NSString stringWithFormat:
+	@"%@: %@",[self formatName],fullreason]];
+}
+
 
 
 
@@ -809,6 +1167,12 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 	return [self recognizeFileWithHandle:handle firstBytes:data name:name];
 }
 
++(BOOL)recognizeFileWithHandle:(CSHandle *)handle firstBytes:(NSData *)data
+resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
+{
+	return [self recognizeFileWithHandle:handle firstBytes:data name:name propertiesToAdd:props];
+}
+
 +(NSArray *)volumesForHandle:(CSHandle *)handle firstBytes:(NSData *)data
 name:(NSString *)name { return nil; }
 
@@ -819,6 +1183,33 @@ name:(NSString *)name { return nil; }
 -(CSHandle *)handleForSolidStreamWithObject:(id)obj wantChecksum:(BOOL)checksum { return nil; }
 
 
+
+
+-(XADError)parseWithoutExceptions
+{
+	@try { [self parse]; }
+	@catch(id exception) { return [XADException parseException:exception]; }
+	if(shouldstop) return XADBreakError;
+	return XADNoError;
+}
+
+-(CSHandle *)handleForEntryWithDictionary:(NSDictionary *)dict wantChecksum:(BOOL)checksum error:(XADError *)errorptr
+{
+	if(errorptr) *errorptr=XADNoError;
+	@try
+	{
+		CSHandle *handle=[self handleForEntryWithDictionary:dict wantChecksum:checksum];
+		if(!handle&&errorptr) *errorptr=XADNotSupportedError;
+		return handle;
+	}
+	@catch(id exception)
+	{
+		if(errorptr) *errorptr=[XADException parseException:exception];
+	}
+
+	return nil;
+}
+
 @end
 
 
@@ -826,6 +1217,7 @@ name:(NSString *)name { return nil; }
 
 -(void)archiveParser:(XADArchiveParser *)parser foundEntryWithDictionary:(NSDictionary *)dict {}
 -(BOOL)archiveParsingShouldStop:(XADArchiveParser *)parser { return NO; }
--(void)archiveParserNeedsPassword:(XADArchiveParser *)parser { }
+-(void)archiveParserNeedsPassword:(XADArchiveParser *)parser {}
+-(void)archiveParser:(XADArchiveParser *)parser findsFileInterestingForReason:(NSString *)reason {}
 
 @end

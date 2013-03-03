@@ -3,6 +3,7 @@
 @interface XADISO9660Parser:XADArchiveParser
 {
 	int blocksize;
+	BOOL isjoliet,ishighsierra;
 	CSHandle *fh;
 }
 
@@ -10,15 +11,14 @@
 +(BOOL)recognizeFileWithHandle:(CSHandle *)handle firstBytes:(NSData *)data
 name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props;
 
--(id)initWithHandle:(CSHandle *)handle name:(NSString *)name;
+-(id)init;
 -(void)dealloc;
 
 -(void)parse;
--(void)parseVolumeDescriptorAtBlock:(uint32_t)block isJoliet:(BOOL)isjoliet;
--(void)parseDirectoryWithPath:(XADPath *)path atBlock:(uint32_t)block
-length:(uint32_t)length isJoliet:(BOOL)isjoliet;
+-(void)parseVolumeDescriptorAtBlock:(uint32_t)block;
+-(void)parseDirectoryWithPath:(XADPath *)path atBlock:(uint32_t)block length:(uint32_t)length;
 
--(XADString *)readStringOfLength:(int)length isJoliet:(BOOL)isjoliet;
+-(XADString *)readStringOfLength:(int)length;
 -(NSDate *)readLongDateAndTime;
 -(NSDate *)readShortDateAndTime;
 -(NSDate *)parseDateAndTimeWithBytes:(const uint8_t *)buffer long:(BOOL)islong;

@@ -1,0 +1,103 @@
+﻿/* Status text for queued multi-part archives */
+"%@ (+%d more)" = "%1$@ (+%2$d altri)";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the file \"%@\" from the archive \"%@\": %@" = "Impossibile estrarre il file \"%1$@\" dall'archivio \"%2$@\": %3$@";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@" = "Impossibile estrarre le resource fork del file \"%1$@\" dall'archivio \"%2$@\":\n%3$@";
+
+/* Option in the password encoding pop-up to use the default encoding */
+"Default encoding" = "Codifica Default";
+
+/* Option in the encoding pop-up to detect the encoding automatically */
+"Detect automatically" = "Rileva automaticamente";
+
+/* Panel OK button title when choosing an unarchiving destination for an archive */
+"Extract" = "Estrai";
+
+/* Panel title when choosing an unarchiving destination for an archive */
+"Extract Archive" = "Estrai Archivio";
+
+/* Status text while extracting an archive */
+"Extracting \"%@\"" = "Estrazione di \"%@\"";
+
+/* Status text when preparing to extract an archive */
+"Preparing to extract \"%@\"" = "Preparo l'estrazione di \"%@\"";
+
+/* Panel OK button title when choosing a default unarchiving destination */
+"Select" = "Seleziona";
+
+/* Panel title when choosing archives to extract */
+"Select files to unarchive" = "Seleziona i file da estrarre";
+
+/* Error message for files not extractable by The Unarchiver */
+"The contents of the file \"%@\" can not be extracted with this program." = "Il contenuto del file \"%@\" non può essere estratto da questo programma.";
+
+/* Error message when encountering an error while extracting entries */
+"There was a problem while extracting the contents of the file \"%@\": %@" = "Si è verificato un problema durante l'estrazione del contenuto del file \"%1$@\": %2$@";
+
+/* Error message when encountering an error while parsing an archive */
+"There was a problem while reading the contents of the file \"%@\": %@" = "Si è verificato un problema durante la lettura del contenuto del file \"%1$@\": %2$@";
+
+/* Panel OK button title when choosing archives to extract */
+"Unarchive" = "Estrai";
+
+/* Status text when asking for a password */
+"You need to supply a password to open the archive \"%@\"." = "È necessario fornire una password per aprire l'archivio \"%@\".";
+
+/* Title for nagging alert on first startup */
+"Where should The Unarchiver extract archives?" = "Dove vuoi che The Unarchiver estragga gli archivi?";
+
+/* Content of nagging alert on first startup */
+"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "Vuoi che The Unarchiver estragga gli archivi nella stessa cartella del file di origine o preferisci che ti venga chiesta la cartella di destinazione individualmente per ogni archivio?";
+
+/* Button to ask every time in nagging alert on first startup */
+"Ask every time" = "Chiedi ogni volta";
+
+/* Button to extract to the same folder in nagging alert on first startup */
+"Extract to the same folder" = "Estrai nella stessa cartella";
+
+/* Informative text in the file panel shown when trying to gain sandbox access */
+"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver non può scrivere su questa cartella. La sandbox di Mac OS X potrebbe bloccare l'accesso ad essa. Per chiedere alla sandbox di lasciare il permesso a The Unarchiver di scrivere in questa cartella, premi semplicemente \"Estrai\". Questo permesso verrà ricordato da The Unarchiver che non avrà bisogno di chiederlo nuovamente.";
+
+/* Informative text in the file panel shown when trying to gain sandbox access for multi-part archives */
+"The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver necessita di cercare ulteriori parti di questo archivio, ma la sandbox di Mac OS X sta bloccando l'accesso alla cartella. Per chiedere alla sandbox di lasciare il permesso a The Unarchiver di cercare in questa cartella, premi semplicemente \"Cerca\". Questo permesso verrà ricordato da The Unarchiver che non avrà bisogno di chiederlo nuovamente.";
+
+/* Panel OK button title when searching for more archive parts */
+"Search" = "Cerca";
+
+/* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
+
+/* Common errors */
+"Attempted to read more data than was available" = "Il file archivio è incompleto";
+"Opening file failed" = "Impossibile aprire il file";
+"Missing or wrong password" = "La password fornita non è corretta";
+"Wrong checksum" = "Il file archivio è corrotto";
+"Could not create directory" = "Impossibile creare la cartella";
+
+/* Uncommon or unused errors */
+"Unknown error" = "Errore sconosciuto";
+"Failed to write to file" = "Scrittura sul file fallita";
+"Function called with illegal parameters" = "Funzione chiamata con parametri non validi";
+"Not enough memory available" = "Non c'è abbastanza memoria disponibile";
+"Data is corrupted" = "I dati sono corrotti";
+"File is not fully supported" = "Il file non è completamente supportato";
+"Required resource missing" = "Risorsa richiesta mancante";
+"Error on decrunching" = "Errore durante il decrunching";
+"Unknown file type" = "Tipo di file sconosciuto";
+"File, disk has been skipped" = "File, il disco è stato saltato";
+"User cancelled extraction" = "L'utente ha interrotto l'estrazione";
+"File already exists" = "Il file esiste già";
+"Verify failed (disk hook)" = "Verifica fallita (disk hook)";
+"Wrong drive geometry" = "Geometria del drive sbagliata";
+"Unknown data format" = "Formato dati sconosciuto";
+"Source contains no files" = "La sorgente non contiene nessun file";
+"Unknown filesystem" = "Filesystem sconosciuto";
+"Name of file exists as directory" = "Il nome del file esiste come cartella";
+"Buffer was too short" = "Buffer troppo piccolo";
+"Text encoding was defective" = "Codifica del testo difettosa";
+"Could not create symlink" = "Impossibile creare il collegamento simbolico";
+
+
+

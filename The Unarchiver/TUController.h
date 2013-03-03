@@ -6,14 +6,14 @@
 #import "TUArchiveTaskView.h"
 #import "TUTaskListView.h"
 #import "TUEncodingPopUp.h"
+#import "TUDockTileView.h"
 
 @interface TUController:NSObject
 {
 	TUTaskQueue *setuptasks,*extracttasks;
-	NSMutableDictionary *queuedfileviews;
+	NSMutableArray *archivecontrollers;
 
-	NSString *currfilename;
-	TUArchiveTaskView *currtaskview;
+	TUDockTileView *docktile;
 
 	NSString *selecteddestination;
 
@@ -42,22 +42,34 @@
 -(void)cleanupOrphanedTempDirectories;
 
 -(NSWindow *)window;
+-(BOOL)hasRunningExtractions;
 
 -(void)applicationDidFinishLaunching:(NSNotification *)notification;
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app;
 -(BOOL)application:(NSApplication *)app openFile:(NSString *)filename;
 
 -(void)newArchivesForFiles:(NSArray *)filenames destination:(int)desttype;
+-(void)newArchivesForURLs:(NSArray *)urls destination:(int)desttype;
 -(void)newArchiveForFile:(NSString *)filename destination:(int)desttype;
+-(NSString *)destinationForFilename:(NSString *)filename type:(int)desttype;
+-(void)addArchiveController:(TUArchiveController *)archive;
+-(TUArchiveController *)archiveControllerForFilename:(NSString *)filename;
+
 -(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview;
 
--(void)setupExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview;
--(void)tryDestination:(NSString *)destination;
+-(void)setupExtractionForArchiveController:(TUArchiveController *)archive;
+-(void)checkDestinationForArchiveController:(TUArchiveController *)archive;
+-(void)checkDestinationForArchiveControllerAgain:(TUArchiveController *)archive;
+-(void)checkDestinationForArchiveController:(TUArchiveController *)archive secondAttempt:(BOOL)secondattempt;
 -(void)archiveDestinationPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)res contextInfo:(void  *)info;
 -(void)archiveTaskView:(TUArchiveTaskView *)taskview notWritableResponse:(int)response;
+-(void)prepareArchiveController:(TUArchiveController *)archive;
+-(void)finishSetupForArchiveController:(TUArchiveController *)archive;
+-(void)cancelSetupForArchiveController:(TUArchiveController *)archive;
+-(void)setupQueueEmpty:(TUTaskQueue *)queue;
 -(void)archiveTaskViewCancelledBeforeExtract:(TUArchiveTaskView *)taskview;
 
--(void)startExtractionOfFile:(NSString *)filename to:(NSString *)destination taskView:(TUArchiveTaskView *)taskview;
+-(void)startExtractionForArchiveController:(TUArchiveController *)archive;
 -(void)archiveControllerFinished:(TUArchiveController *)archive;
 
 -(void)listResized:(id)sender;
@@ -88,6 +100,5 @@ userData:(NSString *)data error:(NSString **)error;
 -(BOOL)tryFileSystemLock:(NSString *)filename;
 -(void)unlockFileSystem:(NSString *)filename;
 -(NSNumber *)_fileSystemNumber:(NSString *)filename;*/
-
 
 @end

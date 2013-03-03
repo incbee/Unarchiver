@@ -87,9 +87,16 @@
 
 	while([self shouldKeepParsing])
 	{
-		uint32_t magic;
-		@try { magic=[fh readID]; }
-		@catch(id e) { break; }
+		if([fh atEndOfFile]) break;
+		uint32_t magic=[fh readID];
+
+		if(magic==0xabcd0054)
+		{
+			// Skip redundant file headers that sometimes appear at the end of files.
+			[fh skipBytes:80];
+			continue;
+		}
+
 		if(magic!='DDAR') [XADException raiseIllegalDataException];
 
 		[fh skipBytes:4];
@@ -113,10 +120,9 @@
 		int rsrccrc=[fh readUInt16BE];
 		[fh skipBytes:2];
 
-		XADPath *name=[currdir pathByAppendingPathComponent:[self XADStringWithBytes:namebuf length:namelen]];
+		XADPath *name=[currdir pathByAppendingXADStringComponent:[self XADStringWithBytes:namebuf length:namelen]];
 
 		off_t start=[fh offsetInFile];
-		uint32_t totalsize=0;
 
 		if(enddir)
 		{
@@ -134,6 +140,8 @@
 
 			[self addEntryWithDictionary:dict];
 			currdir=name;
+
+			[fh seekToFileOffset:start];
 		}
 		else if(finderflags&0x20)
 		{
@@ -180,17 +188,16 @@
 				nil]];
 			}
 
-			totalsize=datasize+rsrcsize;
+			[fh seekToFileOffset:start+datasize+rsrcsize];
 		}
 		else
 		{
 			uint32_t filemagic=[fh readID];
 			if(filemagic!=0xabcd0054) [XADException raiseIllegalDataException];
+			uint32_t totalsize=[self parseFileHeaderWithHandle:fh name:name];
 
-			totalsize=[self parseFileHeaderWithHandle:fh name:name]+84*2;
+			[fh seekToFileOffset:start+84+totalsize];
 		}
-
-		[fh seekToFileOffset:start+totalsize];
 	}
 }
 
@@ -229,7 +236,7 @@
 		for(int i=dirlevel;i<lastdirlevel;i++) currdir=[currdir pathByDeletingLastPathComponent];
 		lastdirlevel=dirlevel;
 
-		XADPath *name=[currdir pathByAppendingPathComponent:[self XADStringWithBytes:namebuf length:namelen]];
+		XADPath *name=[currdir pathByAppendingXADStringComponent:[self XADStringWithBytes:namebuf length:namelen]];
 
 		if(entrytype&0x8000)
 		{
@@ -414,6 +421,8 @@
 
 			if((method&0x7f)==5)
 			{
+				[self reportInterestingFileWithReason:@"Untested compression method 5"];
+
 				numtrees=[handle readUInt8];
 				if(numtrees==0) numtrees=256;
 			}
@@ -438,6 +447,8 @@
 
 		case 4: // Huffman - Untested!
 		{
+			[self reportInterestingFileWithReason:@"Untested compression method 4 (huffman)"];
+
 			int xor=0;
 			if(info1>=0x2a&&(info2&0x80)==0) xor=0x5a;
 
@@ -512,7 +523,9 @@
 		}
 		break;
 
-		default: return nil;
+		default:
+			[self reportInterestingFileWithReason:@"Unsupported compression method %d",method&0x7f];
+			return nil;
 	}
 
 	int delta=[[dict objectForKey:@"DiskDoublerDeltaType"] intValue];
@@ -524,7 +537,9 @@
 			handle=[[[XADDeltaHandle alloc] initWithHandle:handle length:size] autorelease];
 		break;
 
-		default: return nil;
+		default:
+			[self reportInterestingFileWithReason:@"Unsupported preprocessing method %d",delta];
+			return nil;
 	}
 
 	return handle;

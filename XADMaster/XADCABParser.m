@@ -4,6 +4,7 @@
 #import "XADQuantumHandle.h"
 #import "XADMSLZXHandle.h"
 #import "XADCRCHandle.h"
+#import "XADPlatform.h"
 #import "NSDateXAD.h"
 #import "CSMemoryHandle.h"
 #import "CSFileHandle.h"
@@ -55,14 +56,14 @@ static CSHandle *FindHandleForName(NSData *namedata,NSString *dirname,NSArray *d
 		CSHandle *fh=[CSMemoryHandle memoryHandleForReadingData:data];
 		CABHeader firsthead=ReadCABHeader(fh);
 
-		if(!firsthead.prevvolume&&!firsthead.nextvolume) return nil;
+		if(!firsthead.prevvolume && !firsthead.nextvolume) return nil;
 
 		NSString *dirname=[name stringByDeletingLastPathComponent];
-		#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
-		NSArray *dircontents=[[NSFileManager defaultManager] contentsOfDirectoryAtPath:dirname error:NULL];
-		#else
-		NSArray *dircontents=[[NSFileManager defaultManager] directoryContentsAtPath:dirname];
-		#endif
+		if(!dirname) dirname=@".";
+
+		NSArray *dircontents=[XADPlatform contentsOfDirectoryAtPath:dirname];
+		if(!dircontents) return [NSArray array];
+
 		NSMutableArray *volumes=[NSMutableArray arrayWithObject:name];
 
 		NSData *namedata=firsthead.prevvolume;
@@ -176,8 +177,8 @@ static CSHandle *FindHandleForName(NSData *namedata,NSString *dirname,NSArray *d
 			NSDictionary *folder=[folders objectAtIndex:folderindex];
 
 			XADPath *name;
-			if(attribs&0x80) name=[self XADPathWithData:namedata encodingName:XADUTF8StringEncodingName separators:XADWindowsPathSeparator];
-			else name=[self XADPathWithData:namedata separators:XADWindowsPathSeparator];
+			if(attribs&0x80) name=[self XADPathWithData:namedata encodingName:XADUTF8StringEncodingName separators:XADEitherPathSeparator];
+			else name=[self XADPathWithData:namedata separators:XADEitherPathSeparator];
 
 			NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:
 				name,XADFileNameKey,
@@ -292,7 +293,9 @@ static CSHandle *FindHandleForName(NSData *namedata,NSString *dirname,NSArray *d
 		case 1: return [[[XADMSZipHandle alloc] initWithBlockReader:blocks] autorelease];
 		case 2: return [[[XADQuantumHandle alloc] initWithBlockReader:blocks windowBits:(method>>8)&0x1f] autorelease];
 		case 3: return [[[XADMSLZXHandle alloc] initWithBlockReader:blocks windowBits:(method>>8)&0x1f] autorelease];
-		default: return nil;
+		default:
+			[self reportInterestingFileWithReason:@"Unsupported compression method %d",method&0x0f];
+			return nil;
 	}
 }
 

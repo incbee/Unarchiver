@@ -1,0 +1,103 @@
+﻿/* Status text for queued multi-part archives */
+"%@ (+%d more)" = "%1$@ (+%2$d more)";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the file \"%@\" from the archive \"%@\": %@" = "Could not extract the file \"%1$@\" from the archive \"%2$@\": %3$@";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@" = "Could not extract the resource fork for the file \"%1$@\" from the archive \"%2$@\":\n%3$@";
+
+/* Option in the password encoding pop-up to use the default encoding */
+"Default encoding" = "Default encoding";
+
+/* Option in the encoding pop-up to detect the encoding automatically */
+"Detect automatically" = "Detect automatically";
+
+/* Panel OK button title when choosing an unarchiving destination for an archive */
+"Extract" = "Extract";
+
+/* Panel title when choosing an unarchiving destination for an archive */
+"Extract Archive" = "Extract Archive";
+
+/* Status text while extracting an archive */
+"Extracting \"%@\"" = "Extracting \"%@\"";
+
+/* Status text when preparing to extract an archive */
+"Preparing to extract \"%@\"" = "Preparing to extract \"%@\"";
+
+/* Panel OK button title when choosing a default unarchiving destination */
+"Select" = "Select";
+
+/* Panel title when choosing archives to extract */
+"Select files to unarchive" = "Select files to unarchive";
+
+/* Error message for files not extractable by The Unarchiver */
+"The contents of the file \"%@\" can not be extracted with this program." = "The contents of the file \"%@\" can not be extracted with this program.";
+
+/* Error message when encountering an error while extracting entries */
+"There was a problem while extracting the contents of the file \"%@\": %@" = "There was a problem while extracting the contents of the file \"%1$@\": %2$@";
+
+/* Error message when encountering an error while parsing an archive */
+"There was a problem while reading the contents of the file \"%@\": %@" = "There was a problem while reading the contents of the file \"%1$@\": %2$@";
+
+/* Panel OK button title when choosing archives to extract */
+"Unarchive" = "Unarchive";
+
+/* Status text when asking for a password */
+"You need to supply a password to open the archive \"%@\"." = "You need to supply a password to open the archive \"%@\".";
+
+/* Title for nagging alert on first startup */
+"Where should The Unarchiver extract archives?" = "Where should The Unarchiver extract archives?";
+
+/* Content of nagging alert on first startup */
+"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?";
+
+/* Button to ask every time in nagging alert on first startup */
+"Ask every time" = "Ask every time";
+
+/* Button to extract to the same folder in nagging alert on first startup */
+"Extract to the same folder" = "Extract to the same folder";
+
+/* Informative text in the file panel shown when trying to gain sandbox access */
+"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again.";
+
+/* Informative text in the file panel shown when trying to gain sandbox access for multi-part archives */
+"The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again.";
+
+/* Panel OK button title when searching for more archive parts */
+"Search" = "Search";
+
+/* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
+
+/* Common errors */
+"Attempted to read more data than was available" = "The archive file is incomplete";
+"Opening file failed" = "The file could not be opened";
+"Missing or wrong password" = "The supplied password was incorrect";
+"Wrong checksum" = "The archive file is corrupted";
+"Could not create directory" = "Could not create the folder";
+
+/* Uncommon or unused errors */
+"Unknown error" = "Unknown error";
+"Failed to write to file" = "Failed to write to file";
+"Function called with illegal parameters" = "Function called with illegal parameters";
+"Not enough memory available" = "Not enough memory available";
+"Data is corrupted" = "Data is corrupted";
+"File is not fully supported" = "File is not fully supported";
+"Required resource missing" = "Required resource missing";
+"Error on decrunching" = "Error on decrunching";
+"Unknown file type" = "Unknown file type";
+"File, disk has been skipped" = "File, disk has been skipped";
+"User cancelled extraction" = "User cancelled extraction";
+"File already exists" = "File already exists";
+"Verify failed (disk hook)" = "Verify failed (disk hook)";
+"Wrong drive geometry" = "Wrong drive geometry";
+"Unknown data format" = "Unknown data format";
+"Source contains no files" = "Source contains no files";
+"Unknown filesystem" = "Unknown filesystem";
+"Name of file exists as directory" = "Name of file exists as directory";
+"Buffer was too short" = "Buffer was too short";
+"Text encoding was defective" = "Text encoding was defective";
+"Could not create symlink" = "Could not create symlink";
+
+
+

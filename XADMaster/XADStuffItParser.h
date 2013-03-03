@@ -12,4 +12,3 @@
 -(NSString *)formatName;
 
 @end
-

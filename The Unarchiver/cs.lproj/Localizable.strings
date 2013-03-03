@@ -1,0 +1,77 @@
+﻿/* Status text for queued multi-part archives */
+"%@ (+%d more)" = "%1$@ (+%2$d více)";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the file \"%@\" from the archive \"%@\": %@" = "Nelze rozbalit soubor \"%1$@\" z archivu \"%2$@\": %3$@";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@" = "Nelze rozbalit zdrojovou složku \"%1$@\" z archivu \"%2$@\":\n%3$@";
+
+/* Option in the password encoding pop-up to use the default encoding */
+"Default encoding" = "Výchozí kódování";
+
+/* Option in the encoding pop-up to detect the encoding automatically */
+"Detect automatically" = "Rozpoznat automaticky";
+
+/* Panel OK button title when choosing an unarchiving destination for an archive */
+"Extract" = "Rozbalit";
+
+/* Panel title when choosing an unarchiving destination for an archive */
+"Extract Archive" = "Rozbalit archiv";
+
+/* Status text while extracting an archive */
+"Extracting \"%@\"" = "Rozbalování \"%@\"";
+
+/* Status text when preparing to extract an archive */
+"Preparing to extract \"%@\"" = "Příprava na rozbalování \"%@\"";
+
+/* Panel OK button title when choosing a default unarchiving destination */
+"Select" = "Výběr";
+
+/* Panel title when choosing archives to extract */
+"Select files to unarchive" = "Výběr souborů k rozbalení";
+
+/* Error message for files not extractable by The Unarchiver */
+"The contents of the file \"%@\" can not be extracted with this program." = "Obsah souboru \"%@\" nelze rozbalit s tímto programem.";
+
+/* Error message when encountering an error while extracting entries */
+"There was a problem while extracting the contents of the file \"%@\": %@" = "Nastal problém při rozbalování obsahu souboru \"%1$@\": %2$@";
+
+/* Error message when encountering an error while parsing an archive */
+"There was a problem while reading the contents of the file \"%@\": %@" = "Nastal problém při načítání obsahu souboru \"%1$@\": %2$@";
+
+/* Panel OK button title when choosing archives to extract */
+"Unarchive" = "Rozbalit";
+
+/* Status text when asking for a password */
+"You need to supply a password to open the archive \"%@\"." = "Je třeba zadat heslo k otevření archivu \"%@\".";
+
+/* Common errors */
+"Attempted to read more data than was available" = "Soubor archivu není kompletní";
+"Opening file failed" = "Soubor nelze otevřít";
+"Missing or wrong password" = "Zadané heslo není správné";
+"Wrong checksum" = "Soubor achivu je poškozený";
+"Could not create directory" = "Nelze vytvořit složku";
+
+/* Uncommon or unused errors */
+"Unknown error" = "Neznámá chyba";
+"Failed to write to file" = "Chyba při zápisu do souboru";
+"Function called with illegal parameters" = "Funkce volána s neplatnými parametry";
+"Not enough memory available" = "Nedostatek volné paměti";
+"Data is corrupted" = "Data jsou poškozena";
+"File is not fully supported" = "Soubor není plně podporován";
+"Required resource missing" = "Požadovaný zdrojový soubor chybí";
+"Error on decrunching" = "Chyba při louskání";
+"Unknown file type" = "Neznámý typ souboru";
+"File, disk has been skipped" = "Soubor či disk byl přeskočen";
+"User cancelled extraction" = "Uživatelem zrušené rozbalování";
+"File already exists" = "Soubor již existuje";
+"Verify failed (disk hook)" = "Kontrola selhala (disk)";
+"Wrong drive geometry" = "Chybná geometrie disku";
+"Unknown data format" = "Neznámý formát dat";
+"Source contains no files" = "Zdroj neobsahuje žádné soubory";
+"Unknown filesystem" = "Neznámý souborový systém";
+"Name of file exists as directory" = "Název souboru již existuje v podobě složky";
+"Buffer was too short" = "Zásobník je příliš malý";
+"Text encoding was defective" = "Kódování textu bylo chybné";
+"Could not create symlink" = "Nelze vytvořit symbolického zástupce";

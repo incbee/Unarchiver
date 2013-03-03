@@ -1,7 +1,9 @@
-#import "XADArchiveParser.h"
+#import "XADMacArchiveParser.h"
 
-@interface XAD7ZipParser:XADArchiveParser
+@interface XAD7ZipParser:XADMacArchiveParser
 {
+	off_t startoffset;
+
 	NSDictionary *mainstreams;
 
 	NSDictionary *currfolder;
@@ -12,10 +14,10 @@
 +(BOOL)recognizeFileWithHandle:(CSHandle *)handle firstBytes:(NSData *)data name:(NSString *)name;
 +(NSArray *)volumesForHandle:(CSHandle *)handle firstBytes:(NSData *)data name:(NSString *)name;
 
--(id)initWithHandle:(CSHandle *)handle name:(NSString *)name;
+-(id)init;
 -(void)dealloc;
 
--(void)parse;
+-(void)parseWithSeparateMacForks;
 
 -(NSArray *)parseFilesForHandle:(CSHandle *)handle;
 
@@ -35,7 +37,7 @@ packedStreams:(NSArray *)packedstreams packedStreamIndex:(int *)packedstreaminde
 -(void)setupDefaultSubStreamsForFolders:(NSArray *)folders;
 -(NSArray *)collectAllSubStreamsFromFolders:(NSArray *)folders;
 
--(CSHandle *)handleForEntryWithDictionary:(NSDictionary *)dict wantChecksum:(BOOL)checksum;
+-(CSHandle *)rawHandleForEntryWithDictionary:(NSDictionary *)dict wantChecksum:(BOOL)checksum;
 -(CSHandle *)handleForSolidStreamWithObject:(id)obj wantChecksum:(BOOL)checksum;
 -(CSHandle *)handleForStreams:(NSDictionary *)streams folderIndex:(int)folderindex;
 -(CSHandle *)outHandleForFolder:(NSDictionary *)folder index:(int)index;
@@ -44,11 +46,26 @@ packedStreams:(NSArray *)packedstreams packedStreamIndex:(int *)packedstreaminde
 
 -(int)IDForCoder:(NSDictionary *)coder;
 -(off_t)compressedSizeForFolder:(NSDictionary *)folder;
--(off_t)unCompressedSizeForFolder:(NSDictionary *)folder;
+-(off_t)uncompressedSizeForFolder:(NSDictionary *)folder;
 -(NSString *)compressorNameForFolder:(NSDictionary *)folder;
 -(NSString *)compressorNameForFolder:(NSDictionary *)folder index:(int)index;
 -(NSString *)compressorNameForCoder:(NSDictionary *)coder;
+-(BOOL)isFolderEncrypted:(NSDictionary *)folder;
+-(BOOL)isFolderEncrypted:(NSDictionary *)folder index:(int)index;
 
+-(NSString *)formatName;
+
+@end
+
+@interface XAD7ZipSFXParser:XAD7ZipParser
+{
+}
+
++(int)requiredHeaderSize;
++(BOOL)recognizeFileWithHandle:(CSHandle *)handle firstBytes:(NSData *)data
+name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props;
+
+-(void)parse;
 -(NSString *)formatName;
 
 @end

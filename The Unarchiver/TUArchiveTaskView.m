@@ -1,22 +1,21 @@
 #import "TUArchiveTaskView.h"
-
+#import "TUArchiveController.h"
 
 
 @implementation TUArchiveTaskView
 
--(id)initWithFilename:(NSString *)filename
+-(id)init
 {
 	if((self=[super init]))
 	{
+		archive=nil;
+
 		waitview=nil;
 		progressview=nil;
 		errorview=nil;
 		openerrorview=nil;
 		passwordview=nil;
 		encodingview=nil;
-
-		archivename=[filename retain];
-		//maincontroller=controller;
 
 		pauselock=[[NSConditionLock alloc] initWithCondition:0];
 	}
@@ -25,8 +24,6 @@
 
 -(void)dealloc
 {
-	[archivename release];
-
 	[pauselock release];
 
 	[waitview release];
@@ -38,6 +35,11 @@
 
 	[super dealloc];
 }
+
+-(TUArchiveController *)archiveController { return archive; }
+
+-(void)setArchiveController:(TUArchiveController *)archivecontroller { archive=archivecontroller; }
+
 
 
 
@@ -66,13 +68,15 @@
 	{
 		[actionfield setStringValue:[NSString stringWithFormat:
 		NSLocalizedString(@"Extracting \"%@\"",@"Status text while extracting an archive"),
-		[archivename lastPathComponent]]];
+		[[archive filename] lastPathComponent]]];
 		[progressindicator setDoubleValue:0];
 		[progressindicator setMaxValue:1];
 		[progressindicator setIndeterminate:NO];
+		// TODO: Update dock
 	}
 
 	[progressindicator setDoubleValue:[fraction doubleValue]];
+	// TODO: Update dock
 }
 
 
@@ -84,21 +88,21 @@
 	[self setUIResponseAction:selector target:target];
 }
 
--(XADAction)displayError:(NSString *)error ignoreAll:(BOOL *)ignoreall
+-(BOOL)displayError:(NSString *)error ignoreAll:(BOOL *)ignoreall
 {
 	[self performSelectorOnMainThread:@selector(setupErrorView:) withObject:error waitUntilDone:NO];
 
-	XADAction action=[self waitForResponseFromUI];
+	BOOL res=[self waitForResponseFromUI];
 
-	[self setDisplayedView:progressview];
+	[self performSelectorOnMainThread:@selector(setDisplayedView:) withObject:progressview waitUntilDone:NO];
 
-	if(action==XADSkip && ignoreall)
+	if(res && ignoreall)
 	{
 		if([errorapplyallcheck state]==NSOnState) *ignoreall=YES;
 		else *ignoreall=NO;
 	}
 
-	return action;
+	return res;
 }
 
 -(void)displayOpenError:(NSString *)error
@@ -107,30 +111,31 @@
 	[self waitForResponseFromUI];
 }
 
--(NSStringEncoding)displayEncodingSelectorForData:(NSData *)data encoding:(NSStringEncoding)encoding
+-(NSStringEncoding)displayEncodingSelectorForXADString:(id <XADString>)string
 {
-	namedata=data;
-
-	[self performSelectorOnMainThread:@selector(setupEncodingViewWithEncoding:)
-	withObject:[NSNumber numberWithLong:encoding] waitUntilDone:NO];
+	[self performSelectorOnMainThread:@selector(setupEncodingViewForXADString:)
+	withObject:string waitUntilDone:NO];
 
 	BOOL res=[self waitForResponseFromUI];
 
-	[self setDisplayedView:progressview];
+	[self performSelectorOnMainThread:@selector(setDisplayedView:) withObject:progressview waitUntilDone:NO];
 
 	if(res) return [encodingpopup selectedTag];
 	else return 0;
 }
 
--(NSString *)displayPasswordInputWithApplyToAllPointer:(BOOL *)applyall
+-(NSString *)displayPasswordInputWithApplyToAllPointer:(BOOL *)applyall encodingPointer:(NSStringEncoding *)encoding
 {
 	[self performSelectorOnMainThread:@selector(setupPasswordView) withObject:nil waitUntilDone:NO];
 
 	BOOL res=[self waitForResponseFromUI];
 
-	[self setDisplayedView:progressview];
+	[self performSelectorOnMainThread:@selector(setDisplayedView:) withObject:progressview waitUntilDone:NO];
 
-	if(res&&applyall)
+	if([archive caresAboutPasswordEncoding]) *encoding=[passwordpopup selectedTag];
+	else *encoding=0;
+
+	if(res && applyall)
 	{
 		if([passwordapplyallcheck state]==NSOnState) *applyall=YES;
 		else *applyall=NO;
@@ -150,13 +155,29 @@
 		[nib instantiateNibWithOwner:self topLevelObjects:nil];
 	}
 
-	[waitfield setStringValue:[archivename lastPathComponent]];
+	[self updateWaitView];
 
-	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:archivename];
+	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:[archive filename]];
 	[icon setSize:[waiticon frame].size];
 	[waiticon setImage:icon];
 
 	[self setDisplayedView:waitview];
+}
+
+-(void)updateWaitView
+{
+	NSString *filename=[[archive filename] lastPathComponent];
+	NSArray *allfilenames=[archive allFilenames];
+	if(allfilenames && [allfilenames count]>1)
+	{
+		[waitfield setStringValue:[NSString stringWithFormat:
+		NSLocalizedString(@"%@ (+%d more)",@"Status text for queued multi-part archives"),
+		filename,[allfilenames count]-1]];
+	}
+	else
+	{
+		[waitfield setStringValue:filename];
+	}
 }
 
 -(void)setupProgressViewInPreparingMode
@@ -169,11 +190,11 @@
 
 	[actionfield setStringValue:[NSString stringWithFormat:
 	NSLocalizedString(@"Preparing to extract \"%@\"",@"Status text when preparing to extract an archive"),
-	[archivename lastPathComponent]]];
+	[[archive filename] lastPathComponent]]];
 
 	[namefield setStringValue:@""];
 
-	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:archivename];
+	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:[archive filename]];
 	[icon setSize:[progressicon frame].size];
 	[progressicon setImage:icon];
 
@@ -229,18 +250,41 @@
 		[nib instantiateNibWithOwner:self topLevelObjects:nil];
 	}
 
-	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:archivename];
+	[passwordmessagefield setStringValue:[NSString stringWithFormat:
+	NSLocalizedString(@"You need to supply a password to open the archive \"%@\".",@"Status text when asking for a password"),
+	[[archive filename] lastPathComponent]]];
+
+	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:[archive filename]];
 	[icon setSize:[passwordicon frame].size];
 	[passwordicon setImage:icon];
+
+	if([archive caresAboutPasswordEncoding])
+	{
+		NSRect frame=[passwordview frame];
+		frame.size.height=106;
+		[passwordview setFrame:frame];
+
+		[passwordpopup buildEncodingListWithDefaultEncoding];
+		[passwordpopup selectItemWithTag:0];
+	}
+	else
+	{
+		NSRect frame=[passwordview frame];
+		frame.size.height=86;
+		[passwordview setFrame:frame];
+
+		[passwordpopuplabel setHidden:YES];
+		[passwordpopup setHidden:YES];
+	}
 
 	[self setDisplayedView:passwordview];
 	[[passwordfield window] makeFirstResponder:passwordfield];
 	[self getUserAttention];
 }
 
--(void)setupEncodingViewWithEncoding:(NSNumber *)encodingnum
+-(void)setupEncodingViewForXADString:(id <XADString>)string
 {
-	NSStringEncoding encoding=[encodingnum longValue];
+	namestring=string; // Does not need retaining, as the thread that provided it is paused.
 
 	if(!encodingview)
 	{
@@ -248,11 +292,13 @@
 		[nib instantiateNibWithOwner:self topLevelObjects:nil];
 	}
 
-	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:archivename];
+	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:[archive filename]];
 	[icon setSize:[encodingicon frame].size];
 	[encodingicon setImage:icon];
 
-	[encodingpopup buildEncodingListMatchingData:namedata];
+	NSStringEncoding encoding=[string encoding];
+
+	[encodingpopup buildEncodingListMatchingXADString:string];
 	if(encoding)
 	{
 		int index=[encodingpopup indexOfItemWithTag:encoding];
@@ -269,11 +315,18 @@
 
 
 
+
 -(void)getUserAttention
+{
+	[self performSelectorOnMainThread:@selector(getUserAttentionOnMainThread) withObject:nil waitUntilDone:NO];
+}
+
+-(void)getUserAttentionOnMainThread
 {
 	[NSApp activateIgnoringOtherApps:YES];
 	[[self window] makeKeyAndOrderFront:self];
 }
+
 
 
 
@@ -306,16 +359,12 @@
 
 -(IBAction)stopAfterError:(id)sender
 {
-	// KLUDGE: for some reason the button releases itself if sent an Esc keystroke.
-	// This will drive up the retain count, but as the button should never be released
-	// anyway this shouldn't be a problem.
-	//[sender retain];
-	[self provideResponseFromUI:XADAbort];
+	[self provideResponseFromUI:NO];
 }
 
 -(IBAction)continueAfterError:(id)sender
 {
-	[self provideResponseFromUI:XADSkip];
+	[self provideResponseFromUI:YES];
 }
 
 -(IBAction)okAfterOpenError:(id)sender
@@ -325,10 +374,6 @@
 
 -(IBAction)stopAfterPassword:(id)sender
 {
-	// KLUDGE: for some reason the button releases itself if sent an Esc keystroke.
-	// This will drive up the retain count, but as the button should never be released
-	// anyway this shouldn't be a problem.
-	//[sender retain];
 	[self provideResponseFromUI:NO];
 }
 
@@ -339,10 +384,6 @@
 
 -(IBAction)stopAfterEncoding:(id)sender
 {
-	// KLUDGE: for some reason the button releases itself if sent an Esc keystroke.
-	// This will drive up the retain count, but as the button should never be released
-	// anyway this shouldn't be a problem.
-	//[sender retain];
 	[self provideResponseFromUI:NO];
 }
 
@@ -354,8 +395,8 @@
 -(IBAction)selectEncoding:(id)sender
 {
 	NSStringEncoding encoding=[encodingpopup selectedTag];
-	NSString *str=[[[NSString alloc] initWithData:namedata encoding:encoding] autorelease];
-	[encodingfield setStringValue:str?str:@""];
+	if([namestring canDecodeWithEncoding:encoding]) [encodingfield setStringValue:[namestring stringWithEncoding:encoding]];
+	else [encodingfield setStringValue:@""]; // Can't happen, probably.
 }
 
 

@@ -1,0 +1,103 @@
+﻿/* Status text for queued multi-part archives */
+"%@ (+%d more)" = "%1$@ (+%2$d igjen)";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the file \"%@\" from the archive \"%@\": %@" = "Kunne ikke pakke ut filen \"%1$@\" fra arkivfilen \"%2$@\": %3$@";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@" = "Kunne ikke pakke ut resursdelen for filen \"%1$@\" fra arkivfilen \"%2$@\":\n%3$@";
+
+/* Option in the password encoding pop-up to use the default encoding */
+"Default encoding" = "Standardkoding";
+
+/* Option in the encoding pop-up to detect the encoding automatically */
+"Detect automatically" = "Oppdag automatisk";
+
+/* Panel OK button title when choosing an unarchiving destination for an archive */
+"Extract" = "Pakk ut";
+
+/* Panel title when choosing an unarchiving destination for an archive */
+"Extract Archive" = "Pakk ut arkiv";
+
+/* Status text while extracting an archive */
+"Extracting \"%@\"" = "Pakker ut \"%@\"";
+
+/* Status text when preparing to extract an archive */
+"Preparing to extract \"%@\"" = "Forbereder utpakking av \"%@\"";
+
+/* Panel OK button title when choosing a default unarchiving destination */
+"Select" = "Velg";
+
+/* Panel title when choosing archives to extract */
+"Select files to unarchive" = "Velg filer for utpakking";
+
+/* Error message for files not extractable by The Unarchiver */
+"The contents of the file \"%@\" can not be extracted with this program." = "Innholdet av filen \"%@\" kan ikke pakkes ut med dette programmet.";
+
+/* Error message when encountering an error while extracting entries */
+"There was a problem while extracting the contents of the file \"%@\": %@" = "Det oppsto en feil ved utpakking av innholdet i filen \"%1$@\": %2$@";
+
+/* Error message when encountering an error while parsing an archive */
+"There was a problem while reading the contents of the file \"%@\": %@" = "Det oppsto en feil under lesing av innholdet i filen \"%1$@\": %2$@";
+
+/* Panel OK button title when choosing archives to extract */
+"Unarchive" = "Pakk ut";
+
+/* Status text when asking for a password */
+"You need to supply a password to open the archive \"%@\"." = "Du må angi passordet for å kunne åpne arkivfilen \"%@\".";
+
+/* Title for nagging alert on first startup */
+"Where should The Unarchiver extract archives?" = "Hvor vil du at The Unarchiver skal pakke ut arkivfiler?";
+
+/* Content of nagging alert on first startup */
+"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "Vil du at The Unarchiver skal pakke ut arkivfiler til samme mappe som arkivfilen er lagret i, eller foretrekker du å bli spurt om en målkatalog for hver arkivfil?";
+
+/* Button to ask every time in nagging alert on first startup */
+"Ask every time" = "Spør hver gang";
+
+/* Button to extract to the same folder in nagging alert on first startup */
+"Extract to the same folder" = "Pakk ut til samme mappe";
+
+/* Informative text in the file panel shown when trying to gain sandbox access */
+"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver kan ikke skrive til denne mappen. Det kan være Mac OS X sandkassen som blokkerer tilgang til den. For å gi tillatelse for The Unarchiver til å skrive til mappen, klikk på \"Pakk ut\". Denne tillatelsen vil bli husket slik at The Unarchiver ikke trenger å be om den igjen.";
+
+/* Informative text in the file panel shown when trying to gain sandbox access for multi-part archives */
+"The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver har behov for å søke etter flere deler av dette arkivet, men Mac OS X sandkassen blokkerer tilgang til mappen. For at sandkassen skal tillate The Unarchiver å søke i mappen trenger du bare klikke på \"Søk\". Denne tillatelsen vil bli husket slik at The Unarchiver ikke trenger å spørre om den igjen senere.";
+
+/* Panel OK button title when searching for more archive parts */
+"Search" = "Søk";
+
+/* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
+
+/* Common errors */
+"Attempted to read more data than was available" = "Arkivfilen er ikke komplett";
+"Opening file failed" = "Filen kunne ikke åpnes";
+"Missing or wrong password" = "Feil passord";
+"Wrong checksum" = "Arkivfilen er korrupt";
+"Could not create directory" = "Klarte ikke å opprette mappen";
+
+/* Uncommon or unused errors */
+"Unknown error" = "Ukjent feil";
+"Failed to write to file" = "Klarte ikke å skrive til filen";
+"Function called with illegal parameters" = "Funksjonskall hadde ugyldige parametre";
+"Not enough memory available" = "Ikke nok tilgjengelig minne";
+"Data is corrupted" = "Data er korrupt";
+"File is not fully supported" = "Filen er ikke fullstendig supportert";
+"Required resource missing" = "Nødvendig ressurs mangler";
+"Error on decrunching" = "Feil ved utpakking";
+"Unknown file type" = "Ukjent filtype";
+"File, disk has been skipped" = "Fil, disk ble hoppet over";
+"User cancelled extraction" = "Bruker avbrøt utpakkingen";
+"File already exists" = "Filen finnes allerede";
+"Verify failed (disk hook)" = "Verifisering feilet (disk hook)";
+"Wrong drive geometry" = "Feil disk geometri";
+"Unknown data format" = "Ukjent dataformat";
+"Source contains no files" = "Kilden inneholder ingen filer";
+"Unknown filesystem" = "Ukjent filsystem";
+"Name of file exists as directory" = "Filnavnet eksisterer allerede som mappe";
+"Buffer was too short" = "Mellomlager (buffer) var for kort";
+"Text encoding was defective" = "Tekstkoding var defekt";
+"Could not create symlink" = "Kunne ikke opprette symbolsk lenke (symlink)";
+
+
+

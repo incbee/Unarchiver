@@ -3,14 +3,14 @@
 #import "TUTaskListView.h"
 #import "TUEncodingPopUp.h"
 #import <XADMaster/XADRegex.h>
+#import <XADMaster/XADPlatform.h>
 
 
-
-static BOOL GetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info);
-static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info);
 
 
 static NSString *globalpassword=nil;
+NSStringEncoding globalpasswordencoding=0;
+
 
 
 @implementation TUArchiveController
@@ -19,22 +19,36 @@ static NSString *globalpassword=nil;
 {
 	[globalpassword release];
 	globalpassword=nil;
+	globalpasswordencoding=0;
 }
 
--(id)initWithFilename:(NSString *)filename destination:(NSString *)destpath
-taskView:(TUArchiveTaskView *)taskview
+-(id)initWithFilename:(NSString *)filename
 {
 	if((self=[super init]))
 	{
+		view=nil;
+		docktile=nil;
+		unarchiver=nil;
+
+		archivename=[filename retain];
+		destination=nil;
+		tmpdest=nil;
+
+		selected_encoding=0;
+
+		finishtarget=nil;
+		finishselector=NULL;
+
+		foldermodeoverride=copydateoverride=changefilesoverride=-1;
+		deletearchiveoverride=openextractedoverride=-1;
+
 		cancelled=NO;
 		ignoreall=NO;
-		hasstopped=NO;
+		haderrors=NO;
 
-		view=[taskview retain];
-		archivename=[filename retain];
-
-		destination=[destpath retain];
-		tmpdest=nil;
+		#ifndef IsLegacyVersion
+		scopedurl=nil;
+		#endif
 	}
 	return self;
 }
@@ -42,23 +56,159 @@ taskView:(TUArchiveTaskView *)taskview
 -(void)dealloc
 {
 	[view release];
-	[archive release];
+	[docktile release];
+	[unarchiver release];
 	[archivename release];
 	[destination release];
 	[tmpdest release];
+
+	#ifndef IsLegacyVersion
+	[scopedurl stopAccessingSecurityScopedResource];
+	[scopedurl release];
+	#endif
 
 	[super dealloc];
 }
 
 
 
--(NSString *)filename { return archivename; }
-
--(XADArchive *)archive { return archive; }
-
 -(TUArchiveTaskView *)taskView { return view; }
 
+-(void)setTaskView:(TUArchiveTaskView *)taskview
+{
+	[view autorelease];
+	view=[taskview retain];
+}
 
+-(TUDockTileView *)dockTileView { return docktile; }
+
+-(void)setDockTileView:(TUDockTileView *)tileview
+{
+	[docktile autorelease];
+	docktile=[tileview retain];
+}
+
+-(NSString *)destination { return destination; }
+
+-(void)setDestination:(NSString *)newdestination
+{
+	[destination autorelease];
+	destination=[newdestination retain];
+}
+
+-(int)folderCreationMode
+{
+	if(foldermodeoverride>=0) return foldermodeoverride;
+	else return [[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"];
+}
+
+-(void)setFolderCreationMode:(int)mode { foldermodeoverride=mode; }
+
+-(BOOL)copyArchiveDateToExtractedFolder
+{
+	if(copydateoverride>=0) return copydateoverride!=0;
+	else return [[NSUserDefaults standardUserDefaults] integerForKey:@"folderModifiedDate"]==2;
+}
+
+-(void)setCopyArchiveDateToExtractedFolder:(BOOL)copydate { copydateoverride=copydate; }
+
+-(BOOL)changeDateOfExtractedSingleItems
+{
+	if(changefilesoverride>=0) return changefilesoverride!=0;
+	else return [[NSUserDefaults standardUserDefaults] boolForKey:@"changeDateOfFiles"];
+}
+
+-(void)setChangeDateOfExtractedSingleItems:(BOOL)changefiles { changefilesoverride=changefiles; }
+
+-(BOOL)deleteArchive
+{
+	if(deletearchiveoverride>=0) return deletearchiveoverride!=0;
+	else return [[NSUserDefaults standardUserDefaults] boolForKey:@"deleteExtractedArchive"];
+}
+
+-(void)setDeleteArchive:(BOOL)delete { deletearchiveoverride=delete; }
+
+-(BOOL)openExtractedItem
+{
+	if(openextractedoverride>=0) return openextractedoverride!=0;
+	else return [[NSUserDefaults standardUserDefaults] boolForKey:@"openExtractedFolder"];
+}
+
+-(void)setOpenExctractedItem:(BOOL)open { openextractedoverride=open; }
+
+-(BOOL)isCancelled { return cancelled; }
+
+-(void)setIsCancelled:(BOOL)iscancelled { cancelled=iscancelled; }
+
+
+
+#ifndef IsLegacyVersion
+-(void)useSecurityScopedURL:(NSURL *)url
+{
+	[scopedurl stopAccessingSecurityScopedResource];
+	[scopedurl autorelease];
+
+	scopedurl=[url retain];
+	[scopedurl startAccessingSecurityScopedResource];
+}
+#endif
+
+
+
+
+-(NSString *)filename
+{
+	if(!unarchiver) return archivename;
+	else return [[unarchiver outerArchiveParser] filename];
+}
+
+-(NSArray *)allFilenames
+{
+	if(!unarchiver) return nil;
+	return [[unarchiver outerArchiveParser] allFilenames];
+}
+
+-(BOOL)volumeScanningFailed
+{
+	NSNumber *failed=[[[unarchiver archiveParser] properties] objectForKey:XADVolumeScanningFailedKey];
+	return failed && [failed boolValue];
+}
+
+-(BOOL)caresAboutPasswordEncoding { return [[unarchiver archiveParser] caresAboutPasswordEncoding]; }
+
+
+
+
+-(NSString *)currentArchiveName
+{
+	NSString *currfilename=[[unarchiver archiveParser] currentFilename];
+	if(!currfilename) currfilename=[[unarchiver outerArchiveParser] currentFilename];
+	return [currfilename lastPathComponent];
+}
+
+-(NSString *)localizedDescriptionOfError:(XADError)error
+{
+	NSString *errorstr=[XADException describeXADError:error];
+	NSString *localizederror=[[NSBundle mainBundle] localizedStringForKey:errorstr value:errorstr table:nil];
+	return localizederror;
+}
+
+-(NSString *)stringForXADPath:(XADPath *)path
+{
+	NSStringEncoding encoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
+	if(!encoding) encoding=selected_encoding;
+	if(!encoding) encoding=[path encoding];
+	return [path stringWithEncoding:encoding];
+}
+
+
+
+
+-(void)prepare
+{
+	[unarchiver release];
+	unarchiver=[[XADSimpleUnarchiver simpleUnarchiverForPath:archivename error:NULL] retain];
+}
 
 -(void)runWithFinishAction:(SEL)selector target:(id)target
 {
@@ -74,244 +224,192 @@ taskView:(TUArchiveTaskView *)taskview
 	NSString *tmpdir=[NSString stringWithFormat:@".TheUnarchiverTemp%d",tmpcounter++];
 	tmpdest=[[destination stringByAppendingPathComponent:tmpdir] retain];
 
-	[self rememberTempDirectory:tmpdest];
+	[NSThread detachNewThreadSelector:@selector(extractThreadEntry) toTarget:self withObject:nil];
+}
 
-	[NSThread detachNewThreadSelector:@selector(extract) toTarget:self withObject:nil];
+-(void)extractThreadEntry
+{
+	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+	[self extract];
+	[pool release];
 }
 
 -(void)extract
 {
-	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
-
-	@try
+	if(!unarchiver)
 	{
-		archive=[[XADArchive alloc] initWithFile:archivename delegate:self error:NULL];
+		[view displayOpenError:[NSString stringWithFormat:
+		NSLocalizedString(@"The contents of the file \"%@\" can not be extracted with this program.",@"Error message for files not extractable by The Unarchiver"),
+		[archivename lastPathComponent]]];
 
-		if(!archive)
-		{
-			[view displayOpenError:[NSString stringWithFormat:
-			NSLocalizedString(@"The contents of the file \"%@\" can not be extracted with this program.",@"Error message for files not extractable by The Unarchiver"),
-			[archivename lastPathComponent]]];
-			@throw @"Failed to open archive";
-		}
-
-		[archivename release];
-		archivename=[[archive filename] retain];
-
-		//[archive setDelegate:self];
-
-		BOOL res=[archive extractTo:tmpdest subArchives:YES];
-		if(!res) @throw @"Archive extraction failed or was cancelled";
-
-		[self performSelectorOnMainThread:@selector(extractFinished) withObject:nil waitUntilDone:NO];
+		[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
+		return;
 	}
-	@catch(id e)
+
+	int foldermode=[self folderCreationMode];
+	BOOL copydatepref=[self copyArchiveDateToExtractedFolder];
+	BOOL changefilespref=[self changeDateOfExtractedSingleItems];
+
+	[unarchiver setDelegate:self];
+	[unarchiver setPropagatesRelevantMetadata:YES];
+	[unarchiver setAlwaysRenamesFiles:YES];
+	[unarchiver setCopiesArchiveModificationTimeToEnclosingDirectory:copydatepref];
+	[unarchiver setCopiesArchiveModificationTimeToSoloItems:copydatepref && changefilespref];
+	[unarchiver setResetsDateForSoloItems:!copydatepref && changefilespref];
+
+	XADError error=[unarchiver parse];
+	if(error==XADBreakError)
 	{
 		[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
+		return;
+	}
+	else if(error)
+	{
+		if(![view displayError:[NSString stringWithFormat:
+			NSLocalizedString(@"There was a problem while reading the contents of the file \"%@\": %@",@"Error message when encountering an error while parsing an archive"),
+			[self currentArchiveName],
+			[self localizedDescriptionOfError:error]]
+		ignoreAll:&ignoreall])
+		{
+			[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
+			return;
+		}
+		else
+		{
+			haderrors=YES;
+		}
 	}
 
-	[pool release];
+	switch(foldermode)
+	{
+		case 1: // Enclose multiple items.
+		default:
+			[unarchiver setDestination:tmpdest];
+			[unarchiver setRemovesEnclosingDirectoryForSoloItems:YES];
+			[self rememberTempDirectory:tmpdest];
+		break;
+
+		case 2: // Always enclose.
+			[unarchiver setDestination:tmpdest];
+			[unarchiver setRemovesEnclosingDirectoryForSoloItems:NO];
+			[self rememberTempDirectory:tmpdest];
+		break;
+
+		case 3: // Never enclose.
+			[unarchiver setDestination:destination];
+			[unarchiver setEnclosingDirectoryName:nil];
+		break;
+	}
+
+	error=[unarchiver unarchive];
+	if(error)
+	{
+		if(error!=XADBreakError)
+		[view displayOpenError:[NSString stringWithFormat:
+			NSLocalizedString(@"There was a problem while extracting the contents of the file \"%@\": %@",@"Error message when encountering an error while extracting entries"),
+			[self currentArchiveName],
+			[self localizedDescriptionOfError:error]]];
+
+		[self performSelectorOnMainThread:@selector(extractFailed) withObject:nil waitUntilDone:NO];
+		return;
+	}
+
+	[self performSelectorOnMainThread:@selector(extractFinished) withObject:nil waitUntilDone:NO];
 }
 
 -(void)extractFinished
 {
-	NSFileManager *fm=[NSFileManager defaultManager];
+	BOOL deletearchivepref=[self deleteArchive];
+	BOOL openfolderpref=[self openExtractedItem];
 
-	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
-	NSArray *files=[fm contentsOfDirectoryAtPath:tmpdest error:NULL];
-	#else
-	NSArray *files=[fm directoryContentsAtPath:tmpdest];
-	#endif
+	BOOL soloitem=[unarchiver wasSoloItem];
 
-	if(files)
+	// Move files out of temporary directory, if we used one.
+	NSString *newpath=nil;
+	if([unarchiver enclosingDirectoryName])
 	{
-		BOOL alwayscreatepref=[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"]==2;
-		BOOL copydatepref=[[NSUserDefaults standardUserDefaults] integerForKey:@"folderModifiedDate"]==2;
-		BOOL changefilespref=[[NSUserDefaults standardUserDefaults] boolForKey:@"changeDateOfFiles"];
-		BOOL deletearchivepref=[[NSUserDefaults standardUserDefaults] boolForKey:@"deleteExtractedArchive"];
-		BOOL openfolderpref=[[NSUserDefaults standardUserDefaults] boolForKey:@"openExtractedFolder"];
+		NSString *path=[unarchiver createdItem];
+		NSString *filename=[path lastPathComponent];
 
-		BOOL singlefile=[files count]==1;
+		newpath=[destination stringByAppendingPathComponent:filename];
 
-		BOOL makefolder=!singlefile || alwayscreatepref;
-		BOOL copydate=(makefolder&&copydatepref)||(!makefolder&&changefilespref&&copydatepref);
-		BOOL resetdate=!makefolder&&changefilespref&&!copydatepref;
-
-		NSString *finaldest;
-
-		// Propagate quarantine
-		if(LSSetItemAttribute)
+		// Check if we accidentally created a package.
+		if(!soloitem)
+		if([[NSWorkspace sharedWorkspace] isFilePackageAtPath:path])
 		{
-			FSRef src,dest;
-			if(CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:archivename],&src))
-			if(CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:tmpdest],&dest))
-			{
-				CFDictionaryRef dicref;
-				if(LSCopyItemAttribute(&src,kLSRolesAll,kLSItemQuarantineProperties,(CFTypeRef*)&dicref)==noErr)
-				if(dicref)
-				{
-					[self setQuarantineAttributes:dicref forDirectoryRef:&dest];
-					CFRelease(dicref);
-				}
-			}
+			newpath=[newpath stringByDeletingPathExtension];
 		}
 
+		// Avoid collisions.
+		newpath=[XADSimpleUnarchiver _findUniquePathForOriginalPath:newpath];
+
 		// Move files into place
-		if(makefolder)
+		[XADPlatform moveItemAtPath:path toPath:newpath];
+		[XADPlatform removeItemAtPath:tmpdest];
+	}
+
+	// Remove temporary directory from crash recovery list.
+	[self forgetTempDirectory:tmpdest];
+
+	// Delete archive if requested, but only if no errors were encountered.
+	if(deletearchivepref && !haderrors)
+	{
+		NSString *directory=[archivename stringByDeletingLastPathComponent];
+		NSArray *allpaths=[[unarchiver outerArchiveParser] allFilenames];
+		NSMutableArray *allfiles=[NSMutableArray arrayWithCapacity:[allpaths count]];
+		NSEnumerator *enumerator=[allpaths objectEnumerator];
+		NSString *path;
+		while((path=[enumerator nextObject]))
 		{
-			NSString *defaultname;
-			if([archivename matchedByPattern:@"\\.(part[0-9]+\\.rar|tar\\.gz|tar\\.bz2|tar\\.lzma|sit\\.hqx)$" options:REG_ICASE])
-			defaultname=[[[archivename lastPathComponent] stringByDeletingPathExtension] stringByDeletingPathExtension];
-			else
-			defaultname=[[archivename lastPathComponent] stringByDeletingPathExtension];
+			if([[path stringByDeletingLastPathComponent] isEqual:directory])
+			[allfiles addObject:[path lastPathComponent]];
+		}
 
-			finaldest=[self findUniqueDestinationWithDirectory:destination andFilename:defaultname];
+		[[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation
+		source:directory destination:nil files:allfiles tag:nil];
+		//[self playSound:@"/System/Library/Components/CoreAudio.component/Contents/Resources/SystemSounds/dock/drag to trash.aif"];
+	}
 
-			#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
-			[fm moveItemAtPath:tmpdest toPath:finaldest error:NULL];
-			#else
-			[fm movePath:tmpdest toPath:finaldest handler:nil];
-			#endif
-
-			// Check if we accidentally created a package.
-			if([[NSWorkspace sharedWorkspace] isFilePackageAtPath:finaldest])
+	// Open folder if requested.
+	if(openfolderpref)
+	{
+		if(newpath)
+		{
+			BOOL isdir;
+			[[NSFileManager defaultManager] fileExistsAtPath:newpath isDirectory:&isdir];
+			if(isdir&&![[NSWorkspace sharedWorkspace] isFilePackageAtPath:newpath])
 			{
-				NSString *newfinaldest=[finaldest stringByDeletingPathExtension];
-
-				#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
-				[fm moveItemAtPath:finaldest toPath:newfinaldest error:NULL];
-				#else
-				[fm movePath:finaldest toPath:newfinaldest handler:nil];
-				#endif
-
-				finaldest=newfinaldest;
+				[[NSWorkspace sharedWorkspace] openFile:newpath];
+			}
+			else
+			{
+				[[NSWorkspace sharedWorkspace] selectFile:newpath inFileViewerRootedAtPath:@""];
 			}
 		}
 		else
 		{
-			NSString *filename=[files objectAtIndex:0];
-			NSString *src=[tmpdest stringByAppendingPathComponent:filename];
-			finaldest=[self findUniqueDestinationWithDirectory:destination andFilename:filename];
-
-			#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
-			[fm moveItemAtPath:src toPath:finaldest error:NULL];
-			[fm removeItemAtPath:tmpdest error:NULL];
-			#else
-			[fm movePath:src toPath:finaldest handler:nil];
-			[fm removeFileAtPath:tmpdest handler:nil];
-			#endif
-		}
-
-		// Remove temporary directory from crash recovery list
-		[self forgetTempDirectory:tmpdest];
-
-		// Set correct date for extracted directory
-		if(copydate)
-		{
-			FSCatalogInfo archiveinfo,newinfo;
-
-			GetCatalogInfoForFilename(archivename,kFSCatInfoContentMod,&archiveinfo);
-			newinfo.contentModDate=archiveinfo.contentModDate;
-			SetCatalogInfoForFilename(finaldest,kFSCatInfoContentMod,&newinfo);
-		}
-		else if(resetdate)
-		{
-			FSCatalogInfo newinfo;
-
-			UCConvertCFAbsoluteTimeToUTCDateTime(CFAbsoluteTimeGetCurrent(),&newinfo.contentModDate);
-			SetCatalogInfoForFilename(finaldest,kFSCatInfoContentMod,&newinfo);
-		}
-
-		// Delete archive if requested
-		if(deletearchivepref)
-		{
-			NSString *directory=[archivename stringByDeletingLastPathComponent];
-			NSArray *allpaths=[archive allFilenames];
-			NSMutableArray *allfiles=[NSMutableArray arrayWithCapacity:[allpaths count]];
-			NSEnumerator *enumerator=[allpaths objectEnumerator];
-			NSString *path;
-			while((path=[enumerator nextObject]))
-			{
-				if([[path stringByDeletingLastPathComponent] isEqual:directory])
-				[allfiles addObject:[path lastPathComponent]];
-			}
-
-			[[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation
-			source:directory destination:nil files:allfiles tag:nil];
-			//[self playSound:@"/System/Library/Components/CoreAudio.component/Contents/Resources/SystemSounds/dock/drag to trash.aif"];
-		}
-
-		// Open folder if requested
-		if(openfolderpref)
-		{
-			BOOL isdir;
-			[[NSFileManager defaultManager] fileExistsAtPath:finaldest isDirectory:&isdir];
-			if(isdir&&![[NSWorkspace sharedWorkspace] isFilePackageAtPath:finaldest])
-			{
-				[[NSWorkspace sharedWorkspace] openFile:finaldest];
-			}
-			else [[NSWorkspace sharedWorkspace] selectFile:finaldest inFileViewerRootedAtPath:@""];
+			[[NSWorkspace sharedWorkspace] openFile:destination];
 		}
 	}
+	else if([newpath matchedByPattern:@"/Library/Mail Downloads/[^/]+$"])
+	{
+		[[NSWorkspace sharedWorkspace] selectFile:newpath inFileViewerRootedAtPath:@""];
+	}
 
+	[docktile hideProgress];
 	[finishtarget performSelector:finishselector withObject:self];
 	[self release];
 }
 
 -(void)extractFailed
 {
-	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
-	[[NSFileManager defaultManager] removeItemAtPath:tmpdest error:NULL];
-	#else
-	[[NSFileManager defaultManager] removeFileAtPath:tmpdest handler:nil];
-	#endif
+	[XADPlatform removeItemAtPath:tmpdest];
 
 	[self forgetTempDirectory:tmpdest];
 
+	[docktile hideProgress];
 	[finishtarget performSelector:finishselector withObject:self];
 	[self release];
-}
-
--(void)setQuarantineAttributes:(CFDictionaryRef)dicref forDirectoryRef:(FSRef *)dirref
-{
-	FSIterator iterator;
-	if(FSOpenIterator(dirref,kFSIterateFlat,&iterator)!=noErr) return;
-
-	for(;;)
-	{
-		FSRef ref;
-		ItemCount num;
-		OSErr err=FSGetCatalogInfoBulk(iterator,1,&num,NULL,kFSCatInfoNone,NULL,&ref,NULL,NULL);
-
-		if(err==errFSNoMoreItems) break;
-
-		LSSetItemAttribute(&ref,kLSRolesAll,kLSItemQuarantineProperties,dicref);
-
-		FSCatalogInfo catinfo={0};
-		FSGetCatalogInfo(&ref,kFSCatInfoNodeFlags,&catinfo,NULL,NULL,NULL);
-		if(catinfo.nodeFlags&kFSNodeIsDirectoryMask)
-		[self setQuarantineAttributes:dicref forDirectoryRef:&ref];
-	}
-
-	FSCloseIterator(iterator);
-}
-
--(NSString *)findUniqueDestinationWithDirectory:(NSString *)directory andFilename:(NSString *)filename
-{
-	NSString *basename=[filename stringByDeletingPathExtension];
-	NSString *extension=[filename pathExtension];
-	if([extension length]) extension=[@"." stringByAppendingString:extension];
-
-	NSString *dest=[directory stringByAppendingPathComponent:filename];
-	int n=1;
-
-	while([[NSFileManager defaultManager] fileExistsAtPath:dest])
-	{
-		dest=[directory stringByAppendingPathComponent:
-		[NSString stringWithFormat:@"%@-%d%@",basename,n++,extension]];
-	}
-
-	return dest;
 }
 
 -(void)rememberTempDirectory:(NSString *)tmpdir
@@ -342,44 +440,74 @@ taskView:(TUArchiveTaskView *)taskview
 
 
 
--(BOOL)archiveExtractionShouldStop:(XADArchive *)sender { return cancelled; }
 
--(NSStringEncoding)archive:(XADArchive *)sender encodingForData:(NSData *)data guess:(NSStringEncoding)guess confidence:(float)confidence
+-(BOOL)extractionShouldStopForSimpleUnarchiver:(XADSimpleUnarchiver *)unarchiver
 {
-	NSStringEncoding encoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
-	int threshold=[[NSUserDefaults standardUserDefaults] integerForKey:@"autoDetectionThreshold"];
-
-	if(cancelled) return guess;
-	else if(encoding) return encoding;
-	else if(selected_encoding) return selected_encoding;
-	else if(confidence*100<threshold)
-	{
-		selected_encoding=[view displayEncodingSelectorForData:data encoding:guess];
-		if(!selected_encoding)
-		{
-			cancelled=YES;
-			return guess;
-		}
-		return selected_encoding;
-	}
-	else return guess;
+	return cancelled;
 }
 
--(void)archiveNeedsPassword:(XADArchive *)sender
+-(NSString *)simpleUnarchiver:(XADSimpleUnarchiver *)sender encodingNameForXADString:(id <XADString>)string
+{
+	// TODO: Stop using NSStringEncoding.
+
+	// If the user has set an encoding in the preferences, always use this.
+	NSStringEncoding setencoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
+	if(setencoding) return [XADString encodingNameForEncoding:setencoding];
+
+	// If the user has already been asked for an encoding, try to use it.
+	// Otherwise, if the confidence in the guessed encoding is high enough, try that.
+	int threshold=[[NSUserDefaults standardUserDefaults] integerForKey:@"autoDetectionThreshold"];
+
+	NSStringEncoding encoding=0;
+	if(selected_encoding) encoding=selected_encoding;
+	else if([string confidence]*100>=threshold) encoding=[string encoding];
+
+	// If we have an encoding we trust, and it can decode the string, use it.
+	if(encoding && [string canDecodeWithEncoding:encoding])
+	return [XADString encodingNameForEncoding:encoding];
+
+	// Otherwise, ask the user for an encoding.
+	selected_encoding=[view displayEncodingSelectorForXADString:string];
+	if(!selected_encoding)
+	{
+		cancelled=YES;
+		return nil;
+	}
+	return [XADString encodingNameForEncoding:selected_encoding];
+}
+
+-(void)simpleUnarchiverNeedsPassword:(XADSimpleUnarchiver *)sender
 {
 	if(globalpassword)
 	{
 		[sender setPassword:globalpassword];
+		if(globalpasswordencoding)
+		{
+			[[sender archiveParser] setPasswordEncodingName:
+			[XADString encodingNameForEncoding:globalpasswordencoding]];
+		}
 	}
 	else
 	{
 		BOOL applytoall;
-		NSString *password=[view displayPasswordInputWithApplyToAllPointer:&applytoall];
+		NSStringEncoding encoding;
+		NSString *password=[view displayPasswordInputWithApplyToAllPointer:&applytoall
+		encodingPointer:&encoding];
 
 		if(password)
 		{
 			[sender setPassword:password];
-			if(applytoall) globalpassword=[password retain];
+			if(encoding)
+			{
+				[[sender archiveParser] setPasswordEncodingName:
+				[XADString encodingNameForEncoding:encoding]];
+			}
+
+			if(applytoall)
+			{
+				globalpassword=[password retain];
+				globalpasswordencoding=encoding;
+			}
 		}
 		else
 		{
@@ -388,78 +516,75 @@ taskView:(TUArchiveTaskView *)taskview
 	}
 }
 
--(void)archive:(XADArchive *)sender extractionOfEntryWillStart:(int)n
+-(void)simpleUnarchiver:(XADSimpleUnarchiver *)sender willExtractEntryWithDictionary:(NSDictionary *)dict to:(NSString *)path
 {
-	NSString *name=[sender nameOfEntry:n];
-	if(name) [view setName:name];
+	XADPath *name=[dict objectForKey:XADFileNameKey];
+
+	// TODO: Do something prettier here.
+	NSStringEncoding encoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
+	if(!encoding) encoding=selected_encoding;
+	if(!encoding) encoding=[name encoding];
+
+	NSString *namestring=[name stringWithEncoding:encoding];
+
+	if(name) [view setName:namestring];
+	else [view setName:@""];
 }
 
--(void)archive:(XADArchive *)sender extractionProgressBytes:(off_t)bytes of:(off_t)total
+-(void)simpleUnarchiver:(XADSimpleUnarchiver *)sender
+extractionProgressForEntryWithDictionary:(NSDictionary *)dict
+fileProgress:(off_t)fileprogress of:(off_t)filesize
+totalProgress:(off_t)totalprogress of:(off_t)totalsize
 {
-	[view setProgress:(double)bytes/(double)total];
+	double progress=(double)totalprogress/(double)totalsize;
+	[view setProgress:progress];
+	[docktile setProgress:progress];
 }
 
-
--(XADAction)archive:(XADArchive *)archive nameDecodingDidFailForEntry:(int)n data:(NSData *)data
+-(void)simpleUnarchiver:(XADSimpleUnarchiver *)sender
+estimatedExtractionProgressForEntryWithDictionary:(NSDictionary *)dict
+fileProgress:(double)fileprogress totalProgress:(double)totalprogress
 {
-	return [view displayEncodingSelectorForData:data encoding:0];
+	[view setProgress:totalprogress];
+	[docktile setProgress:totalprogress];
 }
 
--(XADAction)archive:(XADArchive *)archive creatingDirectoryDidFailForEntry:(int)n
+-(void)simpleUnarchiver:(XADSimpleUnarchiver *)sender didExtractEntryWithDictionary:(NSDictionary *)dict to:(NSString *)path error:(XADError)error;
 {
-	[view displayOpenError:NSLocalizedString(@"Could not write to the destination directory.",@"Error message string when writing is impossible.")];
-	return XADAbort;
+	if(ignoreall||cancelled) return;
+
+	if(error)
+	{
+		XADPath *filename=[dict objectForKey:XADFileNameKey];
+
+		NSNumber *isresfork=[dict objectForKey:XADIsResourceForkKey];
+		if(isresfork&&[isresfork boolValue])
+		{
+			cancelled=![view displayError:[NSString stringWithFormat:
+				NSLocalizedString(@"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@",@"Error message string. The first %@ is the file name, the second the archive name, the third is error message"),
+				[self stringForXADPath:filename],
+				[self currentArchiveName],
+				[self localizedDescriptionOfError:error]]
+			ignoreAll:&ignoreall];
+		}
+		else
+		{
+			cancelled=![view displayError:[NSString stringWithFormat:
+				NSLocalizedString(@"Could not extract the file \"%@\" from the archive \"%@\": %@",@"Error message string. The first %@ is the file name, the second the archive name, the third is error message"),
+				[self stringForXADPath:filename],
+				[self currentArchiveName],
+				[self localizedDescriptionOfError:error]]
+			ignoreAll:&ignoreall];
+		}
+
+		haderrors=YES;
+	}
 }
 
--(XADAction)archive:(XADArchive *)sender extractionOfEntryDidFail:(int)n error:(XADError)error
-{
-	if(ignoreall) return XADSkip;
-	if(hasstopped) return XADAbort;
-
-	NSString *errstr=[archive describeError:error];
-	XADAction action=[view displayError:
-		[NSString stringWithFormat:
-		NSLocalizedString(@"Could not extract the file \"%@\": %@",@"Error message string. The first %@ is the file name, the second the error message"),
-		[sender nameOfEntry:n],[[NSBundle mainBundle] localizedStringForKey:errstr value:errstr table:nil]]
-	ignoreAll:&ignoreall];
-
-	if(action==XADAbort) hasstopped=YES;
-
-	return action;
-}
-
--(XADAction)archive:(XADArchive *)sender extractionOfResourceForkForEntryDidFail:(int)n error:(XADError)error
-{
-	if(ignoreall) return XADSkip;
-
-	NSString *errstr=[archive describeError:error];
-	return [view displayError:
-		[NSString stringWithFormat:
-		NSLocalizedString(@"Could not extract the resource fork for the file \"%@\":\n%@",@"Error message for resource forks. The first %@ is the file name, the second the error message"),
-		[sender nameOfEntry:n],[[NSBundle mainBundle] localizedStringForKey:errstr value:errstr table:nil]]
-	ignoreAll:&ignoreall];
-}
-
+/*-(NSString *)simpleUnarchiver:(XADSimpleUnarchiver *)sender replacementPathForEntryWithDictionary:(NSDictionary *)dict
+originalPath:(NSString *)path suggestedPath:(NSString *)unique;
+-(NSString *)simpleUnarchiver:(XADSimpleUnarchiver *)sender deferredReplacementPathForOriginalPath:(NSString *)path
+suggestedPath:(NSString *)unique;*/
 
 @end
 
-
-
-
-static BOOL GetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info)
-{
-	FSRef ref;
-	if(FSPathMakeRefWithOptions((const UInt8 *)[filename fileSystemRepresentation],
-	kFSPathMakeRefDoNotFollowLeafSymlink,&ref,NULL)!=noErr) return NO;
-	if(FSGetCatalogInfo(&ref,bitmap,info,NULL,NULL,NULL)!=noErr) return NO;
-	return YES;
-}
-
-static BOOL SetCatalogInfoForFilename(NSString *filename,FSCatalogInfoBitmap bitmap,FSCatalogInfo *info)
-{
-	FSRef ref;
-	if(FSPathMakeRefWithOptions((const UInt8 *)[filename fileSystemRepresentation],
-	kFSPathMakeRefDoNotFollowLeafSymlink,&ref,NULL)!=noErr) return NO;
-	if(FSSetCatalogInfo(&ref,bitmap,info)!=noErr) return NO;
-	return YES;
-}

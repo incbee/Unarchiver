@@ -1,0 +1,103 @@
+﻿/* Status text for queued multi-part archives */
+"%@ (+%d more)" = "%1$@（残り +%2$d 項目）";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the file \"%@\" from the archive \"%@\": %@" = "アーカイブ\"%2$@\"からファイル\"%1$@\"を展開できません：%3$@";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@" = "アーカイブ\"%2$@\"からファイル\"%1$@\"のリソースフォークを展開できません：\n%3$@";
+
+/* Option in the password encoding pop-up to use the default encoding */
+"Default encoding" = "デフォルトエンコーディング";
+
+/* Option in the encoding pop-up to detect the encoding automatically */
+"Detect automatically" = "自動判別";
+
+/* Panel OK button title when choosing an unarchiving destination for an archive */
+"Extract" = "展開";
+
+/* Panel title when choosing an unarchiving destination for an archive */
+"Extract Archive" = "アーカイブを展開";
+
+/* Status text while extracting an archive */
+"Extracting \"%@\"" = "\"%@\"を展開中";
+
+/* Status text when preparing to extract an archive */
+"Preparing to extract \"%@\"" = "\"%@\"の展開を準備中";
+
+/* Panel OK button title when choosing a default unarchiving destination */
+"Select" = "選択";
+
+/* Panel title when choosing archives to extract */
+"Select files to unarchive" = "展開するファイルを選択";
+
+/* Error message for files not extractable by The Unarchiver */
+"The contents of the file \"%@\" can not be extracted with this program." = "ファイル\"%@\"の内容は、このプログラムでは展開できません。";
+
+/* Error message when encountering an error while extracting entries */
+"There was a problem while extracting the contents of the file \"%@\": %@" = "ファイル\"%1$@\"の内容を展開する際に問題が発生しました：%2$@";
+
+/* Error message when encountering an error while parsing an archive */
+"There was a problem while reading the contents of the file \"%@\": %@" = "ファイル\"%1$@\"の内容を読み込む際に問題が発生しました：%2$@";
+
+/* Panel OK button title when choosing archives to extract */
+"Unarchive" = "展開";
+
+/* Status text when asking for a password */
+"You need to supply a password to open the archive \"%@\"." = "アーカイブ\"%@\"を展開するにはパスワードの入力が必要です。";
+
+/* Title for nagging alert on first startup */
+"Where should The Unarchiver extract archives?" = "The Unarchiver のアーカイブ展開先はどこにしますか？";
+
+/* Content of nagging alert on first startup */
+"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "The Unarchiver のアーカイブ展開先をアーカイブファイルと同じフォルダにしますか、それともアーカイブを展開する際に毎回確認しますか？";
+
+/* Button to ask every time in nagging alert on first startup */
+"Ask every time" = "毎回確認";
+
+/* Button to extract to the same folder in nagging alert on first startup */
+"Extract to the same folder" = "同じフォルダに展開";
+
+/* Informative text in the file panel shown when trying to gain sandbox access */
+"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver はこのフォルダに書き込めません。Mac OS X の sandbox によりアクセスがブロックされているものと思われます。The Unarchiver がこのフォルダに書き込めるよう sandbox に許可を申請するには、\"展開\"をクリックしてください。アクセス権は記憶されますので、次回からはこの確認は表示されなくなります。";
+
+/* Informative text in the file panel shown when trying to gain sandbox access for multi-part archives */
+"The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "このアーカイブのパーツを検索する必要がありますが、Mac OS X の Sandbox により、フォルダへのアクセスが制限されています。The Unarchiver からこのフォルダへのアクセス制限を解除するには、“検索”をクリックしてください。このアクセス権変更は記憶されますので、次回以降はこの確認は表示されません。";
+
+/* Panel OK button title when searching for more archive parts */
+"Search" = "検索";
+
+/* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
+
+/* Common errors */
+"Input data buffers border exceeded" = "アーカイブファイルが不完全です";
+"Opening file failed" = "ファイルを開けませんでした";
+"Missing or wrong password" = "入力されたパスワードが正しくありません";
+"Wrong checksum" = "アーカイブファイルが壊れています";
+"Could not create directory" = "フォルダを作成できませんでした";
+
+/* Uncommon or unused errors */
+"Unknown error" = "不明のエラー";
+"Failed to write to file" = "ファイルの書き込みに失敗しました";
+"Function called with illegal parameters" = "不正な引数による関数呼び出しです";
+"Not enough memory available" = "メモリが不十分です";
+"Data is corrupted" = "データが壊れています";
+"Command is not supported" = "サポート外のコマンドです";
+"Required resource missing" = "必要なリソースが見つかりません";
+"Error on decrunching" = "展開時にエラーが発生しました";
+"Unknown file type" = "ファイル形式が不明です";
+"File, disk has been skipped" = "ファイル、ディスクがスキップされました";
+"User break in progress hook" = "ユーザにより中止されました";
+"File already exists" = "ファイルがすでに存在します";
+"Verify failed (disk hook)" = "検証に失敗しました";
+"Wrong drive geometry" = "ドライブジオメトリが誤っています";
+"Unknown data format" = "データ形式が不明です";
+"Source contains no files" = "ファイルが含まれていません";
+"Unknown filesystem" = "ファイルシステムが不明です";
+"Name of file exists as directory" = "同じ名前のフォルダがすでに存在します";
+"Buffer was too short" = "バッファが少なすぎます";
+"Text encoding was defective" = "テキストエンコーディングに問題があります";
+"Could not create symlink" = "シンボリックリンクを作成できません";
+
+
+
