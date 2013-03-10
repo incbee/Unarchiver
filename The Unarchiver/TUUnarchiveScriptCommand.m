@@ -215,14 +215,13 @@ enum extracionDestination {
 	TUArchiveController *archiveController=[[[TUArchiveController alloc] initWithFilename:fileName] autorelease];
 	NSString *destination;
 	switch (desttype) {
+		default:
 		case extractionDestinationCurrentFolderDestination:
 		case extractionDestinationDesktopDestination:
 			destination =[appController destinationForFilename:fileName type:desttype];
 			break;
 		case extractionDestinationCustomPath:
 			destination=extractDestination;
-			break;
-		default:
 			break;
 	}
 	[archiveController setDestination:destination];
