@@ -1,0 +1,98 @@
+/* Status text for queued multi-part archives */
+"%@ (+%d more)" = "%1$@ (+ още %2$d)";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the file \"%@\" from the archive \"%@\": %@" = "Извличане на файл „%1$@“ от архив „%2$@“ е невъзможно: %3$@";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@" = "Извличане на ресурсно разклонение на файл „%1$@“ от архив „%2$@“ е невъзможно: %3$@";
+
+/* Option in the password encoding pop-up to use the default encoding */
+"Default encoding" = "Ползвай по подразбиране";
+
+/* Option in the encoding pop-up to detect the encoding automatically */
+"Detect automatically" = "автоматично откриване";
+
+/* Panel OK button title when choosing an unarchiving destination for an archive */
+"Extract" = "Извлечи";
+
+/* Panel title when choosing an unarchiving destination for an archive */
+"Extract Archive" = "Извличане на архив";
+
+/* Status text while extracting an archive */
+"Extracting \"%@\"" = "Извличане на „%@“";
+
+/* Status text when preparing to extract an archive */
+"Preparing to extract \"%@\"" = "Подготвяне за извличане на „%@“";
+
+/* Panel OK button title when choosing a default unarchiving destination */
+"Select" = "Избери";
+
+/* Panel title when choosing archives to extract */
+"Select files to unarchive" = "Избор на файлове за разархивиране";
+
+/* Error message for files not extractable by The Unarchiver */
+"The contents of the file \"%@\" can not be extracted with this program." = "Програмата не е в състояние да извлече съдържанието на файл „%@“.";
+
+/* Error message when encountering an error while extracting entries */
+"There was a problem while extracting the contents of the file \"%@\": %@" = "Възникна неизправност при извличане на съдържанието на файл „%1$@“: %2$@";
+
+/* Error message when encountering an error while parsing an archive */
+"There was a problem while reading the contents of the file \"%@\": %@" = "Възникна неизправност при четене на съдържанието на файл „%1$@“: %2$@";
+
+/* Panel OK button title when choosing archives to extract */
+"Unarchive" = "Разархивирай";
+
+/* Status text when asking for a password */
+"You need to supply a password to open the archive \"%@\"." = "Предложете парола за отваряне на архив „%@“.";
+
+/* Title for nagging alert on first startup */
+"Where should The Unarchiver extract archives?" = "Къде Разархиваторът ще извлича архивите?";
+
+/* Content of nagging alert on first startup */
+"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "Разархиваторът ще извлича ли архивите в същата папка като физическия файл или предпочитате отделно запитване за целева папка за всеки от архивите?";
+
+/* Button to ask every time in nagging alert on first startup */
+"Ask every time" = "Питай всеки път";
+
+/* Button to extract to the same folder in nagging alert on first startup */
+"Extract to the same folder" = "Извлечи в същата папка";
+
+/* Informative text in the file panel shown when trying to gain sandbox access */
+"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "Разархиваторът не може да пише в папката. Вероятно достъпът до нея се блокира от пясъчника в Mac OS X. Натиснете „Извлечи“, за да поискате позволение от пясъчника. Позволението ще бъде запомнено и Разархиваторът няма да ви пита отново.";
+
+/* Informative text in the file panel shown when trying to gain sandbox access for multi-part archives */
+"The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "Разархиваторът трябва да намери още части на архива, но достъпът до папката се блокира от пясъчника в Mac OS X. Натиснете „Търси“, за да поискате позволение от пясъчника. Позволението ще бъде запомнено и Разархиваторът няма да ви пита отново.";
+
+/* Panel OK button title when searching for more archive parts */
+"Search" = "Търси";
+
+/* Common errors */
+"Attempted to read more data than was available" = "Непълен файл на архива";
+"Opening file failed" = "Невъзможно отваряне на файла";
+"Missing or wrong password" = "Предложената парола е неправилна";
+"Wrong checksum" = "Повреден файл на архива";
+"Could not create directory" = "Невъзможно създаване на папка";
+
+/* Uncommon or unused errors */
+"Unknown error" = "Неизвестна грешка";
+"Failed to write to file" = "Провалено писане на файл";
+"Function called with illegal parameters" = "Функцията е извикана с недопустими параметри";
+"Not enough memory available" = "Недостатъчно налична памет";
+"Data is corrupted" = "Повредени данни";
+"File is not fully supported" = "Непълно поддържан файл";
+"Required resource missing" = "Липсващ изискван ресурс";
+"Error on decrunching" = "Грешка при раздробяване";
+"Unknown file type" = "Неизвестен вид файл";
+"File, disk has been skipped" = "Пропуснат файл или диск";
+"User cancelled extraction" = "Извличането е прекратено от потребителя";
+"File already exists" = "Вече съществуващ файл";
+"Verify failed (disk hook)" = "Провалено проверяване (disk hook)";
+"Wrong drive geometry" = "Грешна геометричност на устройство";
+"Unknown data format" = "Неизвестен формат на данните";
+"Source contains no files" = "Източникът не съдържа файлове";
+"Unknown filesystem" = "Неизвестна файлова система";
+"Name of file exists as directory" = "Името на файла съществува като директория";
+"Buffer was too short" = "Твърде къс буфер";
+"Text encoding was defective" = "Сгрешено текстово кодиране";
+"Could not create symlink" = "Невъзможно създаване на символна връзка";
