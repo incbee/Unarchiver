@@ -383,9 +383,8 @@ static BOOL IsPathWritable(NSString *path);
 				NSTextField *text=[[[NSTextField alloc] initWithFrame:NSMakeRect(0,0,100,100)] autorelease];
 
 				[text setStringValue:NSLocalizedString(
-				@"The Unarchiver can not write to this folder. The Mac OS X "
-				@"sandbox may be blocking access to it. To ask the sandbox to "
-				@"allow The Unarchiver to write to this folder, simply click "
+				@"The Unarchiver does not have permission to write to this folder. "
+				@"To allow The Unarchiver to write to this folder, simply click "
 				@"\"Extract\". This permission will be remembered for this folder, and "
 				@"The Unarchiver will not need to ask for it again.",
 				@"Informative text in the file panel shown when trying to gain sandbox access")];
@@ -515,8 +514,8 @@ static BOOL IsPathWritable(NSString *path);
 
 			[text setStringValue:NSLocalizedString(
 			@"The Unarchiver needs to search for more parts of this archive, "
-			@"but the Mac OS X sandbox is blocking access to the folder. "
-			@"To ask the sandbox to allow The Unarchiver to search in "
+			@"but does not have permission to read the folder. "
+			@"To allow The Unarchiver to search in "
 			@"this folder, simply click \"Search\". This permission will be "
 			@"remembered for this folder, and The Unarchiver will not need to ask for it again.",
 			@"Informative text in the file panel shown when trying to gain sandbox access for multi-part archives")];

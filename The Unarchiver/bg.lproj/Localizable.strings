@@ -59,10 +59,10 @@
 "Extract to the same folder" = "Извлечи в същата папка";
 
 /* Informative text in the file panel shown when trying to gain sandbox access */
-"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "Разархиваторът не може да пише в папката. Вероятно достъпът до нея се блокира от пясъчника в Mac OS X. Натиснете „Извлечи“, за да поискате позволение от пясъчника. Позволението ще бъде запомнено и Разархиваторът няма да ви пита отново.";
+"The Unarchiver does not have permission to write to this folder. To allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered for this folder, and The Unarchiver will not need to ask for it again." = "Разархиваторът не може да пише в папката. Вероятно достъпът до нея се блокира от пясъчника в Mac OS X. Натиснете „Извлечи“, за да поискате позволение от пясъчника. Позволението ще бъде запомнено и Разархиваторът няма да ви пита отново.";
 
 /* Informative text in the file panel shown when trying to gain sandbox access for multi-part archives */
-"The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "Разархиваторът трябва да намери още части на архива, но достъпът до папката се блокира от пясъчника в Mac OS X. Натиснете „Търси“, за да поискате позволение от пясъчника. Позволението ще бъде запомнено и Разархиваторът няма да ви пита отново.";
+"The Unarchiver needs to search for more parts of this archive, but does not have permission to read the folder. To allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered for this folder, and The Unarchiver will not need to ask for it again." = "Разархиваторът трябва да намери още части на архива, но достъпът до папката се блокира от пясъчника в Mac OS X. Натиснете „Търси“, за да поискате позволение от пясъчника. Позволението ще бъде запомнено и Разархиваторът няма да ви пита отново.";
 
 /* Panel OK button title when searching for more archive parts */
 "Search" = "Търси";

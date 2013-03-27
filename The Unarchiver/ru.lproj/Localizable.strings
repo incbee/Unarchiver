@@ -59,10 +59,10 @@
 "Extract to the same folder" = "Извлекать в ту же папку";
 
 /* Informative text in the file panel shown when trying to gain sandbox access */
-"The Unarchiver can not write to this folder. The Mac OS X sandbox may be blocking access to it. To ask the sandbox to allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver не может записывать в эту папку. Возможно, доступ блокирует Mac OS X sandbox. Чтобы позволить The Unarchiver записывать в эту папку, просто щелкните «Extract». Это будет запомнено, и The Unarchiver больше не будет его запрашивать.";
+"The Unarchiver does not have permission to write to this folder. To allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered for this folder, and The Unarchiver will not need to ask for it again." = "The Unarchiver не может записывать в эту папку. Возможно, доступ блокирует Mac OS X sandbox. Чтобы позволить The Unarchiver записывать в эту папку, просто щелкните «Extract». Это будет запомнено, и The Unarchiver больше не будет его запрашивать.";
 
 /* Informative text in the file panel shown when trying to gain sandbox access for multi-part archives */
-"The Unarchiver needs to search for more parts of this archive, but the Mac OS X sandbox is blocking access to the folder. To ask the sandbox to allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered and The Unarchiver will not need to ask for it again." = "The Unarchiver необходимо найти остальные части архива, но Mac OS X sandbox заблокировал доступ к папке. Чтобы разрешить доступ The Unarchiver к поиску в данной папке, просто щелкните «Искать». Права доступа будут сохранены и The Unarchiver больше не будет их запрашивать.";
+"The Unarchiver needs to search for more parts of this archive, but does not have permission to read the folder. To allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered for this folder, and The Unarchiver will not need to ask for it again." = "The Unarchiver необходимо найти остальные части архива, но Mac OS X sandbox заблокировал доступ к папке. Чтобы разрешить доступ The Unarchiver к поиску в данной папке, просто щелкните «Искать». Права доступа будут сохранены и The Unarchiver больше не будет их запрашивать.";
 
 /* Panel OK button title when searching for more archive parts */
 "Search" = "Искать";
