@@ -1,0 +1,79 @@
+﻿/* Status text for queued multi-part archives */
+"%@ (+%d more)" = "%1$@ (+%2$d mais)";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the file \"%@\" from the archive \"%@\": %@" = "Não foi possível extrair o documento \"%1$@\" do arquivo \"%2$@\": %3$@";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@" = "Não foi possível processar a bifurcação de recursos para o documento \"%1$@\" do arquivo \"%2$@\":\n%3$@";
+
+/* Option in the password encoding pop-up to use the default encoding */
+"Default encoding" = "Codificação padrão";
+
+/* Option in the encoding pop-up to detect the encoding automatically */
+"Detect automatically" = "Detectar automaticamente";
+
+/* Panel OK button title when choosing an unarchiving destination for an archive */
+"Extract" = "Extrair";
+
+/* Panel title when choosing an unarchiving destination for an archive */
+"Extract Archive" = "Extrair Arquivo";
+
+/* Status text while extracting an archive */
+"Extracting \"%@\"" = "Extraindo \"%@\"";
+
+/* Status text when preparing to extract an archive */
+"Preparing to extract \"%@\"" = "Preparando para extrair \"%@\"";
+
+/* Panel OK button title when choosing a default unarchiving destination */
+"Select" = "Selecionar";
+
+/* Panel title when choosing archives to extract */
+"Select files to unarchive" = "Selecione os arquivos para descompactar";
+
+/* Error message for files not extractable by The Unarchiver */
+"The contents of the file \"%@\" can not be extracted with this program." = "O conteúdo do arquivo \"%@\" não pode ser extraído com este programa.";
+
+/* Error message when encountering an error while extracting entries */
+"There was a problem while extracting the contents of the file \"%@\": %@" = "Um problema ocorreu ao extrair o conteúdo do arquivo \"%1$@\": %2$@";
+
+/* Error message when encountering an error while parsing an archive */
+"There was a problem while reading the contents of the file \"%@\": %@" = "Um problema ocorreu ao ler o conteúdo do arquivo \"%1$@\": %2$@";
+
+/* Panel OK button title when choosing archives to extract */
+"Unarchive" = "Descompactar";
+
+/* Status text when asking for a password */
+"You need to supply a password to open the archive \"%@\"." = "Você precisa informar uma senha para abrir o arquivo \"%@\".";
+
+/* Error messages from XADMaster.framework. Some are converted to friendlier messages in Brazilian Portuguese, too. */
+
+/* Common errors */
+"Attempted to read more data than was available" = "O arquivo está incompleto";
+"Opening file failed" = "Não foi possível abrir o arquivo";
+"Missing or wrong password" = "A senha informada está incorreta";
+"Wrong checksum" = "O arquivo está corrompido";
+"Could not create directory" = "Não foi possível criar o diretório";
+
+/* Uncommon or unused errors */
+"Unknown error" = "Erro desconhecido";
+"Failed to write to file" = "Falha na escrita do arquivo";
+"Function called with illegal parameters" = "Funcão chamada com parâmetros não permitidos";
+"Not enough memory available" = "Não há memória suficiente";
+"Data is corrupted" = "Dados corrompidos";
+"File is not fully supported" = "O arquivo não é totalmente suportado";
+"Required resource missing" = "Recurso necessário indisponível";
+"Error on decrunching" = "Erro ao decodificar";
+"Unknown file type" = "Tipo de arquivo desconhecido";
+"File, disk has been skipped" = "Arquivo/disco ignorado";
+"User cancelled extraction" = "Extração cancelada pelo usuário";
+"File already exists" = "Arquivo já existente";
+"Verify failed (disk hook)" = "Falha na verificação (hook de disco)";
+"Wrong drive geometry" = "Geometria da unidade errada";
+"Unknown data format" = "Formato de dados desconhecido";
+"Source contains no files" = "Fonte não contém arquivos";
+"Unknown filesystem" = "Sistema de arquivos desconhecido";
+"Name of file exists as directory" = "O nome do arquivo já existe como pasta";
+"Buffer was too short" = "Buffer insuficiente";
+"Text encoding was defective" = "Codificação de caracteres danificada";
+"Could not create symlink" = "Não foi possível criar o link simbólico";
