@@ -7,7 +7,7 @@ __unar()
 	opts="--output-directory --force-overwrite --force-rename --force-skip \
 		--force-directory --no-directory --password --encoding \
 		--password-encoding --indexes --no-recursion --copy-time \
-		--no-quarantine --forks --quiet --help"
+		--no-quarantine --forks --quiet --help --version"
 	if [[ ${prev} == "--forks" ]] ; then
 		local forksopts
 		forksopts="fork visible hidden skip"
