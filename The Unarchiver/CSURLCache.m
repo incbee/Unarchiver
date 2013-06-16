@@ -80,7 +80,11 @@ static BOOL HasPathPrefix(NSString *path,NSString *prefix);
 	}
 
 	[cachedbookmarks setObject:bookmark forKey:path];
-	[cachedurls setObject:url forKey:path];
+
+	BOOL isstale;
+	[cachedurls setObject:url forKey:[NSURL URLByResolvingBookmarkData:bookmark
+	options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil
+	bookmarkDataIsStale:&isstale error:NULL]];
 
 	[NSUserDefaults.standardUserDefaults setObject:cachedbookmarks forKey:@"cachedBookmarks"];
 }
@@ -126,7 +130,7 @@ static BOOL HasPathPrefix(NSString *path,NSString *prefix);
 	options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil
 	bookmarkDataIsStale:&isstale error:NULL];
 
-	if(url)
+	if(url && !isstale)
 	{
 		[cachedurls setObject:url forKey:path];
 		return url;
