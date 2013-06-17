@@ -844,6 +844,26 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>xip</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>XIP Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.apple.xip-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>ace</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -2030,6 +2050,25 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>xar</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.xar-archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>XIP Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.apple.xip-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>xip</string>
 				</array>
 			</dict>
 		</dict>
