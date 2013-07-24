@@ -118,6 +118,14 @@
 
 		return [NSNumber numberWithBool:[self_id caseInsensitiveCompare:handler]==0];
 	}
+	else if([ident isEqual:@"browse"])
+	{
+		NSString *type=[[filetypes objectAtIndex:row] objectForKey:@"type"];
+		NSString *key=[NSString stringWithFormat:@"disableBrowsing.%@",type];
+		BOOL disabled=[NSUserDefaults.standardUserDefaults boolForKey:key];
+
+		return [NSNumber numberWithBool:!disabled];
+	}
 	else
 	{
 		return [[filetypes objectAtIndex:row] objectForKey:ident];
@@ -134,6 +142,12 @@
 
 		if([object boolValue]) [self claimType:type];
 		else [self surrenderType:type];
+	}
+	else if([ident isEqual:@"browse"])
+	{
+		NSString *type=[[filetypes objectAtIndex:row] objectForKey:@"type"];
+		NSString *key=[NSString stringWithFormat:@"disableBrowsing.%@",type];
+		[NSUserDefaults.standardUserDefaults setBool:![object boolValue] forKey:key];
 	}
 }
 
