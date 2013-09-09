@@ -576,7 +576,11 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)setupQueueEmpty:(TUTaskQueue *)queue
 {
-	if([extracttasks isEmpty]) [mainwindow orderOut:nil];
+	if([extracttasks isEmpty])
+	{
+		if([mainwindow isMiniaturized]) [mainwindow close];
+		else [mainwindow orderOut:nil];
+	}
 
 	[selecteddestination release];
 	selecteddestination=nil;
@@ -616,7 +620,11 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)extractQueueEmpty:(TUTaskQueue *)queue
 {
-	if([setuptasks isEmpty]) [mainwindow orderOut:nil];
+	if([setuptasks isEmpty])
+	{
+		if([mainwindow isMiniaturized]) [mainwindow close];
+		else [mainwindow orderOut:nil];
+	}
 
 	[TUArchiveController clearGlobalPassword];
 }
