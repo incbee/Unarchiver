@@ -652,7 +652,7 @@ static BOOL IsPathWritable(NSString *path);
 -(void)updateDestinationPopup
 {
 	NSString *path=[[NSUserDefaults standardUserDefaults] stringForKey:@"extractionDestinationPath"];
-	NSImage *icon=[[NSWorkspace sharedWorkspace] iconForFile:path];
+	NSImage *icon=[TUController iconForPath:path];
 
 	[icon setSize:NSMakeSize(16,16)];
 
@@ -810,6 +810,30 @@ userData:(NSString *)data error:(NSString **)error
 {
 	if ([key isEqualToString:@"hasRunningExtractions"]) return YES;
 	return NO;
+}
+
++(NSImage *)iconForPath:(NSString *)path
+{
+	NSString *usernameregex=[NSUserName() escapedPattern];
+
+	#define regexForUserPath(path) [NSString stringWithFormat:@"/%@/%@$",usernameregex,path,nil]
+	#define folderIconNamed(iconName) [[[NSImage alloc] initWithContentsOfFile:@"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/" iconName] autorelease]
+
+	NSImage *icon=nil;
+
+	if([path matchedByPattern:[NSString stringWithFormat:@"/%@$",usernameregex,nil]]) icon=folderIconNamed(@"HomeFolderIcon.icns");
+	else if([path matchedByPattern:regexForUserPath(@"Desktop")]) icon=folderIconNamed(@"DesktopFolderIcon.icns");
+	else if([path matchedByPattern:regexForUserPath(@"Documents")]) icon=folderIconNamed(@"DocumentsFolderIcon.icns");
+	else if([path matchedByPattern:regexForUserPath(@"Public")]) icon=folderIconNamed(@"PublicFolderIcon.icns");
+	else if([path matchedByPattern:regexForUserPath(@"Pictures")]) icon=folderIconNamed(@"PicturesFolderIcon.icns");
+	else if([path matchedByPattern:regexForUserPath(@"Downloads")]) icon=folderIconNamed(@"DownloadsFolder.icns");
+	else if([path matchedByPattern:regexForUserPath(@"Movies")]) icon=folderIconNamed(@"MovieFolderIcon.icns");
+	else if([path matchedByPattern:regexForUserPath(@"Music")]) icon=folderIconNamed(@"MusicFolderIcon.icns");
+	else if([path matchedByPattern:regexForUserPath(@"Sites")]) icon=folderIconNamed(@"SitesFolderIcon.icns");
+
+	if(!icon) icon=[[NSWorkspace sharedWorkspace] iconForFile:path];
+
+	return icon;
 }
 
 @end
