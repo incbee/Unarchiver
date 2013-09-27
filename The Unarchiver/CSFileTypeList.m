@@ -122,7 +122,7 @@
 	{
 		NSString *type=[[filetypes objectAtIndex:row] objectForKey:@"type"];
 		NSString *key=[NSString stringWithFormat:@"disableBrowsing.%@",type];
-		BOOL disabled=[NSUserDefaults.standardUserDefaults boolForKey:key];
+		BOOL disabled=[[NSUserDefaults standardUserDefaults] boolForKey:key];
 
 		return [NSNumber numberWithBool:!disabled];
 	}
@@ -147,7 +147,7 @@
 	{
 		NSString *type=[[filetypes objectAtIndex:row] objectForKey:@"type"];
 		NSString *key=[NSString stringWithFormat:@"disableBrowsing.%@",type];
-		[NSUserDefaults.standardUserDefaults setBool:![object boolValue] forKey:key];
+		[[NSUserDefaults standardUserDefaults] setBool:![object boolValue] forKey:key];
 	}
 }
 
