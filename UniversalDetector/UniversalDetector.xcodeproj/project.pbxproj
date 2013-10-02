@@ -914,6 +914,8 @@
 				GCC_VERSION = "";
 				GCC_VERSION_i386 = "";
 				GCC_VERSION_ppc = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				INSTALL_PATH = /usr/local/lib;
 				LIBTOOL = "$(SRCROOT)/../XADMaster/Windows/bin/libtoolstub.pl";
 				MACH_O_TYPE = mh_object;
@@ -969,6 +971,8 @@
 				GCC_VERSION = "";
 				GCC_VERSION_i386 = "";
 				GCC_VERSION_ppc = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				INSTALL_PATH = /usr/local/lib;
 				LIBTOOL = "$(SRCROOT)/../XADMaster/Windows/bin/libtoolstub.pl";
 				MACH_O_TYPE = mh_object;
