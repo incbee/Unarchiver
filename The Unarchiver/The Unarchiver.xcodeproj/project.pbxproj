@@ -662,6 +662,7 @@
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				3D664F5F1037772400A679EF /* CopyFiles */,
+				1B2390A3185149C800DC3151 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -915,6 +916,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1B2390A3185149C800DC3151 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "codesign --verbose --force --sign \"3rd Party Mac Developer Application: Dag Agren\" \"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}/XADMaster.framework/Versions/A\"\ncodesign --verbose --force --sign \"3rd Party Mac Developer Application: Dag Agren\" \"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}/UniversalDetector.framework/Versions/A\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
