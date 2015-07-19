@@ -2,10 +2,10 @@
 "%@ (+%d more)" = "%1$@ (nog %2$d meer)";
 
 /* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
-"Could not extract the file \"%@\" from the archive \"%@\": %@" = "Bestand \"%1$@\" van het archief \"%2$@\" kon niet worden uitgepakt: %3$@";
+"Could not extract the file \"%@\" from the archive \"%@\": %@" = "Bestand '%1$@' kon niet uit archief '%2$@' worden gehaald: %3$@";
 
 /* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
-"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@" = "De resource fork van het bestand \"%1$@\" van het archief \"%2$@\" kon niet worden uitgepakt: \n%3$@";
+"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@" = "De resource-fork van bestand '%1$@' kon niet uit archief '%2$@' worden gehaald:\n%3$@";
 
 /* Option in the password encoding pop-up to use the default encoding */
 "Default encoding" = "Standaardcodering";
@@ -20,10 +20,10 @@
 "Extract Archive" = "Archief uitpakken";
 
 /* Status text while extracting an archive */
-"Extracting \"%@\"" = "Bezig met uitpakken van \"%@\"";
+"Extracting \"%@\"" = "'%@' uitpakken...";
 
 /* Status text when preparing to extract an archive */
-"Preparing to extract \"%@\"" = "\"%@\" wordt voorbereid om uit te pakken";
+"Preparing to extract \"%@\"" = "'%@' voorbereiden...";
 
 /* Panel OK button title when choosing a default unarchiving destination */
 "Select" = "Selecteer";
@@ -32,37 +32,37 @@
 "Select files to unarchive" = "Selecteer archieven om uit te pakken";
 
 /* Error message for files not extractable by The Unarchiver */
-"The contents of the file \"%@\" can not be extracted with this program." = "De inhoud van het archief \"%@\" kan niet met dit programma worden uitgepakt.";
+"The contents of the file \"%@\" can not be extracted with this program." = "De inhoud van archief '%@' kan niet met dit programma worden uitgepakt.";
 
 /* Error message when encountering an error while extracting entries */
-"There was a problem while extracting the contents of the file \"%@\": %@" = "Bij het uitpakken van het archief \"%1$@\" is deze fout opgetreden: %2$@";
+"There was a problem while extracting the contents of the file \"%@\": %@" = "Bij het uitpakken van archief '%1$@' is deze fout opgetreden: %2$@";
 
 /* Error message when encountering an error while parsing an archive */
-"There was a problem while reading the contents of the file \"%@\": %@" = "Bij het lezen van het archief \"%1$@\" is deze fout opgetreden: %2$@";
+"There was a problem while reading the contents of the file \"%@\": %@" = "Bij het lezen van archief '%1$@' is deze fout opgetreden: %2$@";
 
 /* Panel OK button title when choosing archives to extract */
 "Unarchive" = "Pak uit";
 
 /* Status text when asking for a password */
-"You need to supply a password to open the archive \"%@\"." = "Een wachtwoord is vereist om het archief \"%@\" te openen.";
+"You need to supply a password to open the archive \"%@\"." = "Een wachtwoord is vereist om archief '%@' te openen.";
 
 /* Title for nagging alert on first startup */
 "Where should The Unarchiver extract archives?" = "Waar moet worden uitgepakt?";
 
 /* Content of nagging alert on first startup */
-"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "Wilt u dat The Unarchiver voortaan elk archief in dezelfde bovenliggende map van het betreffende archief uitpakt, of wilt u telkens afzonderlijk worden gevraagd?";
+"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "Wilt u dat The Unarchiver voortaan elk archief in dezelfde map als het archief uitpakt of wilt u elke keer worden gevraagd?";
 
 /* Button to ask every time in nagging alert on first startup */
-"Ask every time" = "Vraag mij telkens";
+"Ask every time" = "Vraag mij elke keer";
 
 /* Button to extract to the same folder in nagging alert on first startup */
-"Extract to the same folder" = "Pak uit in dezelfde map";
+"Extract to the same folder" = "Pak uit in dezelfde map als archief";
 
 /* Informative text in the file panel shown when trying to gain sandbox access */
-"The Unarchiver does not have permission to write to this folder. To allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered for this folder, and The Unarchiver will not need to ask for it again." = "The Unarchiver heeft geen bevoegdheid om in deze map te schrijven. Om de bevoegdheid te geven klikt u op \"Pak uit\". Deze bevoegdheid zal worden onthouden en The Unarchiver zal u niet opnieuw vragen.";
+"The Unarchiver does not have permission to write to this folder. To allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered for this folder, and The Unarchiver will not need to ask for it again." = "The Unarchiver heeft geen bevoegdheid om in deze map te schrijven. Om de bevoegdheid te geven klikt u op 'Pak uit'. Deze bevoegdheid zal worden onthouden en The Unarchiver zal u niet opnieuw vragen.";
 
 /* Informative text in the file panel shown when trying to gain sandbox access for multi-part archives */
-"The Unarchiver needs to search for more parts of this archive, but does not have permission to read the folder. To allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered for this folder, and The Unarchiver will not need to ask for it again." = "The Unarchiver moet naar andere delen van dit archief zoeken, maar heeft geen bevoegdheid om deze map te lezen. Om de bevoegdheid te geven klikt u op \"Zoek\". Deze bevoegdheid zal worden onthouden en The Unarchiver zal u niet opnieuw vragen.";
+"The Unarchiver needs to search for more parts of this archive, but does not have permission to read the folder. To allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered for this folder, and The Unarchiver will not need to ask for it again." = "The Unarchiver moet naar andere delen van dit archief zoeken, maar heeft geen bevoegdheid om deze map te lezen. Om de bevoegdheid te geven klikt u op 'Zoek'. Deze bevoegdheid zal worden onthouden en The Unarchiver zal u niet opnieuw vragen.";
 
 /* Panel OK button title when searching for more archive parts */
 "Search" = "Zoek";
@@ -71,9 +71,9 @@
 
 /* Common errors */
 "Attempted to read more data than was available" = "Archief is onvolledig";
-"Opening file failed" = "Archief kan niet worden geopend";
-"Missing or wrong password" = "Wachtwoord is fout of ontbreekt";
-"Wrong checksum" = "Controlecijfer is fout";
+"Opening file failed" = "Archief kon niet worden geopend";
+"Missing or wrong password" = "Wachtwoord is onjuist of ontbreekt";
+"Wrong checksum" = "Controlecijfer is onjuist";
 "Could not create directory" = "Map kon niet worden aangemaakt";
 
 /* Uncommon or unused errors */
@@ -83,18 +83,18 @@
 "Not enough memory available" = "Niet genoeg geheugen beschikbaar";
 "Data is corrupted" = "Archief is beschadigd";
 "File is not fully supported" = "Archief wordt niet volledig ondersteund";
-"Required resource missing" = "Noodzakelijke hulpbron ontbreekt";
+"Required resource missing" = "Vereiste hulpbron ontbreekt";
 "Error on decrunching" = "Fout bij het decrunchen";
-"Unknown file type" = "Onbekend bestandssoort";
+"Unknown file type" = "Onbekende bestandssoort";
 "File, disk has been skipped" = "Archief, harde schijf overgeslagen";
-"User cancelled extraction" = "Gebruiker heeft het uitpakken gestopt";
+"User cancelled extraction" = "Gebruiker heeft het uitpakken geannuleerd";
 "File already exists" = "Bestand bestaat al";
-"Verify failed (disk hook)" = "Controle mislukt (disk hook)";
+"Verify failed (disk hook)" = "Controle mislukt (disk-hook)";
 "Wrong drive geometry" = "Harde schijf heeft verkeerde geometrie";
 "Unknown data format" = "Onbekend dataformaat";
 "Source contains no files" = "Bron bevat geen bestanden";
 "Unknown filesystem" = "Onbekend bestandssysteem";
 "Name of file exists as directory" = "Bestandsnaam bestaat al als map";
 "Buffer was too short" = "Buffer te kort";
-"Text encoding was defective" = "Soortherkenning is defect";
+"Text encoding was defective" = "Tekstcodering was defect";
 "Could not create symlink" = "Symlink kon niet worden aangemaakt";
