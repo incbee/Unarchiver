@@ -301,7 +301,7 @@
 	[encodingpopup buildEncodingListMatchingXADString:string];
 	if(encoding)
 	{
-		int index=[encodingpopup indexOfItemWithTag:encoding];
+		int index=(int)[encodingpopup indexOfItemWithTag:encoding];
 		if(index>=0) [encodingpopup selectItemAtIndex:index];
 		else [encodingpopup selectItemAtIndex:[encodingpopup indexOfItemWithTag:NSISOLatin1StringEncoding]];
 	}

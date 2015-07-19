@@ -126,13 +126,13 @@ enum extracionDestination {
 					break;
 				default:
 					//If there is no parameter we use the user defaults
-					destinationIntValue = [[NSUserDefaults standardUserDefaults] integerForKey:UDKdestination];
+					destinationIntValue = (int)[[NSUserDefaults standardUserDefaults] integerForKey:UDKdestination];
 					break;
 			}
 		}
 	}
 	else {
-		destinationIntValue = [[NSUserDefaults standardUserDefaults] integerForKey:UDKdestination];
+		destinationIntValue = (int)[[NSUserDefaults standardUserDefaults] integerForKey:UDKdestination];
 	}
 	desttype=destinationIntValue;
 	
@@ -153,7 +153,7 @@ enum extracionDestination {
 			creatingFolder = creatingFolderUDAlways;
 			break;
 		default:
-			creatingFolder = [[NSUserDefaults standardUserDefaults] integerForKey:UDKcreateFolderMode];
+			creatingFolder = (int)[[NSUserDefaults standardUserDefaults] integerForKey:UDKcreateFolderMode];
 			break;
 	}
 	

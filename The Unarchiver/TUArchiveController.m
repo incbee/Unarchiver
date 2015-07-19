@@ -99,7 +99,7 @@ NSStringEncoding globalpasswordencoding=0;
 -(int)folderCreationMode
 {
 	if(foldermodeoverride>=0) return foldermodeoverride;
-	else return [[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"];
+	else return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"];
 }
 
 -(void)setFolderCreationMode:(int)mode { foldermodeoverride=mode; }
@@ -456,7 +456,7 @@ NSStringEncoding globalpasswordencoding=0;
 
 	// If the user has already been asked for an encoding, try to use it.
 	// Otherwise, if the confidence in the guessed encoding is high enough, try that.
-	int threshold=[[NSUserDefaults standardUserDefaults] integerForKey:@"autoDetectionThreshold"];
+	int threshold=(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"autoDetectionThreshold"];
 
 	NSStringEncoding encoding=0;
 	if(selected_encoding) encoding=selected_encoding;

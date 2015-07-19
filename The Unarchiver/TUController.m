@@ -191,7 +191,7 @@ static BOOL IsPathWritable(NSString *path);
 
 	int desttype;
 	if(GetCurrentKeyModifiers()&(optionKey|shiftKey)) desttype=SelectedDestination;
-	else desttype=[[NSUserDefaults standardUserDefaults] integerForKey:@"extractionDestination"];
+	else desttype=(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"extractionDestination"];
 
 	[self newArchiveForFile:filename destination:desttype];
 	return YES;
@@ -253,7 +253,7 @@ static BOOL IsPathWritable(NSString *path);
 	[archive setDockTileView:docktile];
 
 	[archivecontrollers addObject:archive];
-	[docktile setCount:[archivecontrollers count]];
+	[docktile setCount:(int)[archivecontrollers count]];
 
 	[NSApp activateIgnoringOtherApps:YES];
 	[mainwindow makeKeyAndOrderFront:nil];
@@ -291,7 +291,7 @@ static BOOL IsPathWritable(NSString *path);
 	if([archive isCancelled])
 	{
  		[archivecontrollers removeObjectIdenticalTo:archive];
-		[docktile setCount:[archivecontrollers count]];
+		[docktile setCount:(int)[archivecontrollers count]];
 		[setuptasks finishCurrentTask];
 		return;
 	}
@@ -337,7 +337,7 @@ static BOOL IsPathWritable(NSString *path);
 		#else
 		if(rememberedpath) [panel setDirectoryURL:[NSURL fileURLWithPath:rememberedpath]];
 		[panel beginSheetModalForWindow:mainwindow completionHandler:^(NSInteger result) {
-			[self archiveDestinationPanelDidEnd:panel returnCode:result contextInfo:archive];
+			[self archiveDestinationPanelDidEnd:panel returnCode:(int)result contextInfo:archive];
 		}];
 		#endif
 
@@ -406,7 +406,7 @@ static BOOL IsPathWritable(NSString *path);
 				[panel setDirectoryURL:[NSURL fileURLWithPath:destination]];
 
 				[panel beginSheetModalForWindow:mainwindow completionHandler:^(NSInteger result) {
-					[self archiveDestinationPanelDidEnd:panel returnCode:result contextInfo:archive];
+					[self archiveDestinationPanelDidEnd:panel returnCode:(int)result contextInfo:archive];
 				}];
 			}
 			return;
@@ -569,7 +569,7 @@ static BOOL IsPathWritable(NSString *path);
 -(void)cancelSetupForArchiveController:(TUArchiveController *)archive
 {
 	[archivecontrollers removeObjectIdenticalTo:archive];
-	[docktile setCount:[archivecontrollers count]];
+	[docktile setCount:(int)[archivecontrollers count]];
 	[mainlist removeTaskView:[archive taskView]];
 	[setuptasks finishCurrentTask];
 }
@@ -600,7 +600,7 @@ static BOOL IsPathWritable(NSString *path);
 	if([archive isCancelled])
 	{
 		[archivecontrollers removeObjectIdenticalTo:archive];
-		[docktile setCount:[archivecontrollers count]];
+		[docktile setCount:(int)[archivecontrollers count]];
 		[extracttasks finishCurrentTask];
 		return;
 	}
@@ -613,7 +613,7 @@ static BOOL IsPathWritable(NSString *path);
 -(void)archiveControllerFinished:(TUArchiveController *)archive
 {
 	[archivecontrollers removeObjectIdenticalTo:archive];
-	[docktile setCount:[archivecontrollers count]];
+	[docktile setCount:(int)[archivecontrollers count]];
 	[mainlist removeTaskView:[archive taskView]];
 	[extracttasks finishCurrentTask];
 }
@@ -681,7 +681,7 @@ static BOOL IsPathWritable(NSString *path);
 		[panel setDirectoryURL:[NSURL fileURLWithPath:oldpath]];
 		[panel setAllowedFileTypes:nil];
 		[panel beginSheetModalForWindow:prefswindow completionHandler:^(NSInteger result) {
-			[self destinationPanelDidEnd:panel returnCode:result contextInfo:nil];
+			[self destinationPanelDidEnd:panel returnCode:(int)result contextInfo:nil];
 		}];
 		#endif
 	}
@@ -768,7 +768,7 @@ userData:(NSString *)data error:(NSString **)error
 	[panel setTitle:NSLocalizedString(@"Select files to unarchive",@"Panel title when choosing archives to extract")];
 	[panel setPrompt:NSLocalizedString(@"Unarchive",@"Panel OK button title when choosing archives to extract")];
 
-	int res=[panel runModal];
+	int res=(int)[panel runModal];
 
 	if(res==NSOKButton)
 	{
@@ -784,7 +784,7 @@ userData:(NSString *)data error:(NSString **)error
 
 -(IBAction)changeCreateFolder:(id)sender
 {
-	int createfolder=[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"];
+	int createfolder=(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"];
 	[singlefilecheckbox setEnabled:createfolder==1];
 }
 
