@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">12E55</string>
-		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.39</string>
-		<string key="IBDocument.HIToolboxVersion">626.00</string>
+		<string key="IBDocument.SystemVersion">14A389</string>
+		<string key="IBDocument.InterfaceBuilderVersion">6250</string>
+		<string key="IBDocument.AppKitVersion">1343.14</string>
+		<string key="IBDocument.HIToolboxVersion">755.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">3084</string>
+			<string key="NS.object.0">6250</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSButton</string>
@@ -84,7 +84,7 @@
 							<int key="NSCellFlags2">272629760</int>
 							<string key="NSContents">The Unarchiver heeft geen bevoegdheid om in deze map te schrijven. Het archief kan hier niet worden uitgepakt.</string>
 							<object class="NSFont" key="NSSupport" id="26">
-								<string key="NSName">LucidaGrande</string>
+								<bool key="IBIsSystemFont">YES</bool>
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">3100</int>
 							</object>
@@ -109,11 +109,12 @@
 							</object>
 						</object>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+						<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
 					</object>
 					<object class="NSButton" id="951055739">
 						<reference key="NSNextResponder" ref="1013101151"/>
 						<int key="NSvFlags">265</int>
-						<string key="NSFrame">{{308, 3}, {162, 28}}</string>
+						<string key="NSFrame">{{323, 3}, {143, 28}}</string>
 						<reference key="NSSuperview" ref="1013101151"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -121,7 +122,7 @@
 						<object class="NSButtonCell" key="NSCell" id="740971568">
 							<int key="NSCellFlags">67108864</int>
 							<int key="NSCellFlags2">134348800</int>
-							<string key="NSContents">Op bureaublad uitpakken</string>
+							<string key="NSContents">Pak uit op bureaublad</string>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="951055739"/>
 							<int key="NSButtonFlags">-2038284288</int>
@@ -137,7 +138,7 @@
 					<object class="NSButton" id="183414545">
 						<reference key="NSNextResponder" ref="1013101151"/>
 						<int key="NSvFlags">265</int>
-						<string key="NSFrame">{{180, 3}, {126, 28}}</string>
+						<string key="NSFrame">{{216, 3}, {109, 28}}</string>
 						<reference key="NSSuperview" ref="1013101151"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="951055739"/>
@@ -145,7 +146,7 @@
 						<object class="NSButtonCell" key="NSCell" id="1037550858">
 							<int key="NSCellFlags">67108864</int>
 							<int key="NSCellFlags2">134348800</int>
-							<string key="NSContents">Elders uitpakken...</string>
+							<string key="NSContents">Pak elders uit...</string>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="183414545"/>
 							<int key="NSButtonFlags">-2038284288</int>
@@ -161,7 +162,7 @@
 					<object class="NSButton" id="760114980">
 						<reference key="NSNextResponder" ref="1013101151"/>
 						<int key="NSvFlags">265</int>
-						<string key="NSFrame">{{93, 3}, {85, 28}}</string>
+						<string key="NSFrame">{{138, 3}, {80, 28}}</string>
 						<reference key="NSSuperview" ref="1013101151"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="183414545"/>
@@ -192,7 +193,7 @@
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
-			<array class="NSMutableArray" key="connectionRecords">
+			<array key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">notwritableview</string>
@@ -259,8 +260,8 @@
 							<reference ref="97263181"/>
 							<reference ref="759018430"/>
 							<reference ref="951055739"/>
-							<reference ref="760114980"/>
 							<reference ref="183414545"/>
+							<reference ref="760114980"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">View</string>
@@ -340,6 +341,7 @@
 				<string key="11.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="34.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="49.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<reference key="5.IBNSViewMetadataGestureRecognizers" ref="0"/>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="50.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="51.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -352,14 +354,19 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">53</int>
+			<int key="maxID">55</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
+		<bool key="IBDocument.previouslyAttemptedUpgradeToXcode5">NO</bool>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
+		</object>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
+			<integer value="4600" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
