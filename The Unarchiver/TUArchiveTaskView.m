@@ -12,6 +12,7 @@
 
 		waitview=nil;
 		progressview=nil;
+		notwritableview=nil;
 		errorview=nil;
 		openerrorview=nil;
 		passwordview=nil;
@@ -28,6 +29,7 @@
 
 	[waitview release];
 	[progressview release];
+	[notwritableview release];
 	[errorview release];
 	[openerrorview release];
 	[passwordview release];
