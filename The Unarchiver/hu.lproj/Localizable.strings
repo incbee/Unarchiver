@@ -1,0 +1,103 @@
+﻿/* Status text for queued multi-part archives */
+"%@ (+%d more)" = "%1$@ (+%2$d további)";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the file \"%@\" from the archive \"%@\": %@" = "A fájl kibontása nem sikerült: \"%1$@\" az archívumból: \"%2$@\": %3$@";
+
+/* Error message string. The first %@ is the file name, the second the archive name, the third is error message */
+"Could not extract the resource fork for the file \"%@\" from the archive \"%@\":\n%@" = "Nem sikerült kibontani az erőforrás ágat a következő fájlhoz: \"%1$@\", amely ebben az archívumban található: \"%2$@\":\n%3$@";
+
+/* Option in the password encoding pop-up to use the default encoding */
+"Default encoding" = "Alapértelmezett kódolás";
+
+/* Option in the encoding pop-up to detect the encoding automatically */
+"Detect automatically" = "Automatikus";
+
+/* Panel OK button title when choosing an unarchiving destination for an archive */
+"Extract" = "Kibontás";
+
+/* Panel title when choosing an unarchiving destination for an archive */
+"Extract Archive" = "Archívum kibontása";
+
+/* Status text while extracting an archive */
+"Extracting \"%@\"" = "\"%@\" kibontása";
+
+/* Status text when preparing to extract an archive */
+"Preparing to extract \"%@\"" = "\"%@\" kibontásának előkészítése";
+
+/* Panel OK button title when choosing a default unarchiving destination */
+"Select" = "Kiválaszt";
+
+/* Panel title when choosing archives to extract */
+"Select files to unarchive" = "Kicsomagolandó fájlok kiválasztása";
+
+/* Error message for files not extractable by The Unarchiver */
+"The contents of the file \"%@\" can not be extracted with this program." = "A program nem tudja kibontani a következő fájlok tartalmát: \"%@\"";
+
+/* Error message when encountering an error while extracting entries */
+"There was a problem while extracting the contents of the file \"%@\": %@" = "Probléma merült fel a következő fájl tartalmának kibontásakor: \"%1$@\": %2$@";
+
+/* Error message when encountering an error while parsing an archive */
+"There was a problem while reading the contents of the file \"%@\": %@" = "Probléma merült fel a következő fájl olvasásakor \"%1$@\": %2$@";
+
+/* Panel OK button title when choosing archives to extract */
+"Unarchive" = "Kibontás";
+
+/* Status text when asking for a password */
+"You need to supply a password to open the archive \"%@\"." = "Be kell írnia a jelszót a következő archívum megnyitásához: \"%@\".";
+
+/* Title for nagging alert on first startup */
+"Where should The Unarchiver extract archives?" = "Hova bontsa ki az Unarchiver az archívumokat?";
+
+/* Content of nagging alert on first startup */
+"Would you like The Unarchiver to extract archives to the same folder as the archive file, or would you prefer to be asked for a destination folder for every individual archive?" = "Szeretné, hogy az Unarchiver mindig az őket tartalmazó mappába csomagolja ki az archívumokat, vagy minden kicsomagolás alkalmával kérdezze meg a célmappát?";
+
+/* Button to ask every time in nagging alert on first startup */
+"Ask every time" = "Kérdezze meg minden alkalommal";
+
+/* Button to extract to the same folder in nagging alert on first startup */
+"Extract to the same folder" = "Kibontás ugyanabba a mappába";
+
+/* Informative text in the file panel shown when trying to gain sandbox access */
+"The Unarchiver does not have permission to write to this folder. To allow The Unarchiver to write to this folder, simply click \"Extract\". This permission will be remembered for this folder, and The Unarchiver will not need to ask for it again." = "Az Unarhiver-nek nincs jogosultsága írni ezt a mappát. A művelet engedélyezéséhez kattintson a \"Kibontás\"-ra. Az Unarchiver ezentúl jogosult lesz írni ezt a mappát külön engedélykérés nélkül";
+
+/* Informative text in the file panel shown when trying to gain sandbox access for multi-part archives */
+"The Unarchiver needs to search for more parts of this archive, but does not have permission to read the folder. To allow The Unarchiver to search in this folder, simply click \"Search\". This permission will be remembered for this folder, and The Unarchiver will not need to ask for it again." = "Az Unarchiver-nek meg kell keresnie az archívum további részeit, de nincs jogosultsága olvasni a mappát. A művelet engedélyezéséhez kattintson a \"Keresés\"-re. Az Unarchiver ezentúl jogosult lesz olvasni ezt a mappátkülön engedélykérés nélkül.";
+
+/* Panel OK button title when searching for more archive parts */
+"Search" = "Keresés";
+
+/* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
+
+/* Common errors */
+"Attempted to read more data than was available" = "Az archívum hiányos";
+"Opening file failed" = "A fájl nem nyitható meg";
+"Missing or wrong password" = "Helytelen jelszó";
+"Wrong checksum" = "Az archívum sérült";
+"Could not create directory" = "Mappa létrehozása sikertelen";
+
+/* Uncommon or unused errors */
+"Unknown error" = "Ismeretlen hiba";
+"Failed to write to file" = "A fájl írása sikertelen";
+"Function called with illegal parameters" = "Érvénytelen függvényparaméterek";
+"Not enough memory available" = "Nincs elég memória";
+"Data is corrupted" = "Az adatok sérültek";
+"File is not fully supported" = "A fájl nem teljesen támogatott";
+"Required resource missing" = "Egy szükséges erőforrás hiányzik";
+"Error on decrunching" = "Error on decrunching";
+"Unknown file type" = "Ismeretlen fájltípus";
+"File, disk has been skipped" = "Fájl, lemez kihagyva";
+"User cancelled extraction" = "A felhazsnáló megszakította a kibontást";
+"File already exists" = "A fájl már létezik";
+"Verify failed (disk hook)" = "A megerősítés nem sikerült (lemezhez )";
+"Wrong drive geometry" = "Rossz a meghajtó geometriája";
+"Unknown data format" = "Ismeretlen adatformátum";
+"Source contains no files" = "A forrás nem tartalmaz fájlokat";
+"Unknown filesystem" = "Ismeretlen fájlrendszer";
+"Name of file exists as directory" = "Ezen a fájlnéven már létezik egy könyvtár";
+"Buffer was too short" = "A puffer túl rövid volt";
+"Text encoding was defective" = "A szöveg kódolása hiányos volt";
+"Could not create symlink" = "Szimbolikus csatolás késztése sikertelen";
+
+
+

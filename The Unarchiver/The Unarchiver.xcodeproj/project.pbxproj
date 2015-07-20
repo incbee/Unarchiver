@@ -302,6 +302,15 @@
 		1B4C2F2B15A25E4E00990BF1 /* ar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1B4E39F51677EDA200AA29D3 /* CSURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSURLCache.h; sourceTree = "<group>"; };
 		1B4E39F61677EDA200AA29D3 /* CSURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSURLCache.m; sourceTree = "<group>"; };
+		1B61E9331B5D8149005AE72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = hu; path = hu.lproj/EncodingView.nib; sourceTree = "<group>"; };
+		1B61E9341B5D8149005AE72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1B61E9351B5D8149005AE72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1B61E9361B5D8149005AE72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		1B61E9371B5D8149005AE72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = hu; path = hu.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		1B61E9381B5D8149005AE72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = hu; path = hu.lproj/NotWritableView.nib; sourceTree = "<group>"; };
+		1B61E9391B5D8149005AE72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = hu; path = hu.lproj/ErrorView.nib; sourceTree = "<group>"; };
+		1B61E93A1B5D8149005AE72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = hu; path = hu.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
+		1B61E93B1B5D8149005AE72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = hu; path = hu.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1B6FA2090A58A1D800066489 /* CSFileTypeList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CSFileTypeList.h; sourceTree = "<group>"; };
 		1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CSFileTypeList.m; sourceTree = "<group>"; };
 		1B738CB917DE856C00481D43 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -713,6 +722,7 @@
 				bg,
 				"pt-BR",
 				nl,
+				hu,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* The Unarchiver */;
 			projectDirPath = "";
@@ -973,6 +983,7 @@
 				1B375D2016EEA96E00773BB8 /* bg */,
 				1BB30DEC1767C7F800D41A57 /* pt-BR */,
 				1B738CB917DE856C00481D43 /* nl */,
+				1B61E9341B5D8149005AE72C /* hu */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -998,6 +1009,7 @@
 				1B375D2116EEA96E00773BB8 /* bg */,
 				1BB30DED1767C7F800D41A57 /* pt-BR */,
 				1B738CBA17DE856C00481D43 /* nl */,
+				1B61E9351B5D8149005AE72C /* hu */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1023,6 +1035,7 @@
 				1B375D2516EEA96E00773BB8 /* bg */,
 				1BB30DF11767C7F900D41A57 /* pt-BR */,
 				1B738CBE17DE856C00481D43 /* nl */,
+				1B61E9391B5D8149005AE72C /* hu */,
 			);
 			name = ErrorView.nib;
 			sourceTree = "<group>";
@@ -1048,6 +1061,7 @@
 				1B375D2616EEA96E00773BB8 /* bg */,
 				1BB30DF21767C7F900D41A57 /* pt-BR */,
 				1B738CBF17DE856C00481D43 /* nl */,
+				1B61E93A1B5D8149005AE72C /* hu */,
 			);
 			name = OpenErrorView.nib;
 			sourceTree = "<group>";
@@ -1073,6 +1087,7 @@
 				1B375D2716EEA96E00773BB8 /* bg */,
 				1BB30DF31767C7F900D41A57 /* pt-BR */,
 				1B738CC017DE856C00481D43 /* nl */,
+				1B61E93B1B5D8149005AE72C /* hu */,
 			);
 			name = PasswordView.nib;
 			sourceTree = "<group>";
@@ -1098,6 +1113,7 @@
 				1B375D2816EEA96E00773BB8 /* bg */,
 				1BB30DF41767C7F900D41A57 /* pt-BR */,
 				1B738CC117DE856C00481D43 /* nl */,
+				1B61E9331B5D8149005AE72C /* hu */,
 			);
 			name = EncodingView.nib;
 			sourceTree = "<group>";
@@ -1123,6 +1139,7 @@
 				1B375D2216EEA96E00773BB8 /* bg */,
 				1BB30DEE1767C7F800D41A57 /* pt-BR */,
 				1B738CBB17DE856C00481D43 /* nl */,
+				1B61E9361B5D8149005AE72C /* hu */,
 			);
 			name = ServicesMenu.strings;
 			sourceTree = "<group>";
@@ -1148,6 +1165,7 @@
 				1B375D2416EEA96E00773BB8 /* bg */,
 				1BB30DF01767C7F800D41A57 /* pt-BR */,
 				1B738CBD17DE856C00481D43 /* nl */,
+				1B61E9381B5D8149005AE72C /* hu */,
 			);
 			name = NotWritableView.nib;
 			sourceTree = "<group>";
@@ -1173,6 +1191,7 @@
 				1B375D2316EEA96E00773BB8 /* bg */,
 				1BB30DEF1767C7F800D41A57 /* pt-BR */,
 				1B738CBC17DE856C00481D43 /* nl */,
+				1B61E9371B5D8149005AE72C /* hu */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
