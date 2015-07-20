@@ -86,6 +86,7 @@ void FreeUniversalDetector(void *detectorptr)
 
 void UniversalDetectorHandleData(void *detectorptr,const char *data,int length)
 {
+	if(length==0) return; // There seems to be a bug in UniversalDetector that accesses beyond the end of 0-length buffers.
 	wrappedUniversalDetector *detector=(wrappedUniversalDetector *)detectorptr;
 	if(detector->done()) return;
 	detector->HandleData(data,length);
