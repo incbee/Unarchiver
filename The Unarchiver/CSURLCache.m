@@ -87,6 +87,7 @@ static BOOL HasPathPrefix(NSString *path,NSString *prefix);
 	bookmarkDataIsStale:&isstale error:NULL]];
 
 	[NSUserDefaults.standardUserDefaults setObject:cachedbookmarks forKey:@"cachedBookmarks"];
+	[NSUserDefaults.standardUserDefaults synchronize];
 }
 
 -(NSURL *)securityScopedURLAllowingAccessToURL:(NSURL *)url
