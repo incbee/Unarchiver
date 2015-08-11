@@ -689,7 +689,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				TargetAttributes = {
 					8D1107260486CEB800E47090 = {
 						DevelopmentTeam = M9KXCWYWYR;
@@ -1243,6 +1243,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_BUNDLE_IDENTIFIER = cx.c3.theunarchiver;
 				PRODUCT_NAME = "The Unarchiver";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
@@ -1272,6 +1273,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_BUNDLE_IDENTIFIER = cx.c3.theunarchiver;
 				PRODUCT_NAME = "The Unarchiver";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
@@ -1291,6 +1293,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "The Unarchiver_Prefix.pch";

@@ -548,7 +548,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "UniversalDetector" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -872,6 +872,7 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.mozilla.universalchardet;
 				PRODUCT_NAME = UniversalDetector;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -998,6 +999,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.mozilla.universalchardet;
 				PRODUCT_NAME = UniversalDetector;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1017,6 +1019,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;

@@ -366,7 +366,7 @@ NSStringEncoding globalpasswordencoding=0;
 		}
 
 		[[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation
-		source:directory destination:nil files:allfiles tag:nil];
+		source:directory destination:@"" files:allfiles tag:nil];
 		//[self playSound:@"/System/Library/Components/CoreAudio.component/Contents/Resources/SystemSounds/dock/drag to trash.aif"];
 	}
 

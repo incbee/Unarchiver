@@ -1788,7 +1788,7 @@
 	<key>CFBundleIconFile</key>
 	<string>unarchiver</string>
 	<key>CFBundleIdentifier</key>
-	<string>cx.c3.theunarchiver</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
