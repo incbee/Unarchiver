@@ -1,6 +1,6 @@
-http://wakaba.c3.cx/images/unarchiver_icon.png
+![Icon](http://wakaba.c3.cx/images/unarchiver_icon.png)
 
-=== The Unarchiver is an Objective-C application for uncompressing archive files. ===
+# The Unarchiver is an Objective-C application for uncompressing archive files.
 
 * Supports more formats than I can remember. Zip, Tar, Gzip, Bzip2, 7-Zip, Rar, LhA, StuffIt, several old Amiga file and disk archives, CAB, LZX, stuff I don't even know what it is. Read [http://code.google.com/p/theunarchiver/wiki/SupportedFormats the wiki page] for a more thorough listing of formats.
 * Copies the Finder file-copying/moving/deleting interface for its interface.
