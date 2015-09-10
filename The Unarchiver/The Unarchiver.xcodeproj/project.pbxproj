@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B033DEE1BA15D27008792ED /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B033DED1BA15D27008792ED /* QuartzCore.framework */; };
 		1B0DE4CA0A37A1620009B697 /* TUController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B0DE4C90A37A1620009B697 /* TUController.m */; };
 		1B1A9CF41607B84C00AA6DDE /* error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B1A9CF31607B84C00AA6DDE /* error@2x.png */; };
 		1B1A9CFB1607BDBE00AA6DDE /* close_hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B1A9CF51607BDBD00AA6DDE /* close_hover.png */; };
@@ -228,6 +229,7 @@
 
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		1B033DED1BA15D27008792ED /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = ../../../../../System/Library/Frameworks/QuartzCore.framework; sourceTree = "<group>"; };
 		1B0DE4C80A37A1620009B697 /* TUController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUController.h; sourceTree = "<group>"; };
 		1B0DE4C90A37A1620009B697 /* TUController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUController.m; sourceTree = "<group>"; };
 		1B1A9CF31607B84C00AA6DDE /* error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "error@2x.png"; sourceTree = "<group>"; };
@@ -312,7 +314,7 @@
 		1B61E93A1B5D8149005AE72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = hu; path = hu.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
 		1B61E93B1B5D8149005AE72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = hu; path = hu.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1B6FA2090A58A1D800066489 /* CSFileTypeList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CSFileTypeList.h; sourceTree = "<group>"; };
-		1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CSFileTypeList.m; sourceTree = "<group>"; };
+		1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFileTypeList.m; sourceTree = "<group>"; };
 		1B738CB917DE856C00481D43 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1B738CBA17DE856C00481D43 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1B738CBB17DE856C00481D43 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B033DEE1BA15D27008792ED /* QuartzCore.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				1B1B99F00B07C8D200EC8324 /* Carbon.framework in Frameworks */,
 				3D664F461037769000A679EF /* XADMaster.framework in Frameworks */,
@@ -634,6 +637,7 @@
 				1B1B99EF0B07C8D200EC8324 /* Carbon.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+				1B033DED1BA15D27008792ED /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

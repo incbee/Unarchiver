@@ -5,6 +5,7 @@
 @interface CSFileTypeList:NSTableView
 {
 	CSFileTypeListSource *datasource;
+	NSView *blockerview;
 }
 
 -(id)initWithCoder:(NSCoder *)coder;

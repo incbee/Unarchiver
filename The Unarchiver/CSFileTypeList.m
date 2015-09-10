@@ -10,6 +10,9 @@
 	{
 		datasource=[CSFileTypeListSource new];
 		[self setDataSource:datasource];
+		blockerview=nil;
+
+		[self disableOnAppStore];
 	}
 	return self;
 }
@@ -19,8 +22,12 @@
 	if((self=[super initWithFrame:frame]))
 	{
 		NSLog(@"Custom view mode in IB not supported yet");
+
 		datasource=[CSFileTypeListSource new];
 		[self setDataSource:datasource];
+		blockerview=nil;
+
+		[self disableOnAppStore];
 	}
 	return self;
 }
@@ -28,6 +35,7 @@
 -(void)dealloc
 {
 	[datasource release];
+	[blockerview release];
 	[super dealloc];
 }
 
@@ -41,6 +49,75 @@
 {
 	[datasource surrenderAllTypes];
 	[self reloadData];
+}
+
+-(void)disableOnAppStore
+{
+	if(!getenv("APP_SANDBOX_CONTAINER_ID")) return;
+	if(NSFoundationVersionNumber<1057) return;
+
+	NSTextField *label=[[[NSTextField alloc] initWithFrame:[self bounds]] autorelease];
+	[label setTextColor:[NSColor whiteColor]];
+	[label setBackgroundColor:[NSColor colorWithCalibratedRed:0 green:0 blue:0 alpha:0.75]];
+	[label setFont:[NSFont systemFontOfSize:17]];
+	[label setAlignment:NSCenterTextAlignment];
+	[label setBezeled:NO];
+	[label setEditable:NO];
+	[label setSelectable:NO];
+	[label setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+
+	NSString *appname=[[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:@"CFBundleDisplayName"];
+	if(!appname || ![appname length]) appname=[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+	if(!appname || ![appname length]) appname=[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+
+	NSString *title=NSLocalizedString(@"\nSelecting file formats is not available in App Store apps.",@"App store file format limitation title");
+	NSString *message=[NSString stringWithFormat:NSLocalizedString(
+	@"\n\nTo set %1$@ to be the default application for an archive type:\n\n"
+	@"1. Use the \"File -> Get Info\" menu in the Finder on an archive of that type.\n"
+	@"2. Use \"Open with...\" to select %1$@.\n"
+	@"3. Click \"Change All...",
+	@"App store file format limitation message format"),appname];
+
+	NSMutableParagraphStyle *centeredstyle=[[NSMutableParagraphStyle new] autorelease];
+	[centeredstyle setFirstLineHeadIndent:32];
+	[centeredstyle setHeadIndent:32];
+	[centeredstyle setTailIndent:-32];
+	[centeredstyle setAlignment:NSCenterTextAlignment];
+
+	NSMutableParagraphStyle *leftstyle=[[NSMutableParagraphStyle new] autorelease];
+	[leftstyle setFirstLineHeadIndent:32];
+	[leftstyle setHeadIndent:32];
+	[leftstyle setTailIndent:-32];
+	[leftstyle setAlignment:NSLeftTextAlignment];
+
+	NSMutableAttributedString *string=[[NSMutableAttributedString new] autorelease];
+
+	[string appendAttributedString:[[[NSAttributedString alloc]
+	initWithString:title
+	attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+		[NSFont boldSystemFontOfSize:16],NSFontAttributeName,
+		[NSColor whiteColor],NSForegroundColorAttributeName,
+		centeredstyle,NSParagraphStyleAttributeName,
+	nil]] autorelease]];
+
+	[string appendAttributedString:[[[NSAttributedString alloc]
+	initWithString:message
+	attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+		[NSFont boldSystemFontOfSize:12],NSFontAttributeName,
+		[NSColor whiteColor],NSForegroundColorAttributeName,
+		leftstyle,NSParagraphStyleAttributeName,
+	nil]] autorelease]];
+
+	[label setAttributedStringValue:string];
+
+	blockerview=[label retain];
+	[[self superview] addSubview:blockerview];
+}
+
+-(void)viewDidMoveToSuperview
+{
+	[blockerview removeFromSuperview];
+	[[self superview] addSubview:blockerview];
 }
 
 @end
