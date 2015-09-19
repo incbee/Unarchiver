@@ -1245,7 +1245,7 @@
 				GCC_MODEL_TUNING = G5;
 				IBC_STRIP_NIBS = YES;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
+				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_BUNDLE_IDENTIFIER = cx.c3.theunarchiver;
 				PRODUCT_NAME = "The Unarchiver";
@@ -1275,7 +1275,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				IBC_STRIP_NIBS = NO;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
+				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_BUNDLE_IDENTIFIER = cx.c3.theunarchiver;
 				PRODUCT_NAME = "The Unarchiver";
