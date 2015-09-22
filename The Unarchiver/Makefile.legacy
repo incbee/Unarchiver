@@ -165,11 +165,13 @@ $(APP_NAME).app/Contents/Info.plist: Info.plist
 
 $(APP_NAME).app/Contents/Frameworks/XADMaster.framework: ../XADMaster/XADMaster.framework
 	@mkdir -p "$(subst _,$(empty) $(empty),$(dir $(subst $(empty) $(empty),_,$@)))"
+	rm -rf "$@"
 	cp -R "$^" "$@"
 
 $(APP_NAME).app/Contents/Frameworks/UniversalDetector.framework: ../UniversalDetector/UniversalDetector.framework
 	@mkdir -p "$(subst _,$(empty) $(empty),$(dir $(subst $(empty) $(empty),_,$@)))"
-	cp -R "$^" "$@"
+	rm -rf "$@"
+	cp -R "$^" "$@/"
 
 $(APP_NAME).app/Contents/Resources/%: %
 	@mkdir -p "$(subst _,$(empty) $(empty),$(dir $(subst $(empty) $(empty),_,$@)))"
