@@ -396,7 +396,6 @@
 		1B61E93A1B5D8149005AE72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = hu; path = hu.lproj/OpenErrorView.nib; sourceTree = "<group>"; };
 		1B61E93B1B5D8149005AE72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = hu; path = hu.lproj/PasswordView.nib; sourceTree = "<group>"; };
 		1B6BD5B11BB194D000EA3E01 /* The Unarchiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Unarchiver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1B6BD5B21BB194D000EA3E01 /* The Unarchiver copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "The Unarchiver copy-Info.plist"; path = "/Users/dag/Code/The Unarchiver/The Unarchiver/The Unarchiver copy-Info.plist"; sourceTree = "<absolute>"; };
 		1B6BD5C61BB1A30700EA3E01 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		1B6FA2090A58A1D800066489 /* CSFileTypeList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CSFileTypeList.h; sourceTree = "<group>"; };
 		1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFileTypeList.m; sourceTree = "<group>"; };
@@ -696,7 +695,6 @@
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				56FBC8C70A57528100BE98CF /* XADMaster.xcodeproj */,
 				3D664F4B103776C900A679EF /* UniversalDetector.xcodeproj */,
-				1B6BD5B21BB194D000EA3E01 /* The Unarchiver copy-Info.plist */,
 			);
 			name = "The Unarchiver";
 			sourceTree = "<group>";
