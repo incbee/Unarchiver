@@ -3125,5 +3125,7 @@
 			</dict>
 		</dict>
 	</array>
+	<key>SUFeedURL</key>
+	<string>http://unarchiver.c3.cx/updates.rss</string>
 </dict>
 </plist>

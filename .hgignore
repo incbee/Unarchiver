@@ -18,5 +18,6 @@ glob:*.pbxuser
 glob:.DS_Store
 glob:*.xcuserdatad
 glob:*.exe
-glob:*.framework
+glob:XADMaster.framework
+glob:UniversalDetector.framework
 glob:*.app
