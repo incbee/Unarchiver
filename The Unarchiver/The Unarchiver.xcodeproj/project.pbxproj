@@ -770,6 +770,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1B6BD5AE1BB194D000EA3E01 /* Build configuration list for PBXNativeTarget "The Good Unarchiver" */;
 			buildPhases = (
+				1B6BD6251BB33B0F00EA3E01 /* ShellScript */,
 				1B6BD56D1BB194D000EA3E01 /* Resources */,
 				1B6BD5981BB194D000EA3E01 /* Sources */,
 				1B6BD5A51BB194D000EA3E01 /* Frameworks */,
@@ -1114,6 +1115,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1B6BD6251BB33B0F00EA3E01 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\nif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n  buildnum=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\n  buildnum=$(expr $buildnum + 1)\n  /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildnum\" \"$INFOPLIST_FILE\"\nfi";
+		};
 		1BEAF9BB1BAD671100A08AB5 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
