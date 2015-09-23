@@ -1800,7 +1800,7 @@
 	<key>CFBundleSignature</key>
 	<string>TUnA</string>
 	<key>CFBundleVersion</key>
-	<string>101</string>
+	<string>102</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -1861,6 +1861,8 @@
 	</array>
 	<key>OSAScriptingDefinition</key>
 	<string>TheUnarchiverSuite.sdef</string>
+	<key>SUFeedURL</key>
+	<string>http://unarchiver.c3.cx/updates.rss</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -3125,7 +3127,5 @@
 			</dict>
 		</dict>
 	</array>
-	<key>SUFeedURL</key>
-	<string>http://unarchiver.c3.cx/updates.rss</string>
 </dict>
 </plist>
