@@ -4,6 +4,13 @@
 
 @implementation CSFileTypeList
 
+static BOOL DisabledInSandbox=YES;
+
++(void)setDisabledInSandbox:(BOOL)disabled
+{
+	DisabledInSandbox=disabled;
+}
+
 -(id)initWithCoder:(NSCoder *)coder
 {
 	if((self=[super initWithCoder:coder]))
@@ -53,6 +60,7 @@
 
 -(void)disableOnAppStore
 {
+	if(!DisabledInSandbox) return;
 	if(!getenv("APP_SANDBOX_CONTAINER_ID")) return;
 	if(NSFoundationVersionNumber<1057) return;
 
