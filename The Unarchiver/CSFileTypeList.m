@@ -1,5 +1,14 @@
 #import "CSFileTypeList.h"
 
+static BOOL IsLeopardOrAbove()
+{
+	return NSAppKitVersionNumber>=949;
+}
+
+static BOOL IsYosemiteOrAbove()
+{
+	return NSAppKitVersionNumber>=1343;
+}
 
 
 @implementation CSFileTypeList
@@ -62,7 +71,7 @@ static BOOL DisabledInSandbox=YES;
 {
 	if(!DisabledInSandbox) return;
 	if(!getenv("APP_SANDBOX_CONTAINER_ID")) return;
-	if(NSFoundationVersionNumber<1057) return;
+	if(!IsYosemiteOrAbove()) return;
 
 	NSTextField *label=[[[NSTextField alloc] initWithFrame:[self bounds]] autorelease];
 	[label setTextColor:[NSColor whiteColor]];
@@ -172,7 +181,7 @@ static BOOL DisabledInSandbox=YES;
 			NSNumber *alternate=[NSNumber numberWithBool:rank && [rank isEqual:@"Alternate"]];
 
 			// Zip UTI kludge
-			if(floor(NSAppKitVersionNumber)>=949&&[type isEqual:@"com.pkware.zip-archive"]&&[types count]>1)
+			if(IsLeopardOrAbove() && [type isEqual:@"com.pkware.zip-archive"]&&[types count]>1)
 			type=[types objectAtIndex:1];
 
 			if(!hidden||![hidden containsObject:type])
