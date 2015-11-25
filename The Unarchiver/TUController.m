@@ -9,6 +9,10 @@
 #import "CSURLCache.h"
 #endif
 
+#ifdef UseSparkle
+#import <Sparkle/Sparkle.h>
+#endif
+
 #import <unistd.h>
 #import <sys/stat.h>
 #import <Carbon/Carbon.h>
@@ -41,6 +45,10 @@ static BOOL IsPathWritable(NSString *path);
 
 		[setuptasks setFinishAction:@selector(setupQueueEmpty:) target:self];
 		[extracttasks setFinishAction:@selector(extractQueueEmpty:) target:self];
+
+		#ifdef UseSparkle
+		[SUUpdater new];
+		#endif
 	}
 	return self;
 }

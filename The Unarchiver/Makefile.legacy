@@ -80,6 +80,7 @@ OBJS =	$(OBJC_FILES:%.m=$(BUILD_DIR)/%.o) \
 # App
 
 APP_NAME = The\ Unarchiver
+APP_IDENTIFIER = cx.c3.theunarchiver
 
 APP_FILES = $(APP_NAME).app
 
@@ -160,16 +161,19 @@ $(APP_NAME).app/Contents/Info.plist: Info.plist
 	cat "$^" |\
 	perl -pe 's/\$$\{EXECUTABLE_NAME\}/$(subst \,,$(APP_NAME))/sg' |\
 	perl -pe 's/\$$\{PRODUCT_NAME\}/$(subst \,,$(APP_NAME))/sg' |\
+	perl -pe 's/\$$\(PRODUCT_BUNDLE_IDENTIFIER\)/$(APP_IDENTIFIER)/sg' |\
 	perl -pe 's!<string>10.6.0</string>!<string>10.3.9</string>!sg' |\
 	cat >"$@"
 
 $(APP_NAME).app/Contents/Frameworks/XADMaster.framework: ../XADMaster/XADMaster.framework
 	@mkdir -p "$(subst _,$(empty) $(empty),$(dir $(subst $(empty) $(empty),_,$@)))"
+	rm -rf "$@"
 	cp -R "$^" "$@"
 
 $(APP_NAME).app/Contents/Frameworks/UniversalDetector.framework: ../UniversalDetector/UniversalDetector.framework
 	@mkdir -p "$(subst _,$(empty) $(empty),$(dir $(subst $(empty) $(empty),_,$@)))"
-	cp -R "$^" "$@"
+	rm -rf "$@"
+	cp -R "$^" "$@/"
 
 $(APP_NAME).app/Contents/Resources/%: %
 	@mkdir -p "$(subst _,$(empty) $(empty),$(dir $(subst $(empty) $(empty),_,$@)))"

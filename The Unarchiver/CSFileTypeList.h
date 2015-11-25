@@ -8,6 +8,8 @@
 	NSView *blockerview;
 }
 
++(void)setDisabledInSandbox:(BOOL)disabled;
+
 -(id)initWithCoder:(NSCoder *)coder;
 -(id)initWithFrame:(NSRect)frame;
 -(void)dealloc;

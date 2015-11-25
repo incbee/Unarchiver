@@ -1,8 +1,24 @@
 #import "CSFileTypeList.h"
 
+static BOOL IsLeopardOrAbove()
+{
+	return NSAppKitVersionNumber>=949;
+}
+
+static BOOL IsYosemiteOrAbove()
+{
+	return NSAppKitVersionNumber>=1343;
+}
 
 
 @implementation CSFileTypeList
+
+static BOOL DisabledInSandbox=YES;
+
++(void)setDisabledInSandbox:(BOOL)disabled
+{
+	DisabledInSandbox=disabled;
+}
 
 -(id)initWithCoder:(NSCoder *)coder
 {
@@ -53,8 +69,9 @@
 
 -(void)disableOnAppStore
 {
+	if(!DisabledInSandbox) return;
 	if(!getenv("APP_SANDBOX_CONTAINER_ID")) return;
-	if(NSFoundationVersionNumber<1057) return;
+	if(!IsYosemiteOrAbove()) return;
 
 	NSTextField *label=[[[NSTextField alloc] initWithFrame:[self bounds]] autorelease];
 	[label setTextColor:[NSColor whiteColor]];
@@ -70,12 +87,14 @@
 	if(!appname || ![appname length]) appname=[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
 	if(!appname || ![appname length]) appname=[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
 
-	NSString *title=NSLocalizedString(@"\nSelecting file formats is not available in App Store apps.",@"App store file format limitation title");
+	NSString *title=[NSString stringWithFormat:NSLocalizedString(
+	@"\nSetting %@ as the default app",@"App store file format limitation title"),
+	appname];
 	NSString *message=[NSString stringWithFormat:NSLocalizedString(
-	@"\n\nTo set %1$@ to be the default application for an archive type:\n\n"
-	@"1. Use the \"File -> Get Info\" menu in the Finder on an archive of that type.\n"
+	@"\n\nTo set %1$@ to be the default application for a file type:\n\n"
+	@"1. Use the \"File -> Get Info\" menu in the Finder on a file of that type.\n"
 	@"2. Use \"Open with...\" to select %1$@.\n"
-	@"3. Click \"Change All...",
+	@"3. Click \"Change All...\"",
 	@"App store file format limitation message format"),appname];
 
 	NSMutableParagraphStyle *centeredstyle=[[NSMutableParagraphStyle new] autorelease];
@@ -162,7 +181,7 @@
 			NSNumber *alternate=[NSNumber numberWithBool:rank && [rank isEqual:@"Alternate"]];
 
 			// Zip UTI kludge
-			if(floor(NSAppKitVersionNumber)>=949&&[type isEqual:@"com.pkware.zip-archive"]&&[types count]>1)
+			if(IsLeopardOrAbove() && [type isEqual:@"com.pkware.zip-archive"]&&[types count]>1)
 			type=[types objectAtIndex:1];
 
 			if(!hidden||![hidden containsObject:type])

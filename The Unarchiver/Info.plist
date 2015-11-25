@@ -1796,13 +1796,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.10</string>
-	<key>CFBundleDisplayName</key>
-	<string></string>
+	<string>3.10.1</string>
 	<key>CFBundleSignature</key>
 	<string>TUnA</string>
 	<key>CFBundleVersion</key>
-	<string>3.10</string>
+	<string>103</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -1863,6 +1861,8 @@
 	</array>
 	<key>OSAScriptingDefinition</key>
 	<string>TheUnarchiverSuite.sdef</string>
+	<key>SUFeedURL</key>
+	<string>http://unarchiver.c3.cx/updates.rss</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
