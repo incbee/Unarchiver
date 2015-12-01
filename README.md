@@ -2,7 +2,7 @@
 
 # The Unarchiver is an Objective-C application for uncompressing archive files.
 
-* Supports more formats than I can remember. Zip, Tar, Gzip, Bzip2, 7-Zip, Rar, LhA, StuffIt, several old Amiga file and disk archives, CAB, LZX, stuff I don't even know what it is. Read [http://code.google.com/p/theunarchiver/wiki/SupportedFormats the wiki page] for a more thorough listing of formats.
+* Supports more formats than I can remember. Zip, Tar, Gzip, Bzip2, 7-Zip, Rar, LhA, StuffIt, several old Amiga file and disk archives, CAB, LZX, stuff I don't even know what it is. Read [the wiki page](http://code.google.com/p/theunarchiver/wiki/SupportedFormats) for a more thorough listing of formats.
 * Copies the Finder file-copying/moving/deleting interface for its interface.
 * Uses character set autodetection code from Mozilla to auto-detect the encoding of the filenames in the archives.
 * Supports split archives for certain formats, like RAR.
