@@ -273,7 +273,7 @@ static BOOL IsPathWritable(NSString *path);
 {
 	NSEnumerator *enumerator=[archivecontrollers objectEnumerator];
 	TUArchiveController *archive;
-	while((archive=[enumerator nextObject]))
+	while(archive=[enumerator nextObject])
 	{
 		if([archive isCancelled]) continue;
 		NSArray *filenames=[archive allFilenames];

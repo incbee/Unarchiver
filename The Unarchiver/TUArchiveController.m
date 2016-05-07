@@ -536,7 +536,10 @@ extractionProgressForEntryWithDictionary:(NSDictionary *)dict
 fileProgress:(off_t)fileprogress of:(off_t)filesize
 totalProgress:(off_t)totalprogress of:(off_t)totalsize
 {
-	double progress=(double)totalprogress/(double)totalsize;
+	double progress;
+	if(totalsize) progress=(double)totalprogress/(double)totalsize;
+	else progress=1;
+
 	[view setProgress:progress];
 	[docktile setProgress:progress];
 }
