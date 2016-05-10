@@ -10,7 +10,7 @@
 
 @interface TUController:NSObject
 {
-	TUTaskQueue *setuptasks,*extracttasks;
+	TUTaskQueue *addtasks,*extracttasks;
 	NSMutableArray *archivecontrollers;
 
 	TUDockTileView *docktile;
@@ -48,16 +48,13 @@
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app;
 -(BOOL)application:(NSApplication *)app openFile:(NSString *)filename;
 
--(void)newArchivesForFiles:(NSArray *)filenames destination:(int)desttype;
--(void)newArchivesForURLs:(NSArray *)urls destination:(int)desttype;
--(void)newArchiveForFile:(NSString *)filename destination:(int)desttype;
--(NSString *)destinationForFilename:(NSString *)filename type:(int)desttype;
+-(void)addArchiveControllersForFiles:(NSArray *)filenames destinationType:(int)desttype;
+-(void)addArchiveControllersForURLs:(NSArray *)urls destinationType:(int)desttype;
+-(void)addArchiveControllerForFile:(NSString *)filename destinationType:(int)desttype;
 -(void)addArchiveController:(TUArchiveController *)archive;
+-(void)actuallyAddArchiveController:(TUArchiveController *)archive;
 -(TUArchiveController *)archiveControllerForFilename:(NSString *)filename;
 
--(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview;
-
--(void)setupExtractionForArchiveController:(TUArchiveController *)archive;
 -(void)checkDestinationForArchiveController:(TUArchiveController *)archive;
 -(void)checkDestinationForArchiveControllerAgain:(TUArchiveController *)archive;
 -(void)checkDestinationForArchiveController:(TUArchiveController *)archive secondAttempt:(BOOL)secondattempt;
@@ -66,7 +63,7 @@
 -(void)prepareArchiveController:(TUArchiveController *)archive;
 -(void)finishSetupForArchiveController:(TUArchiveController *)archive;
 -(void)cancelSetupForArchiveController:(TUArchiveController *)archive;
--(void)setupQueueEmpty:(TUTaskQueue *)queue;
+-(void)addQueueEmpty:(TUTaskQueue *)queue;
 -(void)archiveTaskViewCancelledBeforeExtract:(TUArchiveTaskView *)taskview;
 
 -(void)startExtractionForArchiveController:(TUArchiveController *)archive;

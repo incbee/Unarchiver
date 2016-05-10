@@ -33,7 +33,7 @@ static BOOL IsPathWritable(NSString *path);
 {
 	if((self=[super init]))
 	{
-		setuptasks=[TUTaskQueue new];
+		addtasks=[TUTaskQueue new];
 		extracttasks=[TUTaskQueue new];
 		archivecontrollers=[NSMutableArray new];
 		selecteddestination=nil;
@@ -43,7 +43,7 @@ static BOOL IsPathWritable(NSString *path);
 
 		opened=NO;
 
-		[setuptasks setFinishAction:@selector(setupQueueEmpty:) target:self];
+		[addtasks setFinishAction:@selector(addQueueEmpty:) target:self];
 		[extracttasks setFinishAction:@selector(extractQueueEmpty:) target:self];
 
 		#ifdef UseSparkle
@@ -55,7 +55,7 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)dealloc
 {
-	[setuptasks release];
+	[addtasks release];
 	[extracttasks release];
 	[archivecontrollers release];
 	[selecteddestination release];
@@ -201,58 +201,70 @@ static BOOL IsPathWritable(NSString *path);
 	if(GetCurrentKeyModifiers()&(optionKey|shiftKey)) desttype=SelectedDestination;
 	else desttype=(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"extractionDestination"];
 
-	[self newArchiveForFile:filename destination:desttype];
+	[self addArchiveControllerForFile:filename destinationType:desttype];
 	return YES;
 }
 
 
 
--(void)newArchivesForFiles:(NSArray *)filenames destination:(int)desttype
+
+-(void)addArchiveControllersForFiles:(NSArray *)filenames destinationType:(int)desttype;
 {
 	NSEnumerator *enumerator=[filenames objectEnumerator];
 	NSString *filename;
-	while((filename=[enumerator nextObject])) [self newArchiveForFile:filename destination:desttype];
+	while((filename=[enumerator nextObject])) [self addArchiveControllerForFile:filename destinationType:desttype];
 }
 
--(void)newArchivesForURLs:(NSArray *)urls destination:(int)desttype
+-(void)addArchiveControllersForURLs:(NSArray *)urls destinationType:(int)desttype;
 {
 	NSEnumerator *enumerator=[urls objectEnumerator];
 	NSURL *url;
-	while((url=[enumerator nextObject])) [self newArchiveForFile:[url path] destination:desttype];
+	while((url=[enumerator nextObject])) [self addArchiveControllerForFile:[url path] destinationType:desttype];
 }
 
--(void)newArchiveForFile:(NSString *)filename destination:(int)desttype
+-(void)addArchiveControllerForFile:(NSString *)filename destinationType:(int)desttype;
 {
-	// Check if this file is already included in any of the currently queued archives.
-	if([self archiveControllerForFilename:filename]) return;
-
-	TUArchiveController *archive=[[[TUArchiveController alloc] initWithFilename:filename] autorelease];
-	[archive setDestination:[self destinationForFilename:filename type:desttype]];
-	[self addArchiveController:archive];
-}
-
--(NSString *)destinationForFilename:(NSString *)filename type:(int)desttype
-{
+	NSString *destination;
 	switch(desttype)
 	{
 		default:
 		case CurrentFolderDestination:
-			return [filename stringByDeletingLastPathComponent];
+			destination=[filename stringByDeletingLastPathComponent];
+		break;
 
 		case DesktopDestination:
-			return [[NSUserDefaults standardUserDefaults] stringForKey:@"extractionDestinationPath"];
+			destination=[[NSUserDefaults standardUserDefaults] stringForKey:@"extractionDestinationPath"];
+		break;
 
 		case SelectedDestination:
-			return nil;
+			destination=selecteddestination;
+		break;
 	}
+
+	TUArchiveController *archive=[[[TUArchiveController alloc] initWithFilename:filename] autorelease];
+	[archive setDestination:destination];
+
+	[self addArchiveController:archive];
 }
 
 -(void)addArchiveController:(TUArchiveController *)archive
 {
+	[[addtasks taskWithTarget:self] actuallyAddArchiveController:archive];
+}
+
+-(void)actuallyAddArchiveController:(TUArchiveController *)archive
+{
+	// Check if this file is already included in any of the currently queued archives.
+	if([self archiveControllerForFilename:[archive filename]])
+	{
+		[addtasks finishCurrentTask];
+		return;
+	}
+
 	// Create status view and archive controller.
 	TUArchiveTaskView *taskview=[[TUArchiveTaskView new] autorelease];
 
-	[taskview setCancelAction:@selector(archiveTaskViewCancelledBeforeSetup:) target:self];
+	//[taskview setCancelAction:@selector(archiveTaskViewCancelledBeforeSetup:) target:self];
 	[taskview setArchiveController:archive];
 	[taskview setupWaitView];
 	[mainlist addTaskView:taskview];
@@ -266,7 +278,7 @@ static BOOL IsPathWritable(NSString *path);
 	[NSApp activateIgnoringOtherApps:YES];
 	[mainwindow makeKeyAndOrderFront:nil];
 
-	[[setuptasks taskWithTarget:self] setupExtractionForArchiveController:archive];
+	[self checkDestinationForArchiveController:archive];
 }
 
 -(TUArchiveController *)archiveControllerForFilename:(NSString *)filename
@@ -280,35 +292,6 @@ static BOOL IsPathWritable(NSString *path);
 		if([filenames containsObject:filename]) return archive;
 	}
 	return nil;
-}
-
-
-
-
--(void)archiveTaskViewCancelledBeforeSetup:(TUArchiveTaskView *)taskview
-{
-	[mainlist removeTaskView:taskview];
-	[[taskview archiveController] setIsCancelled:YES];
-}
-
-
-
-
--(void)setupExtractionForArchiveController:(TUArchiveController *)archive
-{
-	if([archive isCancelled])
-	{
- 		[archivecontrollers removeObjectIdenticalTo:archive];
-		[docktile setCount:(int)[archivecontrollers count]];
-		[setuptasks finishCurrentTask];
-		return;
-	}
-
-	[[archive taskView] setCancelAction:NULL target:nil];
-
-	if(![archive destination]) [archive setDestination:selecteddestination];
-
-	[self checkDestinationForArchiveController:archive];
 }
 
 -(void)checkDestinationForArchiveController:(TUArchiveController *)archive
@@ -571,7 +554,7 @@ static BOOL IsPathWritable(NSString *path);
 
 	[[extracttasks taskWithTarget:self] startExtractionForArchiveController:archive];
 
-	[setuptasks finishCurrentTask];
+	[addtasks finishCurrentTask];
 }
 
 -(void)cancelSetupForArchiveController:(TUArchiveController *)archive
@@ -579,10 +562,10 @@ static BOOL IsPathWritable(NSString *path);
 	[archivecontrollers removeObjectIdenticalTo:archive];
 	[docktile setCount:(int)[archivecontrollers count]];
 	[mainlist removeTaskView:[archive taskView]];
-	[setuptasks finishCurrentTask];
+	[addtasks finishCurrentTask];
 }
 
--(void)setupQueueEmpty:(TUTaskQueue *)queue
+-(void)addQueueEmpty:(TUTaskQueue *)queue
 {
 	if([extracttasks isEmpty])
 	{
@@ -628,7 +611,7 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)extractQueueEmpty:(TUTaskQueue *)queue
 {
-	if([setuptasks isEmpty])
+	if([addtasks isEmpty])
 	{
 		if([mainwindow isMiniaturized]) [mainwindow close];
 		else [mainwindow orderOut:nil];
@@ -724,7 +707,7 @@ userData:(NSString *)data error:(NSString **)error
 	if([[pboard types] containsObject:NSFilenamesPboardType])
 	{
 		NSArray *filenames=[pboard propertyListForType:NSFilenamesPboardType];
-		[self newArchivesForFiles:filenames destination:CurrentFolderDestination];
+		[self addArchiveControllersForFiles:filenames destinationType:CurrentFolderDestination];
 	}
 }
 
@@ -735,7 +718,7 @@ userData:(NSString *)data error:(NSString **)error
 	if([[pboard types] containsObject:NSFilenamesPboardType])
 	{
 		NSArray *filenames=[pboard propertyListForType:NSFilenamesPboardType];
-		[self newArchivesForFiles:filenames destination:DesktopDestination];
+		[self addArchiveControllersForFiles:filenames destinationType:DesktopDestination];
 	}
 }
 
@@ -746,7 +729,7 @@ userData:(NSString *)data error:(NSString **)error
 	if([[pboard types] containsObject:NSFilenamesPboardType])
 	{
 		NSArray *filenames=[pboard propertyListForType:NSFilenamesPboardType];
-		[self newArchivesForFiles:filenames destination:SelectedDestination];
+		[self addArchiveControllersForFiles:filenames destinationType:SelectedDestination];
 	}
 }
 
@@ -781,9 +764,9 @@ userData:(NSString *)data error:(NSString **)error
 	if(res==NSOKButton)
 	{
 		#ifdef IsLegacyVersion
-		[self newArchivesForFiles:[panel filenames] destination:desttype];
+		[self addArchiveControllersForFiles:[panel filenames] destinationType:desttype];
 		#else
-		[self newArchivesForURLs:[panel URLs] destination:desttype];
+		[self addArchiveControllersForURLs:[panel URLs] destinationType:desttype];
 		#endif
 	}
 }

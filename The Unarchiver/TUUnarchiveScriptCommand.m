@@ -211,27 +211,26 @@ enum extracionDestination {
 
 -(void)unarchiveFile:(NSString *)fileName
 {
-	if([appController archiveControllerForFilename:fileName]) return;
-	TUArchiveController *archiveController=[[[TUArchiveController alloc] initWithFilename:fileName] autorelease];
 	NSString *destination;
 	switch (desttype) {
 		default:
 		case extractionDestinationCurrentFolderDestination:
+			destination=[fileName stringByDeletingLastPathComponent];
+			break;
 		case extractionDestinationDesktopDestination:
-			destination =[appController destinationForFilename:fileName type:desttype];
+			destination=[[NSUserDefaults standardUserDefaults] stringForKey:@"extractionDestinationPath"];
 			break;
 		case extractionDestinationCustomPath:
 			destination=extractDestination;
 			break;
 	}
+
+	TUArchiveController *archiveController=[[[TUArchiveController alloc] initWithFilename:fileName] autorelease];
 	[archiveController setDestination:destination];
 	[archiveController setDeleteArchive:deleteOriginals];
 	[archiveController setFolderCreationMode:creatingFolder];
 	[archiveController setOpenExctractedItem:openFolders];
-	
-	if (archiveController) {
-		[appController addArchiveController:archiveController];
-	}
+	[appController addArchiveController:archiveController];
 }
 
 @end
