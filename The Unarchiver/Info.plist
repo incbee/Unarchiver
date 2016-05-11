@@ -1862,7 +1862,7 @@
 	<key>OSAScriptingDefinition</key>
 	<string>TheUnarchiverSuite.sdef</string>
 	<key>SUFeedURL</key>
-	<string>http://unarchiver.c3.cx/updates.rss</string>
+	<string>https://unarchiver.c3.cx/updates.rss</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
