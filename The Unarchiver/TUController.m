@@ -78,6 +78,18 @@ static BOOL IsPathWritable(NSString *path);
 	if(floor(NSAppKitVersionNumber)<=NSAppKitVersionNumber10_3)
 	[prefstabs removeTabViewItem:formattab];
 
+	#ifdef UseSparkle
+	NSMenu *mainmenu=[[NSApplication sharedApplication] mainMenu];
+	NSMenu *appmenu=[[mainmenu itemAtIndex:0] submenu];
+
+	NSMenuItem *item=[[NSMenuItem new] autorelease];
+	item.title=NSLocalizedString(@"Check for Update…",@"Check for update menu item");
+	item.target=self;
+	item.action=@selector(checkForUpdates:);
+
+	[appmenu insertItem:item atIndex:1];
+	#endif
+
 	[encodingpopup buildEncodingListWithAutoDetect];
 	NSStringEncoding encoding=[[NSUserDefaults standardUserDefaults] integerForKey:@"filenameEncoding"];
 //	if(encoding) [encodingpopup selectItemWithTag:encoding];
@@ -637,6 +649,17 @@ static BOOL IsPathWritable(NSString *path);
 	[mainwindow setMaxSize:NSMakeSize(100000,newframe.size.height)];
 	[mainwindow setFrame:newframe display:YES animate:NO];
 }
+
+
+
+
+#ifdef UseSparkle
+-(IBAction)checkForUpdates:(id)sender
+{
+	[SUUpdater.sharedUpdater checkForUpdates:sender];
+}
+#endif
+
 
 
 

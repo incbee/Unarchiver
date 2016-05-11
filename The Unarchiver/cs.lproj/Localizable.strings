@@ -46,6 +46,9 @@
 /* Status text when asking for a password */
 "You need to supply a password to open the archive \"%@\"." = "Je třeba zadat heslo k otevření archivu \"%@\".";
 
+/* Check for updates menu item */
+"Check for Update…" = "Check for Update…";
+
 /* Common errors */
 "Attempted to read more data than was available" = "Soubor archivu není kompletní";
 "Opening file failed" = "Soubor nelze otevřít";

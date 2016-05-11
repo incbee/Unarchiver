@@ -67,6 +67,9 @@
 /* Panel OK button title when searching for more archive parts */
 "Search" = "Искать";
 
+/* Check for updates menu item */
+"Check for Update…" = "Check for Update…";
+
 /* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
 
 /* Common errors */

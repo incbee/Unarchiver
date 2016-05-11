@@ -67,6 +67,9 @@
 /* Panel OK button title when searching for more archive parts */
 "Search" = "Търси";
 
+/* Check for updates menu item */
+"Check for Update…" = "Check for Update…";
+
 /* Common errors */
 "Attempted to read more data than was available" = "Непълен файл на архива";
 "Opening file failed" = "Невъзможно отваряне на файла";
