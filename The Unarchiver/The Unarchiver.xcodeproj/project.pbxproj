@@ -108,7 +108,7 @@
 		1B6BD5AA1BB194D000EA3E01 /* UniversalDetector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D664F51103776C900A679EF /* UniversalDetector.framework */; };
 		1B6BD5AC1BB194D000EA3E01 /* UniversalDetector.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D664F51103776C900A679EF /* UniversalDetector.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1B6BD5AD1BB194D000EA3E01 /* XADMaster.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1B95B40B1010D537009FA09E /* XADMaster.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		1B6BD5C71BB1A30700EA3E01 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B6BD5C61BB1A30700EA3E01 /* Sparkle.framework */; settings = {ASSET_TAGS = (); }; };
+		1B6BD5C71BB1A30700EA3E01 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B6BD5C61BB1A30700EA3E01 /* Sparkle.framework */; };
 		1B6BD5C81BB1A32900EA3E01 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1B6BD5C61BB1A30700EA3E01 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B6FA20B0A58A1D800066489 /* CSFileTypeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B6FA20A0A58A1D800066489 /* CSFileTypeList.m */; };
 		1B782D21106ACC1700EBF3E8 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B782D20106ACC1700EBF3E8 /* ServicesMenu.strings */; };

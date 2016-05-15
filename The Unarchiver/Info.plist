@@ -1800,7 +1800,7 @@
 	<key>CFBundleSignature</key>
 	<string>TUnA</string>
 	<key>CFBundleVersion</key>
-	<string>103</string>
+	<string>107</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
