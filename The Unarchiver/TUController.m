@@ -401,6 +401,10 @@ static BOOL IsPathWritable(NSString *path);
 				[text setFrame:NSMakeRect(0,0,size.width,size.height)];
 
 				[panel setAccessoryView:text];
+				if([panel respondsToSelector:@selector(isAccessoryViewDisclosed)])
+				{
+					[panel setAccessoryViewDisclosed:YES];
+				}
 
 				[panel setCanCreateDirectories:YES];
 				[panel setCanChooseDirectories:YES];
@@ -532,6 +536,10 @@ static BOOL IsPathWritable(NSString *path);
 			[text setFrame:NSMakeRect(0,0,size.width,size.height)];
 
 			[panel setAccessoryView:text];
+			if([panel respondsToSelector:@selector(isAccessoryViewDisclosed)])
+			{
+				[panel setAccessoryViewDisclosed:YES];
+			}
 
 			[panel setCanCreateDirectories:YES];
 			[panel setCanChooseDirectories:YES];
