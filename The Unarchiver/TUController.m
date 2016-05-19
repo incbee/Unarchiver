@@ -5,7 +5,7 @@
 #import "XADMaster/XADPlatform.h"
 #import "TUDockTileView.h"
 
-#ifndef IsLegacyVersion
+#ifdef UseSandbox
 #import "CSURLCache.h"
 #endif
 
@@ -116,10 +116,18 @@ static BOOL IsPathWritable(NSString *path);
 		#ifdef IsLegacyVersion
 		[fm removeFileAtPath:tmpdir handler:nil];
 		#else
+
+		#ifdef UseSandbox
 		NSURL *url=[[CSURLCache defaultCache] securityScopedURLAllowingAccessToPath:tmpdir];
 		[url startAccessingSecurityScopedResource];
+		#endif
+
 		[fm removeItemAtPath:tmpdir error:nil];
+
+		#ifdef UseSandbox
 		[url stopAccessingSecurityScopedResource];
+		#endif
+
 		#endif
 	}
 
@@ -144,7 +152,7 @@ static BOOL IsPathWritable(NSString *path);
 	[NSApp setServicesProvider:self];
 	[self performSelector:@selector(delayedAfterLaunch) withObject:nil afterDelay:0.3];
 
-	#ifndef IsLegacyVersion
+	#ifdef UseSandbox
 	if([[NSUserDefaults standardUserDefaults] integerForKey:@"extractionDestination"]==UnintializedDestination)
 	{
 		NSArray *array=[[NSBundle mainBundle] preferredLocalizations];
@@ -204,7 +212,7 @@ static BOOL IsPathWritable(NSString *path);
 {
 	opened=YES;
 
-	#ifndef IsLegacyVersion
+	#ifdef UseSandbox
 	// Get rid of sandbox junk.
 	filename=[filename stringByResolvingSymlinksInPath];
 	#endif
@@ -348,7 +356,7 @@ static BOOL IsPathWritable(NSString *path);
 	}
 	else
 	{
-		#ifndef IsLegacyVersion
+		#ifdef UseSandbox
 		// On the first attempt to access a given path, try to find a cached
 		// security-scoped URL for this path, and use it, even if we already have
 		// access. (This is to balance the number of starts and stops for the URL.)
@@ -362,7 +370,7 @@ static BOOL IsPathWritable(NSString *path);
 
 	if(!IsPathWritable(destination))
 	{
-		#ifdef IsLegacyVersion
+		#ifndef UseSandbox
 
 		// Can not write to the given destination. Show an error.
 		[[archive taskView] displayNotWritableErrorWithResponseAction:@selector(archiveTaskView:notWritableResponse:) target:self];
@@ -439,7 +447,9 @@ static BOOL IsPathWritable(NSString *path);
 		selecteddestination=[[panel directory] retain];
 		#else
 		NSURL *url=[panel URL];
+		#ifdef UseSandbox
 		[[CSURLCache defaultCache] cacheSecurityScopedURL:url];
+		#endif
 		selecteddestination=[[url path] retain];
 		#endif
 
@@ -482,7 +492,7 @@ static BOOL IsPathWritable(NSString *path);
 
 -(void)prepareArchiveController:(TUArchiveController *)archive
 {
-	#ifdef IsLegacyVersion
+	#ifndef UseSandbox
 
 	// With no sandbox, this is easy.
 	[archive prepare];
@@ -717,7 +727,9 @@ static BOOL IsPathWritable(NSString *path);
 		NSString *directory=[panel directory];
 		#else
 		NSURL *url=[panel URL];
+		#ifdef UseSandbox
 		[[CSURLCache defaultCache] cacheSecurityScopedURL:url];
+		#endif
 		NSString *directory=[url path];
 		#endif
 

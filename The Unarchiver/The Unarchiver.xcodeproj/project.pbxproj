@@ -1479,6 +1479,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = "-DUseSandbox";
 				PRODUCT_BUNDLE_IDENTIFIER = cx.c3.theunarchiver;
 				PRODUCT_NAME = "The Unarchiver";
 				PROVISIONING_PROFILE = "";
@@ -1574,6 +1575,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = "-DUseSandbox";
 				PRODUCT_BUNDLE_IDENTIFIER = cx.c3.theunarchiver;
 				PRODUCT_NAME = "The Unarchiver";
 				PROVISIONING_PROFILE = "";
