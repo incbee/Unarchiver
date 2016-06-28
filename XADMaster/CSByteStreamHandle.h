@@ -13,8 +13,8 @@
 }
 
 // Intializers
--(id)initWithName:(NSString *)descname length:(off_t)length;
--(id)initWithHandle:(CSHandle *)handle length:(off_t)length bufferSize:(int)buffersize;
+//-(id)initWithName:(NSString *)descname length:(off_t)length;
+-(id)initWithInputBufferForHandle:(CSHandle *)handle length:(off_t)length bufferSize:(int)buffersize;
 -(id)initAsCopyOf:(CSByteStreamHandle *)other;
 
 // Implemented by this class
@@ -34,4 +34,5 @@
 
 extern NSString *CSByteStreamEOFReachedException;
 
+static inline void CSByteStreamEOF(CSByteStreamHandle *self) __attribute__((noreturn));
 static inline void CSByteStreamEOF(CSByteStreamHandle *self) { longjmp(self->eofenv,1); }

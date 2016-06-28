@@ -63,7 +63,6 @@
 -(void)setCancelAction:(SEL)selector target:(id)target;
 
 -(void)setName:(NSString *)name;
--(void)setProgress:(double)progress;
 -(void)setProgress:(double)fraction;
 -(void)_setProgress:(NSNumber *)fraction;
 

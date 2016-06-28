@@ -18,9 +18,6 @@
 
 
 
-static inline int imin(int a,int b) { return a<b?a:b; }
-
-
 
 @implementation XADZipParser
 
@@ -66,6 +63,16 @@ static inline int imin(int a,int b) { return a<b?a:b; }
 		firstFileExtension:nil];
 	}
 
+	// In case the first part of a .1.zip multi-part file was detected as Zip,
+	// scan for the other parts.
+	if((matches=[name substringsCapturedByPattern:@"^(.*)\\.1\\.zip$" options:REG_ICASE]))
+	{
+		return [self scanForVolumesWithFilename:name
+		regex:[XADRegex regexWithPattern:[NSString stringWithFormat:@"^%@(\\.[0-9]+|())\\.zip$",
+			[[matches objectAtIndex:1] escapedPattern]] options:REG_ICASE]
+		firstFileExtension:nil];
+	}
+
 	return nil;
 }
 
@@ -96,7 +103,7 @@ static inline int imin(int a,int b) { return a<b?a:b; }
 	off_t end=[fh offsetInFile];
 
 	int numbytes=0x10011;
-	if(numbytes>end) numbytes=end;
+	if(numbytes>end) numbytes=(int)end;
 
 	uint8_t buf[numbytes];
 
@@ -165,7 +172,7 @@ static inline int imin(int a,int b) { return a<b?a:b; }
 	int centraldirstartdisk=[fh readUInt16LE];
 	/*off_t numentriesdisk=*/[fh readUInt16LE];
 	off_t numentries=[fh readUInt16LE];
-	/*off_t centralsize=*/[fh readUInt32LE];
+	off_t centralsize=[fh readUInt32LE];
 	off_t centraloffset=[fh readUInt32LE];
 	int commentlength=[fh readUInt16LE];
 
@@ -193,7 +200,7 @@ static inline int imin(int a,int b) { return a<b?a:b; }
 			centraldirstartdisk=[fh readUInt32LE];
 			/*off_t numentriesdisk=*/[fh readUInt64LE];
 			numentries=[fh readUInt64LE];
-			/*off_t centralsize=*/[fh readUInt64LE];
+			centralsize=[fh readUInt64LE];
 			centraloffset=[fh readUInt64LE];
 		}
 	}
@@ -247,10 +254,14 @@ static inline int imin(int a,int b) { return a<b?a:b; }
 
 			if(extid==1)
 			{
-				if(uncompsize==0xffffffff) uncompsize=[fh readUInt64LE];
-				if(compsize==0xffffffff) compsize=[fh readUInt64LE];
-				if(locheaderoffset==0xffffffff) locheaderoffset=[fh readUInt64LE];
-				if(startdisk==0xffff) startdisk=[fh readUInt32LE];
+				off_t uncompsize64=[fh readUInt64LE];
+				off_t compsize64=[fh readUInt64LE];
+				off_t locheaderoffset64=[fh readUInt64LE];
+				int startdisk64=[fh readUInt32LE];
+				if(uncompsize==0xffffffff) uncompsize=uncompsize64;
+				if(compsize==0xffffffff) compsize=compsize64;
+				if(locheaderoffset==0xffffffff) locheaderoffset=locheaderoffset64;
+				if(startdisk==0xffff) startdisk=startdisk64;
 				break;
 			}
 
@@ -262,6 +273,15 @@ static inline int imin(int a,int b) { return a<b?a:b; }
 		if(commentlength) commentdata=[fh readDataOfLength:commentlength];
         
 		off_t next=[fh offsetInFile];
+
+		// Some idiotic compressors write files with more than 65535 files without
+		// using Zip64, so numentries overflows. Try to detect if there is enough space
+		// left in the central directory for another 65536 files, and if so, extend the
+		// parsing to include them. This may happen multiple times.
+		if(i==numentries-1 && zip64offs<0)
+		{
+			if(centraloffset+centralsize-next>65536*46) numentries+=65536;
+		}
 
 		// Read local header
 		[fh seekToFileOffset:[self offsetForVolume:startdisk offset:locheaderoffset]];
@@ -308,6 +328,17 @@ static inline int imin(int a,int b) { return a<b?a:b; }
 		[pool release];
 	}
 }
+
+-(off_t)offsetForVolume:(int)disk offset:(off_t)offset
+{
+	NSArray *sizes=[self volumeSizes];
+	NSInteger count=[sizes count];
+
+	for(NSInteger i=0;i<count && i<disk;i++) offset+=[[sizes objectAtIndex:i] longLongValue];
+
+	return offset;
+}
+
 
 
 
@@ -670,6 +701,16 @@ uncompressedSizePointer:(off_t *)uncompsizeptr compressedSizePointer:(off_t *)co
 				uint32_t crc=[fh readUInt32LE];
 				NSData *unicodedata=[fh readDataOfLength:size-5];
 
+				// Some archivers append garbage zero bytes to the end of the name.
+				// Remove them if necessary.
+				const uint8_t *bytes=[unicodedata bytes];
+				int length=size-5;
+				if(length && bytes[length-1]==0)
+				{
+					while(length && bytes[length-1]==0) length--;
+					unicodedata=[unicodedata subdataWithRange:NSMakeRange(0,length)];
+				}
+
 				if((XADCalculateCRC(0xffffffff,[namedata bytes],[namedata length],
 				XADCRCTable_edb88320)^0xffffffff)==crc)
 				{
@@ -854,7 +895,7 @@ isLastEntry:(BOOL)islastentry
 	{
 		if(system==0) // MS-DOS
 		{
-			if(extfileattrib&0x10) [dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsDirectoryKey];
+			if(extfileattrib&0x10 && compsize==0 && uncompsize==0) [dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsDirectoryKey];
 			[dict setObject:[NSNumber numberWithUnsignedInt:extfileattrib] forKey:XADDOSFileAttributesKey];
 		}
 		else if(system==1) // Amiga
@@ -933,7 +974,7 @@ isLastEntry:(BOOL)islastentry
 	BOOL wrapchecksum=NO;
 
 	NSNumber *enc=[dict objectForKey:XADIsEncryptedKey];
-	if(enc&&[enc boolValue])
+	if(enc && [enc boolValue])
 	{
 		off_t compsize=[[dict objectForKey:XADCompressedSizeKey] longLongValue];
 

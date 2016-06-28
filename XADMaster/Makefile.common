@@ -11,7 +11,9 @@ LIBRARY_OBJC_FILES =	CarrylessRangeCoder.m \
 			CSHexDump.m \
 			CSInputBuffer.m \
 			CSMemoryHandle.m \
+			CSMultiFileHandle.m \
 			CSMultiHandle.m \
+			CSSegmentedHandle.m \
 			CSStreamHandle.m \
 			CSSubHandle.m \
 			CSZlibHandle.m \
@@ -93,6 +95,7 @@ LIBRARY_OBJC_FILES =	CarrylessRangeCoder.m \
 			XADPaddedBlockHandle.m \
 			XADPath.m \
 			XADPDFParser.m \
+			XADPMArc1Handle.m \
 			XADPNGWriter.m \
 			XADPowerPackerParser.m \
 			XADPPMdHandles.m \
@@ -106,8 +109,10 @@ LIBRARY_OBJC_FILES =	CarrylessRangeCoder.m \
 			XADRAR20CryptHandle.m \
 			XADRAR20Handle.m \
 			XADRAR30Handle.m \
-			XADRAR30Filter.m \
+			XADRAR50Handle.m \
+			XADRARFilters.m \
 			XADRARInputHandle.m \
+			XADRAR5Parser.m \
 			XADRARParser.m \
 			XADRARVirtualMachine.m \
 			XADRC4Handle.m \
@@ -182,7 +187,9 @@ LIBRARY_C_FILES =	BWT.c \
 			Crypto/aestab.c \
 			Crypto/des.c \
 			Crypto/hmac_sha1.c \
+			Crypto/hmac_sha256.c \
 			Crypto/md5.c \
+			Crypto/pbkdf2_hmac_sha256.c \
 			Crypto/sha.c \
 			libxad/all.c \
 			libxad/clients.c \

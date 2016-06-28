@@ -29,7 +29,7 @@
 	NSMutableDictionary *renames;
 	NSMutableSet *resourceforks;
 	id metadata;
-	NSString *unpackdestination,*finaldestination,*soloitem;
+	NSString *unpackdestination,*finaldestination,*overridesoloitem;
 	int numextracted;
 
 	NSString *toplevelname;
@@ -127,7 +127,6 @@
 -(XADError)_finalizeExtraction;
 
 -(void)_testForSoloItems:(NSDictionary *)entry;
--(NSString *)_findPathForSoloItem;
 
 -(BOOL)_shouldStop;
 
@@ -144,6 +143,8 @@
 @interface NSObject (XADSimpleUnarchiverDelegate)
 
 -(void)simpleUnarchiverNeedsPassword:(XADSimpleUnarchiver *)unarchiver;
+
+-(CSHandle *)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver outputHandleForEntryWithDictionary:(NSDictionary *)dict;
 
 -(NSString *)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver encodingNameForXADString:(id <XADString>)string;
 

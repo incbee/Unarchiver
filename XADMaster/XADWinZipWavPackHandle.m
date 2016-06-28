@@ -9,7 +9,7 @@ extern WavpackStreamReader inputreader;
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length
 {
-	if((self=[super initWithHandle:handle length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		context=NULL;
 		buffer=NULL;
@@ -130,7 +130,7 @@ static int32_t ReadBytes(void *context,void *data,int32_t numbytes)
 static uint32_t GetPos(void *context)
 {
 	CSInputBuffer *input=context;
-	return CSInputBufferOffset(input);
+	return (uint32_t)CSInputBufferOffset(input);
 }
 
 static int SetPosAbs(void *context,uint32_t pos)

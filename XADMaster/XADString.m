@@ -116,7 +116,7 @@ encodingName:(NSString *)encoding
 
 +(NSData *)escapedASCIIDataForString:(NSString *)string
 {
-	int length=[string length];
+	NSInteger length=[string length];
 	NSMutableData *encdata=[NSMutableData dataWithCapacity:length];
 
 	for(int i=0;i<length;i++)
@@ -189,6 +189,7 @@ encodingName:(NSString *)encoding
 -(NSString *)stringWithEncodingName:(NSString *)encoding
 {
 	if(string) return string;
+	if(!data) return nil;
 	return [XADString escapedStringForData:data encodingName:encoding];
 }
 
@@ -230,11 +231,11 @@ encodingName:(NSString *)encoding
 	if(string) return [string hasPrefix:asciiprefix];
 	else
 	{
-		int length=[asciiprefix length];
+		NSInteger length=[asciiprefix length];
 		if([data length]<length) return NO;
 
 		const uint8_t *bytes=[data bytes];
-		for(int i=0;i<length;i++) if(bytes[i]!=[asciiprefix characterAtIndex:i]) return NO;
+		for(NSInteger i=0;i<length;i++) if(bytes[i]!=[asciiprefix characterAtIndex:i]) return NO;
 
 		return YES;
 	}
@@ -284,7 +285,9 @@ encodingName:(NSString *)encoding
 -(NSString *)description
 {
 	// TODO: more info?
-	return [self string];
+	NSString *actualstring=[self string];
+	if(!actualstring) return @"(nil)";
+	return actualstring;
 }
 
 -(id)copyWithZone:(NSZone *)zone
@@ -426,7 +429,7 @@ encodingName:(NSString *)encoding
 static BOOL IsDataASCII(NSData *data)
 {
 	const char *bytes=[data bytes];
-	int length=[data length];
-	for(int i=0;i<length;i++) if(bytes[i]&0x80) return NO;
+	NSInteger length=[data length];
+	for(NSInteger i=0;i<length;i++) if(bytes[i]&0x80) return NO;
 	return YES;
 }

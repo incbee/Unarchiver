@@ -1,11 +1,11 @@
 #import "XADLZHStaticHandle.h"
-
+#import "XADException.h"
 
 @implementation XADLZHStaticHandle
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length windowBits:(int)bits
 {
-	if((self=[super initWithHandle:handle length:length windowSize:1<<bits]))
+	if((self=[super initWithInputBufferForHandle:handle length:length windowSize:1<<bits]))
 	{
 		literalcode=distancecode=nil;
 		windowbits=bits;
@@ -114,7 +114,7 @@
 		int n=0;
 		while(n<num)
 		{
-			int c=CSInputNextSymbolUsingCode(input,metacode);
+			unsigned int c=CSInputNextSymbolUsingCode(input,metacode);
 			if(c<=2)
 			{
 				int zeros;
@@ -124,6 +124,7 @@
 					case 1: zeros=CSInputNextBitString(input,4)+3; break;
 					case 2: zeros=CSInputNextBitString(input,9)+20; break;
 				}
+				if(n+zeros>num) [XADException raiseIllegalDataException];
 				for(int i=0;i<zeros;i++) codelengths[n++]=0;
 			}
 			else codelengths[n++]=c-2;

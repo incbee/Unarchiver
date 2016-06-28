@@ -143,7 +143,7 @@ maximumLength:(int)maxlength shortestCodeIsZeros:(BOOL)zeros
 {
 	if((self=[super init]))
 	{
-		tree=malloc(sizeof(int)*2);
+		tree=malloc(sizeof(XADCodeTreeNode));
 		SetEmptyNode(self,0);
 		numentries=1;
 		minlength=INT_MAX;
@@ -230,7 +230,7 @@ maximumLength:(int)maxcodelength shortestCodeIsZeros:(BOOL)zeros
 	if(length<minlength) minlength=length;
 
 	repeatpos=length-1-repeatpos;
-	if(repeatpos==0||(repeatpos>=0&&(((code>>repeatpos-1)&3)==0||((code>>repeatpos-1)&3)==3)))
+	if(repeatpos==0 || (repeatpos>=0 && (((code>>(repeatpos-1))&3)==0 || ((code>>(repeatpos-1))&3)==3)))
 	[NSException raise:NSInvalidArgumentException format:@"Invalid repeat position"];
 
 	int lastnode=0;

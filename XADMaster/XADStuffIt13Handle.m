@@ -12,7 +12,7 @@ static const int MetaCodeLengths[37];
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length
 {
-	if((self=[super initWithHandle:handle length:length windowSize:65536]))
+	if((self=[super initWithInputBufferForHandle:handle length:length windowSize:65536]))
 	{
 		firstcode=secondcode=offsetcode=nil;
 	}
@@ -113,7 +113,7 @@ static const int MetaCodeLengths[37];
 		int bitlength=CSInputNextSymbolUsingCodeLE(input,offsetcode);
 		if(bitlength==0) *offset=1;
 		else if(bitlength==1) *offset=2;
-		else *offset=(1<<bitlength-1)+CSInputNextBitStringLE(input,bitlength-1)+1;
+		else *offset=(1<<(bitlength-1))+CSInputNextBitStringLE(input,bitlength-1)+1;
 
 		return XADLZSSMatch;
 	}

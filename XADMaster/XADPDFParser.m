@@ -34,9 +34,24 @@ static NSData *CreateNewJPEGHeaderWithColourProfile(NSData *fileheader,NSData *p
 	return YES;
 }
 
+-(id)init
+{
+	if(self=[super init])
+	{
+		parser=nil;
+	}
+	return self;
+}
+
+-(void)dealloc
+{
+	[parser release];
+	[super dealloc];
+}
+
 -(void)parse
 {
-	PDFParser *parser=[PDFParser parserWithHandle:[self handle]];
+	parser=[[PDFParser parserWithHandle:[self handle]] retain];
 	[parser setPasswordRequestAction:@selector(needsPassword:) target:self];
 
 	[parser parse];
@@ -112,8 +127,6 @@ static NSData *CreateNewJPEGHeaderWithColourProfile(NSData *fileheader,NSData *p
 		int components=[image numberOfImageComponents];
 
 		NSData *colourprofile=[image imageICCColourProfile];
-		int profilesize=0;
-		if(colourprofile) profilesize=([colourprofile length]+1)&~1;
 
 		NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:
 			//[self XADStringWithString:[parser isCompressed]?@"Zlib":@"None"],XADCompressionNameKey,
@@ -323,9 +336,9 @@ static NSData *CreateNewJPEGHeaderWithColourProfile(NSData *fileheader,NSData *p
 	}
 }
 
--(void)needsPassword:(PDFParser *)parser
+-(void)needsPassword:(PDFParser *)parserarg
 {
-	if(![parser setPassword:[self password]]) [XADException raisePasswordException];
+	if(![parserarg setPassword:[self password]]) [XADException raisePasswordException];
 }
 
 -(NSString *)compressionNameForStream:(PDFStream *)stream excludingLast:(BOOL)excludelast
@@ -372,7 +385,7 @@ static NSData *CreateNewJPEGHeaderWithColourProfile(NSData *fileheader,NSData *p
 			NSData *newheader=CreateNewJPEGHeaderWithColourProfile(fileheader,profile,&skiplength);
 			if(newheader)
 			{
-				return [CSMultiHandle multiHandleWithHandles:
+				return [CSMultiHandle handleWithHandles:
 				[CSMemoryHandle memoryHandleForReadingData:newheader],
 				[handle nonCopiedSubHandleToEndOfFileFrom:skiplength],
 				nil];
@@ -408,7 +421,7 @@ static NSData *CreateNewJPEGHeaderWithColourProfile(NSData *fileheader,NSData *p
 			numberOfChannels:components palette:palette] autorelease];
 		}
 
-		return [CSMultiHandle multiHandleWithHandles:
+		return [CSMultiHandle handleWithHandles:
 		[CSMemoryHandle memoryHandleForReadingData:header],handle,nil];
 	}
 	else
@@ -615,10 +628,10 @@ static NSData *CreateNewJPEGHeaderWithColourProfile(NSData *fileheader,NSData *p
 
 @implementation XAD8BitPaletteExpansionHandle
 
--(id)initWithHandle:(CSHandle *)parent length:(off_t)length
+-(id)initWithHandle:(CSHandle *)handle length:(off_t)length
 numberOfChannels:(int)numberofchannels palette:(NSData *)palettedata
 {
-	if((self=[super initWithHandle:parent length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		palette=[palettedata retain];
 		numchannels=numberofchannels;

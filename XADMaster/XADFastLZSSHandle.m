@@ -4,28 +4,28 @@
 
 @implementation XADFastLZSSHandle
 
--(id)initWithName:(NSString *)descname windowSize:(int)windowsize
+-(id)initWithParentHandle:(CSHandle *)handle windowSize:(int)windowsize
 {
-	return [self initWithName:descname length:CSHandleMaxLength windowSize:windowsize];
+	return [self initWithParentHandle:handle length:CSHandleMaxLength windowSize:windowsize];
 }
 
--(id)initWithName:(NSString *)descname length:(off_t)length windowSize:(int)windowsize
+-(id)initWithParentHandle:(CSHandle *)handle length:(off_t)length windowSize:(int)windowsize
 {
-	if((self=[super initWithName:descname length:length]))
+	if((self=[super initWithParentHandle:handle length:length]))
 	{
 		InitializeLZSS(&lzss,windowsize);
 	}
 	return self;
 }
 
--(id)initWithHandle:(CSHandle *)handle windowSize:(int)windowsize
+-(id)initWithInputBufferForHandle:(CSHandle *)handle windowSize:(int)windowsize
 {
-	return [self initWithHandle:handle length:CSHandleMaxLength windowSize:windowsize];
+	return [self initWithInputBufferForHandle:handle length:CSHandleMaxLength windowSize:windowsize];
 }
 
--(id)initWithHandle:(CSHandle *)handle length:(off_t)length windowSize:(int)windowsize
+-(id)initWithInputBufferForHandle:(CSHandle *)handle length:(off_t)length windowSize:(int)windowsize
 {
-	if((self=[super initWithHandle:handle length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		InitializeLZSS(&lzss,windowsize);
 	}
@@ -61,7 +61,7 @@
 		XADLZSSFlushToBuffer(self);
 	}
 
-	return bufferpos-streampos;
+	return (int)(bufferpos-streampos);
 }
 
 -(void)resetLZSSHandle {}
@@ -76,7 +76,7 @@ void XADLZSSFlushToBuffer(XADFastLZSSHandle *self)
 	off_t end=LZSSPosition(&self->lzss);
 	if(end>self->bufferend) end=self->bufferend;
 
-	int available=end-self->bufferpos;
+	int available=(int)(end-self->bufferpos);
 	if(available==0) return;
 	//if(available<0) [XADException raiseUnknownException]; // TODO: better error
 

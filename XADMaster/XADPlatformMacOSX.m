@@ -162,6 +162,10 @@ preservePermissions:(BOOL)preservepermissions
 			mode_t mask=umask(022);
 			umask(mask); // This is stupid. Is there no sane way to just READ the umask?
 			mode&=~(mask|S_ISUID|S_ISGID);
+
+			// Just force read and write flags for all files, no matter what
+			// insane archives think.
+			mode|=S_IRUSR|S_IWUSR;
 		}
 	}
 
@@ -249,18 +253,24 @@ preservePermissions:(BOOL)preservepermissions
 // Archive post-processing.
 //
 
+#ifdef IsLegacyVersion
+
 +(id)readCloneableMetadataFromPath:(NSString *)path
 {
 	if(!LSSetItemAttribute) return nil;
 
+	NSURL *url=[NSURL fileURLWithPath:path];
+	if(!url) return nil;
+
 	FSRef ref;
-	if(CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:path],&ref))
+	if(CFURLGetFSRef((CFURLRef)url,&ref))
 	{
 		CFDictionaryRef quarantinedict;
-		LSCopyItemAttribute(&ref,kLSRolesAll,kLSItemQuarantineProperties,
-		(CFTypeRef*)&quarantinedict);
-
-		return [(id)quarantinedict autorelease];
+		if(LSCopyItemAttribute(&ref,kLSRolesAll,kLSItemQuarantineProperties,
+		(CFTypeRef*)&quarantinedict)==noErr)
+		{
+			return [(id)quarantinedict autorelease];
+		}
 	}
 	return nil;
 }
@@ -269,10 +279,36 @@ preservePermissions:(BOOL)preservepermissions
 {
 	if(!LSSetItemAttribute) return;
 
+	NSURL *url=[NSURL fileURLWithPath:path];
+	if(!url) return nil;
+
 	FSRef ref;
-	if(CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:path],&ref))
+	if(CFURLGetFSRef((CFURLRef)url,&ref))
 	LSSetItemAttribute(&ref,kLSRolesAll,kLSItemQuarantineProperties,metadata);
 }
+
+#else
+
+// NSURLQuarantinePropertiesKey only exists on 10.10, so don't dereference it,
+// but use it as a string. This code will not work on older versions, but is
+// not really important at all so we'll let it slide.
+
++(id)readCloneableMetadataFromPath:(NSString *)path
+{
+	NSDictionary *value;
+    if([[NSURL fileURLWithPath:path] getResourceValue:&value forKey:@"NSURLQuarantinePropertiesKey" error:NULL])
+	{
+		return value;
+	}
+	return nil;
+}
+
++(void)writeCloneableMetadata:(id)metadata toPath:(NSString *)path
+{
+	[[NSURL fileURLWithPath:path] setResourceValue:metadata forKey:@"NSURLQuarantinePropertiesKey" error:NULL];
+}
+
+#endif
 
 +(BOOL)copyDateFromPath:(NSString *)src toPath:(NSString *)dest
 {
@@ -396,7 +432,7 @@ preservePermissions:(BOOL)preservepermissions
 		uint8_t buffer[16384];
 
 		ssize_t actual=fgetxattr(fd,XATTR_RESOURCEFORK_NAME,buffer,sizeof(buffer),pos,0);
-		if(actual<0) return nil;
+		if(actual<0) { close(fd); return nil; }
 		if(actual==0) break;
 
 		[data appendBytes:buffer length:actual];

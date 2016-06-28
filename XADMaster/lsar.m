@@ -5,7 +5,7 @@
 #import "CSJSONPrinter.h"
 #import "CommandLineCommon.h"
 
-#define VERSION_STRING @"v1.5"
+#define VERSION_STRING @"v1.10.1"
 
 #define EntryDoesNotNeedTestingResult 0
 #define EntryIsNotSupportedResult 1
@@ -41,6 +41,8 @@ int main(int argc,const char **argv)
 	@"Usage: lsar [options] archive [files ...]\n"
 	@"\n"
 	@"Available options:\n"];
+
+	[cmdline setProgramVersion:VERSION_STRING];
 
 	[cmdline addSwitchOption:@"long" description:
 	@"Print more information about each file in the archive."];
@@ -96,6 +98,8 @@ int main(int argc,const char **argv)
 
 	[cmdline addHelpOption];
 
+	[cmdline addVersionOption];
+	
 	if(![cmdline parseCommandLineWithArgc:argc argv:argv]) return 1;
 
 
@@ -143,15 +147,13 @@ int main(int argc,const char **argv)
 		[printer setASCIIMode:jsonascii];
 
 		[printer startPrintingDictionary];
-		[printer printDictionaryKey:@"lsarFormatVersion"];
-		[printer printDictionaryObject:[NSNumber numberWithInt:2]];
+		[printer printDictionaryObject:[NSNumber numberWithInt:2] forKey:@"lsarFormatVersion"];
 
 		XADError openerror;
 		XADSimpleUnarchiver *unarchiver=[XADSimpleUnarchiver simpleUnarchiverForPath:filename error:&openerror];
 		if(!unarchiver)
 		{
-			[printer printDictionaryKey:@"lsarError"];
-			[printer printDictionaryObject:[NSNumber numberWithInt:openerror]];
+			[printer printDictionaryObject:[NSNumber numberWithInt:openerror] forKey:@"lsarError"];
 			[printer endPrintingDictionary];
 			[@"\n" print];
 			return 1;
@@ -172,8 +174,7 @@ int main(int argc,const char **argv)
 
 		[unarchiver setDelegate:[[JSONLister new] autorelease]];
 
-		[printer printDictionaryKey:@"lsarContents"];
-		[printer startPrintingDictionaryObject];
+		[printer startPrintingDictionaryObjectForKey:@"lsarContents"];
 		[printer startPrintingArray];
 
 		returncode=0;
@@ -182,13 +183,11 @@ int main(int argc,const char **argv)
 		XADError unarchiveerror=[unarchiver unarchive];
 
 		[printer endPrintingArray];
-		[printer endPrintingDictionaryObject];
 
 		if(parseerror||unarchiveerror)
 		{
-			[printer printDictionaryKey:@"lsarError"];
-			if(parseerror) [printer printDictionaryObject:[NSNumber numberWithInt:parseerror]];
-			else [printer printDictionaryObject:[NSNumber numberWithInt:unarchiveerror]];
+			if(parseerror) [printer printDictionaryObject:[NSNumber numberWithInt:parseerror] forKey:@"lsarError"];
+			else [printer printDictionaryObject:[NSNumber numberWithInt:unarchiveerror] forKey:@"lsarError"];
 			returncode=1;
 		}
 
@@ -197,7 +196,7 @@ int main(int argc,const char **argv)
 			XADArchiveParser *subparser=[unarchiver innerArchiveParser];
 			if(subparser)
 			{
-				[printer printDictionaryKey:@"lsarTestResult"];
+				[printer startPrintingDictionaryObjectForKey:@"lsarTestResult"];
 
 				CSHandle *handle=[subparser handle];
 				if([handle hasChecksum])
@@ -205,38 +204,28 @@ int main(int argc,const char **argv)
 					@try
 					{
 						[handle seekToEndOfFile];
-						if([handle isChecksumCorrect]) [printer printDictionaryObject:@"ok"];
-						else { [printer printDictionaryObject:@"wrong_checksum"]; returncode=1; }
+						if([handle isChecksumCorrect]) [printer printObject:@"ok"];
+						else { [printer printObject:@"wrong_checksum"]; returncode=1; }
 					}
-					@catch(id e) { [printer printDictionaryObject:@"unpacking_failed"]; returncode=1; }
+					@catch(id e) { [printer printObject:@"unpacking_failed"]; returncode=1; }
 				}
-				else [printer printDictionaryObject:@"no_checksum"];
+				else [printer printObject:@"no_checksum"];
 			}
 		}
 
 		XADArchiveParser *parser=[unarchiver archiveParser];
-		[printer printDictionaryKey:@"lsarEncoding"];
-		[printer printDictionaryObject:[parser encodingName]];
-		[printer printDictionaryKey:@"lsarConfidence"];
-		[printer printDictionaryObject:[NSNumber numberWithFloat:[parser encodingConfidence]]];
+		[printer printDictionaryObject:[parser encodingName] forKey:@"lsarEncoding"];
+		[printer printDictionaryObject:[NSNumber numberWithFloat:[parser encodingConfidence]] forKey:@"lsarConfidence"];
 
 		XADArchiveParser *outerparser=[unarchiver outerArchiveParser];
-		[printer printDictionaryKey:@"lsarFormatName"];
-		[printer printObject:[outerparser formatName]];
-		[printer printDictionaryKey:@"lsarProperties"];
-		[printer startPrintingDictionary];
-		[printer printDictionaryKeysAndObjects:[outerparser properties]];
-		[printer endPrintingDictionary];
+		[printer printDictionaryObject:[outerparser formatName] forKey:@"lsarFormatName"];
+		[printer printDictionaryObject:[outerparser properties] forKey:@"lsarProperties"];
 
 		XADArchiveParser *innerparser=[unarchiver innerArchiveParser];
 		if(innerparser)
 		{
-			[printer printDictionaryKey:@"lsarInnerFormatName"];
-			[printer printObject:[innerparser formatName]];
-			[printer printDictionaryKey:@"lsarInnerProperties"];
-			[printer startPrintingDictionary];
-			[printer printDictionaryKeysAndObjects:[innerparser properties]];
-			[printer endPrintingDictionary];
+			[printer printDictionaryObject:[innerparser formatName] forKey:@"lsarInnerFormatName"];
+			[printer printDictionaryObject:[innerparser properties] forKey:@"lsarInnerProperties"];
 		}
 
 		[printer endPrintingDictionary];
@@ -294,7 +283,7 @@ int main(int argc,const char **argv)
 			[[[unarchiver outerArchiveParser] formatName] print];
 		}
 
-		NSArray *volumes=[[unarchiver outerArchiveParser] volumes];
+		NSArray *volumes=[[unarchiver outerArchiveParser] volumeSizes];
 		if([volumes count]>1) [[NSString stringWithFormat:@" (%d volumes)",(int)[volumes count]] print];
 
 		[@"\n" print];
@@ -499,22 +488,21 @@ int main(int argc,const char **argv)
 
 	if(test)
 	{
-		[printer printDictionaryKey:@"lsarTestResult"];
+		[printer startPrintingDictionaryObjectForKey:@"lsarTestResult"];
 		switch(TestEntry(unarchiver,dict))
 		{
-			case EntryDoesNotNeedTestingResult: [printer printDictionaryObject:@"not_tested"]; break;
-			case EntryIsNotSupportedResult: [printer printDictionaryObject:@"not_supported"]; break;
-			case EntryHasWrongPasswordResult: [printer printDictionaryObject:@"wrong_password"]; break;
-			case EntryFailsWhileUnpackingResult: [printer printDictionaryObject:@"unpacking_failed"]; break;
-			case EntrySizeIsWrongResult: [printer printDictionaryObject:@"wrong_size"]; break;
-			case EntryHasNoChecksumResult: [printer printDictionaryObject:@"no_checksum"]; break;
-			case EntryChecksumIsIncorrectResult: [printer printDictionaryObject:@"wrong_checksum"]; break;
-			case EntryIsOkResult: [printer printDictionaryObject:@"ok"]; break;
+			case EntryDoesNotNeedTestingResult: [printer printObject:@"not_tested"]; break;
+			case EntryIsNotSupportedResult: [printer printObject:@"not_supported"]; break;
+			case EntryHasWrongPasswordResult: [printer printObject:@"wrong_password"]; break;
+			case EntryFailsWhileUnpackingResult: [printer printObject:@"unpacking_failed"]; break;
+			case EntrySizeIsWrongResult: [printer printObject:@"wrong_size"]; break;
+			case EntryHasNoChecksumResult: [printer printObject:@"no_checksum"]; break;
+			case EntryChecksumIsIncorrectResult: [printer printObject:@"wrong_checksum"]; break;
+			case EntryIsOkResult: [printer printObject:@"ok"]; break;
 		}
 	}
 
 	[printer endPrintingDictionary];
-	[printer endPrintingArrayObject];
 
 	return NO;
 }

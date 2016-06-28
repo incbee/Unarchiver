@@ -30,7 +30,7 @@ static const int offsetcodes[0x40]=
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length
 {
-	if((self=[super initWithHandle:handle length:length windowSize:8192]))
+	if((self=[super initWithInputBufferForHandle:handle length:length windowSize:8192]))
 	{
 		maincode=nil;
 		offsetcode=[XADPrefixCode new];
@@ -67,6 +67,8 @@ static void BuildCodeFromTree(XADPrefixCode *code,int *tree,int node,int numnode
 {
 	int numnodes=CSInputNextUInt16LE(input);
 	int codelength=CSInputNextByte(input);
+
+	analyser_assert(numnodes>=2);
 
 	if(numnodes>0x274) [XADException raiseDecrunchException];
 

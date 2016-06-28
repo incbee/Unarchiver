@@ -76,10 +76,10 @@ $(FRAMEWORK_NAME).framework/Versions/A/$(FRAMEWORK_NAME) \
 $(FRAMEWORK_NAME).framework/Versions/A/Resources/Info.plist \
 $(FRAMEWORK_NAME).framework/Versions/A/Resources/en.lproj/InfoPlist.strings \
 $(FRAMEWORK_HEADER_FILES:%=$(FRAMEWORK_NAME).framework/Versions/A/Headers/%)
-	ln -sf A $(FRAMEWORK_NAME).framework/Versions/Current
-	ln -sf Versions/Current/$(FRAMEWORK_NAME) $(FRAMEWORK_NAME).framework/$(FRAMEWORK_NAME)
-	ln -sf Versions/Current/Resources $(FRAMEWORK_NAME).framework/Resources
-	ln -sf Versions/Current/Headers $(FRAMEWORK_NAME).framework/Headers
+	ln -shf A $(FRAMEWORK_NAME).framework/Versions/Current
+	ln -shf Versions/Current/$(FRAMEWORK_NAME) $(FRAMEWORK_NAME).framework/$(FRAMEWORK_NAME)
+	ln -shf Versions/Current/Resources $(FRAMEWORK_NAME).framework/Resources
+	ln -shf Versions/Current/Headers $(FRAMEWORK_NAME).framework/Headers
 
 $(FRAMEWORK_NAME).framework/Versions/A/$(FRAMEWORK_NAME): $(LIBRARY_OBJS)
 	@mkdir -p $(dir $@)

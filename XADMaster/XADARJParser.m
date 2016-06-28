@@ -73,7 +73,7 @@ static NSData *ReadNullTerminatedString(CSHandle *fh);
 	int firstsize=headerbytes[0];
 	//int version=headerbytes[1];
 	//int minversion=headerbytes[2];
-	//int os=headerbytes[3];
+	int os=headerbytes[3];
 	//int archiveflags=headerbytes[4];
 	//int securityversion=headerbytes[5];
 	int filetype=headerbytes[6];
@@ -92,8 +92,17 @@ static NSData *ReadNullTerminatedString(CSHandle *fh);
 	const char *comment=(const char *)&headerbytes[firstsize+filenamelen+1];
 	int commentlen=StringLength(comment,(const char *)&headerbytes[headersize]);
 
-	[properties setObject:[NSDate XADDateWithMSDOSDateTime:archivecreataion] forKey:XADCreationDateKey];
-	[properties setObject:[NSDate XADDateWithMSDOSDateTime:archivemodification] forKey:XADLastModificationDateKey];
+	if(os==2) // Unix dates
+	{
+		[properties setObject:[NSDate dateWithTimeIntervalSince1970:archivecreataion] forKey:XADCreationDateKey];
+		[properties setObject:[NSDate dateWithTimeIntervalSince1970:archivemodification] forKey:XADLastModificationDateKey];
+	}
+	else // MS-DOS/Windows dates
+	{
+		[properties setObject:[NSDate XADDateWithMSDOSDateTime:archivecreataion] forKey:XADCreationDateKey];
+		[properties setObject:[NSDate XADDateWithMSDOSDateTime:archivemodification] forKey:XADLastModificationDateKey];
+	}
+
 	if(filenamelen) [properties setObject:[self XADStringWithBytes:filename length:filenamelen]
 	forKey:@"ARJOriginalArchiveName"];
 	if(commentlen) [properties setObject:[self XADStringWithBytes:comment length:commentlen]
@@ -140,13 +149,17 @@ static NSData *ReadNullTerminatedString(CSHandle *fh);
 
 		off_t pos=[fh offsetInFile];
 
+		NSDate *modificationdate;
+		if(os==2) modificationdate=[NSDate dateWithTimeIntervalSince1970:modification];
+		else modificationdate=[NSDate XADDateWithMSDOSDateTime:modification];
+
 		NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:
 			[self XADPathWithData:filename separators:separator],XADFileNameKey,
 			[NSNumber numberWithLongLong:pos],XADDataOffsetKey,
 			[NSNumber numberWithLongLong:compsize],XADDataLengthKey,
 			[NSNumber numberWithLongLong:compsize],XADCompressedSizeKey,
 			[NSNumber numberWithLongLong:size],XADFileSizeKey,
-			[NSDate XADDateWithMSDOSDateTime:modification],XADLastModificationDateKey,
+			modificationdate,XADLastModificationDateKey,
 			[NSNumber numberWithInt:accessmode],XADDOSFileAttributesKey,
 			[NSNumber numberWithInt:version],@"ARJVersion",
 			[NSNumber numberWithInt:minversion],@"ARJMinimumVersion",
@@ -178,8 +191,10 @@ static NSData *ReadNullTerminatedString(CSHandle *fh);
 			case 7: osname=@"Atari ST"; break;
 			case 8: osname=@"NeXT"; break;
 			case 9: osname=@"VAX VMS"; break;
+			case 10: osname=@"Windows 95"; break;
+			case 11: osname=@"Win32"; break;
 		}
-		[dict setObject:[self XADStringWithString:osname] forKey:@"ARJOSName"];
+		if(osname) [dict setObject:[self XADStringWithString:osname] forKey:@"ARJOSName"];
 
 		NSString *methodname=nil;
 		switch(method)
@@ -190,7 +205,7 @@ static NSData *ReadNullTerminatedString(CSHandle *fh);
 			case 3: methodname=@"Fast"; break;
 			case 4: methodname=@"Fastest"; break;
 		}
-		[dict setObject:[self XADStringWithString:methodname] forKey:XADCompressionNameKey];
+		if(methodname) [dict setObject:[self XADStringWithString:methodname] forKey:XADCompressionNameKey];
 
 		if([comment length]) [dict setObject:[self XADStringWithData:comment] forKey:XADCommentKey];
 

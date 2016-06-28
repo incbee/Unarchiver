@@ -121,19 +121,51 @@ static void FindAttribute(CSHandle *handle,int attribute)
 
 	startoffset=[handle offsetInFile];
 
-	[handle skipBytes:12];
+	[handle skipBytes:8];
 
+	uint32_t somecrc=[handle readUInt32LE];
 	off_t nextheaderoffs=[handle readUInt64LE];
-	//off_t nextheadersize=[handle readUInt64LE];
+	off_t nextheadersize=[handle readUInt64LE];
+	uint32_t nextheadercrc=[handle readUInt32LE];
 
-	[handle seekToFileOffset:nextheaderoffs+32+startoffset];
+	if(somecrc==0 && nextheaderoffs==0 && nextheadersize==0 && nextheadercrc==0)
+	{
+		[handle seekToEndOfFile];
+		[handle skipBytes:-1];
+		uint8_t endbyte=[handle readUInt8];
+		if(endbyte!=0) [XADException raiseIllegalDataException];
+
+		[handle skipBytes:-2];
+		uint8_t lastbyte=[handle readUInt8];
+
+		for(int i=0;;i++)
+		{
+			if(i>=512) [XADException raiseIllegalDataException];
+			[handle skipBytes:-2];
+			uint8_t byte=[handle readUInt8];
+
+			if(byte==1 && lastbyte==4) break; // Header, MainStreamsInfo
+			if(byte==23 && lastbyte==6) break; // EncodedHeader, PackInfo
+
+			lastbyte=byte;
+		}
+
+		[handle skipBytes:-1];
+	}
+	else
+	{
+		[handle seekToFileOffset:startoffset+32+nextheaderoffs];
+	}
 
 	CSHandle *fh=handle;
 
 	for(;;)
 	{
-		int type=ReadNumber(fh);
-		if(type==1) break; // Header
+		int type=(int)ReadNumber(fh);
+		if(type==1) // Header
+		{
+			break;
+		}
 		else if(type==23) // EncodedHeader
 		{
 			NSDictionary *streams=[self parseStreamsForHandle:fh];
@@ -141,15 +173,18 @@ static void FindAttribute(CSHandle *handle,int attribute)
 			//int folderindex=[[dict objectForKey:@"FolderIndex"] intValue];
 			fh=[self handleForStreams:streams folderIndex:0];
 		}
-		else [XADException raiseIllegalDataException];
+		else
+		{
+			[XADException raiseIllegalDataException];
+		}
 	}
 
-	NSDictionary *additionalstreams=nil;
+	//NSDictionary *additionalstreams=nil;
 	NSArray *files=nil;
 
 	for(;;)
 	{
-		int type=ReadNumber(fh);
+		int type=(int)ReadNumber(fh);
 		switch(type)
 		{
 			case 0: goto end;
@@ -164,7 +199,7 @@ static void FindAttribute(CSHandle *handle,int attribute)
 			break;
 
 			case 3: // AdditionalStreamsInfo
-				additionalstreams=[self parseStreamsForHandle:fh];
+				/*additionalstreams=*/[self parseStreamsForHandle:fh];
 			break;
 
 			case 4: // MainStreamsInfo
@@ -236,13 +271,13 @@ static void FindAttribute(CSHandle *handle,int attribute)
 
 -(NSArray *)parseFilesForHandle:(CSHandle *)handle
 {
-	int numfiles=ReadNumber(handle);
+	int numfiles=(int)ReadNumber(handle);
 	NSMutableArray *files=ArrayWithLength(numfiles);
 	NSMutableArray *emptystreams=nil;
 
 	for(;;)
 	{
-		int type=ReadNumber(handle);
+		int type=(int)ReadNumber(handle);
 		if(type==0) return files;
 
 		uint64_t size=ReadNumber(handle);
@@ -387,7 +422,7 @@ static void FindAttribute(CSHandle *handle,int attribute)
 	NSArray *folders=nil,*packedstreams=nil;
 	for(;;)
 	{
-		int type=ReadNumber(handle);
+		int type=(int)ReadNumber(handle);
 		switch(type)
 		{
 			case 0: // End
@@ -418,12 +453,12 @@ static void FindAttribute(CSHandle *handle,int attribute)
 -(NSArray *)parsePackedStreamsForHandle:(CSHandle *)handle
 {
 	uint64_t dataoffset=ReadNumber(handle)+32+startoffset;
-	int numpackedstreams=ReadNumber(handle);
+	int numpackedstreams=(int)ReadNumber(handle);
 	NSMutableArray *packedstreams=ArrayWithLength(numpackedstreams);
 
 	for(;;)
 	{
-		int type=ReadNumber(handle);
+		int type=(int)ReadNumber(handle);
 		switch(type)
 		{
 			case 0: return packedstreams;
@@ -455,7 +490,7 @@ static void FindAttribute(CSHandle *handle,int attribute)
 {
 	FindAttribute(handle,11); // Folder
 
-	int numfolders=ReadNumber(handle);
+	int numfolders=(int)ReadNumber(handle);
 	NSMutableArray *folders=ArrayWithLength(numfolders);
 
 	int external=[handle readUInt8];
@@ -468,7 +503,7 @@ static void FindAttribute(CSHandle *handle,int attribute)
 
 	for(;;)
 	{
-		int type=ReadNumber(handle);
+		int type=(int)ReadNumber(handle);
 		switch(type)
 		{
 			case 0: return folders;
@@ -497,7 +532,7 @@ static void FindAttribute(CSHandle *handle,int attribute)
 -(void)parseFolderForHandle:(CSHandle *)handle dictionary:(NSMutableDictionary *)dictionary
 packedStreams:(NSArray *)packedstreams packedStreamIndex:(int *)packedstreamindex
 {
-	int numcoders=ReadNumber(handle);
+	int numcoders=(int)ReadNumber(handle);
 	NSMutableArray *instreams=[NSMutableArray array];
 	NSMutableArray *outstreams=[NSMutableArray array];
 
@@ -510,13 +545,13 @@ packedStreams:(NSArray *)packedstreams packedStreamIndex:(int *)packedstreaminde
 		int numinstreams=0,numoutstreams=0;
 		if(flags&0x10)
 		{
-			numinstreams=ReadNumber(handle);
-			numoutstreams=ReadNumber(handle);
+			numinstreams=(int)ReadNumber(handle);
+			numoutstreams=(int)ReadNumber(handle);
 		}
 		else numoutstreams=numinstreams=1;
 
 		NSData *props=nil;
-		if(flags&0x20) props=[handle readDataOfLength:ReadNumber(handle)];
+		if(flags&0x20) props=[handle readDataOfLength:(int)ReadNumber(handle)];
 
 		NSMutableDictionary *coder=[NSMutableDictionary dictionaryWithObjectsAndKeys:
 			coderid,@"ID",
@@ -556,8 +591,8 @@ packedStreams:(NSArray *)packedstreams packedStreamIndex:(int *)packedstreaminde
 	{
 		uint64_t inindex=ReadNumber(handle);
 		uint64_t outindex=ReadNumber(handle);
-		SetNumberEntryInArray(instreams,inindex,outindex,@"SourceIndex");
-		SetNumberEntryInArray(outstreams,outindex,inindex,@"DestinationIndex");
+		SetNumberEntryInArray(instreams,(int)inindex,outindex,@"SourceIndex");
+		SetNumberEntryInArray(outstreams,(int)outindex,inindex,@"DestinationIndex");
 	}
 
 	// Load packed stream indexes, if any
@@ -574,7 +609,7 @@ packedStreams:(NSArray *)packedstreams packedStreamIndex:(int *)packedstreaminde
 	else
 	{
 		for(int i=0;i<numpackedstreams;i++)
-		SetObjectEntryInArray(instreams,ReadNumber(handle),[packedstreams objectAtIndex:*packedstreamindex+i],@"PackedStream");
+		SetObjectEntryInArray(instreams,(int)ReadNumber(handle),[packedstreams objectAtIndex:*packedstreamindex+i],@"PackedStream");
 	}
 	*packedstreamindex+=numpackedstreams;
 
@@ -593,7 +628,7 @@ packedStreams:(NSArray *)packedstreams packedStreamIndex:(int *)packedstreaminde
 
 	for(;;)
 	{
-		int type=ReadNumber(handle);
+		int type=(int)ReadNumber(handle);
 		switch(type)
 		{
 			case 0: return;
@@ -601,7 +636,7 @@ packedStreams:(NSArray *)packedstreams packedStreamIndex:(int *)packedstreaminde
 			case 13: // NumUnpackStreams
 				for(int i=0;i<numfolders;i++)
 				{
-					int numsubstreams=ReadNumber(handle);
+					int numsubstreams=(int)ReadNumber(handle);
 					if(numsubstreams!=1) // Re-use default substream when there is only one
 					{
 						NSArray *substreams=ArrayWithLength(numsubstreams);

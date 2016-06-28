@@ -844,6 +844,26 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>xip</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>XIP Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.apple.xip-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>ace</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -943,6 +963,26 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>cx.c3.lbr-archive</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>pma</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>PMA Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>cx.c3.pma-archive</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -1748,7 +1788,7 @@
 	<key>CFBundleIconFile</key>
 	<string>unarchiver</string>
 	<key>CFBundleIdentifier</key>
-	<string>cx.c3.theunarchiver</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -1756,11 +1796,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.6</string>
+	<string>3.11.1</string>
 	<key>CFBundleSignature</key>
 	<string>TUnA</string>
 	<key>CFBundleVersion</key>
-	<string>3.6</string>
+	<string>109</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -1821,6 +1861,8 @@
 	</array>
 	<key>OSAScriptingDefinition</key>
 	<string>TheUnarchiverSuite.sdef</string>
+	<key>SUFeedURL</key>
+	<string>https://unarchiver.c3.cx/updates.rss</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -2030,6 +2072,25 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>xar</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.xar-archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>XIP Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.apple.xip-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>xip</string>
 				</array>
 			</dict>
 		</dict>
@@ -2681,6 +2742,26 @@
 					<string>application/x-lha</string>
 					<string>application/lzh</string>
 					<string>application/x-lzh</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PMA Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>archive.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>cx.c3.pma-archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pma</string>
 				</array>
 			</dict>
 		</dict>

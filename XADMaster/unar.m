@@ -2,16 +2,23 @@
 #import "NSStringPrinting.h"
 #import "CSCommandLineParser.h"
 #import "CommandLineCommon.h"
+#import "CSFileHandle.h"
 
-#define VERSION_STRING @"v1.5"
+#define VERSION_STRING @"v1.10.1"
 
 @interface Unarchiver:NSObject {}
 @end
 
 int numerrors;
+BOOL isinteractive,tostdout;
+FILE *outstream,*errstream;
 
 int main(int argc,const char **argv)
 {
+	#ifdef GNUSTEP
+	setlocale(LC_ALL,""); // GNUstep requires this.
+	#endif
+
 	NSAutoreleasePool *pool=[NSAutoreleasePool new];
 
 	CSCommandLineParser *cmdline=[[CSCommandLineParser new] autorelease];
@@ -22,9 +29,12 @@ int main(int argc,const char **argv)
 	@"\n"
 	@"Available options:\n"];
 
+	[cmdline setProgramVersion:VERSION_STRING];
+
 	[cmdline addStringOption:@"output-directory" description:
 	@"The directory to write the contents of the archive to. "
-	@"Defaults to the current directory."];
+	@"Defaults to the current directory. If set to a single dash (-), "
+	@"no files will be created, and all data will be output to stdout."];
 	[cmdline addAlias:@"o" forOption:@"output-directory"];
 
 	[cmdline addSwitchOption:@"force-overwrite" description:
@@ -128,11 +138,14 @@ int main(int argc,const char **argv)
 
 	#endif
 
+	[cmdline addSwitchOption:@"quiet" description:@"Run in quiet mode."];
+	[cmdline addAlias:@"q" forOption:@"quiet"];
+
+	[cmdline addVersionOption];
+
 	[cmdline addHelpOption];
 
 	if(![cmdline parseCommandLineWithArgc:argc argv:argv]) exit(1);
-
-
 
 	NSString *destination=[cmdline stringValueForOption:@"output-directory"];
 	BOOL forceoverwrite=[cmdline boolValueForOption:@"force-overwrite"];
@@ -148,10 +161,34 @@ int main(int argc,const char **argv)
 	BOOL copytime=[cmdline boolValueForOption:@"copy-time"];
 	BOOL noquarantine=[cmdline boolValueForOption:@"no-quarantine"];
 	int forkstyle=forkvalues[[cmdline intValueForOption:@"forks"]];
+	BOOL quietmode=[cmdline boolValueForOption:@"quiet"];
+
+	if(destination && [destination isEqual:@"-"])
+	{
+		destination=@"/____________________";
+		tostdout=YES;
+		quietmode=YES;
+	}
+	else
+	{
+		tostdout=NO;
+	}
+
+	if(quietmode)
+	{
+		isinteractive=NO;
+		outstream=NULL;
+		errstream=stderr;
+	}
+	else
+	{
+		isinteractive=IsInteractive();
+		outstream=errstream=stdout;
+	}
 
 	if(IsListRequest(encoding)||IsListRequest(passwordencoding))
 	{
-		[@"Available encodings are:\n" print];
+		[@"Available encodings are:\n" printToFile:outstream];
 		PrintEncodingList();
 		return 0;
 	}
@@ -166,9 +203,9 @@ int main(int argc,const char **argv)
 
 	NSString *filename=[files objectAtIndex:0];
 
-	[filename print];
-	[@": " print];
-	fflush(stdout);
+	[filename printToFile:outstream];
+	[@": " printToFile:outstream];
+	if(outstream) fflush(outstream);
 
 	XADError openerror;
 	XADSimpleUnarchiver *unarchiver=[XADSimpleUnarchiver simpleUnarchiverForPath:filename error:&openerror];
@@ -176,13 +213,13 @@ int main(int argc,const char **argv)
 	{
 		if(openerror)
 		{
-			[@"Couldn't open archive. (" print];
-			[[XADException describeXADError:openerror] print];
-			[@".)\n" print];
+			[@"Couldn't open archive. (" printToFile:errstream];
+			[[XADException describeXADError:openerror] printToFile:errstream];
+			[@".)\n" printToFile:errstream];
 		}
 		else
 		{
-			[@"Couldn't recognize the archive format.\n" print];
+			[@"Couldn't recognize the archive format.\n" printToFile:errstream];
 		}
 		return 1;
 	}
@@ -214,16 +251,16 @@ int main(int argc,const char **argv)
 
 	if([unarchiver innerArchiveParser])
 	{
-		[[[unarchiver innerArchiveParser] formatName] print];
-		[@" in " print];
-		[[[unarchiver outerArchiveParser] formatName] print];
+		[[[unarchiver innerArchiveParser] formatName] printToFile:outstream];
+		[@" in " printToFile:outstream];
+		[[[unarchiver outerArchiveParser] formatName] printToFile:outstream];
 	}
 	else
 	{
-		[[[unarchiver outerArchiveParser] formatName] print];
+		[[[unarchiver outerArchiveParser] formatName] printToFile:outstream];
 	}
 
-	[@"\n" print];
+	[@"\n" printToFile:outstream];
 
 	numerrors=0;
 
@@ -231,9 +268,9 @@ int main(int argc,const char **argv)
 
 	if(parseerror)
 	{
-		[@"Archive parsing failed! (" print];
-		[[XADException describeXADError:parseerror] print];
-		[@".)\n" print];
+		[@"Archive parsing failed! (" printToFile:errstream];
+		[[XADException describeXADError:parseerror] printToFile:errstream];
+		[@".)\n" printToFile:errstream];
 	}
 
 	if(unarchiveerror||numerrors)
@@ -243,20 +280,20 @@ int main(int argc,const char **argv)
 
 		if(!destination||[destination isEqual:@"."])
 		{
-			[@"Extraction to current directory failed! (" print];
+			[@"Extraction to current directory failed! (" printToFile:errstream];
 		}
 		else
 		{
-			[@"Extraction to directory \"" print];
-			[destination print];
-			[@"\" failed (" print];
+			[@"Extraction to directory \"" printToFile:errstream];
+			[destination printToFile:errstream];
+			[@"\" failed (" printToFile:errstream];
 		}
 
-		if(unarchiveerror) [[XADException describeXADError:unarchiveerror] print];
+		if(unarchiveerror) [[XADException describeXADError:unarchiveerror] printToFile:errstream];
 		else [[NSString stringWithFormat:@"%d file%s failed",
-		numerrors,numerrors==1?"":"s"] print];
+		numerrors,numerrors==1?"":"s"] printToFile:errstream];
 
-		[@".)\n" print];
+		[@".)\n" printToFile:errstream];
 	}
 	else if([unarchiver numberOfItemsExtracted])
 	{
@@ -264,18 +301,18 @@ int main(int argc,const char **argv)
 
 		if([result isEqual:@"."])
 		{
-			[@"Successfully extracted to current directory.\n" print];
+			[@"Successfully extracted to current directory.\n" printToFile:outstream];
 		}
 		else
 		{
-			[@"Successfully extracted to \"" print];
-			[result print];
-			[@"\".\n" print];
+			[@"Successfully extracted to \"" printToFile:outstream];
+			[result printToFile:outstream];
+			[@"\".\n" printToFile:outstream];
 		}
 	}
 	else
 	{
-		[@"No files extracted.\n" print];
+		[@"No files extracted.\n" printToFile:outstream];
 	}
 
 	// TODO: Print interest?
@@ -290,8 +327,8 @@ int main(int argc,const char **argv)
 -(void)simpleUnarchiverNeedsPassword:(XADSimpleUnarchiver *)unarchiver
 {
 	// Ask for a password from the user if called in interactive mode,
-	// otherwise just print an error on stderr and exit.
- 	if(IsInteractive())
+	// otherwise just print an error and exit.
+ 	if(isinteractive)
 	{
 		NSString *password=AskForPassword(@"This archive requires a password to unpack.\n");
 		if(!password) exit(2);
@@ -299,30 +336,43 @@ int main(int argc,const char **argv)
 	}
 	else
 	{
-		[@"This archive requires a password to unpack. Use the -p option to provide one.\n" printToFile:stderr];
+		[@"This archive requires a password to unpack. Use the -p option to provide one.\n" printToFile:errstream];
 		exit(2);
 	}
 }
 
+-(CSHandle *)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver outputHandleForEntryWithDictionary:(NSDictionary *)dict
+{
+	if(tostdout) return [CSFileHandle fileHandleForStandardOutput];
+	else return nil;
+}
 
 //-(NSString *)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver encodingNameForXADString:(id <XADString>)string;
 
 -(NSString *)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver replacementPathForEntryWithDictionary:(NSDictionary *)dict
 originalPath:(NSString *)path suggestedPath:(NSString *)unique
 {
-	// Skip files if not interactive.
- 	if(!IsInteractive()) return nil;
+	// Skip files and report as error if not interactive.
+ 	if(!isinteractive)
+	{
+		[@"  " printToFile:errstream];
+		NSString *name=MediumInfoLineForEntryWithDictionary(dict);
+		[name printToFile:errstream];
+		[@"... Skipping existing file.\n" printToFile:errstream];
+		numerrors++;
+		return nil;
+	}
 
-	[@"\"" print];
-	[[path stringByEscapingControlCharacters] print];
-	[@"\" already exists.\n" print];
+	[@"\"" printToFile:outstream];
+	[[path stringByEscapingControlCharacters] printToFile:outstream];
+	[@"\" already exists.\n" printToFile:outstream];
 
 	for(;;)
 	{
-		[@"(r)ename to \"" print];
-		[[[unique lastPathComponent] stringByEscapingControlCharacters] print];
-		[@"\", (R)ename all, (o)verwrite, (O)verwrite all, (s)kip, (S)kip all, (q)uit? " print];
-		fflush(stdout);
+		[@"(r)ename to \"" printToFile:outstream];
+		[[[unique lastPathComponent] stringByEscapingControlCharacters] printToFile:outstream];
+		[@"\", (R)ename all, (o)verwrite, (O)verwrite all, (s)kip, (S)kip all, (q)uit? " printToFile:outstream];
+		if(outstream) fflush(outstream);
 
 		switch(GetPromptCharacter())
 		{
@@ -346,23 +396,33 @@ suggestedPath:(NSString *)unique
 
 -(void)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver willExtractEntryWithDictionary:(NSDictionary *)dict to:(NSString *)path
 {
-	[@"  " print];
+	[@"  " printToFile:outstream];
 
 	NSString *name=MediumInfoLineForEntryWithDictionary(dict);
-	[name print];
+	[name printToFile:outstream];
 
-	[@"... " print];
-	fflush(stdout);
+	[@"... " printToFile:outstream];
+	if(outstream) fflush(outstream);
 }
 
 -(void)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver didExtractEntryWithDictionary:(NSDictionary *)dict to:(NSString *)path error:(XADError)error
 {
-	if(!error) [@"OK.\n" print];
+	if(!error)
+	{
+		[@"OK.\n" printToFile:outstream];
+	}
 	else
 	{
-		[@"Failed! (" print];
-		[[XADException describeXADError:error] print];
-		[@")\n" print];
+		if(errstream==stderr)
+		{
+			[@"  " printToFile:errstream];
+			NSString *name=MediumInfoLineForEntryWithDictionary(dict);
+			[name printToFile:errstream];
+			[@"... " printToFile:errstream];
+		}
+		[@"Failed! (" printToFile:errstream];
+		[[XADException describeXADError:error] printToFile:errstream];
+		[@")\n" printToFile:errstream];
 
 		numerrors++;
 	}
@@ -372,13 +432,5 @@ suggestedPath:(NSString *)unique
 {
 	return NO;
 }
-
-//-(void)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver
-//extractionProgressForEntryWithDictionary:(NSDictionary *)dict
-//fileProgress:(off_t)fileprogress of:(off_t)filesize
-//totalProgress:(off_t)totalprogress of:(off_t)totalsize;
-//-(void)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver
-//estimatedExtractionProgressForEntryWithDictionary:(NSDictionary *)dict
-//fileProgress:(double)fileprogress totalProgress:(double)totalprogress;
 
 @end

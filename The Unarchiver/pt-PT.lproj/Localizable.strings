@@ -46,6 +46,9 @@
 /* Status text when asking for a password */
 "You need to supply a password to open the archive \"%@\"." = "É necessário uma palavra-passe para abrir o arquivo \"%@\".";
 
+/* Check for updates menu item */
+"Check for Update…" = "Check for Update…";
+
 /* Error messages from XADMaster.framework. Some are converted to friendlier messages in English, too. */
 
 /* Common errors */

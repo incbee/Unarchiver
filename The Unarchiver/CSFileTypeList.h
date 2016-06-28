@@ -5,7 +5,10 @@
 @interface CSFileTypeList:NSTableView
 {
 	CSFileTypeListSource *datasource;
+	NSView *blockerview;
 }
+
++(void)setDisabledInSandbox:(BOOL)disabled;
 
 -(id)initWithCoder:(NSCoder *)coder;
 -(id)initWithFrame:(NSRect)frame;

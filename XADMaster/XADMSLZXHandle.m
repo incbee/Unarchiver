@@ -165,7 +165,7 @@
 		{
 			if(outbuffer[i]==0xe8)
 			{
-				int32_t currpos=pos+i;
+				int32_t currpos=(int)pos+i;
 				int32_t absoffs=CSInt32LE(&outbuffer[i+1]);
 				if(absoffs>=-currpos && absoffs<preprocesssize)
 				{
@@ -229,6 +229,7 @@
 
 		case 3: // uncompressed
 		{
+			CSInputSkipBits(input,1);
 			CSInputSkipTo16BitBoundary(input);
 			// Untangle the stored r0-r2 values (the byte swapping earlier messed them up)
 			r0=CSInputNextUInt16BE(input);

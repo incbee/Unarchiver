@@ -161,6 +161,7 @@ resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMu
 
 // Internal functions
 
++(NSArray *)scanForVolumesWithFilename:(NSString *)filename regex:(XADRegex *)regex;
 +(NSArray *)scanForVolumesWithFilename:(NSString *)filename
 regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext;
 
@@ -171,8 +172,9 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext;
 -(CSHandle *)zeroLengthHandleWithChecksum:(BOOL)checksum;
 -(CSHandle *)subHandleFromSolidStreamForEntryWithDictionary:(NSDictionary *)dict;
 
--(NSArray *)volumes;
--(off_t)offsetForVolume:(int)disk offset:(off_t)offset;
+-(BOOL)hasVolumes;
+-(NSArray *)volumeSizes;
+-(CSHandle *)currentHandle;
 
 -(void)setObject:(id)object forPropertyKey:(NSString *)key;
 -(void)addPropertiesFromDictionary:(NSDictionary *)dict;

@@ -2,6 +2,7 @@
 #import "XADLZHStaticHandle.h"
 #import "XADLZHDynamicHandle.h"
 #import "XADLArcHandles.h"
+#import "XADPMArc1Handle.h"
 #import "XADLZHOldHandles.h"
 #import "XADCRCHandle.h"
 #import "NSDateXAD.h"
@@ -83,7 +84,22 @@
 			[dict setObject:[NSDate XADDateWithMSDOSDateTime:time] forKey:XADLastModificationDateKey];
 
 			int namelen=[fh readUInt8];
-			[dict setObject:[fh readDataOfLength:namelen] forKey:@"LHAHeaderFileNameData"];
+			uint8_t namebuffer[namelen];
+			[fh readBytes:namelen toBuffer:namebuffer];
+
+			int actualnamelen=0;
+			while(actualnamelen<namelen)
+			{
+				if(namebuffer[actualnamelen]==0)
+				{
+					[dict setObject:[self XADStringWithBytes:&namebuffer[actualnamelen+1]
+					length:namelen-actualnamelen-1] forKey:XADCommentKey];
+					break;
+				}
+				actualnamelen++;
+			}
+
+			[dict setObject:[NSData dataWithBytes:namebuffer length:actualnamelen] forKey:@"LHAHeaderFileNameData"];
 
 			int crc=[fh readUInt16LE];
 			[dict setObject:[NSNumber numberWithInt:crc] forKey:@"LHACRC16"];
@@ -146,7 +162,7 @@
 				[self parseExtendedForDictionary:dict size:extsize-4];
 			}
 		}
-		else [XADException raiseIllegalDataException];
+		else { [XADException raiseIllegalDataException]; for(;;); }
 
 		if(level==0)
 		{
@@ -221,7 +237,10 @@
 			if(filenamedata&&[filenamedata length])
 			path=[path pathByAppendingXADStringComponent:[self XADStringWithData:filenamedata]];
 		}
-		else if(filenamedata) path=[self XADPathWithData:filenamedata separators:"\xff\\/"];
+		else if(filenamedata)
+		{
+			path=[self XADPathWithData:filenamedata separators:"\xff\\/"];
+		}
 
 		if(path) [dict setObject:path forKey:XADFileNameKey];
 
@@ -376,9 +395,12 @@
 	{
 		// no compression, do nothing
 	}
+	else if([method isEqual:@"-pm1-"])
+	{
+		handle=[[[XADPMArc1Handle alloc] initWithHandle:handle length:size] autorelease];
+	}
 	else if([method isEqual:@"-pm2-"])
 	{
-		[self reportInterestingFileWithReason:@"-pm2- compression"];
 		handle=[[[XADPMArc2Handle alloc] initWithHandle:handle length:size] autorelease];
 	}
 	else // not supported

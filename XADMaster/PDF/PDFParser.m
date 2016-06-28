@@ -40,6 +40,7 @@ static BOOL IsDelimiter(uint8_t c);
 		objdict=[[NSMutableDictionary dictionary] retain];
 		unresolved=[[NSMutableArray array] retain];
 
+		trailerdict=nil;
 		encryption=nil;
 
 		passwordaction=NULL;
@@ -64,6 +65,7 @@ static BOOL IsDelimiter(uint8_t c);
 	[fh release];
 	[objdict release];
 	[unresolved release];
+	[trailerdict release];
 	[encryption release];
 	[super dealloc];
 }
@@ -252,8 +254,8 @@ static BOOL IsDelimiter(uint8_t c);
 		}
 		else if(currchar>='0' && currchar<='9')
 		{
-			/*int first=*/[self parseSimpleInteger];
-			int num=[self parseSimpleInteger];
+			/*int first=(int)*/[self parseSimpleInteger];
+			int num=(int)[self parseSimpleInteger];
 
 			[self skipWhitespace];
 
@@ -347,7 +349,7 @@ static BOOL IsDelimiter(uint8_t c);
 
 		for(int n=first;n<first+num;n++)
 		{
-			int type=[self parseIntegerOfSize:typesize fromHandle:handle default:1];
+			int type=(int)[self parseIntegerOfSize:typesize fromHandle:handle default:1];
 			uint64_t value1=[self parseIntegerOfSize:value1size fromHandle:handle default:0];
 			/*uint64_t value2=*/[self parseIntegerOfSize:value2size fromHandle:handle default:0];
 
@@ -428,8 +430,8 @@ static BOOL IsDelimiter(uint8_t c);
 
 -(id)parsePDFObjectWithReferencePointer:(PDFObjectReference **)refptr
 {
-	int objnum=[self parseSimpleInteger];
-	int objgen=[self parseSimpleInteger];
+	int objnum=(int)[self parseSimpleInteger];
+	int objgen=(int)[self parseSimpleInteger];
 	PDFObjectReference *ref=[PDFObjectReference referenceWithNumber:objnum generation:objgen];
 	if(refptr) *refptr=ref;
 
@@ -548,8 +550,8 @@ static BOOL IsDelimiter(uint8_t c);
 
 	for(int i=0;i<num;i++)
 	{
-		objnums[i]=[self parseSimpleInteger];
-		offsets[i]=[self parseSimpleInteger];
+		objnums[i]=(int)[self parseSimpleInteger];
+		offsets[i]=(int)[self parseSimpleInteger];
 	}
 
 	for(int i=0;i<num;i++)
@@ -957,7 +959,7 @@ static BOOL IsDelimiter(uint8_t c);
 	if(offs<100)
 	{
 		[fh seekToFileOffset:0];
-		start=[fh readDataOfLength:offs];
+		start=[fh readDataOfLength:(int)offs];
 	}
 	else
 	{

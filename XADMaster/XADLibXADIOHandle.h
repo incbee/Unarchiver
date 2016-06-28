@@ -129,7 +129,6 @@ void xadIODropBitsHigh(struct xadInOut *io, xadUINT8 bits);
 
 @interface XADLibXADIOHandle:CSMemoryHandle
 {
-	CSHandle *parent;
 	BOOL unpacked;
 
 	off_t inlen,outlen;
@@ -139,7 +138,6 @@ void xadIODropBitsHigh(struct xadInOut *io, xadUINT8 bits);
 
 -(id)initWithHandle:(CSHandle *)handle;
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)outlength;
--(void)dealloc;
 
 -(off_t)fileSize;
 -(off_t)offsetInFile;
@@ -199,7 +197,7 @@ void xadIODropBitsHigh(struct xadInOut *io, xadUINT8 bits);
 #define XADMEMF_CLEAR   (1L << 16)
 #define XADMEMF_PUBLIC  (1L << 0)
 
-static inline xadPTR xadAllocVec(xadSize size, xadUINT32 flags) { return calloc(size,1); }
+static inline xadPTR xadAllocVec(xadSize size, xadUINT32 flags) { return calloc((int)size,1); }
 static inline void xadFreeObject(xadPTR object,xadTag tag, ...) { free(object); }
 static inline void xadFreeObjectA(xadPTR object,xadTAGPTR tags) { free(object); }
 static inline void xadCopyMem(const void *s,xadPTR d,xadSize size) { memmove(d,s,(size_t)size); }

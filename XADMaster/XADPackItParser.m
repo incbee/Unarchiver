@@ -63,7 +63,7 @@
 				password:[[self password] dataUsingEncoding:NSMacOSRomanStringEncoding]] autorelease];
 				encrypted=YES;
 			}
-			else if(magic=='PMa6')
+			else //if(magic=='PMa6')
 			{
 				src=[[[XADPackItDESHandle alloc] initWithHandle:handle
 				password:[[self password] dataUsingEncoding:NSMacOSRomanStringEncoding]] autorelease];
@@ -74,7 +74,7 @@
 			input=hh->input;
 			fh=hh;
 		}
-		else [XADException raiseIllegalDataException];
+		else { [XADException raiseIllegalDataException]; for(;;); }
 
 		int namelen=[fh readUInt8];
 		if(namelen>63) namelen=63;
@@ -113,10 +113,10 @@
 		else
 		{
 			[fh skipBytes:datasize];
-			datacompsize=CSInputBufferOffset(input)-94;
+			datacompsize=(int)CSInputBufferOffset(input)-94;
 
 			[fh skipBytes:rsrcsize];
-			rsrccompsize=CSInputBufferOffset(input)-datacompsize-94;
+			rsrccompsize=(int)CSInputBufferOffset(input)-datacompsize-94;
 
 			int crc=[fh readUInt16BE];
 
@@ -204,7 +204,7 @@
 	if(uncomplennum)
 	{
 		off_t uncomplen=[uncomplennum longLongValue];
-		int crypto=[[obj objectForKey:@"Crypto"] longLongValue];
+		int crypto=[[obj objectForKey:@"Crypto"] intValue];
 
 		if(crypto==1)
 		{
@@ -248,7 +248,7 @@
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length password:(NSData *)passdata
 {
-	if((self=[super initWithHandle:handle length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		const uint8_t *passbytes=[passdata bytes];
 		int passlen=[passdata length];
@@ -303,7 +303,7 @@
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length password:(NSData *)passdata
 {
-	if((self=[super initWithHandle:handle length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		const uint8_t *passbytes=[passdata bytes];
 		int passlen=[passdata length];

@@ -163,10 +163,6 @@ void _CSInputFillBuffer(CSInputBuffer *self)
 
 // Bitstream reading
 
-static inline int imin(int a,int b) { return a<b?a:b; }
-
-static inline int iswap16(uint16_t v) { return (v>>8)|(v<<8); }
-
 // TODO: clean up and/or make faster
 void _CSInputFillBits(CSInputBuffer *self)
 {
@@ -199,16 +195,16 @@ void _CSInputFillBits(CSInputBuffer *self)
 				(_CSInputPeekByteWithoutEOF(self,startoffset)<<16)|
 				(_CSInputPeekByteWithoutEOF(self,startoffset+1)<<8)|
 				(_CSInputPeekByteWithoutEOF(self,startoffset+2)<<0)
-			)<<8-self->numbits;
+			)<<(8-self->numbits);
 		break;
 		case 2:
 			self->bits|=(
 				(_CSInputPeekByteWithoutEOF(self,startoffset)<<8)|
 				(_CSInputPeekByteWithoutEOF(self,startoffset+1)<<0)
-			)<<16-self->numbits;
+			)<<(16-self->numbits);
 		break;
 		case 1:
-			self->bits|=_CSInputPeekByteWithoutEOF(self,startoffset)<<24-self->numbits;
+			self->bits|=_CSInputPeekByteWithoutEOF(self,startoffset)<<(24-self->numbits);
 		break;
 	}
 

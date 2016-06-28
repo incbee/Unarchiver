@@ -11,16 +11,13 @@ uint8_t *destinationbase,uint8_t *destinationstart,uint8_t *destinationend);
 
 static XADPrefixCode *AllocAndReadCode(uint8_t *source,uint8_t *sourceend,int numentries,uint8_t **newsource);
 static void WordAlign(uint8_t *start,uint8_t **curr);
-static void CopyBytesWithRepeat(uint8_t *dest,uint8_t *src,int length);
 
 @implementation XADNowCompressHandle
 
 -(id)initWithHandle:(CSHandle *)handle files:(NSMutableArray *)filesarray
 {
-	if((self=[super initWithName:[handle name]]))
+	if(self=[super initWithParentHandle:handle])
 	{
-		parent=[handle retain];
-
 		files=[filesarray retain];
 
 		blocks=NULL;
@@ -32,7 +29,6 @@ static void CopyBytesWithRepeat(uint8_t *dest,uint8_t *src,int length);
 -(void)dealloc
 {
 	free(blocks);
-	[parent release];
 	[super dealloc];
 }
 

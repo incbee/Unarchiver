@@ -12,6 +12,7 @@
 
 		waitview=nil;
 		progressview=nil;
+		notwritableview=nil;
 		errorview=nil;
 		openerrorview=nil;
 		passwordview=nil;
@@ -28,6 +29,7 @@
 
 	[waitview release];
 	[progressview release];
+	[notwritableview release];
 	[errorview release];
 	[openerrorview release];
 	[passwordview release];
@@ -301,7 +303,7 @@
 	[encodingpopup buildEncodingListMatchingXADString:string];
 	if(encoding)
 	{
-		int index=[encodingpopup indexOfItemWithTag:encoding];
+		int index=(int)[encodingpopup indexOfItemWithTag:encoding];
 		if(index>=0) [encodingpopup selectItemAtIndex:index];
 		else [encodingpopup selectItemAtIndex:[encodingpopup indexOfItemWithTag:NSISOLatin1StringEncoding]];
 	}

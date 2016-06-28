@@ -81,7 +81,7 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 	const uint8_t *bytes=[data bytes];
 	int length=[data length];
 
-	for(int offs=0;offs<length+4+16;offs+=512)
+	for(int offs=0;offs+4+16<=length;offs+=512)
 	{
 		if(IsOlderSignature(bytes+offs)) 
 		{
@@ -205,7 +205,8 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 		extractOpcode:extractopcode ignoreOverwrite:NO
 		directoryOpcode:extractopcode-2 directoryArgument:0 assignOpcode:-1
 		startOffset:(stride+phase)*4 endOffset:stringtable stride:stride
-		stringStartOffset:stringtable stringEndOffset:uncomplength unicode:NO];
+		stringStartOffset:stringtable stringEndOffset:uncomplength unicode:NO
+		newDateTimeOrder:NO];
 	}
 	else
 	{
@@ -234,7 +235,8 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 		extractOpcode:extractopcode ignoreOverwrite:NO
 		directoryOpcode:extractopcode-2 directoryArgument:0 assignOpcode:-1
 		startOffset:(stride+phase)*4 endOffset:stringtable stride:stride
-		stringStartOffset:stringtable stringEndOffset:headerlength unicode:NO];
+		stringStartOffset:stringtable stringEndOffset:headerlength unicode:NO
+		newDateTimeOrder:NO];
 	}
 }
 
@@ -281,7 +283,8 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 		extractOpcode:4 ignoreOverwrite:NO
 		directoryOpcode:3 directoryArgument:1 assignOpcode:-1
 		startOffset:(stride+phase)*4 endOffset:stringtable stride:stride
-		stringStartOffset:stringtable stringEndOffset:headerlength unicode:NO];
+		stringStartOffset:stringtable stringEndOffset:headerlength unicode:NO
+		newDateTimeOrder:NO];
 	}
 	else
 	{
@@ -292,7 +295,8 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 		extractOpcode:extractopcode ignoreOverwrite:NO
 		directoryOpcode:extractopcode-2 directoryArgument:0 assignOpcode:-1
 		startOffset:(stride+phase)*4 endOffset:stringtable stride:stride
-		stringStartOffset:stringtable stringEndOffset:headerlength unicode:NO];
+		stringStartOffset:stringtable stringEndOffset:headerlength unicode:NO
+		newDateTimeOrder:NO];
 	}
 }
 
@@ -376,7 +380,8 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 		extractOpcode:20 ignoreOverwrite:YES
 		directoryOpcode:11 directoryArgument:1 assignOpcode:25
 		startOffset:entryoffs endOffset:entryoffs+entrynum*4*7 stride:7
-		stringStartOffset:stringoffs stringEndOffset:nextoffs unicode:unicode];
+		stringStartOffset:stringoffs stringEndOffset:nextoffs unicode:unicode
+		newDateTimeOrder:YES];
 	}
 	else
 	{
@@ -404,15 +409,21 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 		extractOpcode:extractopcode ignoreOverwrite:NO
 		directoryOpcode:diropcode directoryArgument:1 assignOpcode:-1
 		startOffset:(stride+phase)*4 endOffset:stringtable stride:stride
-		stringStartOffset:stringtable stringEndOffset:headerlength unicode:NO];
+		stringStartOffset:stringtable stringEndOffset:headerlength unicode:NO
+		newDateTimeOrder:YES];
 	}
 }
 
 
 
-static NSInteger CompareEntryDataOffsets(id first,id second,void *context)
+static NSComparisonResult CompareEntryDataOffsets(id first,id second,void *context)
 {
 	return [[first objectForKey:@"NSISDataOffset"] compare:[second objectForKey:@"NSISDataOffset"]];
+}
+
+static NSComparisonResult CompareEntryFileNames(id first,id second,void *context)
+{
+	return -[[[first objectForKey:XADFileNameKey] string] compare:[[second objectForKey:XADFileNameKey] string]];
 }
 
 -(void)parseOpcodesWithHeader:(NSData *)header blocks:(NSDictionary *)blocks
@@ -420,16 +431,18 @@ extractOpcode:(int)extractopcode ignoreOverwrite:(BOOL)ignoreoverwrite
 directoryOpcode:(int)diropcode directoryArgument:(int)dirarg assignOpcode:(int)assignopcode
 startOffset:(int)startoffs endOffset:(int)endoffs stride:(int)stride
 stringStartOffset:(int)stringoffs stringEndOffset:(int)stringendoffs unicode:(BOOL)unicode
+newDateTimeOrder:(BOOL)neworder
 {
 	const uint8_t *bytes=[header bytes];
 	int length=[header length];
 	XADPath *dir=[self XADPath];
-	NSMutableArray *array=[NSMutableArray array];
+	NSMutableArray *files=[NSMutableArray array];
+	NSMutableArray *dirs=[NSMutableArray array];
 
 	for(int i=startoffs;i<endoffs&&i+24<=length;i+=4*stride)
 	{
 		int opcode=CSUInt32LE(bytes+i);
-		uint32_t args[6];
+		uint32_t args[6]={0};
 		for(int j=1;j<stride;j++) args[j-1]=CSUInt32LE(bytes+i+j*4);
 
 		if(opcode==extractopcode)
@@ -438,8 +451,18 @@ stringStartOffset:(int)stringoffs stringEndOffset:(int)stringendoffs unicode:(BO
 			uint32_t filename=args[1];
 			NSNumber *offs=[NSNumber numberWithUnsignedInt:args[2]];
 			NSNumber *block=[blocks objectForKey:offs];
-			uint32_t datetimehigh=args[3];
-			uint32_t datetimelow=args[4];
+			uint32_t datetimelow,datetimehigh;
+
+			if(neworder)
+			{
+				datetimelow=args[3];
+				datetimehigh=args[4];
+			}
+			else
+			{
+				datetimelow=args[4];
+				datetimehigh=args[3];
+			}
 
 			if(ignoreoverwrite || overwrite<4)
 			if(filename<stringendoffs-stringoffs)
@@ -447,14 +470,21 @@ stringStartOffset:(int)stringoffs stringEndOffset:(int)stringendoffs unicode:(BO
 			{
 				uint32_t len=[block unsignedIntValue];
 
+				XADPath *path=[dir pathByAppendingPath:[self expandAnyPathWithOffset:filename
+				unicode:unicode header:header stringStartOffset:stringoffs
+				stringEndOffset:stringendoffs currentPath:dir]];
+
 				NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:
-					[dir pathByAppendingPath:[self expandAnyPathWithOffset:filename
-					unicode:unicode header:header stringStartOffset:stringoffs
-					stringEndOffset:stringendoffs currentPath:dir]],XADFileNameKey,
+					path,XADFileNameKey,
 					[NSNumber numberWithUnsignedInt:len&0x7fffffff],XADCompressedSizeKey,
-					[NSDate XADDateWithWindowsFileTimeLow:datetimelow high:datetimehigh],XADLastModificationDateKey,
 					offs,@"NSISDataOffset",
 				nil];
+
+				if(datetimehigh!=0xffffffff && datetimelow!=0xffffffff)
+				{
+					[dict setObject:[NSDate XADDateWithWindowsFileTimeLow:datetimelow high:datetimehigh]
+					forKey:XADLastModificationDateKey];
+				}
 
 				if((len&0x80000000) || solidhandle)
 				{
@@ -466,18 +496,24 @@ stringStartOffset:(int)stringoffs stringEndOffset:(int)stringendoffs unicode:(BO
 					[dict setObject:[NSNumber numberWithUnsignedInt:len&0x7fffffff] forKey:XADFileSizeKey];
 				}
 
-				[array addObject:dict];
+				[files addObject:dict];
 
 				continue;
 			}
 		}
 		if(opcode==diropcode)
 		{
-			if(args[1]==dirarg&&args[2]==0&&args[3]==0&&args[4]==0)
+			if(args[1]==dirarg && args[2]==0 && args[3]==0 && args[4]==0)
 			{
 				dir=[self expandAnyPathWithOffset:args[0] unicode:unicode header:header
 				stringStartOffset:stringoffs stringEndOffset:stringendoffs currentPath:dir];
 
+				NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:
+					dir,XADFileNameKey,
+					[NSNumber numberWithBool:YES],XADIsDirectoryKey,
+					[NSNumber numberWithUnsignedInt:args[2]],@"NSISDataOffset",
+				nil];
+				[dirs addObject:dict];
 				continue;
 			}
 		}
@@ -492,31 +528,51 @@ stringStartOffset:(int)stringoffs stringEndOffset:(int)stringendoffs unicode:(BO
 		}
 	}
 
-	if([array count]==0) return;
+	if([files count]==0 && [dirs count]==0) return;
 
-	[array sortUsingFunction:CompareEntryDataOffsets context:NULL];
-
-	// Filter out duplicate entries
-	NSMutableDictionary *last=[array objectAtIndex:0];
-	for(int i=1;i<[array count];i++)
+	[files sortUsingFunction:CompareEntryDataOffsets context:NULL];
+	[dirs sortUsingFunction:CompareEntryFileNames context:NULL];
+  
+	// Filter out duplicate directory entries
+	NSMutableDictionary *lastdir=[dirs objectAtIndex:0];
+	for(int i=1;i<[dirs count];i++)
 	{
-		NSMutableDictionary *dict=[array objectAtIndex:i];
+		NSMutableDictionary *dict=[dirs objectAtIndex:i];
+		XADPath *dir1=[dict objectForKey:XADFileNameKey];
+		XADPath *dir2=[lastdir objectForKey:XADFileNameKey];
 
-		if([[dict objectForKey:@"NSISDataOffset"] isEqual:[last objectForKey:@"NSISDataOffset"]]
-		&&[[dict objectForKey:XADFileNameKey] isEqual:[last objectForKey:XADFileNameKey]])
+		if([dir1 isEqual:dir2])
 		{
-			[array removeObjectAtIndex:i];
+			[dirs removeObjectAtIndex:i];
 			i--;
 		}
-		else last=dict;
+		else lastdir=dict;
+	}
+
+	// Filter out duplicate entries
+	NSMutableDictionary *lastfile=[files objectAtIndex:0];
+	for(int i=1;i<[files count];i++)
+	{
+		NSMutableDictionary *dict=[files objectAtIndex:i];
+
+		if([[dict objectForKey:@"NSISDataOffset"] isEqual:[lastfile objectForKey:@"NSISDataOffset"]]
+		&& [[dict objectForKey:XADFileNameKey] isEqual:[lastfile objectForKey:XADFileNameKey]])
+		{
+			[files removeObjectAtIndex:i];
+			i--;
+		}
+		else lastfile=dict;
 	}
 
 	// Re-arrange items to make extracting duplicate entries from solid archives
 	// a little bit less slow, and put in solidness markers.
-	[self makeEntryArrayStrictlyIncreasing:array];
+	[self makeEntryArrayStrictlyIncreasing:files];
 
-	NSEnumerator *enumerator=[array objectEnumerator];
+	NSEnumerator *enumerator=[dirs objectEnumerator];
 	NSMutableDictionary *dict;
+	while((dict=[enumerator nextObject])) [self addEntryWithDictionary:dict];
+  
+	enumerator=[files objectEnumerator];
 	while((dict=[enumerator nextObject])) [self addEntryWithDictionary:dict];
 }
 
@@ -1145,6 +1201,8 @@ stringStartOffset:(int)stringoffs stringEndOffset:(int)stringendoffs currentPath
 			}
 		}
 	}
+
+	[XADException raiseNotSupportedException];
 	return nil;
 }
 

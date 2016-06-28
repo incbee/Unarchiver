@@ -59,11 +59,14 @@ not its contents.
 Copy the file modification time from the archive file to the
 containing directory, if one is created.
 .TP
-.BR \-f ", " "\-forks visible" | hidden | skip
+.BR \-k ", " "\-forks visible" | hidden | skip
 How to handle Mac OS resource forks.  \fBvisible\fR creates
 AppleDouble files with the extension ".rsrc", \fBhidden\fR creates
 AppleDouble files with the prefix "._", and \fBskip\fR discards all
 resource forks.  Defaults to \fBvisible\fR.
+.TP
+.BR \-q ", " \-quiet
+Run in quiet mode.
 .TP
 .BR \-h ", " \-help
 Display help information.

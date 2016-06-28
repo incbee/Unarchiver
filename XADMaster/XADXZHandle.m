@@ -28,9 +28,8 @@ static uint64_t ParseInteger(CSHandle *fh);
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length
 {
-	if((self=[super initWithName:[handle name] length:length]))
+	if(self=[super initWithParentHandle:handle length:length])
 	{
-		parent=[handle retain];
 		startoffs=[parent offsetInFile];
 		currhandle=nil;
 	}
@@ -39,7 +38,6 @@ static uint64_t ParseInteger(CSHandle *fh);
 
 -(void)dealloc
 {
-	[parent release];
 	[currhandle release];
 	[super dealloc];
 }
@@ -107,7 +105,7 @@ static uint64_t ParseInteger(CSHandle *fh);
 			{
 				ids[i]=ParseInteger(parent);
 				uint64_t size=ParseInteger(parent);
-				properties[i]=[parent readDataOfLength:size];
+				properties[i]=[parent readDataOfLength:(int)size];
 			}
 
 			[parent seekToFileOffset:streamstart];
@@ -157,7 +155,7 @@ static uint64_t ParseInteger(CSHandle *fh);
 			switch(checksumflags)
 			{
 				case 1:
-					crc=XADCalculateCRC(crc,&bytebuf[bytesread],actual,XADCRCTable_edb88320);
+					crc=XADCalculateCRC((uint32_t)crc,&bytebuf[bytesread],actual,XADCRCTable_edb88320);
 				break;
 
 				case 4:

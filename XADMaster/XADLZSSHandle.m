@@ -2,7 +2,7 @@
 
 @implementation XADLZSSHandle
 
--(id)initWithName:(NSString *)descname windowSize:(int)windowsize
+/*-(id)initWithName:(NSString *)descname windowSize:(int)windowsize
 {
 	return [self initWithName:descname length:CSHandleMaxLength windowSize:windowsize];
 }
@@ -18,16 +18,16 @@
 		windowmask=windowsize-1; // Assumes windows are always power-of-two sized!
 	}
 	return self;
+}*/
+
+-(id)initWithInputBufferForHandle:(CSHandle *)handle windowSize:(int)windowsize
+{
+	return [self initWithInputBufferForHandle:handle length:CSHandleMaxLength windowSize:windowsize];
 }
 
--(id)initWithHandle:(CSHandle *)handle windowSize:(int)windowsize
+-(id)initWithInputBufferForHandle:(CSHandle *)handle length:(off_t)length windowSize:(int)windowsize
 {
-	return [self initWithHandle:handle length:CSHandleMaxLength windowSize:windowsize];
-}
-
--(id)initWithHandle:(CSHandle *)handle length:(off_t)length windowSize:(int)windowsize
-{
-	if((self=[super initWithHandle:handle length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		nextliteral_ptr=(int (*)(id,SEL,int *,int *,off_t))
 		[self methodForSelector:@selector(nextLiteralOrOffset:andLength:atPosition:)];
@@ -60,18 +60,29 @@
 		int offset,length;
 		int val=nextliteral_ptr(self,@selector(nextLiteralOrOffset:andLength:atPosition:),&offset,&length,pos);
 
-		if(val>=0) return windowbuffer[pos&windowmask]=val;
-		else if(val==XADLZSSEnd) CSByteStreamEOF(self);
+		if(val>=0)
+		{
+			windowbuffer[pos&windowmask]=val;
+			return val;
+		}
+		else if(val==XADLZSSEnd)
+		{
+			CSByteStreamEOF(self);
+		}
 		else
 		{
 			matchlength=length;
-			matchoffset=pos-offset;
+			matchoffset=(int)(pos-offset);
 		}
 	}
 
 	matchlength--;
+
 	uint8_t byte=windowbuffer[matchoffset++&windowmask];
-	return windowbuffer[pos&windowmask]=byte;
+
+	windowbuffer[pos&windowmask]=byte;
+
+	return byte;
 }
 
 -(void)resetLZSSHandle {}

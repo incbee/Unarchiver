@@ -10,7 +10,7 @@
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length
 {
-	if((self=[super initWithHandle:handle length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		lzw=AllocLZW(8192,1);
 	}
@@ -120,7 +120,7 @@
 		else
 		{
 			// If the tree is full, find an less-used symbol, and replace it.
-			int minindex,minusage=INT_MAX;
+			int minindex=0,minusage=INT_MAX;
 			int index=usageindex;
 			do
 			{

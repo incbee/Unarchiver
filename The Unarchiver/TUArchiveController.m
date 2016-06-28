@@ -99,7 +99,7 @@ NSStringEncoding globalpasswordencoding=0;
 -(int)folderCreationMode
 {
 	if(foldermodeoverride>=0) return foldermodeoverride;
-	else return [[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"];
+	else return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"createFolder"];
 }
 
 -(void)setFolderCreationMode:(int)mode { foldermodeoverride=mode; }
@@ -366,7 +366,7 @@ NSStringEncoding globalpasswordencoding=0;
 		}
 
 		[[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation
-		source:directory destination:nil files:allfiles tag:nil];
+		source:directory destination:@"" files:allfiles tag:nil];
 		//[self playSound:@"/System/Library/Components/CoreAudio.component/Contents/Resources/SystemSounds/dock/drag to trash.aif"];
 	}
 
@@ -456,7 +456,7 @@ NSStringEncoding globalpasswordencoding=0;
 
 	// If the user has already been asked for an encoding, try to use it.
 	// Otherwise, if the confidence in the guessed encoding is high enough, try that.
-	int threshold=[[NSUserDefaults standardUserDefaults] integerForKey:@"autoDetectionThreshold"];
+	int threshold=(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"autoDetectionThreshold"];
 
 	NSStringEncoding encoding=0;
 	if(selected_encoding) encoding=selected_encoding;
@@ -536,7 +536,10 @@ extractionProgressForEntryWithDictionary:(NSDictionary *)dict
 fileProgress:(off_t)fileprogress of:(off_t)filesize
 totalProgress:(off_t)totalprogress of:(off_t)totalsize
 {
-	double progress=(double)totalprogress/(double)totalsize;
+	double progress;
+	if(totalsize) progress=(double)totalprogress/(double)totalsize;
+	else progress=1;
+
 	[view setProgress:progress];
 	[docktile setProgress:progress];
 }

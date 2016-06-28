@@ -3,10 +3,14 @@
 
 @interface XADPDFParser:XADArchiveParser
 {
+	PDFParser *parser;
 }
 
 +(int)requiredHeaderSize;
 +(BOOL)recognizeFileWithHandle:(CSHandle *)handle firstBytes:(NSData *)data name:(NSString *)name;
+
+-(id)init;
+-(void)dealloc;
 
 -(void)parse;
 -(NSString *)compressionNameForStream:(PDFStream *)stream excludingLast:(BOOL)excludelast;
@@ -25,7 +29,7 @@
 	int numchannels,currentchannel;
 }
 
--(id)initWithHandle:(CSHandle *)parent length:(off_t)length
+-(id)initWithHandle:(CSHandle *)handle length:(off_t)length
 numberOfChannels:(int)numberofchannels palette:(NSData *)palettedata;
 
 -(void)resetByteStream;

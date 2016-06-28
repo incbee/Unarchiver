@@ -179,7 +179,7 @@ static BOOL IsSurrogateLowCharacter(unichar c)
 
 static BOOL SanityCheckString(NSString *string)
 {
-	int length=[string length];
+	int length=(int)[string length];
 	for(int i=0;i<length;i++)
 	{
 		unichar c=[string characterAtIndex:i];

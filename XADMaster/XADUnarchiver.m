@@ -274,7 +274,7 @@
 
 
 
-static NSInteger SortDirectoriesByDepthAndResource(id entry1,id entry2,void *context)
+static NSComparisonResult SortDirectoriesByDepthAndResource(id entry1,id entry2,void *context)
 {
 	NSDictionary *dict1=[entry1 objectAtIndex:1];
 	NSDictionary *dict2=[entry2 objectAtIndex:1];
@@ -479,7 +479,7 @@ resourceForkDictionary:(NSDictionary *)forkdict wantChecksum:(BOOL)checksum erro
 	@try
 	{
 		// TODO: Should this function handle exceptions itself?
-		[XADAppleDouble writeAppleDoubleHeaderToHandle:fh resourceForkSize:ressize
+		[XADAppleDouble writeAppleDoubleHeaderToHandle:fh resourceForkSize:(int)ressize
 		extendedAttributes:extattrs];
 	}
 	@catch(id e) { return [XADException parseException:e]; }
@@ -538,7 +538,7 @@ deferDirectories:(BOOL)defer
 		}
 	}
 
-	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050
+	#if MAC_OS_X_VERSION_MIN_REQUIRED>=1050 || __IPHONE_OS_VERSION_MIN_REQUIRED>__IPHONE_2_0
 	if([manager createDirectoryAtPath:path
 	withIntermediateDirectories:NO attributes:nil error:NULL]) return XADNoError;
 	#else

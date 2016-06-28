@@ -52,12 +52,6 @@
 
 	for(int i=0;i<16;i++) keybuf[i+16]=digest[i^3];
 
-/*NSLog(@"%@",salt);
-NSLog(@"%02x%02x%02x%02x %02x%02x%02x%02x %02x%02x%02x%02x %02x%02x%02x%02x",
-keybuf[0],keybuf[1],keybuf[2],keybuf[3],keybuf[4],keybuf[5],keybuf[6],keybuf[7],
-keybuf[8],keybuf[9],keybuf[10],keybuf[11],keybuf[12],keybuf[13],keybuf[14],keybuf[15]
-);*/
-
 	return [NSData dataWithBytes:keybuf length:sizeof(keybuf)];
 }
 
@@ -68,9 +62,8 @@ keybuf[8],keybuf[9],keybuf[10],keybuf[11],keybuf[12],keybuf[13],keybuf[14],keybu
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length key:(NSData *)keydata
 {
-	if((self=[super initWithName:[handle name] length:length]))
+	if((self=[super initWithParentHandle:handle length:length]))
 	{
-		parent=[handle retain];
 		startoffs=[handle offsetInFile];
 
 		const uint8_t *keybytes=[keydata bytes];
@@ -80,27 +73,79 @@ keybuf[8],keybuf[9],keybuf[10],keybuf[11],keybuf[12],keybuf[13],keybuf[14],keybu
 	return self;
 }
 
--(void)dealloc
+-(id)initWithHandle:(CSHandle *)handle RAR5Key:(NSData *)keydata IV:(NSData *)ivdata
 {
-	[parent release];
-	[super dealloc];
+	return [self initWithHandle:handle length:CSHandleMaxLength RAR5Key:keydata IV:ivdata];
 }
 
--(void)resetBlockStream
+-(id)initWithHandle:(CSHandle *)handle length:(off_t)length RAR5Key:(NSData *)keydata IV:(NSData *)ivdata
+{
+	if(self=[super initWithParentHandle:handle length:length])
+	{
+		startoffs=[handle offsetInFile];
+
+		memcpy(iv,[ivdata bytes],16);
+		aes_decrypt_key256([keydata bytes],&aes);
+	}
+	return self;
+}
+
+-(void)resetStream
 {
 	[parent seekToFileOffset:startoffs];
-	[self setBlockPointer:buffer];
 	memcpy(block,iv,sizeof(iv));
 }
 
--(int)produceBlockAtOffset:(off_t)pos
+-(int)streamAtMost:(int)num toBuffer:(void *)buffer
 {
-	int actual=[parent readAtMost:sizeof(buffer) toBuffer:buffer];
-	if(actual==0) return -1;
+	uint8_t *bytebuffer=buffer;
+	int bufferpos=streampos&15;
+	int bufferlength=(-streampos)&15;
+	int total=0;
 
-	aes_cbc_decrypt(buffer,buffer,actual&~15,block,&aes);
+	if(num<=bufferlength)
+	{
+		memcpy(&bytebuffer[total],&blockbuffer[bufferpos],num);
+		return num;
+	}
 
-	return actual;
+	memcpy(&bytebuffer[total],&blockbuffer[bufferpos],bufferlength);
+	total+=bufferlength;
+
+	int remaining=num-total;
+	int remainingblocklength=remaining&~15;
+
+	if(remainingblocklength)
+	{
+		int actual=[parent readAtMost:remainingblocklength toBuffer:&bytebuffer[total]];
+		int actualblocklength=actual&~15;
+		aes_cbc_decrypt(&bytebuffer[total],&bytebuffer[total],actualblocklength,block,&aes);
+		total+=actualblocklength;
+
+		if(actualblocklength!=remainingblocklength)
+		{
+			[self endStream];
+			return total;
+		}
+	}
+
+	int endlength=num-total;
+	if(endlength)
+	{
+		int actual=[parent readAtMost:16 toBuffer:blockbuffer];
+		if(actual!=16)
+		{
+			[self endStream];
+			return total;
+		}
+
+		aes_cbc_decrypt(blockbuffer,blockbuffer,16,block,&aes);
+
+		memcpy(&bytebuffer[total],&blockbuffer[0],endlength);
+		total+=endlength;
+	}
+
+	return total;
 }
 
 @end

@@ -11,12 +11,12 @@
 	if([key matchedByPattern:@"CRC32$"])
 	{
 		if(![object isKindOfClass:[NSNumber class]]) return [object description];
-		return [NSString stringWithFormat:@"0x%08llx",[object longLongValue]];
+		return [NSString stringWithFormat:@"0x%08x",[object unsignedIntValue]];
 	}
 	else if([key matchedByPattern:@"CRC16$"])
 	{
 		if(![object isKindOfClass:[NSNumber class]]) return [object description];
-		return [NSString stringWithFormat:@"0x%04llx",[object longLongValue]];
+		return [NSString stringWithFormat:@"0x%04x",[object unsignedIntValue]];
 	}
 	else if([key matchedByPattern:@"Is[A-Z0-9]"])
 	{
@@ -135,7 +135,7 @@
 	return key;
 }
 
-static NSInteger OrderKeys(id first,id second,void *context);
+static NSComparisonResult OrderKeys(id first,id second,void *context);
 
 -(NSArray *)descriptiveOrderingOfKeysInDictionary:(NSDictionary *)dict
 {
@@ -205,7 +205,7 @@ static NSInteger OrderKeys(id first,id second,void *context);
 	return [[dict allKeys] sortedArrayUsingFunction:OrderKeys context:ordering];
 }
 
-static NSInteger OrderKeys(id first,id second,void *context)
+static NSComparisonResult OrderKeys(id first,id second,void *context)
 {
 	NSDictionary *ordering=context;
 	NSNumber *firstorder=[ordering objectForKey:first];
@@ -360,7 +360,6 @@ NSString *XADHumanReadableObject(id object)
 	else if([object isKindOfClass:[NSValue class]]) return GNUSTEPKludge_HumanReadableValue(object);
 	#endif
 	else return [object description];
-
 }
 
 NSString *XADHumanReadableDate(NSDate *date)

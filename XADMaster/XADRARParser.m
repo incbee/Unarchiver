@@ -10,7 +10,6 @@
 #import "XADCRCHandle.h"
 #import "CSFileHandle.h"
 #import "CSMemoryHandle.h"
-#import "CSMultiHandle.h"
 #import "XADException.h"
 #import "NSDateXAD.h"
 #import "Scanning.h"
@@ -68,7 +67,7 @@ static inline BOOL IsZeroBlock(RARBlock block) { return block.start==0; }
 
 static BOOL IsRARSignature(const uint8_t *ptr)
 {
-	return ptr[0]==0x52 && ptr[1]==0x61 && ptr[2]==0x72 && ptr[3]==0x21 &&
+	return ptr[0]=='R' && ptr[1]=='a' && ptr[2]=='r' && ptr[3]=='!' &&
 	ptr[4]==0x1a && ptr[5]==0x07 && ptr[6]==0x00;
 }
 
@@ -129,7 +128,7 @@ static const uint8_t *FindSignature(const uint8_t *ptr,int length)
 			[[matches objectAtIndex:1] escapedPattern],
 			(long)[(NSString *)[matches objectAtIndex:2] length],
 			[[matches objectAtIndex:3] escapedPattern]] options:REG_ICASE]
-		firstFileExtension:@"rar"];
+		];
 	}
 
 	// Old naming scheme. Just look for rar/r01/s01/... files.
@@ -172,6 +171,10 @@ static const uint8_t *FindSignature(const uint8_t *ptr,int length)
 
 -(void)parse
 {
+	// Parsing the RAR format and keeping track of missing volumes here is quite a mess.
+	// The RAR5 parser is somewhat cleaner, and this code should probably be rewritten
+	// to match its structure.
+
 	CSHandle *handle=[self handle];
 
 	uint8_t buf[7];
@@ -370,8 +373,7 @@ static const uint8_t *FindSignature(const uint8_t *ptr,int length)
 
 				[self skipBlock:block];
 
-				CSHandle *handle=[self handle];
-				if([handle respondsToSelector:@selector(currentHandle)]) handle=[(id)handle currentHandle];
+				CSHandle *handle=[self currentHandle];
 				if([handle offsetInFile]!=0) [handle seekToEndOfFile];
 			}
 			break;
@@ -736,7 +738,7 @@ isCorrupted:(BOOL)iscorrupted
 -(CSHandle *)inputHandleWithParts:(NSArray *)parts encrypted:(BOOL)encrypted
 cryptoVersion:(int)version salt:(NSData *)salt
 {
-	CSHandle *handle=[[[XADRARInputHandle alloc] initWithRARParser:self parts:parts] autorelease];
+	CSHandle *handle=[[[XADRARInputHandle alloc] initWithHandle:[self handle] parts:parts] autorelease];
 
 	if(encrypted)
 	{
@@ -751,8 +753,7 @@ cryptoVersion:(int)version salt:(NSData *)salt
 			case 20: return [[[XADRAR20CryptHandle alloc] initWithHandle:handle
 			length:[handle fileSize] password:[self encodedPassword]] autorelease];
 
-			default:
-			return [[[XADRARAESHandle alloc] initWithHandle:handle
+			default: return [[[XADRARAESHandle alloc] initWithHandle:handle
 			length:[handle fileSize] key:[self keyForSalt:salt]] autorelease];
 		}
 	}
@@ -838,13 +839,13 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 	// New naming scheme. Find the last number in the name, and look for other files
 	// with the same number of digits in the same location.
 	NSArray *matches;
-	if((matches=[name substringsCapturedByPattern:@"^(.*[^0-9])([0-9]+)(.*)\\.exe$" options:REG_ICASE]))
+	if((matches=[name substringsCapturedByPattern:@"^(.*[^0-9])([0-9]+)(.*)\\.(exe|sfx)$" options:REG_ICASE]))
 	return [self scanForVolumesWithFilename:name
-	regex:[XADRegex regexWithPattern:[NSString stringWithFormat:@"^%@[0-9]{%ld}%@.(rar|exe)$",
+	regex:[XADRegex regexWithPattern:[NSString stringWithFormat:@"^%@[0-9]{%ld}%@.(rar|exe|sfx)$",
 		[[matches objectAtIndex:1] escapedPattern],
 		(long)[(NSString *)[matches objectAtIndex:2] length],
 		[[matches objectAtIndex:3] escapedPattern]] options:REG_ICASE]
-	firstFileExtension:@"exe"];
+	];
 
 	return nil;
 }

@@ -41,7 +41,7 @@
 
 		NSString *name=[archiveparser name];
 		if([name matchedByPattern:
-		@"\\.(part[0-9]+\\.rar|tar\\.gz|tar\\.bz2|tar\\.lzma|sit\\.hqx)$"
+		@"\\.(part[0-9]+\\.rar|tar\\.gz|tar\\.bz2|tar\\.lzma|tar\\.xz|tar\\.Z|sit\\.hqx)$"
 		options:REG_ICASE])
 		{
 			enclosingdir=[[[name stringByDeletingPathExtension]
@@ -82,7 +82,7 @@
 
 		unpackdestination=nil;
 		finaldestination=nil;
-		soloitem=nil;
+		overridesoloitem=nil;
 
 		toplevelname=nil;
 		lookslikesolo=NO;
@@ -113,7 +113,7 @@
 
 	[unpackdestination release];
 	[finaldestination release];
-	[soloitem release];
+	[overridesoloitem release];
 
 	[toplevelname release];
 
@@ -274,19 +274,42 @@
 
 -(NSString *)actualDestination { return finaldestination; }
 
--(NSString *)soloItem { return soloitem; }
+-(NSString *)soloItem
+{
+	if(lookslikesolo)
+	{
+		if(overridesoloitem) return overridesoloitem;
+
+		NSArray *keys=[renames allKeys];
+		if([keys count]==1)
+		{
+			NSString *key=[keys objectAtIndex:0];
+			id value=[[renames objectForKey:key] objectForKey:@"."];
+			if(value!=[NSNull null]) return value;
+		}
+	}
+	return nil;
+}
 
 -(NSString *)createdItem
 {
 	if(!enclosingdir) return nil;
-	else if(lookslikesolo && removesolo) return soloitem;
+	else if(lookslikesolo && removesolo) return [self soloItem];
 	else return finaldestination;
 }
 
 -(NSString *)createdItemOrActualDestination
 {
-	if(lookslikesolo && enclosingdir && removesolo) return soloitem;
-	else return finaldestination;
+	if(lookslikesolo && enclosingdir && removesolo)
+	{
+		NSString *soloitem=[self soloItem];
+		if(soloitem) return soloitem;
+		else return @".";
+	}
+	else
+	{
+		return finaldestination;
+	}
 }
 
 
@@ -446,9 +469,6 @@
 	// If we ended up extracting nothing, give up.
 	if(!numextracted) return XADNoError;
 
-	// If we unpacked a solo item, remember its path.
-	soloitem=[[self _findPathForSoloItem] retain];
-
 	return [self _finalizeExtraction];
 }
 
@@ -506,7 +526,7 @@
 	if(!numextracted) return error;
 
 	// If we extracted a single item, remember its path.
-	NSString *soloitempath=[self _findPathForSoloItem];
+	NSString *soloitem=[self soloItem];
 
 	// If we are removing the enclosing directory for solo items, check
 	// how many items were extracted, and handle collisions and moving files.
@@ -516,7 +536,7 @@
 		{
 			// Only one top-level item was unpacked. Move it to the parent
 			// directory and remove the enclosing directory.
-			NSString *itemname=[soloitempath lastPathComponent];
+			NSString *itemname=[soloitem lastPathComponent];
 
 			// To avoid trouble, first rename the enclosing directory
 			// to something unique.
@@ -548,7 +568,7 @@
 
 			// Remember where the item ended up.
 			finaldestination=[[finalitempath stringByDeletingLastPathComponent] retain];
-			soloitempath=finalitempath;
+			soloitem=finalitempath;
 
 		}
 		else
@@ -598,7 +618,7 @@
 	}
 
 	// Save the final path to the solo item, if any.
-	soloitem=[soloitempath retain];
+	overridesoloitem=[soloitem retain];
 
 	if(error) return error;
 
@@ -619,6 +639,7 @@
 			if(lookslikesolo && removesolo)
 			{
 				// We are dealing with a solo item removed from the enclosing directory.
+				NSString *soloitem=[self soloItem];
 				if(copydatetosolo) [XADPlatform copyDateFromPath:archivename toPath:soloitem];
 				else if(resetsolodate) [XADPlatform resetDateAtPath:soloitem];
 			}
@@ -639,7 +660,13 @@
 	// if this one has the same first first path component as the earlier ones.
 	if(lookslikesolo || !toplevelname)
 	{
-		NSString *firstcomp=[[entry objectForKey:XADFileNameKey] firstCanonicalPathComponent];
+		NSString *safepath=[[entry objectForKey:XADFileNameKey] sanitizedPathString];
+		NSArray *components=[safepath pathComponents];
+
+		NSString *firstcomp;
+		if([components count]>0) firstcomp=[components objectAtIndex:0];
+		else firstcomp=@"";
+
 		if(!toplevelname)
 		{
 			toplevelname=[firstcomp retain];
@@ -650,20 +677,6 @@
 			if(![toplevelname isEqual:firstcomp]) lookslikesolo=NO;
 		}
 	}
-}
-
--(NSString *)_findPathForSoloItem
-{
-	if(lookslikesolo)
-	{
-		NSArray *keys=[renames allKeys];
-		if([keys count]==1)
-		{
-			id value=[[renames objectForKey:[keys objectAtIndex:0]] objectForKey:@"."];
-			if(value!=[NSNull null]) return value;
-		}
-	}
-	return nil;
 }
 
 
@@ -789,8 +802,21 @@
 
 	*pathptr=path;
 
-	// If we have a delegate, ask it if we should extract.
-	if(delegate) return [delegate simpleUnarchiver:self shouldExtractEntryWithDictionary:dict to:path];
+	if(delegate)
+	{
+		// If we have a delegate, ask it if we should extract.
+		if(![delegate simpleUnarchiver:self shouldExtractEntryWithDictionary:dict to:path]) return NO;
+
+		// Check if the user wants to extract the entry to his own filehandle.
+		// In such case, call into the lower-level API to run the extraction
+		// and return without doing further work.
+		CSHandle *handle=[delegate simpleUnarchiver:self outputHandleForEntryWithDictionary:dict];
+		if(handle)
+		{
+			[unarchiver runExtractorWithDictionary:dict outputHandle:handle];
+			return NO;
+		}
+	}
 
 	// Otherwise, just extract.
 	return YES;
@@ -852,6 +878,10 @@
 fileFraction:(double)fileratio estimatedTotalFraction:(double)totalratio
 {
 	if(!delegate) return;
+
+	// If we receive a bogus file size ratio, give up and show estimated progress instead,
+	// as we have probably been fed a broken Zip file with 32 bit overflow.
+	if(fileratio>1) totalsize=-1;
 
 	if(totalsize>=0)
 	{
@@ -1033,6 +1063,8 @@ fileFraction:(double)fileratio estimatedTotalFraction:(double)totalratio
 @implementation NSObject (XADSimpleUnarchiverDelegate)
 
 -(void)simpleUnarchiverNeedsPassword:(XADSimpleUnarchiver *)unarchiver {}
+
+-(CSHandle *)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver outputHandleForEntryWithDictionary:(NSDictionary *)dict { return nil; }
 
 -(NSString *)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver encodingNameForXADString:(id <XADString>)string; { return [string encodingName]; }
 

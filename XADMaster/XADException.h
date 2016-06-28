@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+#import "ClangAnalyser.h"
+
 typedef int XADError;
 
 #define XADNoError               0x0000 /* no error */
@@ -38,17 +40,17 @@ extern NSString *XADExceptionName;
 {
 }
 
-+(void)raiseUnknownException;
-+(void)raiseInputException;
-+(void)raiseOutputException;
-+(void)raiseIllegalDataException;
-+(void)raiseNotSupportedException;
-+(void)raiseDecrunchException;
-+(void)raisePasswordException;
-+(void)raiseChecksumException;
-+(void)raiseDataFormatException;
-+(void)raiseOutOfMemoryException;
-+(void)raiseExceptionWithXADError:(XADError)errnum;
++(void)raiseUnknownException CLANG_ANALYZER_NORETURN;
++(void)raiseInputException CLANG_ANALYZER_NORETURN;
++(void)raiseOutputException CLANG_ANALYZER_NORETURN;
++(void)raiseIllegalDataException CLANG_ANALYZER_NORETURN;
++(void)raiseNotSupportedException CLANG_ANALYZER_NORETURN;
++(void)raiseDecrunchException CLANG_ANALYZER_NORETURN;
++(void)raisePasswordException CLANG_ANALYZER_NORETURN;
++(void)raiseChecksumException CLANG_ANALYZER_NORETURN;
++(void)raiseDataFormatException CLANG_ANALYZER_NORETURN;
++(void)raiseOutOfMemoryException CLANG_ANALYZER_NORETURN;
++(void)raiseExceptionWithXADError:(XADError)errnum CLANG_ANALYZER_NORETURN;
 
 +(XADError)parseException:(id)exception;
 +(NSString *)describeXADError:(XADError)errnum;

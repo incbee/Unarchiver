@@ -1,14 +1,14 @@
 #import "XADRAR30Handle.h"
-#import "XADRAR30Filter.h"
+#import "XADRARFilters.h"
 #import "XADException.h"
 
 @implementation XADRAR30Handle
 
--(id)initWithRARParser:(XADRARParser *)parent files:(NSArray *)filearray
+-(id)initWithRARParser:(XADRARParser *)parentparser files:(NSArray *)filearray
 {
-	if((self=[super initWithName:[parent filename]]))
+	if((self=[super initWithParentHandle:[parentparser handle]]))
 	{
-		parser=parent;
+		parser=parentparser;
 		files=[filearray retain];
 
 		InitializeLZSS(&lzss,0x400000);
@@ -155,7 +155,7 @@
 
 		// Check if we immediately hit a new filter or file edge, and try again.
 		if(actualend==start) return [self produceBlockAtOffset:pos];
-		else return actualend-start;
+		else return (int)(actualend-start);
 	}
 }
 
@@ -560,7 +560,7 @@
 	else blocklength=oldfilterlength[num];
 
 	uint32_t registers[8]={
-		[3]=RARProgramGlobalAddress,[4]=blocklength,
+		[3]=RARProgramSystemGlobalAddress,[4]=blocklength,
 		[5]=usagecount[num],[7]=RARProgramMemorySize
 	};
 

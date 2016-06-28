@@ -126,13 +126,13 @@ enum extracionDestination {
 					break;
 				default:
 					//If there is no parameter we use the user defaults
-					destinationIntValue = [[NSUserDefaults standardUserDefaults] integerForKey:UDKdestination];
+					destinationIntValue = (int)[[NSUserDefaults standardUserDefaults] integerForKey:UDKdestination];
 					break;
 			}
 		}
 	}
 	else {
-		destinationIntValue = [[NSUserDefaults standardUserDefaults] integerForKey:UDKdestination];
+		destinationIntValue = (int)[[NSUserDefaults standardUserDefaults] integerForKey:UDKdestination];
 	}
 	desttype=destinationIntValue;
 	
@@ -153,7 +153,7 @@ enum extracionDestination {
 			creatingFolder = creatingFolderUDAlways;
 			break;
 		default:
-			creatingFolder = [[NSUserDefaults standardUserDefaults] integerForKey:UDKcreateFolderMode];
+			creatingFolder = (int)[[NSUserDefaults standardUserDefaults] integerForKey:UDKcreateFolderMode];
 			break;
 	}
 	
@@ -211,28 +211,26 @@ enum extracionDestination {
 
 -(void)unarchiveFile:(NSString *)fileName
 {
-	if([appController archiveControllerForFilename:fileName]) return;
-	TUArchiveController *archiveController=[[[TUArchiveController alloc] initWithFilename:fileName] autorelease];
 	NSString *destination;
 	switch (desttype) {
+		default:
 		case extractionDestinationCurrentFolderDestination:
+			destination=[fileName stringByDeletingLastPathComponent];
+			break;
 		case extractionDestinationDesktopDestination:
-			destination =[appController destinationForFilename:fileName type:desttype];
+			destination=[[NSUserDefaults standardUserDefaults] stringForKey:@"extractionDestinationPath"];
 			break;
 		case extractionDestinationCustomPath:
 			destination=extractDestination;
 			break;
-		default:
-			break;
 	}
+
+	TUArchiveController *archiveController=[[[TUArchiveController alloc] initWithFilename:fileName] autorelease];
 	[archiveController setDestination:destination];
 	[archiveController setDeleteArchive:deleteOriginals];
 	[archiveController setFolderCreationMode:creatingFolder];
 	[archiveController setOpenExctractedItem:openFolders];
-	
-	if (archiveController) {
-		[appController addArchiveController:archiveController];
-	}
+	[appController addArchiveController:archiveController];
 }
 
 @end

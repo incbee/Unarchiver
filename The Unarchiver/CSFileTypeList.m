@@ -1,8 +1,24 @@
 #import "CSFileTypeList.h"
 
+static BOOL IsLeopardOrAbove()
+{
+	return NSAppKitVersionNumber>=949;
+}
+
+static BOOL IsYosemiteOrAbove()
+{
+	return NSAppKitVersionNumber>=1343;
+}
 
 
 @implementation CSFileTypeList
+
+static BOOL DisabledInSandbox=YES;
+
++(void)setDisabledInSandbox:(BOOL)disabled
+{
+	DisabledInSandbox=disabled;
+}
 
 -(id)initWithCoder:(NSCoder *)coder
 {
@@ -10,6 +26,9 @@
 	{
 		datasource=[CSFileTypeListSource new];
 		[self setDataSource:datasource];
+		blockerview=nil;
+
+		[self disableOnAppStore];
 	}
 	return self;
 }
@@ -19,8 +38,12 @@
 	if((self=[super initWithFrame:frame]))
 	{
 		NSLog(@"Custom view mode in IB not supported yet");
+
 		datasource=[CSFileTypeListSource new];
 		[self setDataSource:datasource];
+		blockerview=nil;
+
+		[self disableOnAppStore];
 	}
 	return self;
 }
@@ -28,12 +51,13 @@
 -(void)dealloc
 {
 	[datasource release];
+	[blockerview release];
 	[super dealloc];
 }
 
 -(IBAction)selectAll:(id)sender
 {
-	[datasource claimAllTypes];
+	[datasource claimAllTypesExceptAlternate];
 	[self reloadData];
 }
 
@@ -41,6 +65,78 @@
 {
 	[datasource surrenderAllTypes];
 	[self reloadData];
+}
+
+-(void)disableOnAppStore
+{
+	if(!DisabledInSandbox) return;
+	if(!getenv("APP_SANDBOX_CONTAINER_ID")) return;
+	if(!IsYosemiteOrAbove()) return;
+
+	NSTextField *label=[[[NSTextField alloc] initWithFrame:[self bounds]] autorelease];
+	[label setTextColor:[NSColor whiteColor]];
+	[label setBackgroundColor:[NSColor colorWithCalibratedRed:0 green:0 blue:0 alpha:0.75]];
+	[label setFont:[NSFont systemFontOfSize:17]];
+	[label setAlignment:NSCenterTextAlignment];
+	[label setBezeled:NO];
+	[label setEditable:NO];
+	[label setSelectable:NO];
+	[label setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+
+	NSString *appname=[[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:@"CFBundleDisplayName"];
+	if(!appname || ![appname length]) appname=[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+	if(!appname || ![appname length]) appname=[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+
+	NSString *title=[NSString stringWithFormat:NSLocalizedString(
+	@"\nSetting %@ as the default app",@"App store file format limitation title"),
+	appname];
+	NSString *message=[NSString stringWithFormat:NSLocalizedString(
+	@"\n\nTo set %1$@ to be the default application for a file type:\n\n"
+	@"1. Use the \"File -> Get Info\" menu in the Finder on a file of that type.\n"
+	@"2. Use \"Open with...\" to select %1$@.\n"
+	@"3. Click \"Change All...\"",
+	@"App store file format limitation message format"),appname];
+
+	NSMutableParagraphStyle *centeredstyle=[[NSMutableParagraphStyle new] autorelease];
+	[centeredstyle setFirstLineHeadIndent:32];
+	[centeredstyle setHeadIndent:32];
+	[centeredstyle setTailIndent:-32];
+	[centeredstyle setAlignment:NSCenterTextAlignment];
+
+	NSMutableParagraphStyle *leftstyle=[[NSMutableParagraphStyle new] autorelease];
+	[leftstyle setFirstLineHeadIndent:32];
+	[leftstyle setHeadIndent:32];
+	[leftstyle setTailIndent:-32];
+	[leftstyle setAlignment:NSLeftTextAlignment];
+
+	NSMutableAttributedString *string=[[NSMutableAttributedString new] autorelease];
+
+	[string appendAttributedString:[[[NSAttributedString alloc]
+	initWithString:title
+	attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+		[NSFont boldSystemFontOfSize:16],NSFontAttributeName,
+		[NSColor whiteColor],NSForegroundColorAttributeName,
+		centeredstyle,NSParagraphStyleAttributeName,
+	nil]] autorelease]];
+
+	[string appendAttributedString:[[[NSAttributedString alloc]
+	initWithString:message
+	attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+		[NSFont boldSystemFontOfSize:12],NSFontAttributeName,
+		[NSColor whiteColor],NSForegroundColorAttributeName,
+		leftstyle,NSParagraphStyleAttributeName,
+	nil]] autorelease]];
+
+	[label setAttributedStringValue:string];
+
+	blockerview=[label retain];
+	[[self superview] addSubview:blockerview];
+}
+
+-(void)viewDidMoveToSuperview
+{
+	[blockerview removeFromSuperview];
+	[[self superview] addSubview:blockerview];
 }
 
 @end
@@ -85,7 +181,7 @@
 			NSNumber *alternate=[NSNumber numberWithBool:rank && [rank isEqual:@"Alternate"]];
 
 			// Zip UTI kludge
-			if(floor(NSAppKitVersionNumber)>=949&&[type isEqual:@"com.pkware.zip-archive"]&&[types count]>1)
+			if(IsLeopardOrAbove() && [type isEqual:@"com.pkware.zip-archive"]&&[types count]>1)
 			type=[types objectAtIndex:1];
 
 			if(!hidden||![hidden containsObject:type])
@@ -118,6 +214,14 @@
 
 		return [NSNumber numberWithBool:[self_id caseInsensitiveCompare:handler]==0];
 	}
+	else if([ident isEqual:@"browse"])
+	{
+		NSString *type=[[filetypes objectAtIndex:row] objectForKey:@"type"];
+		NSString *key=[NSString stringWithFormat:@"disableBrowsing.%@",type];
+		BOOL disabled=[[NSUserDefaults standardUserDefaults] boolForKey:key];
+
+		return [NSNumber numberWithBool:!disabled];
+	}
 	else
 	{
 		return [[filetypes objectAtIndex:row] objectForKey:ident];
@@ -134,6 +238,12 @@
 
 		if([object boolValue]) [self claimType:type];
 		else [self surrenderType:type];
+	}
+	else if([ident isEqual:@"browse"])
+	{
+		NSString *type=[[filetypes objectAtIndex:row] objectForKey:@"type"];
+		NSString *key=[NSString stringWithFormat:@"disableBrowsing.%@",type];
+		[[NSUserDefaults standardUserDefaults] setBool:![object boolValue] forKey:key];
 	}
 }
 
@@ -160,8 +270,7 @@
 	NSString *self_id=[[NSBundle mainBundle] bundleIdentifier];
 	NSString *oldhandler=[(id)LSCopyDefaultRoleHandlerForContentType((CFStringRef)type,kLSRolesViewer) autorelease];
 
-
-	if(oldhandler && ![oldhandler isEqual:self_id])
+	if(oldhandler && [oldhandler caseInsensitiveCompare:self_id]!=0 && ![oldhandler isEqual:@"__dummy__"])
 	{
 		NSString *key=[@"oldHandler." stringByAppendingString:type];
 		[[NSUserDefaults standardUserDefaults] setObject:oldhandler forKey:key];
@@ -176,8 +285,7 @@
 	NSString *key=[@"oldHandler." stringByAppendingString:type];
 	NSString *oldhandler=[[NSUserDefaults standardUserDefaults] stringForKey:key];
 
-
-	if(oldhandler && ![oldhandler isEqual:self_id]) [self setHandler:oldhandler forType:type];
+	if(oldhandler && [oldhandler caseInsensitiveCompare:self_id]!=0) [self setHandler:oldhandler forType:type];
 	else [self removeHandlerForType:type];
 }
 

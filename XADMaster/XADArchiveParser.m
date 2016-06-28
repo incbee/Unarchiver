@@ -1,6 +1,6 @@
 #import "XADArchiveParser.h"
 #import "CSFileHandle.h"
-#import "CSMultiHandle.h"
+#import "CSMultiFileHandle.h"
 #import "CSMemoryHandle.h"
 #import "CSStreamHandle.h"
 #import "XADCRCHandle.h"
@@ -39,6 +39,7 @@
 #import "XADPowerPackerParser.h"
 #import "XADPPMdParser.h"
 #import "XADRARParser.h"
+#import "XADRAR5Parser.h"
 #import "XADRPMParser.h"
 #import "XADSARParser.h"
 #import "XADSplitFileParser.h"
@@ -135,6 +136,7 @@ static int maxheader=0;
 		// Common formats
 		[XADZipParser class],
 		[XADRARParser class],
+		[XADRAR5Parser class],
 		[XAD7ZipParser class],
 		[XADGzipParser class],
 		[XADBzip2Parser class],
@@ -183,6 +185,7 @@ static int maxheader=0;
 		[XADZipItSEAParser class],
 		[XADZipSFXParser class],
 		[XADEmbeddedRARParser class],
+		[XADEmbeddedRAR5Parser class],
 		[XAD7ZipSFXParser class],
 		[XADNSISParser class],
 		[XADGzipSFXParser class],
@@ -325,14 +328,7 @@ resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMu
 		{
 			if([volumes count]>1)
 			{
-				NSMutableArray *handles=[NSMutableArray array];
-				NSEnumerator *enumerator=[volumes objectEnumerator];
-				NSString *volume;
-
-				while((volume=[enumerator nextObject]))
-				[handles addObject:[CSFileHandle fileHandleForReadingAtPath:volume]];
-
-				CSMultiHandle *multihandle=[CSMultiHandle multiHandleWithHandleArray:handles];
+				CSHandle *multihandle=[CSMultiFileHandle handleWithPathArray:volumes];
 
 				XADArchiveParser *parser=[[parserclass new] autorelease];
 				[parser setHandle:multihandle];
@@ -533,9 +529,9 @@ resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMu
 
 -(NSString *)currentFilename
 {
-	if([sourcehandle isKindOfClass:[XADMultiHandle class]])
+	if([sourcehandle isKindOfClass:[CSSegmentedHandle class]])
 	{
-		return [[(XADMultiHandle *)sourcehandle currentHandle] name];
+		return [[(CSSegmentedHandle *)sourcehandle currentHandle] name];
 	}
 	else
 	{
@@ -651,8 +647,10 @@ resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMu
 
 	// If the extended attributes already have a finderinfo,
 	// just keep it and return them as such.
-	if(originalattrs&&[originalattrs objectForKey:@"com.apple.FinderInfo"])
-	return originalattrs;
+	if(originalattrs && [originalattrs objectForKey:@"com.apple.FinderInfo"])
+	{
+		return originalattrs;
+	}
 
 	// If we have or can build a finderinfo struct, add it.
 	NSData *finderinfo=[self finderInfoForDictionary:dict];
@@ -674,7 +672,7 @@ resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMu
 		}
 	}
 
-	return nil;
+	return originalattrs;
 }
 
 -(NSData *)finderInfoForDictionary:(NSDictionary *)dict
@@ -742,7 +740,7 @@ resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMu
 
 // Internal functions
 
-static NSInteger XADVolumeSort(id entry1,id entry2,void *extptr)
+static NSComparisonResult XADVolumeSort(id entry1,id entry2,void *extptr)
 {
 	NSString *str1=entry1;
 	NSString *str2=entry2;
@@ -754,6 +752,11 @@ static NSInteger XADVolumeSort(id entry1,id entry2,void *extptr)
 	else if(!isfirst1&&isfirst2) return NSOrderedDescending;
 //	else return [str1 compare:str2 options:NSCaseInsensitiveSearch|NSNumericSearch];
 	else return [str1 compare:str2 options:NSCaseInsensitiveSearch];
+}
+
++(NSArray *)scanForVolumesWithFilename:(NSString *)filename regex:(XADRegex *)regex
+{
+	return [self scanForVolumesWithFilename:filename regex:regex firstFileExtension:nil];
 }
 
 +(NSArray *)scanForVolumesWithFilename:(NSString *)filename
@@ -856,23 +859,29 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext
 
 
 
--(NSArray *)volumes
+-(BOOL)hasVolumes
 {
-	if([sourcehandle respondsToSelector:@selector(handles)]) return [(id)sourcehandle handles];
-	else return nil;
+	return [sourcehandle isKindOfClass:[XADSegmentedHandle class]];
 }
 
--(off_t)offsetForVolume:(int)disk offset:(off_t)offset
+-(NSArray *)volumeSizes
 {
-	if([sourcehandle respondsToSelector:@selector(handles)])
+	if([sourcehandle isKindOfClass:[XADSegmentedHandle class]])
 	{
-		NSArray *handles=[(id)sourcehandle handles];
-		int count=[handles count];
-		for(int i=0;i<count&&i<disk;i++) offset+=[(CSHandle *)[handles objectAtIndex:i] fileSize];
+		return [(XADSegmentedHandle *)sourcehandle segmentSizes];
 	}
-
-	return offset;
+	else
+	{
+		return [NSArray arrayWithObject:[NSNumber numberWithLongLong:[sourcehandle fileSize]]];
+	}
 }
+
+-(CSHandle *)currentHandle
+{
+	if([sourcehandle isKindOfClass:[CSSegmentedHandle class]]) return [(CSSegmentedHandle *)sourcehandle currentHandle];
+	else return sourcehandle;
+}
+
 
 
 

@@ -1,16 +1,11 @@
 #import "XADDiskDoublerDDnHandle.h"
 #import "XADException.h"
 
-static void CopyBytesWithRepeat(uint8_t *dest,uint8_t *src,int length)
-{
-	for(int i=0;i<length;i++) dest[i]=src[i];
-}
-
 @implementation XADDiskDoublerDDnHandle
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length
 {
-	if((self=[super initWithHandle:handle length:length windowSize:65536]))
+	if((self=[super initWithInputBufferForHandle:handle length:length windowSize:65536]))
 	{
 		lengthcode=nil;
 	}
@@ -58,7 +53,7 @@ static void CopyBytesWithRepeat(uint8_t *dest,uint8_t *src,int length)
 		int offset=*offsetptr++;
 
 		if(offset>pos) [XADException raiseIllegalDataException];
-		if(pos+length>blockend) length=blockend-pos;
+		if(pos+length>blockend) length=(int)(blockend-pos);
 
 		*offsetout=offset;
 		*lengthout=length;
@@ -68,7 +63,7 @@ static void CopyBytesWithRepeat(uint8_t *dest,uint8_t *src,int length)
 	{
 		int length=1<<(code-128);
 
-		if(pos+length>blockend) length=blockend-pos;
+		if(pos+length>blockend) length=(int)(blockend-pos);
 		// TODO: check for literals left
 
 		literalsleft=length-1;

@@ -1,5 +1,6 @@
 #include "Decompressor.h"
 #include "LZMA.h"
+#include "../ClangAnalyser.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -211,7 +212,7 @@ int ReadNextWinZipJPEGBundle(WinZipJPEGDecompressor *self)
 		int64_t div1=pow2size/self->jpeg.horizontalmcus;
 		if(div1<1) div1=1;
 		int64_t div2=(self->jpeg.verticalmcus+div1-1)/div1;
-		self->sliceheight=(self->jpeg.verticalmcus+div2-1)/div2;
+		self->sliceheight=(unsigned int)((self->jpeg.verticalmcus+div2-1)/div2);
 	}
 	else
 	{
@@ -617,12 +618,12 @@ const WinZipJPEGQuantizationTable *quantization)
 		if(d0>d1)
 		{
 			int64_t weight=1LL<<Min(d0-d1,31);
-			predicted=(weight*(int64_t)p1+(int64_t)p0)/(1+weight);
+			predicted=(int)((weight*(int64_t)p1+(int64_t)p0)/(1+weight));
 		}
 		else
 		{
 			int64_t weight=1LL<<Min(d1-d0,31);
-			predicted=(weight*(int64_t)p0+(int64_t)p1)/(1+weight);
+			predicted=(int)((weight*(int64_t)p0+(int64_t)p1)/(1+weight));
 		}
 	}
 
@@ -774,7 +775,7 @@ static unsigned int Category(unsigned int val)
 	if(val&0xff00) { val>>=8; cat|=8; }
 	if(val&0xf0) { val>>=4; cat|=4; }
 	if(val&0xc) { val>>=2; cat|=2; }
-	if(val&0x2) { val>>=1; cat|=1; }
+	if(val&0x2) { /*val>>=1;*/ cat|=1; }
 	return cat+1;
 }
 
@@ -1024,17 +1025,19 @@ size_t EncodeWinZipJPEGBlocksToBuffer(WinZipJPEGDecompressor *self,void *bytes,s
 static void PushEncodedValue(WinZipJPEGDecompressor *self,WinZipJPEGHuffmanTable *table,
 int value,unsigned int highbits)
 {
-	int category,bitstring;
+	unsigned int category,bitstring;
 	if(value>=0)
 	{
 		category=Category(value);
-		int mask=(1<<category)-1;
+		analyser_assert(category>=1 && category<=32);
+		unsigned int mask=(1ull<<category)-1;
 		bitstring=value&mask;
 	}
 	else
 	{
 		category=Category(-value);
-		int mask=(1<<category)-1;
+		analyser_assert(category>=1 && category<=32);
+		unsigned int mask=(1ull<<category)-1;
 		bitstring=(value&mask)-1;
 	}
 
@@ -1050,6 +1053,6 @@ static void PushHuffmanCode(WinZipJPEGDecompressor *self,WinZipJPEGHuffmanTable 
 
 static void PushBitString(WinZipJPEGDecompressor *self,uint32_t bitstring,unsigned int length)
 {
-	self->bitstring|=(uint64_t)bitstring<<64-self->bitlength-length;
+	self->bitstring|=(uint64_t)bitstring<<(64-self->bitlength-length);
 	self->bitlength+=length;
 }

@@ -107,7 +107,7 @@ static int NextArithmeticBitString(ArithmeticDecoder *decoder,ArithmeticModel *m
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length
 {
-	if((self=[super initWithHandle:handle length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		block=NULL;
 		transform=NULL;
@@ -202,7 +202,7 @@ static int NextArithmeticBitString(ArithmeticDecoder *decoder,ArithmeticModel *m
 	}
 
 	free(transform);
-	transform=malloc(sizeof(int)*numbytes);
+	transform=malloc(sizeof(uint32_t)*numbytes);
 	CalculateInverseBWT(transform,block,numbytes);
 }
 

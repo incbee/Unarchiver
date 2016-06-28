@@ -4,20 +4,20 @@ static inline int imin(int a,int b) { return a<b?a:b; }
 
 @implementation CSBlockStreamHandle
 
--(id)initWithName:(NSString *)descname length:(off_t)length
+/*-(id)initWithName:(NSString *)descname length:(off_t)length
 {
-	if((self=[super initWithName:descname length:length]))
+	if(self=[super initWithName:descname length:length])
 	{
 		_currblock=NULL;
 		_blockstartpos=0;
 		_blocklength=0;
 	}
 	return self;
-}
+}*/
 
--(id)initWithHandle:(CSHandle *)handle length:(off_t)length bufferSize:(int)buffersize;
+-(id)initWithInputBufferForHandle:(CSHandle *)handle length:(off_t)length bufferSize:(int)buffersize;
 {
-	if((self=[super initWithHandle:handle length:length bufferSize:buffersize]))
+	if(self=[super initWithInputBufferForHandle:handle length:length bufferSize:buffersize])
 	{
 		_currblock=NULL;
 		_blockstartpos=0;
@@ -70,7 +70,7 @@ static inline int imin(int a,int b) { return a<b?a:b; }
 	{
 		if(!_currblock) return 0;
 
-		int offs=streampos-_blockstartpos;
+		int offs=(int)(streampos-_blockstartpos);
 		int count=_blocklength-offs;
 		if(count>num) count=num;
 		memcpy(buffer,_currblock+offs,count);
