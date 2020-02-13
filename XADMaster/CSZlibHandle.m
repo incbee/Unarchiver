@@ -1,3 +1,23 @@
+/*
+ * CSZlibHandle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "CSZlibHandle.h"
 
 
@@ -11,32 +31,31 @@ NSString *CSZlibException=@"CSZlibException";
 
 +(CSZlibHandle *)zlibHandleWithHandle:(CSHandle *)handle
 {
-	return [[[CSZlibHandle alloc] initWithHandle:handle length:CSHandleMaxLength header:YES name:[handle name]] autorelease];
+	return [[[CSZlibHandle alloc] initWithHandle:handle length:CSHandleMaxLength header:YES] autorelease];
 }
 
 +(CSZlibHandle *)zlibHandleWithHandle:(CSHandle *)handle length:(off_t)length
 {
-	return [[[CSZlibHandle alloc] initWithHandle:handle length:length header:YES name:[handle name]] autorelease];
+	return [[[CSZlibHandle alloc] initWithHandle:handle length:length header:YES] autorelease];
 }
 
 +(CSZlibHandle *)deflateHandleWithHandle:(CSHandle *)handle
 {
-	return [[[CSZlibHandle alloc] initWithHandle:handle length:CSHandleMaxLength header:NO name:[handle name]] autorelease];
+	return [[[CSZlibHandle alloc] initWithHandle:handle length:CSHandleMaxLength header:NO] autorelease];
 }
 
 +(CSZlibHandle *)deflateHandleWithHandle:(CSHandle *)handle length:(off_t)length
 {
-	return [[[CSZlibHandle alloc] initWithHandle:handle length:length header:NO name:[handle name]] autorelease];
+	return [[[CSZlibHandle alloc] initWithHandle:handle length:length header:NO] autorelease];
 }
 
 
 
 
--(id)initWithHandle:(CSHandle *)handle length:(off_t)length header:(BOOL)header name:(NSString *)descname
+-(id)initWithHandle:(CSHandle *)handle length:(off_t)length header:(BOOL)header
 {
-	if((self=[super initWithName:descname length:length]))
+	if(self=[super initWithParentHandle:handle length:length])
 	{
-		parent=[handle retain];
 		startoffs=[parent offsetInFile];
 		inited=YES;
 		seekback=NO;
@@ -51,9 +70,8 @@ NSString *CSZlibException=@"CSZlibException";
 
 -(id)initAsCopyOf:(CSZlibHandle *)other
 {
-	if((self=[super initAsCopyOf:other]))
+	if(self=[super initAsCopyOf:other])
 	{
-		parent=[other->parent copy];
 		startoffs=other->startoffs;
 		inited=NO;
 		seekback=other->seekback;
@@ -77,7 +95,6 @@ NSString *CSZlibException=@"CSZlibException";
 -(void)dealloc
 {
 	if(inited) inflateEnd(&zs);
-	[parent release];
 
 	[super dealloc];
 }
@@ -132,7 +149,7 @@ NSString *CSZlibException=@"CSZlibException";
 -(void)_raiseZlib
 {
 	[NSException raise:CSZlibException
-	format:@"Zlib error while attepting to read from \"%@\": %s.",name,zs.msg];
+	format:@"Zlib error while attepting to read from \"%@\": %s.",[self name],zs.msg];
 }
 
 @end

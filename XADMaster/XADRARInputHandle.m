@@ -1,10 +1,30 @@
+/*
+ * XADRARInputHandle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADRARInputHandle.h"
 #import "XADException.h"
 #import "CRC.h"
 
 @implementation XADRARInputHandle
 
--(id)initWithHandle:(CSHandle *)parent parts:(NSArray *)partarray
+-(id)initWithHandle:(CSHandle *)handle parts:(NSArray *)partarray
 {
 	off_t totallength=0;
 	NSEnumerator *enumerator=[partarray objectEnumerator];
@@ -14,9 +34,8 @@
 		totallength+=[[dict objectForKey:@"InputLength"] longLongValue];
 	}
 
-	if((self=[super initWithHandle:parent length:totallength]))
+	if((self=[super initWithParentHandle:handle length:totallength]))
 	{
-		handle=[parent retain];
 		parts=[partarray retain];
 	}
 	return self;
@@ -24,7 +43,6 @@
 
 -(void)dealloc
 {
-	[handle release];
 	[parts release];
 	[super dealloc];
 }
@@ -48,9 +66,9 @@
 		int numbytes=num-total;
 		if(streampos+total+numbytes>=partend) numbytes=(int)(partend-streampos-total);
 
-		[handle readBytes:numbytes toBuffer:&bytebuf[total]];
+		[parent readBytes:numbytes toBuffer:&bytebuf[total]];
 
-		crc=XADCalculateCRC(crc,&bytebuf[total],numbytes,XADCRCTable_edb88320);
+        crc=XADCalculateCRCFast(crc,&bytebuf[total],numbytes,XADCRCTable_sliced16_edb88320);
 
 		total+=numbytes;
 
@@ -76,7 +94,7 @@
 	off_t offset=[[dict objectForKey:@"Offset"] longLongValue];
 	off_t length=[[dict objectForKey:@"InputLength"] longLongValue];
 
-	[handle seekToFileOffset:offset];
+	[parent seekToFileOffset:offset];
 	partend+=length;
 
 	crc=0xffffffff;

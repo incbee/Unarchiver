@@ -1,3 +1,23 @@
+/*
+ * XADGzipParser.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADGzipParser.h"
 #import "CSZlibHandle.h"
 #import "CRC.h"
@@ -82,7 +102,7 @@
 
 	if(time) [dict setObject:[NSDate dateWithTimeIntervalSince1970:time] forKey:XADLastModificationDateKey];
 
-	if([contentname matchedByPattern:@"\\.(tar|cpio|pax)$" options:REG_ICASE])
+	if([contentname matchedByPattern:@"\\.(tar|cpio|pax|warc)$" options:REG_ICASE])
 	[dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsArchiveKey];
 
 	off_t filesize=[handle fileSize];
@@ -163,10 +183,8 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 
 -(id)initWithHandle:(CSHandle *)handle
 {
-    
-	if((self=[super initWithName:[handle name]]))
+	if(self=[super initWithParentHandle:handle])
 	{
-		parent=[handle retain];
 		startoffs=[parent offsetInFile];
 		currhandle=nil;
 	}
@@ -175,7 +193,6 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 
 -(void)dealloc
 {
-	[parent release];
 	[currhandle release];
 	[super dealloc];
 }
@@ -242,7 +259,7 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 		case DataState:
 		{
 			int actual=[currhandle readAtMost:num-bytesread toBuffer:&bytebuf[bytesread]];
-			crc=XADCalculateCRC(crc,&bytebuf[bytesread],actual,XADCRCTable_edb88320);
+			crc=XADCalculateCRCFast(crc,&bytebuf[bytesread],actual,XADCRCTable_sliced16_edb88320);
 
 			bytesread+=actual;
 

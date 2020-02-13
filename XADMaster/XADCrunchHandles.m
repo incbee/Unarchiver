@@ -1,3 +1,23 @@
+/*
+ * XADCrunchHandles.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADCrunchHandles.h"
 #import "Checksums.h"
 
@@ -268,6 +288,7 @@ static xadUINT8 CRUNCHdecode(struct CrunchData *cd, xadUINT16 code)
   stackp = cd->stack;
   while(ep > cd->table + 255) /* i.e. code not atomic */
   {
+    if(stackp - cd->stack >= sizeof(cd->stack)) return 0; // TODO: Should throw error
     *(stackp++) = ep->suffix;
     ep = cd->table + (ep->predecessor&0xFFF);
   }
@@ -294,7 +315,7 @@ xadINT32 CRUNCHuncrunch(struct xadInOut *io, xadUINT32 mode)
     if(mode)
     {
       xadUINT8 *stackp, *stacke; /* byte string stack pointer */
-      struct CrunchEntry *ep;
+      struct CrunchEntry *ep = NULL;
 
       stackp = cd->stack;
       stacke = cd->stack+CRUNCH_TABLE_SIZE-2;
@@ -320,7 +341,23 @@ xadINT32 CRUNCHuncrunch(struct xadInOut *io, xadUINT32 mode)
         if(pred == 0) /* end-of-file code */
           break; /* all lzw codes read */
 
-        ep = cd->table + (cd->table[pred].predecessor == CRUNCH_EMPTY ? cd->lastpr : pred);
+        if(pred >= CRUNCH_TABLE_SIZE)
+        {
+          cd->io->xio_Error = XADERR_DECRUNCH;
+          break;
+        }
+
+		if(cd->table[pred].predecessor == CRUNCH_EMPTY)
+		{
+			pred = cd->lastpr;
+			if(pred >= CRUNCH_TABLE_SIZE)
+			{
+				cd->io->xio_Error = XADERR_DECRUNCH;
+				break;
+			}
+		}
+
+        ep = cd->table + pred;
 
         /* walk back the lzw table starting with this code */
         while(ep->predecessor < CRUNCH_TABLE_SIZE)

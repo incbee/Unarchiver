@@ -1,17 +1,36 @@
+/*
+ * XADCRCHandle.h
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "CSStreamHandle.h"
 #import "Checksums.h"
 #import "Progress.h"
 #import "CRC.h"
 
-typedef uint32_t XADCRCTransformationFunction(uint32_t crc,void *context);
+typedef uint32_t XADCRCTransformationFunction(uint32_t crc,id context);
 
 @interface XADCRCHandle:CSStreamHandle
 {
-	CSHandle *parent;
 	uint32_t crc,initcrc,compcrc;
 	const uint32_t *table;
 	XADCRCTransformationFunction *transformationfunction;
-	void *transformationcontext;
+	id transformationcontext;
 }
 
 +(XADCRCHandle *)IEEECRC32HandleWithHandle:(CSHandle *)handle
@@ -27,7 +46,7 @@ correctCRC:(uint32_t)correctcrc conditioned:(BOOL)conditioned;
 correctCRC:(uint32_t)correctcrc CRCTable:(const uint32_t *)crctable;
 -(void)dealloc;
 
--(void)setCRCTransformationFunction:(XADCRCTransformationFunction *)function context:(void *)context;
+-(void)setCRCTransformationFunction:(XADCRCTransformationFunction *)function context:(id)context;
 
 -(void)resetStream;
 -(int)streamAtMost:(int)num toBuffer:(void *)buffer;

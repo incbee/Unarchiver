@@ -1,3 +1,23 @@
+/*
+ * CSHandle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "CSHandle.h"
 #import "CSSubHandle.h"
 
@@ -13,11 +33,25 @@ NSString *CSNotSupportedException=@"CSNotSupportedException";
 
 @implementation CSHandle
 
--(id)initWithName:(NSString *)descname
+-(id)init
 {
-	if((self=[super init]))
+	if(self=[super init])
 	{
-		name=[descname retain];
+		parent=nil;
+
+		bitoffs=-1;
+
+		writebyte=0;
+		writebitsleft=8;
+	}
+	return self;
+}
+
+-(id)initWithParentHandle:(CSHandle *)parenthandle
+{
+	if(self=[super init])
+	{
+		parent=[parenthandle retain];
 
 		bitoffs=-1;
 
@@ -29,9 +63,9 @@ NSString *CSNotSupportedException=@"CSNotSupportedException";
 
 -(id)initAsCopyOf:(CSHandle *)other
 {
-	if((self=[super init]))
+	if(self=[super init])
 	{
-		name=[[[other name] stringByAppendingString:@" (copy)"] retain];
+		parent=[other->parent retain];
 
 		bitoffs=other->bitoffs;
 		readbyte=other->readbyte;
@@ -44,11 +78,12 @@ NSString *CSNotSupportedException=@"CSNotSupportedException";
 
 -(void)dealloc
 {
-	[name release];
+	[parent release];
 	[super dealloc];
 }
 
 -(void)close {}
+
 
 
 
@@ -380,10 +415,10 @@ CSWriteValueImpl(uint32_t,writeUInt32BE,CSSetUInt32BE)
 
 CSWriteValueImpl(int16_t,writeInt16LE,CSSetInt16LE)
 CSWriteValueImpl(int32_t,writeInt32LE,CSSetInt32LE)
-//CSWriteValueImpl(int64_t,writeInt64LE,CSSetInt64LE)
+CSWriteValueImpl(int64_t,writeInt64LE,CSSetInt64LE)
 CSWriteValueImpl(uint16_t,writeUInt16LE,CSSetUInt16LE)
 CSWriteValueImpl(uint32_t,writeUInt32LE,CSSetUInt32LE)
-//CSWriteValueImpl(uint64_t,writeUInt64LE,CSSetUInt64LE)
+CSWriteValueImpl(uint64_t,writeUInt64LE,CSSetUInt64LE)
 
 CSWriteValueImpl(uint32_t,writeID,CSSetUInt32BE)
 
@@ -438,34 +473,65 @@ CSWriteValueImpl(uint32_t,writeID,CSSetUInt32BE)
 -(void)_raiseMemory
 {
 	[NSException raise:CSOutOfMemoryException
-	format:@"Out of memory while attempting to read from file \"%@\" (%@).",name,[self class]];
+	format:@"Out of memory while attempting to read from file \"%@\" (%@).",
+	[self name],[self class]];
 }
 
 -(void)_raiseEOF
 {
 	[NSException raise:CSEndOfFileException
-	format:@"Attempted to read past the end of file \"%@\" (%@).",name,[self class]];
+	format:@"Attempted to read past the end of file \"%@\" (%@).",
+	[self name],[self class]];
 }
 
 -(void)_raiseNotImplemented:(SEL)selector
 {
 	[NSException raise:CSNotImplementedException
-	format:@"Attempted to use unimplemented method +[%@ %@] when reading from file \"%@\".",[self class],NSStringFromSelector(selector),name];
+	format:@"Attempted to use unimplemented method +[%@ %@] when reading from file \"%@\".",
+	[self class],NSStringFromSelector(selector),[self name]];
 }
 
 -(void)_raiseNotSupported:(SEL)selector
 {
 	[NSException raise:CSNotSupportedException
-	format:@"Attempted to use unsupported method +[%@ %@] when reading from file \"%@\".",[self class],NSStringFromSelector(selector),name];
+	format:@"Attempted to use unsupported method +[%@ %@] when reading from file \"%@\".",
+	[self class],NSStringFromSelector(selector),[self name]];
 }
 
 
--(NSString *)name { return name; }
+-(NSString *)name
+{
+	return [parent name];
+}
+
+-(CSHandle *)parentHandle
+{
+	return parent;
+}
+
+-(void)setParentHandle:(CSHandle *)newparent
+{
+	[parent autorelease];
+	parent=[newparent retain];
+}
 
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"%@ for \"%@\", position %qu",
-	[self class],name,[self offsetInFile]];
+	if(parent)
+	{
+		return [NSString stringWithFormat:@"%@ @ %qu for %@",
+		[self class],[self offsetInFile],[parent description]];
+	}
+	else if([self name])
+	{
+		return [NSString stringWithFormat:@"%@ @ %qu for \"%@\"",
+		[self class],[self offsetInFile],[self name]];
+	}
+	else
+	{
+		return [NSString stringWithFormat:@"%@ @ %qu",
+		[self class],[self offsetInFile]];
+	}
 }
 
 

@@ -1,21 +1,41 @@
+/*
+ * CSByteStreamHandle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "CSByteStreamHandle.h"
 
 NSString *CSByteStreamEOFReachedException=@"CSByteStreamEOFReachedException";
 
 @implementation CSByteStreamHandle
 
--(id)initWithName:(NSString *)descname length:(off_t)length
+/*-(id)initWithName:(NSString *)descname length:(off_t)length
 {
-	if((self=[super initWithName:descname length:length]))
+	if(self=[super initWithName:descname length:length])
 	{
 		bytestreamproducebyte_ptr=(uint8_t (*)(id,SEL,off_t))[self methodForSelector:@selector(produceByteAtOffset:)];
 	}
 	return self;
-}
+}*/
 
--(id)initWithHandle:(CSHandle *)handle length:(off_t)length bufferSize:(int)buffersize;
+-(id)initWithInputBufferForHandle:(CSHandle *)handle length:(off_t)length bufferSize:(int)buffersize;
 {
-	if((self=[super initWithHandle:handle length:length bufferSize:buffersize]))
+	if(self=[super initWithInputBufferForHandle:handle length:length bufferSize:buffersize])
 	{
 		bytestreamproducebyte_ptr=(uint8_t (*)(id,SEL,off_t))[self methodForSelector:@selector(produceByteAtOffset:)];
 	}
@@ -63,65 +83,3 @@ NSString *CSByteStreamEOFReachedException=@"CSByteStreamEOFReachedException";
 -(void)endByteStream { [self endStream]; }
 
 @end
-
-
-
-
-
-/*
-@implementation CSFilterHandle
-
--(id)initWithHandle:(CSHandle *)handle
-{
-	if(self=[super initWithName:[handle name]])
-	{
-		parent=[handle retain];
-		readatmost_ptr=(int (*)(id,SEL,int,void *))[parent methodForSelector:@selector(readAtMost:toBuffer:)];
-
-		pos=0;
-
-		coro=nil;
-		// start couroutine which returns control immediately
-	}
-	return self;
-}
-
--(id)initAsCopyOf:(CSFilterHandle *)other
-{
-	parent=nil; coro=nil; [self release];
-	[self _raiseNotImplemented:_cmd];
-	return nil;
-}
-
--(void)dealloc
-{
-	[parent release];
-	[coro release];
-	[super dealloc];
-}
-
--(off_t)offsetInFile { return pos; }
-
--(int)readAtMost:(int)num toBuffer:(void *)buffer
-{
-	if(!num) return 0;
-
-	ptr=buffer;
-	left=num;
-
-	if(!coro)
-	{
-		coro=[self newCoroutine];
-		[(id)coro filter];
-	} else [coro switchTo];
-
-	//if(eof)...
-
-	return num-left;
-}
-
--(void)filter {}
-
-@end
-
-*/

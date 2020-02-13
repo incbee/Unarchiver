@@ -1,12 +1,31 @@
+/*
+ * CSSubHandle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "CSSubHandle.h"
 
 @implementation CSSubHandle
 
 -(id)initWithHandle:(CSHandle *)handle from:(off_t)from length:(off_t)length
 {
-	if((self=[super initWithName:[NSString stringWithFormat:@"%@ (Subrange from %qd, length %qd)",[handle name],from,length]]))
+	if((self=[super initWithParentHandle:handle]))
 	{
-		parent=[handle retain];
 		start=from;
 		end=from+length;
 
@@ -21,9 +40,8 @@
 
 -(id)initAsCopyOf:(CSSubHandle *)other
 {
-	if((self=[super initAsCopyOf:other]))
+	if(self=[super initAsCopyOf:other])
 	{
-		parent=[other->parent copy];
 		start=other->start;
 		end=other->end;
 	}
@@ -32,11 +50,8 @@
 
 -(void)dealloc
 {
-	[parent release];
 	[super dealloc];
 }
-
--(CSHandle *)parentHandle { return parent; }
 
 -(off_t)startOffsetInParent { return start; }
 
@@ -85,6 +100,12 @@
 	if(curr+num>end) num=(int)(end-curr);
 	if(num<=0) return 0;
 	else return [parent readAtMost:num toBuffer:buffer];
+}
+
+-(NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ @ %qu from %qu length %qu for %@",
+	[self class],[self offsetInFile],start,end-start,[parent description]];
 }
 
 @end

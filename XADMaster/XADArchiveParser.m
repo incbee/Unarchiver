@@ -1,6 +1,26 @@
+/*
+ * XADArchiveParser.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADArchiveParser.h"
 #import "CSFileHandle.h"
-#import "CSMultiHandle.h"
+#import "CSMultiFileHandle.h"
 #import "CSMemoryHandle.h"
 #import "CSStreamHandle.h"
 #import "XADCRCHandle.h"
@@ -120,10 +140,22 @@ NSString *XADVolumesKey=@"XADVolumes";
 NSString *XADVolumeScanningFailedKey=@"XADVolumeScanningFailed";
 NSString *XADDiskLabelKey=@"XADDiskLabel";
 
+NSString *XADSignatureOffset=@"XADFoundSignatureOffset";
+NSString *XADParserClass=@"XADParserClass";
+
+static NSComparisonResult CompareParserSignaturesLocations(id first,id second,void *context)
+{
+	NSNumber * offset1 = [first objectForKey:XADSignatureOffset] ?: [NSNumber numberWithInt:0x100000];
+	NSNumber * offset2 = [second objectForKey:XADSignatureOffset] ?: [NSNumber numberWithInt:0x100000];
+
+	return [offset1 compare:offset2];
+}
 
 @implementation XADArchiveParser
 
 static NSMutableArray *parserclasses=nil;
+static NSArray *parsersWithFloatingSignaturesClasses=nil;
+
 static int maxheader=0;
 
 +(void)initialize
@@ -208,6 +240,14 @@ static int maxheader=0;
 		[XADLibXADParser class],
 	nil] retain];
 
+    // These classes can detect themselves incorrectly if one archive is placed in another
+    parsersWithFloatingSignaturesClasses = [[NSArray arrayWithObjects:
+        [XADZipSFXParser class],
+        [XADEmbeddedRARParser class],
+        [XADEmbeddedRAR5Parser class],
+     nil
+    ] retain];
+
 	NSEnumerator *enumerator=[parserclasses objectEnumerator];
 	Class class;
 	while((class=[enumerator nextObject]))
@@ -220,23 +260,82 @@ static int maxheader=0;
 +(Class)archiveParserClassForHandle:(CSHandle *)handle firstBytes:(NSData *)header
 resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 {
-	NSEnumerator *enumerator=[parserclasses objectEnumerator];
-	Class parserclass;
-	while((parserclass=[enumerator nextObject]))
+    BOOL conflictingParsersChecked = NO;
+	for(Class parserclass in parserclasses)
 	{
 		[handle seekToFileOffset:0];
 		[props removeAllObjects];
 
-		@try {
-			if([parserclass recognizeFileWithHandle:handle firstBytes:header
-			resourceFork:fork name:name propertiesToAdd:props])
-			{
-				[handle seekToFileOffset:0];
-				return parserclass;
-			}
-		} @catch(id e) {} // ignore parsers that throw errors on recognition or init
+        if ([parsersWithFloatingSignaturesClasses containsObject:parserclass])
+        {
+            if (!conflictingParsersChecked)
+            {
+                conflictingParsersChecked = YES;
+                Class arhiveParserClass =
+                    [self archiveParserFromParsersWithFloatingSignature:parsersWithFloatingSignaturesClasses
+                                                              forHandle:handle
+                                                             firstBytes:header
+                                                                   name:name
+                                                        propertiesToAdd:props];
+                if (arhiveParserClass) {
+                    [handle seekToFileOffset:0];
+                    return arhiveParserClass;
+                }
+            }
+            continue;
+        }
+
+        if ([self isValidParserClass:parserclass forHandle:handle firstBytes:header name:name propertiesToAdd:props])
+        {
+            [handle seekToFileOffset:0];
+            return parserclass;
+        }
 	}
 	return nil;
+}
+
++ (Class)archiveParserFromParsersWithFloatingSignature:(NSArray *)parsers forHandle:(CSHandle *)handle firstBytes:(NSData *)header name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
+{
+    NSMutableArray * validParsersInformation = [NSMutableArray array];
+    for(Class parserClass in parsers)
+    {
+        [handle seekToFileOffset:0];
+        NSMutableDictionary * properties = [NSMutableDictionary dictionary];
+        if ([self isValidParserClass:parserClass
+						   forHandle:handle
+						  firstBytes:header
+								name:name
+					 propertiesToAdd:properties])
+        {
+            [properties setObject:parserClass forKey:XADParserClass];
+            [validParsersInformation addObject:properties];
+        }
+    }
+
+    if (![validParsersInformation count])
+    {
+        return nil;
+    }
+
+    [validParsersInformation sortUsingFunction:CompareParserSignaturesLocations context:nil];
+
+    NSDictionary * bestMatch = [validParsersInformation objectAtIndex:0];
+    [props addEntriesFromDictionary:bestMatch];
+
+    Class foundClass = [bestMatch objectForKey:XADParserClass];
+    return foundClass;
+}
+
++ (BOOL)isValidParserClass:(Class)parserClass forHandle:(CSHandle *)handle firstBytes:(NSData *)header name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
+{
+    @try {
+        if ([parserClass recognizeFileWithHandle:handle firstBytes:header name:name propertiesToAdd:props]) {
+            [handle seekToFileOffset:0];
+            return YES;
+        }
+    } @catch (id e) {
+    } // ignore parsers that throw errors on recognition or init
+    return NO;
 }
 
 +(XADArchiveParser *)archiveParserForHandle:(CSHandle *)handle name:(NSString *)name
@@ -328,14 +427,7 @@ resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMu
 		{
 			if([volumes count]>1)
 			{
-				NSMutableArray *handles=[NSMutableArray array];
-				NSEnumerator *enumerator=[volumes objectEnumerator];
-				NSString *volume;
-
-				while((volume=[enumerator nextObject]))
-				[handles addObject:[CSFileHandle fileHandleForReadingAtPath:volume]];
-
-				CSMultiHandle *multihandle=[CSMultiHandle multiHandleWithHandleArray:handles];
+				CSHandle *multihandle=[CSMultiFileHandle handleWithPathArray:volumes];
 
 				XADArchiveParser *parser=[[parserclass new] autorelease];
 				[parser setHandle:multihandle];
@@ -536,9 +628,9 @@ resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMu
 
 -(NSString *)currentFilename
 {
-	if([sourcehandle isKindOfClass:[XADMultiHandle class]])
+	if([sourcehandle isKindOfClass:[CSSegmentedHandle class]])
 	{
-		return [[(XADMultiHandle *)sourcehandle currentHandle] name];
+		return [[(CSSegmentedHandle *)sourcehandle currentHandle] name];
 	}
 	else
 	{
@@ -853,6 +945,7 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext
 		[currsolidobj release];
 		currsolidobj=[solidobj retain];
 		[currsolidhandle release];
+        currsolidhandle = nil;
 		currsolidhandle=[[self handleForSolidStreamWithObject:solidobj wantChecksum:YES] retain];
 	}
 
@@ -866,29 +959,29 @@ regex:(XADRegex *)regex firstFileExtension:(NSString *)firstext
 
 
 
--(NSArray *)volumes
+-(BOOL)hasVolumes
 {
-	if([sourcehandle respondsToSelector:@selector(handles)]) return [(id)sourcehandle handles];
-	else return nil;
+	return [sourcehandle isKindOfClass:[XADSegmentedHandle class]];
+}
+
+-(NSArray *)volumeSizes
+{
+	if([sourcehandle isKindOfClass:[XADSegmentedHandle class]])
+	{
+		return [(XADSegmentedHandle *)sourcehandle segmentSizes];
+	}
+	else
+	{
+		return [NSArray arrayWithObject:[NSNumber numberWithLongLong:[sourcehandle fileSize]]];
+	}
 }
 
 -(CSHandle *)currentHandle
 {
-	if([sourcehandle respondsToSelector:@selector(currentHandle)]) return [(id)sourcehandle currentHandle];
+	if([sourcehandle isKindOfClass:[CSSegmentedHandle class]]) return [(CSSegmentedHandle *)sourcehandle currentHandle];
 	else return sourcehandle;
 }
 
--(off_t)offsetForVolume:(int)disk offset:(off_t)offset
-{
-	if([sourcehandle respondsToSelector:@selector(handles)])
-	{
-		NSArray *handles=[(id)sourcehandle handles];
-		int count=[handles count];
-		for(int i=0;i<count&&i<disk;i++) offset+=[(CSHandle *)[handles objectAtIndex:i] fileSize];
-	}
-
-	return offset;
-}
 
 
 
@@ -1181,12 +1274,6 @@ name:(NSString *)name { return NO; }
 name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 {
 	return [self recognizeFileWithHandle:handle firstBytes:data name:name];
-}
-
-+(BOOL)recognizeFileWithHandle:(CSHandle *)handle firstBytes:(NSData *)data
-resourceFork:(XADResourceFork *)fork name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
-{
-	return [self recognizeFileWithHandle:handle firstBytes:data name:name propertiesToAdd:props];
 }
 
 +(NSArray *)volumesForHandle:(CSHandle *)handle firstBytes:(NSData *)data

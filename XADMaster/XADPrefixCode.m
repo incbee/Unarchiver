@@ -1,3 +1,23 @@
+/*
+ * XADPrefixCode.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADPrefixCode.h"
 #import "Realloc.h"
 
@@ -341,17 +361,17 @@ static void MakeTable(XADPrefixCode *code,int node,XADCodeTableEntry *table,int 
 {
 	int currtablesize=1<<(maxdepth-depth);
 
-	if(IsLeafNode(code,node))
+	if(IsInvalidNode(code,node))
+	{
+		for(int i=0;i<currtablesize;i++) table[i].length=-1;
+	}
+	else if(IsLeafNode(code,node))
 	{
 		for(int i=0;i<currtablesize;i++)
 		{
 			table[i].length=depth;
 			table[i].value=LeafValue(code,node);
 		}
-	}
-	else if(IsInvalidNode(code,node))
-	{
-		for(int i=0;i<currtablesize;i++) table[i].length=-1;
 	}
 	else
 	{
@@ -373,17 +393,17 @@ static void MakeTableLE(XADPrefixCode *code,int node,XADCodeTableEntry *table,in
 	int currtablesize=1<<(maxdepth-depth);
 	int currstride=1<<depth;
 
-	if(IsLeafNode(code,node))
+	if(IsInvalidNode(code,node))
+	{
+		for(int i=0;i<currtablesize;i++) table[i*currstride].length=-1;
+	}
+	else if(IsLeafNode(code,node))
 	{
 		for(int i=0;i<currtablesize;i++)
 		{
 			table[i*currstride].length=depth;
 			table[i*currstride].value=LeafValue(code,node);
 		}
-	}
-	else if(IsInvalidNode(code,node))
-	{
-		for(int i=0;i<currtablesize;i++) table[i*currstride].length=-1;
 	}
 	else
 	{

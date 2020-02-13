@@ -1,3 +1,23 @@
+/*
+ * XADARCParser.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADARCParser.h"
 #import "XADARCCrunchHandle.h"
 #import "XADARCCrushHandle.h"
@@ -131,7 +151,7 @@ name:(NSString *)name
 		if(method==1) uncompsize=compsize;
 		else uncompsize=[fh readUInt32LE];
 
-		uint32_t loadaddress,execaddress,fileattrs;
+		uint32_t loadaddress=0,execaddress=0,fileattrs=0;
 		if(method&0x80)
 		{
 			loadaddress=[fh readUInt32LE];
@@ -144,7 +164,7 @@ name:(NSString *)name
 		XADString *name=[self XADStringWithData:namedata];
 		XADPath *path=[parent pathByAppendingXADStringComponent:name];
 
-		if(method==0x1e || (method==0x82&&((loadaddress&0xffffff00)==0xfffddc00)))
+		if(method==0x1e || (method==0x82 && ((loadaddress&0xffffff00)==0xfffddc00)))
 		{
 			NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:
 				path,XADFileNameKey,

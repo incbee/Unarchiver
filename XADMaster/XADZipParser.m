@@ -1,3 +1,23 @@
+/*
+ * XADZipParser.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADZipParser.h"
 #import "XADZipImplodeHandle.h"
 #import "XADZipShrinkHandle.h"
@@ -95,46 +115,101 @@
 	[super dealloc];
 }
 
+-(void)findCentralDirectoryRecordOffset:(off_t *)centrOffset zip64Offset:(off_t *)zip64offs
+{
+    // Default values
+    if (centrOffset) *centrOffset=-1;
+    if (zip64offs) *zip64offs=-1;
+
+    CSHandle *fh=[self handle];
+    [fh seekToEndOfFile];
+    off_t end=[fh offsetInFile];
+
+    // TODO: There should be another way of correctly searching signature for zip file
+    // 1MB in memory is not always a good idea
+    // This is a question whether Central Directory Record can be farther than this
+    int chunkSize = 0x10000;
+    off_t chunk_end = end;
+    while (true) {
+
+        // read n bytes or less, if this is the last chunk
+        int numbytes=chunkSize;
+        if(chunk_end - numbytes<0) numbytes=(int)chunk_end;
+        off_t chunk_start = chunk_end - numbytes;
+
+        uint8_t *buf = malloc(numbytes);
+        [fh seekToFileOffset:chunk_start];
+        [fh readBytes:numbytes toBuffer:buf];
+
+        int preservedBytes = chunk_start >= 20 ? 20 : 0;
+        int pos=numbytes-4;
+        // Find end of central directory record
+        while(pos>=preservedBytes)
+        {
+            if(buf[pos]=='P'&&buf[pos+1]=='K'&&buf[pos+2]==5&&buf[pos+3]==6) break;
+            pos--;
+        }
+
+        BOOL centralOffsetFound = pos >= preservedBytes;
+        if (centralOffsetFound) {
+            if (centrOffset) {
+                *centrOffset = chunk_start + pos;
+            }
+
+            // Found a zip64 end of central directory locator.
+            if(pos>=20 && buf[pos-20]=='P' && buf[pos-19]=='K' && buf[pos-18]==6 && buf[pos-17]==7)
+            {
+                if (zip64offs) *zip64offs = chunk_start + pos - 20;
+            }
+        }
+        free(buf);
+
+        if (centralOffsetFound) {
+            return;
+        }
+
+        // If chunk was exact at position of overlapping, we would likely to read next chunk a bit overlapped
+        //         PK67   P
+        //  |----------|----------| In basic reading syle, we can miss zip64Offset, beacuse it wil be in the next chunk
+        //
+        // Instead, we'll read chunks a bit overlapped
+        // This will allow us to prevent cases when part is in another chunk
+        //             |----------|
+        //      |----------|
+
+        chunk_end -= (chunkSize - preservedBytes * 2);
+
+        if (chunk_end <= 0) {
+            break;
+        }
+    }
+}
+
+
 -(void)parseWithSeparateMacForks
 {
-	CSHandle *fh=[self handle];
+    off_t centraloffs = -1;
+    off_t zip64offs = -1;
+    [self findCentralDirectoryRecordOffset:&centraloffs zip64Offset:&zip64offs];
 
-	[fh seekToEndOfFile];
-	off_t end=[fh offsetInFile];
+    CSHandle *fh=[self handle];
+    [fh seekToEndOfFile];
+    off_t end=[fh offsetInFile];
 
-	int numbytes=0x10011;
-	if(numbytes>end) numbytes=(int)end;
-
-	uint8_t buf[numbytes];
-
-	[fh skipBytes:-numbytes];
-	[fh readBytes:numbytes toBuffer:buf];
-	int pos=numbytes-4;
-
-	// Find end of central directory record
-	while(pos>=0)
-	{
-		if(buf[pos]=='P'&&buf[pos+1]=='K'&&buf[pos+2]==5&&buf[pos+3]==6) break;
-		pos--;
-	}
-
-	if(pos<0)
+	if(centraloffs == -1)
 	{
 		// Could not find a central directory record. Scan the zip file from the start instead.
 		[self parseWithoutCentralDirectory];
 		return;
 	}
 
-	off_t centraloffs=end-numbytes+pos;
-
 	// Find zip64 end of central directory locator
-	while(pos>=0)
+	if(zip64offs != -1)
 	{
-		if(buf[pos]=='P'&&buf[pos+1]=='K'&&buf[pos+2]==6&&buf[pos+3]==7) break;
-		pos--;
+		// Found a zip64 end of central directory locator.
+		[self parseWithCentralDirectoryAtOffset:centraloffs zip64Offset:zip64offs];
 	}
-
-	if(pos<0)
+	else
 	{
 		// Could not find a zip64 end of central directory locator.
 		if(end>0x100000000)
@@ -149,12 +224,6 @@
 			// If the file is small enough, everything is fine, and we continue.
 			[self parseWithCentralDirectoryAtOffset:centraloffs zip64Offset:-1];
 		}
-	}
-	else
-	{
-		// Found a zip64 end of central directory locator.
-		off_t zip64offs=end-numbytes+pos;
-		[self parseWithCentralDirectoryAtOffset:centraloffs zip64Offset:zip64offs];
 	}
 }
 
@@ -217,56 +286,11 @@
 
 		NSAutoreleasePool *pool=[NSAutoreleasePool new];
 
-		// Read central directory record.
-		uint32_t centralid=[fh readID];
-		if(centralid!=0x504b0102) [XADException raiseIllegalDataException]; // could try recovering here
+        XADZipParserCentralDirectoryRecord cdr = [self readCentralDirectoryRecord];
 
-		/*int creatorversion=*/[fh readUInt8];
-		int system=[fh readUInt8];
-		int extractversion=[fh readUInt16LE];
-		int flags=[fh readUInt16LE];
-		int compressionmethod=[fh readUInt16LE];
-		uint32_t date=[fh readUInt32LE];
-		uint32_t crc=[fh readUInt32LE];
-		off_t compsize=[fh readUInt32LE];
-		off_t uncompsize=[fh readUInt32LE];
-		int namelength=[fh readUInt16LE];
-		int extralength=[fh readUInt16LE];
-		int commentlength=[fh readUInt16LE];
-		int startdisk=[fh readUInt16LE];
-		/*int infileattrib=*/[fh readUInt16LE];
-		uint32_t extfileattrib=[fh readUInt32LE];
-		off_t locheaderoffset=[fh readUInt32LE];
-
-		[fh skipBytes:namelength];
-
-		// Read central directory extra fields, just to find the Zip64 field.
-		int length=extralength;
-		while(length>9)
-		{
-			int extid=[fh readUInt16LE];
-			int size=[fh readUInt16LE];
-			length-=4;
-
-			if(size>length) break;
-			length-=size;
-			off_t nextextra=[fh offsetInFile]+size;
-
-			if(extid==1)
-			{
-				if(uncompsize==0xffffffff) uncompsize=[fh readUInt64LE];
-				if(compsize==0xffffffff) compsize=[fh readUInt64LE];
-				if(locheaderoffset==0xffffffff) locheaderoffset=[fh readUInt64LE];
-				if(startdisk==0xffff) startdisk=[fh readUInt32LE];
-				break;
-			}
-
-			[fh seekToFileOffset:nextextra];
-		}
-		if(length) [fh skipBytes:length];
-
+        // Parse comment data
 		NSData *commentdata=nil;
-		if(commentlength) commentdata=[fh readDataOfLength:commentlength];
+		if(cdr.commentlength) commentdata=[fh readDataOfLength:cdr.commentlength];
         
 		off_t next=[fh offsetInFile];
 
@@ -280,7 +304,7 @@
 		}
 
 		// Read local header
-		[fh seekToFileOffset:[self offsetForVolume:startdisk offset:locheaderoffset]];
+		[fh seekToFileOffset:[self offsetForVolume:cdr.startdisk offset:cdr.locheaderoffset]];
 
 		uint32_t localid=[fh readID];
 		if(localid==0x504b0304||localid==0x504b0506) // kludge for strange archives
@@ -305,15 +329,16 @@
 			NSDictionary *extradict=nil;
 			@try {
 				if(localextralength) extradict=[self parseZipExtraWithLength:localextralength nameData:namedata
-				uncompressedSizePointer:&uncompsize compressedSizePointer:&compsize];
+				uncompressedSizePointer:&cdr.uncompsize compressedSizePointer:&cdr.compsize];
 			} @catch(id e) {
 				[self setObject:[NSNumber numberWithBool:YES] forPropertyKey:XADIsCorruptedKey];
 				NSLog(@"Error parsing Zip extra fields: %@",e);
 			}
 
-			[self addZipEntryWithSystem:system extractVersion:extractversion flags:flags
-			compressionMethod:compressionmethod date:date crc:crc localDate:localdate
-			compressedSize:compsize uncompressedSize:uncompsize extendedFileAttributes:extfileattrib
+            // TODO: Consider using CDR struct
+			[self addZipEntryWithSystem:cdr.system extractVersion:cdr.extractversion flags:cdr.flags
+			compressionMethod:cdr.compressionmethod date:cdr.date crc:cdr.crc localDate:localdate
+			compressedSize:cdr.compsize uncompressedSize:cdr.uncompsize extendedFileAttributes:cdr.extfileattrib
 			extraDictionary:extradict dataOffset:dataoffset nameData:namedata commentData:commentdata
 			isLastEntry:i==numentries-1];
 		}
@@ -325,7 +350,91 @@
 	}
 }
 
+-(XADZipParserCentralDirectoryRecord)readCentralDirectoryRecord
+{
+    CSHandle *fh=[self handle];
 
+    XADZipParserCentralDirectoryRecord cdr;
+    // Read central directory record.
+    cdr.centralid=[fh readID];
+    if(cdr.centralid!=0x504b0102) [XADException raiseIllegalDataException]; // could try recovering here
+
+    cdr.creatorversion=[fh readUInt8];
+    cdr.system=[fh readUInt8];
+    cdr.extractversion=[fh readUInt16LE];
+    cdr.flags=[fh readUInt16LE];
+    cdr.compressionmethod=[fh readUInt16LE];
+    cdr.date=[fh readUInt32LE];
+    cdr.crc=[fh readUInt32LE];
+    cdr.compsize=[fh readUInt32LE];
+    cdr.uncompsize=[fh readUInt32LE];
+    cdr.namelength=[fh readUInt16LE];
+    cdr.extralength=[fh readUInt16LE];
+    cdr.commentlength=[fh readUInt16LE];
+    cdr.startdisk=[fh readUInt16LE];
+    cdr.infileattrib=[fh readUInt16LE];
+    cdr.extfileattrib=[fh readUInt32LE];
+    cdr.locheaderoffset=[fh readUInt32LE];
+
+    [fh skipBytes:cdr.namelength];
+
+    // Read central directory extra fields, just to find the Zip64 field.
+    int length=cdr.extralength;
+    while(length>=8)
+    {
+        int extid=[fh readUInt16LE];
+        int size=[fh readUInt16LE];
+        length-=4;
+
+        if(size>length) break;
+        length-=size;
+        off_t nextextra=[fh offsetInFile]+size;
+
+        if(extid==1)
+        {
+            //
+            // From https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT
+            //
+            // 4.5.3 -Zip64 Extended Information Extra Field (0x0001):
+            // ... fields MUST only appear if the corresponding Local or Central directory record field is set to 0xFFFF or 0xFFFFFFFF.
+            //
+            // This means the ZIP64 fields must only appear if they're set to set to 0xFFFF or 0xFFFFFFFF in the Local/Central records.
+            // Always reading them might result in a crash and a parse failure, even if the headers are correct.
+            //
+            if(cdr.uncompsize==0xffffffff) {
+                cdr.uncompsize=[fh readUInt64LE];
+            }
+            if(cdr.compsize==0xffffffff) {
+                cdr.compsize=[fh readUInt64LE];
+            }
+            if(cdr.locheaderoffset==0xffffffff) {
+                cdr.locheaderoffset=[fh readUInt64LE];
+            }
+            if(cdr.startdisk==0xffff) {
+                cdr.startdisk=[fh readUInt32LE];
+            }
+            //
+            // We can't break since not always all fields are present so we need to seek to the next extra.
+            // Investigated here: https://github.com/aonez/Keka/issues/423
+            //
+            //break;
+            //
+        }
+        [fh seekToFileOffset:nextextra];
+    }
+    if(length) [fh skipBytes:length];
+    return cdr;
+}
+
+-(off_t)offsetForVolume:(int)disk offset:(off_t)offset
+{
+	NSArray *sizes=[self volumeSizes];
+	NSInteger count=[sizes count];
+
+	for(NSInteger i=0;i<count && i<disk;i++) offset+=[[sizes objectAtIndex:i] longLongValue];
+
+	return offset;
+}
 
 -(void)parseWithoutCentralDirectory
 {
@@ -552,7 +661,7 @@ uncompressedSizePointer:(off_t *)uncompsizeptr compressedSizePointer:(off_t *)co
 
 	off_t end=[fh offsetInFile]+length;
 
-	while(length>9)
+	while(length>=9)
 	{
 		int extid=[fh readUInt16LE];
 		int size=[fh readUInt16LE];
@@ -570,6 +679,7 @@ uncompressedSizePointer:(off_t *)uncompsizeptr compressedSizePointer:(off_t *)co
 		}
 		else if(extid==0x5455&&size>=5) // Extended Timestamp Extra Field
 		{
+            // https://opensource.apple.com/source/zip/zip-6/unzip/unzip/proginfo/extra.fld
 			int flags=[fh readUInt8];
 			if(flags&1) [dict setObject:[NSDate dateWithTimeIntervalSince1970:[fh readUInt32LE]] forKey:XADLastModificationDateKey];
 			if(flags&2) [dict setObject:[NSDate dateWithTimeIntervalSince1970:[fh readUInt32LE]] forKey:XADLastAccessDateKey];
@@ -882,7 +992,18 @@ isLastEntry:(BOOL)islastentry
 		{
 			if(extfileattrib&0x10 && compsize==0 && uncompsize==0) [dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsDirectoryKey];
 			[dict setObject:[NSNumber numberWithUnsignedInt:extfileattrib] forKey:XADDOSFileAttributesKey];
-		}
+
+            // While the original system was MSDos, most novel archivers on those systems can still set valid permissions
+            // For example, Archive created on windows, can still have valid symlinks in it
+            int perm = extfileattrib >> 16;
+            // Ignore permissions set to 0, as these are most likely writte by buggy archivers.
+
+            // Ignore file permissions, because these can lead to the incorrect handling of the files on MacOS
+            if (perm >= S_IFIFO) {
+            	[dict setObject:[NSNumber numberWithInt:perm] forKey:XADPosixPermissionsKey];
+            }
+
+        }
 		else if(system==1) // Amiga
 		{
 			[dict setObject:[NSNumber numberWithUnsignedInt:extfileattrib] forKey:XADAmigaProtectionBitsKey];

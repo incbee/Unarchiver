@@ -1,3 +1,23 @@
+/*
+ * XADXARParser.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADXARParser.h"
 #import "XADGzipParser.h"
 #import "CSZlibHandle.h"
@@ -464,10 +484,10 @@ destinationDictionary:(NSMutableDictionary *)dest
 			int c=[string characterAtIndex:i];
 			if(isxdigit(c))
 			{
-				int val;
+				int val=0;
 				if(c>='0'&&c<='9') val=c-'0';
-				if(c>='A'&&c<='F') val=c-'A'+10;
-				if(c>='a'&&c<='f') val=c-'a'+10;
+				else if(c>='A'&&c<='F') val=c-'A'+10;
+				else if(c>='a'&&c<='f') val=c-'a'+10;
 
 				if(n&1) { byte|=val; [data appendBytes:&byte length:1]; }
 				else byte=val<<4;

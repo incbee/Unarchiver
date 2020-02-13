@@ -1,14 +1,41 @@
+/*
+ * XADRAR5Parser.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADRAR5Parser.h"
 #import "XADRARInputHandle.h"
+#import "XADRAR50Handle.h"
 #import "XADRARAESHandle.h"
 #import "XADCRCHandle.h"
 #import "NSDateXAD.h"
+#import "CSFileHandle.h"
 #import "Crypto/hmac_sha256.h"
 #import "Crypto/pbkdf2_hmac_sha256.h"
 
 #define ZeroBlock ((RAR5Block){0})
+#define ZeroHeaderBlock ((RAR5HeaderBlock){0})
 
-static uint32_t EncryptRAR5CRC32(uint32_t crc,void *context);
+NSString *RAR5SignatureCannotBeFound=@"RAR5SignatureCannotBeFound";
+const off_t RAR5MaximumSFXHeader  = 1 << 20; // 1 MB
+const off_t RAR5SignatureNotFound = -1;
+
+static uint32_t EncryptRAR5CRC32(uint32_t crc,id context);
 
 static BOOL IsRAR5Signature(const uint8_t *ptr)
 {
@@ -24,7 +51,8 @@ static uint64_t ReadRAR5VInt(CSHandle *handle)
 	{
 		uint8_t byte=[handle readUInt8];
 
-		res|=(byte&0x7f)<<pos;
+		uint64_t meaningfulBits = (uint64_t) (byte & 0x7f);
+		res |= meaningfulBits << pos;
 
 		if(!(byte&0x80)) return res;
 
@@ -33,9 +61,11 @@ static uint64_t ReadRAR5VInt(CSHandle *handle)
 }
 
 static inline BOOL IsZeroBlock(RAR5Block block) { return block.start==0; }
+static inline BOOL IsZeroHeaderBlock(RAR5HeaderBlock block) { return IsZeroBlock(block.block); }
 
-
-
+@interface XADRAR5Parser (Multipart)
++(BOOL)isPartOfMultiVolume:(CSHandle *)handle;
+@end
 
 @implementation XADRAR5Parser
 
@@ -46,24 +76,42 @@ static inline BOOL IsZeroBlock(RAR5Block block) { return block.start==0; }
 
 +(BOOL)recognizeFileWithHandle:(CSHandle *)handle firstBytes:(NSData *)data name:(NSString *)name
 {
-	const uint8_t *bytes=[data bytes];
-	int length=[data length];
+    off_t signatureLocation = [self signatureLocationInData:data];
+    return signatureLocation != RAR5SignatureNotFound;
+}
 
-	if(length<8) return NO; // TODO: fix to use correct min size
-
-	if(IsRAR5Signature(bytes)) return YES;
-
-	return NO;
++ (off_t)signatureLocationInData:(NSData *)data {
+    const uint8_t *bytes=[data bytes];
+    int length=[data length];
+    
+    if(length<8) return RAR5SignatureNotFound; // TODO: fix to use correct min size
+    
+    // for SFXX, RAR Signature can be found not at start, but anywhere in the data
+    int maxxSearch = MIN(length, RAR5MaximumSFXHeader) - 8;
+    
+    const uint8_t *sign = bytes;
+    for (int i =0 ; i < maxxSearch; i++, sign++) {
+        if(IsRAR5Signature(sign)) {
+            return i;
+        }
+    }
+    return RAR5SignatureNotFound;
 }
 
 +(NSArray *)volumesForHandle:(CSHandle *)handle firstBytes:(NSData *)data name:(NSString *)name
 {
+    // Check if multipart
+    CSFileHandle *filehandle=[CSFileHandle fileHandleForReadingAtPath:name];
+    if (![self isPartOfMultiVolume:filehandle]) {
+        return nil;
+    }
+
 	// New naming scheme. Find the last number in the name, and look for other files
 	// with the same number of digits in the same location.
 	NSArray *matches;
-	if((matches=[name substringsCapturedByPattern:@"^(.*[^0-9])([0-9]+)(.*)\\.rar$" options:REG_ICASE]))
+	if((matches=[name substringsCapturedByPattern:@"^(.*[^0-9])([0-9]+)(.*)\\.(rar|sfx|exe)$" options:REG_ICASE]))
 	return [self scanForVolumesWithFilename:name
-	regex:[XADRegex regexWithPattern:[NSString stringWithFormat:@"^%@[0-9]{%ld}%@.rar$",
+	regex:[XADRegex regexWithPattern:[NSString stringWithFormat:@"^%@[0-9]{%ld}%@.(rar|sfx|exe)$",
 		[[matches objectAtIndex:1] escapedPattern],
 		(long)[(NSString *)[matches objectAtIndex:2] length],
 		[[matches objectAtIndex:3] escapedPattern]] options:REG_ICASE]
@@ -79,6 +127,7 @@ static inline BOOL IsZeroBlock(RAR5Block block) { return block.start==0; }
 	{
 		headerkey=nil;
 		cryptocache=[NSMutableDictionary new];
+		solidstreams=[NSMutableArray new];
 	}
 	return self;
 }
@@ -87,171 +136,207 @@ static inline BOOL IsZeroBlock(RAR5Block block) { return block.start==0; }
 {
 	[headerkey release];
 	[cryptocache release];
+	[solidstreams release];
 	[super dealloc];
+}
+
+- (void)readUntilSignature {
+    CSHandle * signatureSearchingHandle = [[self handle] subHandleToEndOfFileFrom:0];
+    NSData * data = [signatureSearchingHandle readDataOfLengthAtMost:RAR5MaximumSFXHeader];
+    off_t signatureLocation = [XADRAR5Parser signatureLocationInData:data];
+    if (signatureLocation == RAR5SignatureNotFound) {
+        [NSException raise:RAR5SignatureCannotBeFound format:@"Signature cannot be found %@",[self class]];
+    }
+    
+    [self.handle skipBytes:signatureLocation];
 }
 
 -(void)parse
 {
+	currsolidstream=nil;
+	totalsolidsize=0;
+
 	NSMutableDictionary *currdict=nil;
 	NSMutableArray *currparts=[NSMutableArray array];
-	NSMutableArray *currfiles=[NSMutableArray array];
-	off_t totalsolidsize=0;
-
-	[[self handle] skipBytes:8];
 
 	// TODO: Catch exceptions and emit partial files?
 
-	for(;;)
+	@try
 	{
-		RAR5Block block=[self readBlockHeader];
-
-		if(IsZeroBlock(block)) break;
-
-		CSHandle *handle=block.fh;
-
-		switch(block.type)
+        [self readUntilSignature];
+        [self.handle skipBytes:8];
+        
+		for(;;)
 		{
-			case 1: // Main archive header.
-				[self skipBlock:block];
-			break;
+			RAR5Block block=[self readBlockHeader];
 
-			case 2: // File header.
+			if(IsZeroBlock(block)) break;
+
+			CSHandle *handle=block.fh;
+
+			switch(block.type)
 			{
-				NSMutableDictionary *dict=[self readFileBlockHeader:block];
+				case RAR5HeaderTypeMain: // Main archive header.
+					[self skipBlock:block];
+				break;
 
-				BOOL first=!(block.flags&0x0008);
-				BOOL last=!(block.flags&0x0010);
-
-				XADPath *path1=[currdict objectForKey:XADFileNameKey];
-				XADPath *path2=[dict objectForKey:XADFileNameKey];
-
-				if(currdict && !first && [path1 isEqual:path2])
+				case RAR5HeaderTypeFile: // File header.
 				{
-					// We have a correct continuation from a previously encountered file header.
-					[currdict addEntriesFromDictionary:dict];
-				}
-				else
-				{
-					// Not a continuation, or a broken continuation.
-					if(currdict)
+					NSMutableDictionary *dict=[self readFileBlockHeader:block];
+
+					BOOL first=!(block.flags&0x0008);
+					BOOL last=!(block.flags&0x0010);
+
+					XADPath *path1=[currdict objectForKey:XADFileNameKey];
+					XADPath *path2=[dict objectForKey:XADFileNameKey];
+
+					if(currdict && !first && [path1 isEqual:path2])
 					{
-						// We had a previous entry, but it did not match. Mark it
-						// as corrupted and get rid of it.
-						[currdict setObject:currfiles forKey:XADSolidObjectKey];
-						[currdict setObject:[NSNumber numberWithBool:YES] forKey:XADIsCorruptedKey];
+						// We have a correct continuation from a previously encountered file header.
+						[currdict addEntriesFromDictionary:dict];
+					}
+					else
+					{
+						// Not a continuation, or a broken continuation.
+						if(currdict)
+						{
+							// We had a previous entry, but it did not match. Mark it
+							// as corrupted and get rid of it.
+							[self addEntryWithDictionary:currdict
+							inputParts:currparts isCorrupted:YES];
+							currparts=[NSMutableArray array];
+						}
 
-						NSNumber *length=[dict objectForKey:XADFileSizeKey];
+						// Set this as the current file being collected.
+						currdict=dict;
 
-						[currdict setObject:[NSNumber numberWithLongLong:totalsolidsize] forKey:XADSolidOffsetKey];
-						[currdict setObject:length forKey:XADSolidLengthKey];
-						[currdict setObject:[NSNumber numberWithLongLong:[currfiles count]] forKey:@"RAR5SolidIndex"];
-
-						[self addEntryWithDictionary:currdict];
-
-						totalsolidsize+=[length longLongValue];
+						if(!first)
+						{
+							// This is not the first part of a new file. Mark as corrupted.
+							[currdict setObject:[NSNumber numberWithBool:YES] forKey:XADIsCorruptedKey];
+						}
 					}
 
-					// Set this as the current file being collected.
-					currdict=dict;
+					[currparts addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+						[NSNumber numberWithLongLong:[self endOfBlockHeader:block]],@"Offset",
+						[NSNumber numberWithLongLong:block.datasize],@"InputLength",
+						[currdict objectForKey:@"RAR5CRC32"],@"CRC32",
+					nil]];
 
-					if(!first)
+					if(last)
 					{
-						// This is not the first part of a new file. Mark as corrupted.
-						[currdict setObject:[NSNumber numberWithBool:YES] forKey:XADIsCorruptedKey];
-					}
-				}
-
-				[currparts addObject:[NSDictionary dictionaryWithObjectsAndKeys:
-					[NSNumber numberWithLongLong:[self endOfBlockHeader:block]],@"Offset",
-					[NSNumber numberWithLongLong:block.datasize],@"InputLength",
-					[currdict objectForKey:@"RAR5CRC32"],@"CRC32",
-				nil]];
-
-				if(last)
-				{
-					// This is the last part of a file, so get rid of it.
-
-					// If this is not a solid file, forget the earlier file list and start over.
-					bool solid=[[currdict objectForKey:XADIsSolidKey] boolValue];
-					if(!solid)
-					{
-						currfiles=[NSMutableArray array];
-						totalsolidsize=0;
+						// This is the last part of a file, so get rid of it.
+						[self addEntryWithDictionary:currdict inputParts:currparts isCorrupted:NO];
+						currparts=[NSMutableArray array];
+						currdict=nil;
 					}
 
-					// Add the current file parts to the file list.
-					[currfiles addObject:currparts];
-					[currdict setObject:currfiles forKey:XADSolidObjectKey];
-
-					NSNumber *length=[dict objectForKey:XADFileSizeKey];
-
-					[currdict setObject:[NSNumber numberWithLongLong:totalsolidsize] forKey:XADSolidOffsetKey];
-					if(length) [currdict setObject:length forKey:XADSolidLengthKey];
-					[currdict setObject:[NSNumber numberWithLongLong:[currfiles count]] forKey:@"RAR5SolidIndex"];
-
-					[self addEntryWithDictionary:currdict];
-
-					totalsolidsize+=[length longLongValue];
-
-					currparts=[NSMutableArray array];
-					currdict=nil;
+					[self skipBlock:block];
 				}
+				break;
 
-				[self skipBlock:block];
-			}
-			break;
+				//case RAR5HeaderTypeService: // Service header.
+				//break;
 
-			//case 3: // Service header.
-			//break;
-
-			case 4: // Archive encryption header.
-			{
-				uint64_t version=ReadRAR5VInt(handle);
-				if(version!=0) [XADException raiseNotSupportedException];
-
-				uint64_t flags=ReadRAR5VInt(handle);
-				int strength=[handle readUInt8];
-				NSData *salt=[handle readDataOfLength:16];
-
-				NSData *passcheck=nil;
-				if(flags&0x0001)
+				case RAR5HeaderTypeEncryption: // Archive encryption header.
 				{
-					passcheck=[handle readDataOfLength:8];
-					//uint32_t extracrc=[handle readUInt32LE];
+					uint64_t version=ReadRAR5VInt(handle);
+					if(version!=0) [XADException raiseNotSupportedException];
+
+					uint64_t flags=ReadRAR5VInt(handle);
+					int strength=[handle readUInt8];
+					NSData *salt=[handle readDataOfLength:16];
+
+					NSData *passcheck=nil;
+					if(flags&0x0001)
+					{
+						passcheck=[handle readDataOfLength:8];
+						//uint32_t extracrc=[handle readUInt32LE];
+					}
+
+					headerkey=[[self encryptionKeyForPassword:[self password]
+					salt:salt strength:strength passwordCheck:passcheck] retain];
+
+					[self skipBlock:block];
 				}
+				break;
 
-				headerkey=[[self encryptionKeyForPassword:[self password]
-				salt:salt strength:strength passwordCheck:passcheck] retain];
-
-				[self skipBlock:block];
-			}
-			break;
-
-			case 5: // End of archive header.
-			{
-				uint64_t flags=ReadRAR5VInt(handle);
-				if(flags&0x0001)
+				case RAR5HeaderTypeEnd: // End of archive header.
 				{
-					[[self currentHandle] seekToEndOfFile];
-					[[self handle] skipBytes:8];
-					[headerkey release];
-					headerkey=nil;
+					uint64_t flags=ReadRAR5VInt(handle);
+					if(flags&0x0001)
+					{
+						[[self currentHandle] seekToEndOfFile];
+						[[self handle] skipBytes:8];
+						[headerkey release];
+						headerkey=nil;
+					}
+					else
+					{
+						goto end;
+					}
 				}
-				else
-				{
-					goto end;
-				}
-			}
-			break;
+				break;
 
-			default:
-				[self skipBlock:block];
-			break;
+				default:
+					[self skipBlock:block];
+				break;
+			}
 		}
+	}
+	@catch(id exception)
+	{
+		@throw;
 	}
 
 	end:
 	return;
+}
+
+-(void)addEntryWithDictionary:(NSMutableDictionary *)dict
+inputParts:(NSArray *)parts isCorrupted:(BOOL)iscorrupted
+{
+	if(iscorrupted)
+	{
+		[dict setObject:[NSNumber numberWithBool:YES] forKey:XADIsCorruptedKey];
+	}
+
+	// If this is not a solid file, forget the earlier solid
+	// file list and start over.
+	bool solid=[[dict objectForKey:XADIsSolidKey] boolValue];
+	if(!solid)
+	{
+		currsolidstream=[NSMutableArray array];
+		[solidstreams addObject:currsolidstream];
+		totalsolidsize=0;
+	}
+
+	// Find the length of the file in the output stream, ignoring symlinks.
+	NSNumber *length=[dict objectForKey:XADFileSizeKey];
+	if([dict objectForKey:XADLinkDestinationKey]) length=[NSNumber numberWithInt:0];
+
+	// Add the list of input parts to the current file.
+	[dict setObject:parts forKey:@"RAR5InputParts"];
+
+	// Add the current file to the solid file list.
+	if([length longLongValue]!=0) [currsolidstream addObject:dict];
+
+	// Set up solid stream paramters for the current file.
+	[dict setObject:[NSNumber numberWithInteger:[solidstreams count]-1] forKey:XADSolidObjectKey];
+	[dict setObject:[NSNumber numberWithLongLong:totalsolidsize] forKey:XADSolidOffsetKey];
+	if(length) [dict setObject:length forKey:XADSolidLengthKey];
+
+	// Calculate and set the total compressed size.
+	off_t compsize=0;
+	NSEnumerator *enumerator=[parts objectEnumerator];
+	NSDictionary *part;
+	while(part=[enumerator nextObject]) compsize+=[[part objectForKey:@"InputLength"] longLongValue];
+
+	[dict setObject:[NSNumber numberWithLongLong:compsize] forKey:XADCompressedSizeKey];
+
+	[self addEntryWithDictionary:dict];
+
+	totalsolidsize+=[length longLongValue];
 }
 
 -(NSMutableDictionary *)readFileBlockHeader:(RAR5Block)block
@@ -294,22 +379,24 @@ static inline BOOL IsZeroBlock(RAR5Block block) { return block.start==0; }
 		int compversion=compinfo&0x3f;
 		BOOL issolid=(compinfo&0x40)>>6;
 		int compmethod=(compinfo&0x380)>>7;
-		int compdictsize=(compinfo&0x3c00)>>10;
+		int dictshift=(compinfo&0x3c00)>>10;
+		uint64_t dictsize=0x20000ll<<dictshift;
+
 		[dict setObject:[NSNumber numberWithUnsignedLongLong:compinfo] forKey:@"RAR5CompressionInformation"];
 		[dict setObject:[NSNumber numberWithInt:compversion] forKey:@"RAR5CompressionVersion"];
 		[dict setObject:[NSNumber numberWithBool:issolid] forKey:XADIsSolidKey];
 		[dict setObject:[NSNumber numberWithInt:compmethod] forKey:@"RAR5CompressionMethod"];
-		[dict setObject:[NSNumber numberWithInt:compdictsize] forKey:@"RAR5CompressionDictionarySize"];
+		[dict setObject:[NSNumber numberWithUnsignedLongLong:dictsize] forKey:@"RAR5DictionarySize"];
 
 		NSString *methodname=nil;
 		switch(compmethod)
 		{
 			case 0: methodname=@"None"; break;
-			case 1: methodname=[NSString stringWithFormat:@"Fastest v5.0 (v%d)",compversion]; break;
-			case 2: methodname=[NSString stringWithFormat:@"Fast v5.0 (v%d)",compversion]; break;
-			case 3: methodname=[NSString stringWithFormat:@"Normal v5.0 (v%d)",compversion]; break;
-			case 4: methodname=[NSString stringWithFormat:@"Good v5.0 (v%d)",compversion]; break;
-			case 5: methodname=[NSString stringWithFormat:@"Best v5.0 (v%d)",compversion]; break;
+			case 1: methodname=[NSString stringWithFormat:@"Fastest v5.0 (%d)",compversion]; break;
+			case 2: methodname=[NSString stringWithFormat:@"Fast v5.0 (%d)",compversion]; break;
+			case 3: methodname=[NSString stringWithFormat:@"Normal v5.0 (%d)",compversion]; break;
+			case 4: methodname=[NSString stringWithFormat:@"Good v5.0 (%d)",compversion]; break;
+			case 5: methodname=[NSString stringWithFormat:@"Best v5.0 (%d)",compversion]; break;
 		}
 		if(methodname) [dict setObject:[self XADStringWithString:methodname] forKey:XADCompressionNameKey];
 	}
@@ -522,6 +609,53 @@ static inline BOOL IsZeroBlock(RAR5Block block) { return block.start==0; }
 	return dict;
 }
 
++(RAR5HeaderBlock)readMasterHeaderFromHandle:(CSHandle *)handle
+{
+    RAR5HeaderBlock header;
+
+    RAR5Block block;
+    block.outerstart=0;
+    
+    @try
+    {
+        CSHandle * signatureSearchingHandle = [handle subHandleToEndOfFileFrom:0];
+        NSData * data = [signatureSearchingHandle readDataOfLengthAtMost:RAR5MaximumSFXHeader];
+        off_t signatureLocation = [XADRAR5Parser signatureLocationInData:data];
+        if (signatureLocation == RAR5SignatureNotFound) {
+            [NSException raise:RAR5SignatureCannotBeFound format:@"Signature cannot be found %@",[self class]];
+        }
+        
+        [handle skipBytes:signatureLocation];
+        [handle skipBytes:8];
+        if([handle atEndOfFile]) return ZeroHeaderBlock;
+
+        block.crc=[handle readUInt32LE];
+        block.headersize=ReadRAR5VInt(handle);
+        block.start=[handle offsetInFile];
+        block.type=ReadRAR5VInt(handle);
+        block.flags=ReadRAR5VInt(handle);
+        
+        if(block.flags&0x0001) block.extrasize=ReadRAR5VInt(handle);
+        else block.extrasize=0;
+        
+        header.archiveFlags=ReadRAR5VInt(handle);
+        
+        if(block.flags&0x0002) block.datasize=ReadRAR5VInt(handle);
+        else block.datasize=0;
+    }
+    @catch(id e) { return ZeroHeaderBlock; }
+    
+    // If first block wasn't main
+    if (block.type != RAR5HeaderTypeMain) {
+        return ZeroHeaderBlock;
+    }
+    
+    block.fh=handle;
+    
+    header.block = block;
+    return header;
+}
+    
 -(RAR5Block)readBlockHeader
 {
 	CSHandle *fh=[self handle];
@@ -637,10 +771,7 @@ static inline BOOL IsZeroBlock(RAR5Block block) { return block.start==0; }
 	CSHandle *handle;
 	if([[dict objectForKey:@"RAR5CompressionMethod"] intValue]==0)
 	{
-		NSArray *files=[dict objectForKey:XADSolidObjectKey];
-		int index=[[dict objectForKey:@"RARSolidIndex"] intValue];
-		NSArray *parts=[files objectAtIndex:index];
-		handle=[self inputHandleWithWithDictionary:dict parts:parts];
+		handle=[self inputHandleWithDictionary:dict];
 
 		off_t length=[[dict objectForKey:XADSolidLengthKey] longLongValue];
 		if(length!=[handle fileSize]) handle=[handle nonCopiedSubHandleOfLength:length];
@@ -678,7 +809,7 @@ static inline BOOL IsZeroBlock(RAR5Block block) { return block.start==0; }
 			handle=crchandle;
 		}
 
-		// Add blake2sp
+		// TODO: Add blake2sp
 	}
 
 	return handle;
@@ -686,11 +817,19 @@ static inline BOOL IsZeroBlock(RAR5Block block) { return block.start==0; }
 
 -(CSHandle *)handleForSolidStreamWithObject:(id)obj wantChecksum:(BOOL)checksum
 {
-	return nil;
+	NSNumber *index=obj;
+	NSArray *stream=[solidstreams objectAtIndex:[index integerValue]];
+	return [[[XADRAR50Handle alloc] initWithRARParser:self files:stream] autorelease];
 }
 
--(CSHandle *)inputHandleWithWithDictionary:(NSDictionary *)dict parts:(NSArray *)parts
+-(CSInputBuffer *)inputBufferWithDictionary:(NSDictionary *)dict
 {
+	return CSInputBufferAlloc([self inputHandleWithDictionary:dict],16384);
+}
+
+-(CSHandle *)inputHandleWithDictionary:(NSDictionary *)dict
+{
+	NSArray *parts=[dict objectForKey:@"RAR5InputParts"];
 	CSHandle *handle=[[[XADRARInputHandle alloc] initWithHandle:[self handle] parts:parts] autorelease];
 
 	NSNumber *encryptnum=[dict objectForKey:XADIsEncryptedKey];
@@ -731,7 +870,7 @@ static inline BOOL IsZeroBlock(RAR5Block block) { return block.start==0; }
 
 @end
 
-static uint32_t EncryptRAR5CRC32(uint32_t crc,void *context)
+static uint32_t EncryptRAR5CRC32(uint32_t crc,id context)
 {
 	NSData *key=context;
 
@@ -755,3 +894,27 @@ static uint32_t EncryptRAR5CRC32(uint32_t crc,void *context)
 
 	return newcrc^0xffffffff;
 }
+
+
+@implementation XADRAR5Parser (Testing)
+
++(uint64_t)readRAR5VIntFrom:(CSHandle *)handle
+{
+	return ReadRAR5VInt(handle);
+}
+
+@end
+
+@implementation XADRAR5Parser (Multipart)
+
++(BOOL)isPartOfMultiVolume:(CSHandle *)handle
+{
+    RAR5HeaderBlock header = [self readMasterHeaderFromHandle:handle];
+    if (IsZeroHeaderBlock(header)) {
+        return NO;
+    }
+    return (header.archiveFlags & RAR5ArchiveFlagsVolume);
+}
+@end
+
+

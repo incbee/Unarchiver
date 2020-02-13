@@ -1,3 +1,23 @@
+/*
+ * XADTarSparseHandle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADTarSparseHandle.h"
 #import "Realloc.h"
 
@@ -6,9 +26,8 @@
 // Make a new sparse handle by wrapping around another CSHandle
 -(id)initWithHandle:(CSHandle *)handle size:(off_t)size
 {
-	if( (self = [super initWithName:[handle name]]) )
+	if( self = [super initWithParentHandle:handle] )
 	{
-		parent = [handle retain];
 		regions = malloc( sizeof( XADTarSparseRegion ) );
 		regions[ 0 ].nextRegion = -1;
 		regions[ 0 ].size = [parent fileSize];
@@ -30,7 +49,6 @@
 {
 	if( (self = [super initAsCopyOf:other]) )
 	{
-		parent = [other->parent copy];
 		numRegions = other->numRegions;
 		regions = malloc( sizeof( XADTarSparseRegion ) * numRegions );
 		memcpy( regions, other->regions, sizeof( XADTarSparseRegion ) * numRegions );
@@ -45,7 +63,6 @@
 -(void)dealloc
 {
 	free( regions );
-	[parent release];
 	[super dealloc];
 }
 
@@ -237,7 +254,7 @@
 			[parent readAtMost:(int)dataLeftInRegion toBuffer:buffer];
 		}
 		currentRegion = regions[ currentRegion ].nextRegion;
-		positionInRegion = 0;
+		//positionInRegion = 0;
 		dataLeftInRegion = regions[ currentRegion ].size;
 		currentOffset += dataLeftInRegion;
 	}

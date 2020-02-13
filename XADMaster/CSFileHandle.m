@@ -1,3 +1,23 @@
+/*
+ * CSFileHandle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "CSFileHandle.h"
 
 #include <sys/stat.h>
@@ -35,34 +55,59 @@ NSString *CSFileErrorException=@"CSFileErrorException";
 	if(!fileh) [NSException raise:CSCannotOpenFileException
 	format:@"Error attempting to open file \"%@\" in mode \"%@\".",path,modes];
 
-	CSFileHandle *handle=[[[CSFileHandle alloc] initWithFilePointer:fileh closeOnDealloc:YES name:path] autorelease];
+	CSFileHandle *handle=[[[CSFileHandle alloc] initWithFilePointer:fileh closeOnDealloc:YES path:path] autorelease];
 	if(handle) return handle;
 
 	fclose(fileh);
 	return nil;
 }
 
-
-
--(id)initWithFilePointer:(FILE *)file closeOnDealloc:(BOOL)closeondealloc name:(NSString *)descname
++(CSFileHandle *)fileHandleForStandardInput
 {
-	if((self=[super initWithName:descname]))
+	static CSFileHandle *handle=nil;
+	if(!handle) handle=[[CSFileHandle alloc] initWithFilePointer:stdin closeOnDealloc:NO path:@"/dev/stdin"];
+	return handle;
+}
+
++(CSFileHandle *)fileHandleForStandardOutput
+{
+	static CSFileHandle *handle=nil;
+	if(!handle) handle=[[CSFileHandle alloc] initWithFilePointer:stdout closeOnDealloc:NO path:@"/dev/stdout"];
+	return handle;
+}
+
++(CSFileHandle *)fileHandleForStandardError
+{
+	static CSFileHandle *handle=nil;
+	if(!handle) handle=[[CSFileHandle alloc] initWithFilePointer:stderr closeOnDealloc:NO path:@"/dev/stderr"];
+	return handle;
+}
+
+
+
+
+-(id)initWithFilePointer:(FILE *)file closeOnDealloc:(BOOL)closeondealloc path:(NSString *)filepath
+{
+	if(self=[super init])
 	{
 		fh=file;
+		path=[filepath retain];
  		close=closeondealloc;
 		multilock=nil;
-		parent=nil;
+		fhowner=nil;
 	}
 	return self;
 }
 
 -(id)initAsCopyOf:(CSFileHandle *)other
 {
-	if((self=[super initAsCopyOf:other]))
+	if(self=[super initAsCopyOf:other])
 	{
 		fh=other->fh;
+		path=[other->path retain];
  		close=NO;
-		parent=[other retain];
+		if(other->fhowner) fhowner=[other->fhowner retain];
+		else fhowner=[other retain];
 
 		if(!other->multilock) [other _setMultiMode];
 
@@ -76,15 +121,16 @@ NSString *CSFileErrorException=@"CSFileErrorException";
 
 -(void)dealloc
 {
-	if(fh&&close) fclose(fh);
-	[parent release];
+	if(fh && close) fclose(fh);
+	[path release];
+	[fhowner release];
 	[multilock release];
 	[super dealloc];
 }
 
 -(void)close
 {
-	if(fh&&close) fclose(fh);
+	if(fh && close) fclose(fh);
 	fh=NULL;
 }
 
@@ -162,6 +208,11 @@ NSString *CSFileErrorException=@"CSFileErrorException";
 	if(multilock) { pos=ftello(fh); [multilock unlock]; }
 }
 
+-(NSString *)name
+{
+	return path;
+}
+
 
 
 
@@ -169,7 +220,7 @@ NSString *CSFileErrorException=@"CSFileErrorException";
 {
 	if(feof(fh)) [self _raiseEOF];
 	else [[[[NSException alloc] initWithName:CSFileErrorException
-	reason:[NSString stringWithFormat:@"Error while attempting to read file \"%@\": %s.",name,strerror(errno)]
+	reason:[NSString stringWithFormat:@"Error while attempting to read file \"%@\": %s.",[self name],strerror(errno)]
 	userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:errno] forKey:@"ErrNo"]] autorelease] raise];
 }
 

@@ -1,3 +1,23 @@
+/*
+ * XADNSISParser.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADNSISParser.h"
 #import "XADNSISBzip2Handle.h"
 #import "XADDeflateHandle.h"
@@ -81,7 +101,7 @@ name:(NSString *)name propertiesToAdd:(NSMutableDictionary *)props
 	const uint8_t *bytes=[data bytes];
 	int length=[data length];
 
-	for(int offs=0;offs<length+4+16;offs+=512)
+	for(int offs=0;offs+4+16<=length;offs+=512)
 	{
 		if(IsOlderSignature(bytes+offs)) 
 		{
@@ -442,7 +462,7 @@ newDateTimeOrder:(BOOL)neworder
 	for(int i=startoffs;i<endoffs&&i+24<=length;i+=4*stride)
 	{
 		int opcode=CSUInt32LE(bytes+i);
-		uint32_t args[6];
+		uint32_t args[6]={0};
 		for(int j=1;j<stride;j++) args[j-1]=CSUInt32LE(bytes+i+j*4);
 
 		if(opcode==extractopcode)
@@ -1201,6 +1221,8 @@ stringStartOffset:(int)stringoffs stringEndOffset:(int)stringendoffs currentPath
 			}
 		}
 	}
+
+	[XADException raiseNotSupportedException];
 	return nil;
 }
 

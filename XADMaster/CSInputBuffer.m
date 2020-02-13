@@ -1,3 +1,23 @@
+/*
+ * CSInputBuffer.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "CSInputBuffer.h"
 
 
@@ -180,6 +200,9 @@ void _CSInputFillBits(CSInputBuffer *self)
 //		self->bits|=_CSInputPeekByteWithoutEOF(self,i+startoffset)<<shift;
 //		shift-=8;
 //	}
+
+// Commented out as it causes false positives for RAR archives. E.g. "CWCHEAT_0_2_2_REVD.RAR" from test data
+	//if(startoffset+numbytes>_CSInputBytesLeftInBuffer(self)) _CSInputBufferRaiseEOF(self);
 
 	switch(numbytes)
 	{

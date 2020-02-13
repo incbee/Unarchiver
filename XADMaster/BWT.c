@@ -1,3 +1,23 @@
+/*
+ * BWT.c
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #include "BWT.h"
 
 #include <stdlib.h>
@@ -38,7 +58,7 @@ void UnsortBWT(uint8_t *dest,uint8_t *src,int blocklen,int firstindex,uint32_t *
 	}
 }
 
-void UnsortST4(uint8_t *dest,uint8_t *src,int blocklen,int firstindex,uint32_t *transform)
+bool UnsortST4(uint8_t *dest,uint8_t *src,int blocklen,int firstindex,uint32_t *transform)
 {
 	int counts[256];
 	for(int i=0;i<256;i++) counts[i]=0;
@@ -115,20 +135,26 @@ void UnsortST4(uint8_t *dest,uint8_t *src,int blocklen,int firstindex,uint32_t *
 	{
 		if(tval&0x800000)
 		{
-			index=transform[tval&0x7fffff]&0x7fffff;
-			transform[tval&0x7fffff]++;
+			int newindex=tval&0x7fffff;
+			if(newindex>=blocklen) { free(array2); return false; } // TODO: Is it a bug that this can happen, or not?
+			index=transform[newindex]&0x7fffff;
+			transform[newindex]++;
 		}
 		else
 		{
+			if(index>=blocklen) { free(array2); return false; }
 			transform[index]++;
 			index=tval&0x7fffff;
 		}
 
+		if(index>=blocklen) { free(array2); return false; }
 		tval=transform[index];
 		dest[i]=tval>>24;
 	}
 
 	free(array2);
+
+	return true;
 }
 
 /*void UnsortBWTStuffItX(uint8_t *dest,int blocklen,int firstindex,uint8_t *src,uint32_t *transform)

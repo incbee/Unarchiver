@@ -1,4 +1,25 @@
+/*
+ * XADZipParser.h
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADMacArchiveParser.h"
+#import "XADZipParserStructures.h"
 
 @interface XADZipParser:XADMacArchiveParser
 {
@@ -15,6 +36,8 @@
 
 -(void)parseWithSeparateMacForks;
 -(void)parseWithCentralDirectoryAtOffset:(off_t)centraloffs zip64Offset:(off_t)zip64offs;
+-(off_t)offsetForVolume:(int)disk offset:(off_t)offset;
+-(void)findCentralDirectoryRecordOffset:(off_t *)centrOffset zip64Offset:(off_t *)zip64offs;
 
 -(void)parseWithoutCentralDirectory;
 -(void)findEndOfStreamMarkerWithZip64Flag:(BOOL)zip64 uncompressedSizePointer:(off_t *)uncompsizeptr
@@ -25,6 +48,7 @@ compressedSizePointer:(off_t *)compsizeptr CRCPointer:(uint32_t *)crcptr;
 //-(void)findNoSeekMarkerForDictionary:(NSMutableDictionary *)dict;
 -(NSDictionary *)parseZipExtraWithLength:(int)length nameData:(NSData *)namedata
 uncompressedSizePointer:(off_t *)uncompsizeptr compressedSizePointer:(off_t *)compsizeptr;
+-(XADZipParserCentralDirectoryRecord)readCentralDirectoryRecord;
 
 -(void)addZipEntryWithSystem:(int)system
 extractVersion:(int)extractversion

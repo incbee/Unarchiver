@@ -1,3 +1,23 @@
+/*
+ * XAD7ZipParser.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XAD7ZipParser.h"
 #import "XADLZMAHandle.h"
 #import "XADLZMA2Handle.h"
@@ -14,8 +34,6 @@
 #import "CSZlibHandle.h"
 #import "CSBzip2Handle.h"
 #import "NSDateXAD.h"
-
-
 
 
 static BOOL Is7ZipSignature(const uint8_t *ptr)
@@ -179,7 +197,7 @@ static void FindAttribute(CSHandle *handle,int attribute)
 		}
 	}
 
-	NSDictionary *additionalstreams=nil;
+	//NSDictionary *additionalstreams=nil;
 	NSArray *files=nil;
 
 	for(;;)
@@ -199,7 +217,7 @@ static void FindAttribute(CSHandle *handle,int attribute)
 			break;
 
 			case 3: // AdditionalStreamsInfo
-				additionalstreams=[self parseStreamsForHandle:fh];
+				/*additionalstreams=*/[self parseStreamsForHandle:fh];
 			break;
 
 			case 4: // MainStreamsInfo
@@ -777,7 +795,9 @@ packedStreams:(NSArray *)packedstreams packedStreamIndex:(int *)packedstreaminde
 		case 0x00000000: return inhandle;
 		//case 0x02030200: return @"Swap2";
 		//case 0x02030400: return @"Swap4";
+        // TODO: ??? Not sure where this 0x02040000 came from. Current 7z returns 0x03000000 for Delta decoder.
 		case 0x02040000: return [[[XADDeltaHandle alloc] initWithHandle:inhandle length:size propertyData:props] autorelease];
+        case 0x03000000: return [[[XADDeltaHandle alloc] initWithHandle:inhandle length:size propertyData:props] autorelease];
 		case 0x03010100: return [[[XADLZMAHandle alloc] initWithHandle:inhandle length:size propertyData:props] autorelease];
 		case 0x03030103: return [[[XAD7ZipBCJHandle alloc] initWithHandle:inhandle length:size propertyData:props] autorelease];
 		case 0x0303011b:

@@ -1,3 +1,23 @@
+/*
+ * XADARCDistillHandle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADARCDistillHandle.h"
 #import "XADException.h"
 
@@ -30,7 +50,7 @@ static const int offsetcodes[0x40]=
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length
 {
-	if((self=[super initWithHandle:handle length:length windowSize:8192]))
+	if((self=[super initWithInputBufferForHandle:handle length:length windowSize:8192]))
 	{
 		maincode=nil;
 		offsetcode=[XADPrefixCode new];
@@ -47,8 +67,10 @@ static const int offsetcodes[0x40]=
 	[super dealloc];
 }
 
-static void BuildCodeFromTree(XADPrefixCode *code,int *tree,int node,int numnodes)
+static void BuildCodeFromTree(XADPrefixCode *code,int *tree,int node,int numnodes,int depth)
 {
+	if(depth>64) [XADException raiseDecrunchException];
+
 	if(node>=numnodes)
 	{
 		[code makeLeafWithValue:node-numnodes];
@@ -56,9 +78,9 @@ static void BuildCodeFromTree(XADPrefixCode *code,int *tree,int node,int numnode
 	else
 	{
 		[code startZeroBranch];
-		BuildCodeFromTree(code,tree,tree[node],numnodes);
+		BuildCodeFromTree(code,tree,tree[node],numnodes,depth+1);
 		[code startOneBranch];
-		BuildCodeFromTree(code,tree,tree[node+1],numnodes);
+		BuildCodeFromTree(code,tree,tree[node+1],numnodes,depth+1);
 		[code finishBranches];
 	}
 }
@@ -68,6 +90,7 @@ static void BuildCodeFromTree(XADPrefixCode *code,int *tree,int node,int numnode
 	int numnodes=CSInputNextUInt16LE(input);
 	int codelength=CSInputNextByte(input);
 
+	if(numnodes<2) [XADException raiseDecrunchException];
 	if(numnodes>0x274) [XADException raiseDecrunchException];
 
 	int nodes[numnodes];
@@ -77,7 +100,7 @@ static void BuildCodeFromTree(XADPrefixCode *code,int *tree,int node,int numnode
 	maincode=[XADPrefixCode new];
 
 	[maincode startBuildingTree];
-	BuildCodeFromTree(maincode,nodes,numnodes-2,numnodes);
+	BuildCodeFromTree(maincode,nodes,numnodes-2,numnodes,0);
 }
 
 -(void)expandFromPosition:(off_t)pos

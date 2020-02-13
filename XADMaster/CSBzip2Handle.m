@@ -1,3 +1,23 @@
+/*
+ * CSBzip2Handle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "CSBzip2Handle.h"
 
 NSString *CSBzip2Exception=@"CSBzip2Exception";
@@ -6,19 +26,18 @@ NSString *CSBzip2Exception=@"CSBzip2Exception";
 
 +(CSBzip2Handle *)bzip2HandleWithHandle:(CSHandle *)handle
 {
-	return [[[self alloc] initWithHandle:handle length:CSHandleMaxLength name:[handle name]] autorelease];
+	return [[[self alloc] initWithHandle:handle length:CSHandleMaxLength] autorelease];
 }
 
 +(CSBzip2Handle *)bzip2HandleWithHandle:(CSHandle *)handle length:(off_t)length
 {
-	return [[[self alloc] initWithHandle:handle length:length name:[handle name]] autorelease];
+	return [[[self alloc] initWithHandle:handle length:length] autorelease];
 }
 
--(id)initWithHandle:(CSHandle *)handle length:(off_t)length name:(NSString *)descname
+-(id)initWithHandle:(CSHandle *)handle length:(off_t)length
 {
-	if((self=[super initWithName:descname]))
+	if((self=[super initWithParentHandle:handle length:length]))
 	{
-		parent=[handle retain];
 		startoffs=[parent offsetInFile];
 		inited=NO;
 		checksumcorrect=YES;
@@ -29,7 +48,6 @@ NSString *CSBzip2Exception=@"CSBzip2Exception";
 -(void)dealloc
 {
 	if(inited) BZ2_bzDecompressEnd(&bzs);
-	[parent release];
 
 	[super dealloc];
 }
@@ -104,7 +122,7 @@ NSString *CSBzip2Exception=@"CSBzip2Exception";
 -(void)_raiseBzip2:(int)error
 {
 	[NSException raise:CSBzip2Exception
-	format:@"Bzlib error while attepting to read from \"%@\": %d.",name,error];
+	format:@"Bzlib error while attepting to read from \"%@\": %d.",[self name],error];
 }
 
 @end

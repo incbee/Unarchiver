@@ -1,8 +1,28 @@
+/*
+ * VariantG.c
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #include "VariantG.h"
 
 #include <string.h>
 
-static void RestartModel(PPMdModelVariantG *self);
+static bool RestartModel(PPMdModelVariantG *self);
 
 static void UpdateModel(PPMdModelVariantG *self);
 static bool MakeRoot(PPMdModelVariantG *self,unsigned int SkipCount,PPMdState *state);
@@ -13,7 +33,7 @@ static void DecodeSymbol2VariantG(PPMdContext *self,PPMdModelVariantG *model);
 
 static int NumberOfStates(PPMdContext *self) { return self->Flags?0:self->LastStateIndex+1; }
 
-void StartPPMdModelVariantG(PPMdModelVariantG *self,
+bool StartPPMdModelVariantG(PPMdModelVariantG *self,
 PPMdReadFunction *readfunc,void *inputcontext,
 PPMdSubAllocator *alloc,int maxorder,bool brimstone)
 {
@@ -39,10 +59,10 @@ PPMdSubAllocator *alloc,int maxorder,bool brimstone)
 
 	self->DummySEE2Cont.Shift=PERIOD_BITS;
 
-	RestartModel(self);
+	return RestartModel(self);
 }
 
-static void RestartModel(PPMdModelVariantG *self)
+static bool RestartModel(PPMdModelVariantG *self)
 {
 	InitSubAllocator(self->core.alloc);
 
@@ -52,10 +72,12 @@ static void RestartModel(PPMdModelVariantG *self)
 	self->core.OrderFall=1;
 
 	self->MaxContext=NewPPMdContext(&self->core);
+	if(!self->MaxContext) return false;
 	self->MaxContext->LastStateIndex=255;
 	if(self->Brimstone) self->MaxContext->SummFreq=385;
 	else self->MaxContext->SummFreq=257;
 	self->MaxContext->States=AllocUnits(self->core.alloc,256/2);
+	if(!self->MaxContext->States) return false;
 
 	PPMdState *maxstates=PPMdContextStates(self->MaxContext,&self->core);
 	for(int i=0;i<256;i++)
@@ -71,6 +93,7 @@ static void RestartModel(PPMdModelVariantG *self)
 	{
 		//PPMdState firststate={0,1};
 		self->MaxContext=NewPPMdContextAsChildOf(&self->core,self->MaxContext,state,/*&firststate*/NULL);
+		if(!self->MaxContext) return false;
 		if(i==self->MaxOrder) break;
 		state=PPMdContextOneState(self->MaxContext);
 		state->Symbol=0;
@@ -96,6 +119,8 @@ static void RestartModel(PPMdModelVariantG *self)
 	for(int i=0;i<43;i++)
 	for(int k=0;k<8;k++)
 	self->SEE2Cont[i][k]=MakeSEE2(4*i+10,3);
+
+	return true;
 }
 
 
@@ -103,6 +128,7 @@ static void RestartModel(PPMdModelVariantG *self)
 int NextPPMdVariantGByte(PPMdModelVariantG *self)
 {
 	if(!self->MinContext) return -1;
+	if(setjmp(self->errorjmp)) return -2;
 
 	if(NumberOfStates(self->MinContext)!=1) DecodeSymbol1VariantG(self->MinContext,self);
 	else DecodeBinSymbolVariantG(self->MinContext,self);
@@ -272,6 +298,7 @@ static void UpdateModel(PPMdModelVariantG *self)
 	}
 
 	self->MedContext=self->MinContext;
+	if(!Successor) longjmp(self->errorjmp,1);
 	self->MaxContext=Successor;
 	return;
 
@@ -308,6 +335,7 @@ static bool MakeRoot(PPMdModelVariantG *self,unsigned int SkipCount,PPMdState *s
 	do
 	{
 		context=PPMdContextSuffix(context,&self->core);
+		if(!context) longjmp(self->errorjmp,1);
 		if(NumberOfStates(context)!=1)
 		{
 			state=PPMdContextStates(context,&self->core);

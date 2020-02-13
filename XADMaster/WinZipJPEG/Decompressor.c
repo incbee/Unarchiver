@@ -1,5 +1,26 @@
+/*
+ * Decompressor.c
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #include "Decompressor.h"
 #include "LZMA.h"
+#include "../ClangAnalyser.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -774,7 +795,7 @@ static unsigned int Category(unsigned int val)
 	if(val&0xff00) { val>>=8; cat|=8; }
 	if(val&0xf0) { val>>=4; cat|=4; }
 	if(val&0xc) { val>>=2; cat|=2; }
-	if(val&0x2) { val>>=1; cat|=1; }
+	if(val&0x2) { /*val>>=1;*/ cat|=1; }
 	return cat+1;
 }
 
@@ -1024,17 +1045,19 @@ size_t EncodeWinZipJPEGBlocksToBuffer(WinZipJPEGDecompressor *self,void *bytes,s
 static void PushEncodedValue(WinZipJPEGDecompressor *self,WinZipJPEGHuffmanTable *table,
 int value,unsigned int highbits)
 {
-	int category,bitstring;
+	unsigned int category,bitstring;
 	if(value>=0)
 	{
 		category=Category(value);
-		int mask=(1<<category)-1;
+		analyser_assert(category>=1 && category<=32);
+		unsigned int mask=(1ull<<category)-1;
 		bitstring=value&mask;
 	}
 	else
 	{
 		category=Category(-value);
-		int mask=(1<<category)-1;
+		analyser_assert(category>=1 && category<=32);
+		unsigned int mask=(1ull<<category)-1;
 		bitstring=(value&mask)-1;
 	}
 

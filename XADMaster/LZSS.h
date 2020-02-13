@@ -1,19 +1,40 @@
+/*
+ * LZSS.h
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #ifndef __LZSS_H__
 #define __LZSS_H__
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 typedef struct LZSS
 {
 	uint8_t *window;
-	int mask;
+	size_t mask;
 	int64_t position;
 } LZSS;
 
 
 
-bool InitializeLZSS(LZSS *self,int windowsize);
+bool InitializeLZSS(LZSS *self,size_t windowsize);
 void CleanupLZSS(LZSS *self);
 void RestartLZSS(LZSS *self);
 
@@ -21,17 +42,17 @@ void RestartLZSS(LZSS *self);
 
 static inline int64_t LZSSPosition(LZSS *self) { return self->position; }
 
-static inline int LZSSWindowMask(LZSS *self) { return self->mask; }
+static inline size_t LZSSWindowMask(LZSS *self) { return self->mask; }
 
-static inline int LZSSWindowSize(LZSS *self)  { return self->mask+1; }
+static inline size_t LZSSWindowSize(LZSS *self)  { return self->mask+1; }
 
 static inline uint8_t *LZSSWindowPointer(LZSS *self)  { return self->window; }
 
-static inline int LZSSWindowOffsetForPosition(LZSS *self,int64_t pos) { return pos&self->mask; }
+static inline size_t LZSSWindowOffsetForPosition(LZSS *self,int64_t pos) { return pos&self->mask; }
 
 static inline uint8_t *LZSSWindowPointerForPosition(LZSS *self,int64_t pos)  { return &self->window[LZSSWindowOffsetForPosition(self,pos)]; }
 
-static inline int CurrentLZSSWindowOffset(LZSS *self) { return LZSSWindowOffsetForPosition(self,self->position); }
+static inline size_t CurrentLZSSWindowOffset(LZSS *self) { return LZSSWindowOffsetForPosition(self,self->position); }
 
 static inline uint8_t *CurrentLZSSWindowPointer(LZSS *self) { return LZSSWindowPointerForPosition(self,self->position); }
 

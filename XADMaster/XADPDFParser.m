@@ -1,3 +1,23 @@
+/*
+ * XADPDFParser.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADPDFParser.h"
 #import "CSMemoryHandle.h"
 #import "CSMultiHandle.h"
@@ -127,8 +147,6 @@ static NSData *CreateNewJPEGHeaderWithColourProfile(NSData *fileheader,NSData *p
 		int components=[image numberOfImageComponents];
 
 		NSData *colourprofile=[image imageICCColourProfile];
-		int profilesize=0;
-		if(colourprofile) profilesize=([colourprofile length]+1)&~1;
 
 		NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:
 			//[self XADStringWithString:[parser isCompressed]?@"Zlib":@"None"],XADCompressionNameKey,
@@ -387,7 +405,7 @@ static NSData *CreateNewJPEGHeaderWithColourProfile(NSData *fileheader,NSData *p
 			NSData *newheader=CreateNewJPEGHeaderWithColourProfile(fileheader,profile,&skiplength);
 			if(newheader)
 			{
-				return [CSMultiHandle multiHandleWithHandles:
+				return [CSMultiHandle handleWithHandles:
 				[CSMemoryHandle memoryHandleForReadingData:newheader],
 				[handle nonCopiedSubHandleToEndOfFileFrom:skiplength],
 				nil];
@@ -423,7 +441,7 @@ static NSData *CreateNewJPEGHeaderWithColourProfile(NSData *fileheader,NSData *p
 			numberOfChannels:components palette:palette] autorelease];
 		}
 
-		return [CSMultiHandle multiHandleWithHandles:
+		return [CSMultiHandle handleWithHandles:
 		[CSMemoryHandle memoryHandleForReadingData:header],handle,nil];
 	}
 	else
@@ -630,10 +648,10 @@ static NSData *CreateNewJPEGHeaderWithColourProfile(NSData *fileheader,NSData *p
 
 @implementation XAD8BitPaletteExpansionHandle
 
--(id)initWithHandle:(CSHandle *)parent length:(off_t)length
+-(id)initWithHandle:(CSHandle *)handle length:(off_t)length
 numberOfChannels:(int)numberofchannels palette:(NSData *)palettedata
 {
-	if((self=[super initWithHandle:parent length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		palette=[palettedata retain];
 		numchannels=numberofchannels;

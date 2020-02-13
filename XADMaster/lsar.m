@@ -1,3 +1,23 @@
+/*
+ * lsar.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADSimpleUnarchiver.h"
 #import "XADArchiveParserDescriptions.h"
 #import "NSStringPrinting.h"
@@ -5,7 +25,7 @@
 #import "CSJSONPrinter.h"
 #import "CommandLineCommon.h"
 
-#define VERSION_STRING @"v1.8.1"
+#define VERSION_STRING @"v1.10.7"
 
 #define EntryDoesNotNeedTestingResult 0
 #define EntryIsNotSupportedResult 1
@@ -87,6 +107,11 @@ int main(int argc,const char **argv)
 	@"Print the listing in JSON format."];
 	[cmdline addAlias:@"j" forOption:@"json"];
 
+	[cmdline addSwitchOption:@"json-skip-solid-information" description:
+	@"Do not print solid object information in the JSON output."
+	@"Can be helpful for solid archives with a lot of files."];
+	[cmdline addAlias:@"jss" forOption:@"json-skip-solid-information"];
+
 	[cmdline addSwitchOption:@"json-ascii" description:
 	@"Print the listing in JSON format, encoded as pure ASCII text."];
 	[cmdline addAlias:@"ja" forOption:@"json-ascii"];
@@ -115,6 +140,7 @@ int main(int argc,const char **argv)
 	BOOL indexes=[cmdline boolValueForOption:@"indexes"];
 	BOOL json=[cmdline boolValueForOption:@"json"];
 	BOOL jsonascii=[cmdline boolValueForOption:@"json-ascii"];
+	BOOL jsonskipsolidobjects=[cmdline boolValueForOption:@"json-skip-solid-information"];
 	BOOL norecursion=[cmdline boolValueForOption:@"no-recursion"];
 
 	// -json-ascii implies -json.
@@ -145,6 +171,7 @@ int main(int argc,const char **argv)
 		printer=[CSJSONPrinter new];
 		[printer setIndentString:@"  "];
 		[printer setASCIIMode:jsonascii];
+		if (jsonskipsolidobjects) [printer setExcludedKeys:[NSArray arrayWithObject:@"XADSolidObject"]];
 
 		[printer startPrintingDictionary];
 		[printer printDictionaryObject:[NSNumber numberWithInt:2] forKey:@"lsarFormatVersion"];
@@ -283,7 +310,7 @@ int main(int argc,const char **argv)
 			[[[unarchiver outerArchiveParser] formatName] print];
 		}
 
-		NSArray *volumes=[[unarchiver outerArchiveParser] volumes];
+		NSArray *volumes=[[unarchiver outerArchiveParser] volumeSizes];
 		if([volumes count]>1) [[NSString stringWithFormat:@" (%d volumes)",(int)[volumes count]] print];
 
 		[@"\n" print];

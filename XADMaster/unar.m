@@ -1,15 +1,36 @@
+/*
+ * unar.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADSimpleUnarchiver.h"
 #import "NSStringPrinting.h"
 #import "CSCommandLineParser.h"
 #import "CommandLineCommon.h"
+#import "CSFileHandle.h"
 
-#define VERSION_STRING @"v1.8.1"
+#define VERSION_STRING @"v1.10.7"
 
 @interface Unarchiver:NSObject {}
 @end
 
 int numerrors;
-BOOL isinteractive;
+BOOL isinteractive,tostdout;
 FILE *outstream,*errstream;
 
 int main(int argc,const char **argv)
@@ -32,7 +53,8 @@ int main(int argc,const char **argv)
 
 	[cmdline addStringOption:@"output-directory" description:
 	@"The directory to write the contents of the archive to. "
-	@"Defaults to the current directory."];
+	@"Defaults to the current directory. If set to a single dash (-), "
+	@"no files will be created, and all data will be output to stdout."];
 	[cmdline addAlias:@"o" forOption:@"output-directory"];
 
 	[cmdline addSwitchOption:@"force-overwrite" description:
@@ -145,8 +167,6 @@ int main(int argc,const char **argv)
 
 	if(![cmdline parseCommandLineWithArgc:argc argv:argv]) exit(1);
 
-
-
 	NSString *destination=[cmdline stringValueForOption:@"output-directory"];
 	BOOL forceoverwrite=[cmdline boolValueForOption:@"force-overwrite"];
 	BOOL forcerename=[cmdline boolValueForOption:@"force-rename"];
@@ -162,6 +182,17 @@ int main(int argc,const char **argv)
 	BOOL noquarantine=[cmdline boolValueForOption:@"no-quarantine"];
 	int forkstyle=forkvalues[[cmdline intValueForOption:@"forks"]];
 	BOOL quietmode=[cmdline boolValueForOption:@"quiet"];
+
+	if(destination && [destination isEqual:@"-"])
+	{
+		destination=@"/____________________";
+		tostdout=YES;
+		quietmode=YES;
+	}
+	else
+	{
+		tostdout=NO;
+	}
 
 	if(quietmode)
 	{
@@ -330,21 +361,21 @@ int main(int argc,const char **argv)
 	}
 }
 
+-(CSHandle *)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver outputHandleForEntryWithDictionary:(NSDictionary *)dict
+{
+	if(tostdout) return [CSFileHandle fileHandleForStandardOutput];
+	else return nil;
+}
 
 //-(NSString *)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver encodingNameForXADString:(id <XADString>)string;
 
 -(NSString *)simpleUnarchiver:(XADSimpleUnarchiver *)unarchiver replacementPathForEntryWithDictionary:(NSDictionary *)dict
 originalPath:(NSString *)path suggestedPath:(NSString *)unique
 {
-	// Skip files and report as error if not interactive.
+	// Return suggested path if not interactive.
  	if(!isinteractive)
 	{
-		[@"  " printToFile:errstream];
-		NSString *name=MediumInfoLineForEntryWithDictionary(dict);
-		[name printToFile:errstream];
-		[@"... Skipping existing file.\n" printToFile:errstream];
-		numerrors++;
-		return nil;
+		return unique;
 	}
 
 	[@"\"" printToFile:outstream];

@@ -1,3 +1,23 @@
+/*
+ * XADStuffItXParser.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADStuffItXParser.h"
 #import "XADStuffItXBlockHandle.h"
 #import "XADPPMdHandles.h"
@@ -16,7 +36,7 @@
 
 typedef struct StuffItXElement
 {
-	int something,type;
+	unsigned int something,type;
 	int64_t attribs[10];
 	int64_t alglist[6];
 	int64_t alglist3_extra;
@@ -36,11 +56,11 @@ static void ReadElement(CSHandle *fh,StuffItXElement *element)
 	element->alglist3_extra=-1;
 
 	element->something=[fh readBitsLE:1];
-	element->type=(int)ReadSitxP2(fh);
+	element->type=(unsigned int)ReadSitxP2(fh);
 
 	for(;;)
 	{
-		int type=(int)ReadSitxP2(fh);
+		unsigned int type=(unsigned int)ReadSitxP2(fh);
 		if(type==0) break;
 		uint64_t value=ReadSitxP2(fh);
 		if(type<=10) element->attribs[type-1]=value;
@@ -49,7 +69,7 @@ static void ReadElement(CSHandle *fh,StuffItXElement *element)
 
 	for(;;)
 	{
-		int type=(int)ReadSitxP2(fh);
+		unsigned int type=(unsigned int)ReadSitxP2(fh);
 		if(type==0) break;
 		uint64_t value=ReadSitxP2(fh);
 		if(type<=6) element->alglist[type-1]=value;
@@ -120,7 +140,9 @@ static CSHandle *HandleForElement(XADStuffItXParser *self,StuffItXElement *eleme
 
 		case 0: // Brimstone/PPMd
 		{
-			int allocsize=1<<[handle readUInt8];
+			int exponent=[handle readUInt8];
+			if(exponent>31) [XADException raiseDecrunchException];
+			int allocsize=1<<exponent;
 			int order=[handle readUInt8];
 			handle=[[[XADStuffItXBrimstoneHandle alloc] initWithHandle:handle
 			length:uncompressedlength maxOrder:order subAllocSize:allocsize] autorelease];
@@ -614,7 +636,7 @@ static CSHandle *HandleForElement(XADStuffItXParser *self,StuffItXElement *eleme
 	{
 		for(;;)
 		{
-			int key=(int)ReadSitxP2(fh);
+			unsigned int key=(unsigned int)ReadSitxP2(fh);
 			if(!key) break;
 
 			switch(key)
@@ -673,7 +695,7 @@ static CSHandle *HandleForElement(XADStuffItXParser *self,StuffItXElement *eleme
 
 				case 7:
 				{
-					int val=(int)ReadSitxP2(fh);
+					unsigned int val=(unsigned int)ReadSitxP2(fh);
 					NSLog(@"7: %d",val);
 				}
 				break;
@@ -693,7 +715,7 @@ static CSHandle *HandleForElement(XADStuffItXParser *self,StuffItXElement *eleme
 
 				case 10:
 				{
-					int num=(int)ReadSitxP2(fh);
+					unsigned int num=(unsigned int)ReadSitxP2(fh);
 					for(int i=0;i<num;i++)
 					NSLog(@"10: %@",[self XADStringWithData:ReadSitxString(fh)]);
 				}

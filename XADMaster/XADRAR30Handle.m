@@ -1,14 +1,34 @@
+/*
+ * XADRAR30Handle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADRAR30Handle.h"
-#import "XADRAR30Filter.h"
+#import "XADRARFilters.h"
 #import "XADException.h"
 
 @implementation XADRAR30Handle
 
--(id)initWithRARParser:(XADRARParser *)parent files:(NSArray *)filearray
+-(id)initWithRARParser:(XADRARParser *)parentparser files:(NSArray *)filearray
 {
-	if((self=[super initWithName:[parent filename]]))
+	if((self=[super initWithParentHandle:[parentparser handle]]))
 	{
-		parser=parent;
+		parser=parentparser;
 		files=[filearray retain];
 
 		InitializeLZSS(&lzss,0x400000);
@@ -69,6 +89,11 @@
 {
 	if(startnewfile)
 	{
+        // We need to skip empty entries.
+        // This is basically needed because this method won't be called for directories (which has 0 size)
+        // Because of that, we're simply ignoring zero-sized files and directories
+        [self skipEmptyEntries];
+
 		CSInputBuffer *buf=[parser inputBufferForFileWithIndex:file files:files];
 		[self setInputBuffer:buf];
 
@@ -156,6 +181,18 @@
 		// Check if we immediately hit a new filter or file edge, and try again.
 		if(actualend==start) return [self produceBlockAtOffset:pos];
 		else return (int)(actualend-start);
+	}
+}
+
+- (void)skipEmptyEntries {
+	while (file < files.count) {
+		NSDictionary *fileToCheck = [files objectAtIndex:file];
+		BOOL isEmptyFile = [[fileToCheck objectForKey:@"OutputLength"] longLongValue] == 0;
+		if (isEmptyFile) {
+			file++;
+			continue;
+		}
+		break;
 	}
 }
 
@@ -576,7 +613,7 @@
 	if(isnew)
 	{
 		int length=CSInputNextRARVMNumber(filterinput);
-		if(length==0||length>0x10000) [XADException raiseIllegalDataException];
+		if(length<=0||length>0x10000) [XADException raiseIllegalDataException];
 
 		uint8_t bytecode[length];
 		for(int i=0;i<length;i++) bytecode[i]=CSInputNextBitString(filterinput,8);

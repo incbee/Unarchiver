@@ -1,3 +1,23 @@
+/*
+ * CSMemoryHandle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "CSMemoryHandle.h"
 
 
@@ -28,7 +48,7 @@
 
 -(id)initWithData:(NSData *)data
 {
-	if((self=[super initWithName:[NSString stringWithFormat:@"%@ at %p",[data class],data]]))
+	if(self=[super init])
 	{
 		memorypos=0;
 		backingdata=[data retain];
@@ -38,7 +58,7 @@
 
 -(id)initAsCopyOf:(CSMemoryHandle *)other
 {
-	if((self=[super initAsCopyOf:other]))
+	if(self=[super initAsCopyOf:other])
 	{
 		memorypos=other->memorypos;
 		backingdata=[other->backingdata retain];
@@ -135,5 +155,10 @@
 -(NSData *)copyDataOfLength:(int)length { return [[self readDataOfLength:length] retain]; }
 
 -(NSData *)copyDataOfLengthAtMost:(int)length { return [[self readDataOfLengthAtMost:length] retain]; }
+
+-(NSString *)name
+{
+	return [NSString stringWithFormat:@"%@ at %p",[backingdata class],backingdata];
+}
 
 @end

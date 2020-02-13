@@ -1,3 +1,23 @@
+/*
+ * XADWARCParser.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADWARCParser.h"
 #import "Scanning.h"
 
@@ -97,8 +117,7 @@
 		if([type isEqual:@"response"])
 		if([status matchedByPattern:@"^HTTP/[0-9]+\\.[0-9]+ 200"])
 		{
-			NSString *target=[record objectForKey:@"WARC-Target-URI"];
-
+			NSString *target=[self getTargetURI:record];
 			NSArray *components=[self pathComponentsForURLString:target];
 			if(components)
 			{
@@ -128,7 +147,7 @@
 	enumerator=[filerecords objectEnumerator];
 	while((record=[enumerator nextObject]))
 	{
-		NSString *target=[record objectForKey:@"WARC-Target-URI"];
+		NSString *target=[self getTargetURI:record];
 		NSNumber *startnum=[record objectForKey:@"HTTPBodyStart"];
 		NSNumber *endnum=[record objectForKey:@"EndOfRecord"];
 		NSArray *responseheaders=[record objectForKey:@"HTTPHeaders"];
@@ -208,8 +227,24 @@
 	}
 }
 
+-(NSString *)getTargetURI:(NSDictionary *)record
+{
 
+	NSString *target=[record objectForKey:@"WARC-Target-URI"];
 
+	// WARC 1.0 requires WARC-Target-URI to be surrounded by angle brackets,
+	// but most tools don't respect this requirement, so we just strip them
+	// if they're present.
+	//
+	// Read <https://github.com/iipc/warc-specifications/issues/23> for more
+	// details.
+	if(target.length>=2 && [target characterAtIndex:0]=='<' && [target characterAtIndex:target.length-1]=='>')
+	{
+		target=[target substringWithRange:NSMakeRange(1, target.length-2)];
+	}
+
+	return target;
+}
 
 -(NSArray *)pathComponentsForURLString:(NSString *)urlstring
 {

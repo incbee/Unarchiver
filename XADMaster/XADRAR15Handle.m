@@ -1,3 +1,23 @@
+/*
+ * XADRAR15Handle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADRAR15Handle.h"
 #import "XADException.h"
 
@@ -10,11 +30,11 @@ static void ResetTable(int *table,int *reverse);
 
 @implementation XADRAR15Handle
 
--(id)initWithRARParser:(XADRARParser *)parent files:(NSArray *)filearray
+-(id)initWithRARParser:(XADRARParser *)parentparser files:(NSArray *)filearray
 {
-	if((self=[super initWithName:[parent filename] windowSize:0x10000]))
+	if((self=[super initWithParentHandle:[parentparser handle] windowSize:0x10000]))
 	{
-		parser=parent;
+		parser=parentparser;
 		files=[filearray retain];
 
 		lengthcode1=[[XADPrefixCode alloc] initWithLengths:(int[256]){

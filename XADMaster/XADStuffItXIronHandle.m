@@ -1,3 +1,23 @@
+/*
+ * XADStuffItXIronHandle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADStuffItXIronHandle.h"
 #import "XADException.h"
 #import "StuffItXUtilities.h"
@@ -36,7 +56,7 @@ static int NextBitWithDoubleWeights(CarrylessRangeCoder *coder,uint32_t *weight1
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length
 {
-	if((self=[super initWithHandle:handle length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		block=NULL;
 		currsize=0;
@@ -59,12 +79,12 @@ static int NextBitWithDoubleWeights(CarrylessRangeCoder *coder,uint32_t *weight1
 	maxfreq2=1<<CSInputNextSitxP2(input);
 	maxfreq3=1<<CSInputNextSitxP2(input);
 
-	byteshift1=(int)CSInputNextSitxP2(input);
-	byteshift2=(int)CSInputNextSitxP2(input);
-	byteshift3=(int)CSInputNextSitxP2(input);
-	countshift1=(int)CSInputNextSitxP2(input);
-	countshift2=(int)CSInputNextSitxP2(input);
-	countshift3=(int)CSInputNextSitxP2(input);
+	byteshift1=(unsigned int)CSInputNextSitxP2(input);
+	byteshift2=(unsigned int)CSInputNextSitxP2(input);
+	byteshift3=(unsigned int)CSInputNextSitxP2(input);
+	countshift1=(unsigned int)CSInputNextSitxP2(input);
+	countshift2=(unsigned int)CSInputNextSitxP2(input);
+	countshift3=(unsigned int)CSInputNextSitxP2(input);
 }
 
 -(int)produceBlockAtOffset:(off_t)pos
@@ -73,12 +93,13 @@ static int NextBitWithDoubleWeights(CarrylessRangeCoder *coder,uint32_t *weight1
 
 	if(CSInputNextBitLE(input)==1) return -1;
 
-	int blocksize=(int)CSInputNextSitxP2(input);
+	unsigned int blocksize=(unsigned int)CSInputNextSitxP2(input);
 
 	if(blocksize>currsize)
 	{
 		free(block);
 		block=malloc(blocksize*6);
+		if(!block) [XADException raiseOutOfMemoryException];
 		sorted=block+blocksize;
 		table=(uint32_t *)(block+2*blocksize);
 		currsize=blocksize;
@@ -86,7 +107,8 @@ static int NextBitWithDoubleWeights(CarrylessRangeCoder *coder,uint32_t *weight1
 
 	if(CSInputNextBitLE(input)==0) // compressed
 	{
-		int firstindex=(int)CSInputNextSitxP2(input);
+		unsigned int firstindex=(int)CSInputNextSitxP2(input);
+		if(firstindex>=blocksize) [XADException raiseDecrunchException];
 
 		CSInputSkipToByteBoundary(input);
 
@@ -94,7 +116,7 @@ static int NextBitWithDoubleWeights(CarrylessRangeCoder *coder,uint32_t *weight1
 
 		if(st4transform)
 		{
-			UnsortST4(block,sorted,blocksize,firstindex,table);
+			if(!UnsortST4(block,sorted,blocksize,firstindex,table)) [XADException raiseDecrunchException];
 		}
 		else
 		{

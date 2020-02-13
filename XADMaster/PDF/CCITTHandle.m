@@ -1,3 +1,23 @@
+/*
+ * CCITTHandle.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "CCITTHandle.h"
 
 #define EOL -1
@@ -52,9 +72,9 @@ static int ReadLengthWithCodeTable(CSInputBuffer *input,XADPrefixCode *prefixcod
 
 
 
--(id)initWithHandle:(CSHandle *)handle columns:(int)cols white:(int)whitevalue
+-(id)initWithInputBufferForHandle:(CSHandle *)handle columns:(int)cols white:(int)whitevalue
 {
-	if(self=[super initWithHandle:handle])
+	if(self=[super initWithInputBufferForHandle:handle])
 	{
 		columns=cols;
 		white=whitevalue;
@@ -114,14 +134,13 @@ static int ReadLengthWithCodeTable(CSInputBuffer *input,XADPrefixCode *prefixcod
 
 
 @implementation CCITTFaxT41DHandle
-static int line=0;
+
 -(id)initWithHandle:(CSHandle *)handle columns:(int)cols white:(int)whitevalue
 {
-	if(self=[super initWithHandle:handle columns:cols white:whitevalue])
+	if(self=[super initWithInputBufferForHandle:handle columns:cols white:whitevalue])
 	{
 		whitecode=[[XADPrefixCode alloc] initWithStaticTable:T41DWhiteCodeTable];
 		blackcode=[[XADPrefixCode alloc] initWithStaticTable:T41DBlackCodeTable];
-line=0;
 	}
 	return self;
 }
@@ -187,7 +206,7 @@ void FindNextOldChangeOfColorAndLargerThan(CCITTFaxT6Handle *self,int column,int
 
 -(id)initWithHandle:(CSHandle *)handle columns:(int)cols white:(int)whitevalue
 {
-	if(self=[super initWithHandle:handle columns:cols white:whitevalue])
+	if(self=[super initWithInputBufferForHandle:handle columns:cols white:whitevalue])
 	{
 		maincode=[[XADPrefixCode alloc] initWithStaticTable:T62DCodeTable];
 		whitecode=[[XADPrefixCode alloc] initWithStaticTable:T41DWhiteCodeTable];

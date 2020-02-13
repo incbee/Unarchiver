@@ -1,4 +1,25 @@
+/*
+ * XADPPMdHandles.m
+ *
+ * Copyright (c) 2017-present, MacPaw Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
 #import "XADPPMdHandles.h"
+#import "XADException.h"
 
 
 
@@ -12,7 +33,7 @@
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length maxOrder:(int)maxorder subAllocSize:(int)suballocsize
 {
-	if((self=[super initWithHandle:handle length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		alloc=CreateSubAllocatorVariantG(suballocsize);
 		max=maxorder;
@@ -26,13 +47,20 @@
 	[super dealloc];
 }
 
--(void)resetByteStream { StartPPMdModelVariantG(&model,(PPMdReadFunction *)CSInputNextByte,input,&alloc->core,max,NO); }
+-(void)resetByteStream
+{
+	if(!StartPPMdModelVariantG(&model,(PPMdReadFunction *)CSInputNextByte,input,&alloc->core,max,NO))
+	{
+		[XADException raiseDecrunchException];
+	}
+}
 
 -(uint8_t)produceByteAtOffset:(off_t)pos
 {
 	int byte=NextPPMdVariantGByte(&model);
-	if(byte<0) CSByteStreamEOF(self);
-	return byte;
+	if(byte==-1) CSByteStreamEOF(self);
+	else if(byte==-2) { [XADException raiseDecrunchException]; return 0; }
+	else return byte;
 }
 
 @end
@@ -49,7 +77,7 @@
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length maxOrder:(int)maxorder subAllocSize:(int)suballocsize
 {
-	if((self=[super initWithHandle:handle length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		alloc=CreateSubAllocatorVariantH(suballocsize);
 		max=maxorder;
@@ -86,7 +114,7 @@
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length maxOrder:(int)maxorder subAllocSize:(int)suballocsize modelRestorationMethod:(int)mrmethod
 {
-	if((self=[super initWithHandle:handle length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		alloc=CreateSubAllocatorVariantI(suballocsize);
 		max=maxorder;
@@ -101,7 +129,11 @@
 	[super dealloc];
 }
 
--(void)resetByteStream { StartPPMdModelVariantI(&model,(PPMdReadFunction *)CSInputNextByte,input,alloc,max,method); }
+-(void)resetByteStream
+{
+	if(max<2) [XADException raiseNotSupportedException];
+	StartPPMdModelVariantI(&model,(PPMdReadFunction *)CSInputNextByte,input,alloc,max,method);
+}
 
 -(uint8_t)produceByteAtOffset:(off_t)pos
 {
@@ -124,7 +156,7 @@
 
 -(id)initWithHandle:(CSHandle *)handle length:(off_t)length maxOrder:(int)maxorder subAllocSize:(int)suballocsize
 {
-	if((self=[super initWithHandle:handle length:length]))
+	if((self=[super initWithInputBufferForHandle:handle length:length]))
 	{
 		alloc=CreateSubAllocatorBrimstone(suballocsize);
 		max=maxorder;
@@ -138,7 +170,13 @@
 	[super dealloc];
 }
 
--(void)resetByteStream { StartPPMdModelVariantG(&model,(PPMdReadFunction *)CSInputNextByte,input,&alloc->core,max,YES); }
+-(void)resetByteStream
+{
+	if(!StartPPMdModelVariantG(&model,(PPMdReadFunction *)CSInputNextByte,input,&alloc->core,max,YES))
+	{
+		[XADException raiseDecrunchException];
+	}
+}
 
 -(uint8_t)produceByteAtOffset:(off_t)pos
 {
